@@ -1,0 +1,15 @@
+{
+  "name": "express-proxy-mock",
+  "version": "0.5.2",
+  "description": "The tool with proxy and mock for front-end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shunseven",
+  "license": "ISC",
+  "dependencies": {
+    "http-proxy": "^1.13.2",
+    "is-json": "^2.0.0"
+  }
+}
