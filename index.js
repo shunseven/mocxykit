@@ -8,6 +8,7 @@ var path=require('path');
 var url=require('url');
 module.exports=function (app,option) {
     var configPath=option&&option.configPath?option.configPath:'/config';
+    var apiRule=option&&option.apiRule?option.apiRule:'/*';
     return function (req,res,next) {
         function getHost(){
             var stat=fs.existsSync('./proxy.json');
@@ -62,7 +63,6 @@ module.exports=function (app,option) {
         app.get('/__mock_proxy_assets__*',function (req,res) {   
             res.sendFile(__dirname+req.url);
         })
-        var apiRule=option.apiRule?option.apiRule:'/*';
         app.all(apiRule,function (req,res,next) {
             if(nowHost!='http://0:0'){
                 next();
