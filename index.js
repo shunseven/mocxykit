@@ -59,11 +59,11 @@ module.exports=function (app,option) {
                 res.send(null);
             }
         })
-        app.get('/__mock_proxy_assets__*',function (req,res) {
-            
+        app.get('/__mock_proxy_assets__*',function (req,res) {   
             res.sendFile(__dirname+req.url);
         })
-        app.get("/*",function (req,res,next) {
+        var apiRule=option.apiRule?option.apiRule:'/*';
+        app.all(apiRule,function (req,res,next) {
             if(nowHost!='http://0:0'){
                 next();
                 return false;
@@ -86,7 +86,7 @@ module.exports=function (app,option) {
             }
             res.send(mes);
         });
-        app.all("/*",function (req,res,next) {
+        app.all(apiRule,function (req,res,next) {
             proxy.web(req, res, { target:nowHost });
         })
         next();
