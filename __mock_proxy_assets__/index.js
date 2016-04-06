@@ -9,19 +9,36 @@ var oMockMessage=$('#mock-message');
 var oMockUrl=$('#mock-url');
 var mockIndex=-1;
 var mockData=[];
+
+//publicMock
+$.get('/get/publicmock',function (data) {
+    var html=data.map(function(ip,i){
+        ip.isPublicMock=true;
+        return '<li class="cLi"> <span class="checked">✔</span><a data-index='+i+' class="changeHost" href="#" data-ip='+JSON.stringify(ip)+' >公共mock('+ip.host+':'+ip.port+')</a></li>'
+    }).join('');
+    $('.public-mock').html(html);
+});
+
+function setActiveHost(activeHost) {
+    $('.changeHost').each(function (i,element) {
+        var data=JSON.parse(element.dataset.ip);
+        console.log(data);
+        var span=$(element).closest('.cLi').find('span');
+        span.removeClass('active');
+         if(activeHost.host==data.host&&activeHost.port==data.port){
+             span.addClass('active');
+         }
+    })
+}
+
 function getList(){
     var list=localStorage.getItem('hostList')?localStorage.getItem('hostList'):'[]';
     return JSON.parse(list);
 }
 function showHostList(){
     var list=getList().reverse();
-    var index=localStorage.getItem('active');
-    if(index==-1){
-        $('.mock span').addClass('active');
-    }
     var html=list.map(function(ip,i){
-        var stutas=i==index?'active':'';
-        return '<li class="cLi"> <span class="checked '+stutas+'">✔</span><a data-index='+i+' class="changeHost" href="#" data-ip='+JSON.stringify(ip)+' >'+ip.host+':'+ip.port+'('+ip.name+')</a><button data-index='+i+' type="button" class="delete-proxy"><span>&times;</span></button></li>'
+        return '<li class="cLi"> <span class="checked ">✔</span><a data-index='+i+' class="changeHost" href="#" data-ip='+JSON.stringify(ip)+' >'+ip.host+':'+ip.port+'('+ip.name+')</a><button data-index='+i+' type="button" class="delete-proxy"><span>&times;</span></button></li>'
     }).join('');
     $('.host-list').html(html);
 }
@@ -66,7 +83,8 @@ function changeHost(data,index){
         url:'/change/host',
         success:function(mes){
             setNowHost(mes);
-            console.log(mes);
+            setActiveHost(mes);
+            getMock()
         }
     });
 }
@@ -98,6 +116,7 @@ getMock();
 $.get('/get/host').success(function(mes){
     console.log(mes)
     setNowHost(mes);
+    setActiveHost(mes);
 });
 $('.add-mock').on('click',function () {
     mockIndex=-1;
@@ -130,22 +149,10 @@ $(document).on('click','.mock-edit',function () {
 })
 $(document).on('click','.changeHost',function(){
     var data=$(this).data('ip');
-    var index=$(this).data('index');
-    localStorage.setItem('active',index);
-    $('.checked').removeClass('active').eq(index).addClass('active');
-    $('.mock span').removeClass('active');
-    changeHost(data);
-})
-$('.mockChange').on('click',function () {
-    var data=$(this).data('ip');
-    $('.checked').removeClass('active');
-    $('.mock span').addClass('active');
-    localStorage.setItem('active','-1')
     changeHost(data);
 });
 $('.ip-form').submit(function(){
     setList()
-    localStorage.setItem('active',0);
     showHostList();
     var data=$('.ip-form').serialize();
     changeHost(data);
@@ -161,14 +168,10 @@ $(document).on('click','.delete-mock',function () {
 $(document).on('click','.delete-proxy',function(){
     var index=$(this).data('index');
     var list=getList();
-    var active=localStorage.getItem('active');
-    if(index<active){
-        localStorage.setItem('active',active-1)
-    }
-    if(index==active) localStorage.removeItem('active');
     list.splice(list.length-index-1,1);
     var hostString=JSON.stringify(list);
     localStorage.setItem('hostList',hostString);
+    setActiveHost({});
     showHostList();
 });
 

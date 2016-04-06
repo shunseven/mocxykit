@@ -28,7 +28,12 @@ module.exports=function (app,option) {
         }
 
         var proxy = httpProxy.createProxyServer({});
-
+        function isPublisMock() {
+            return option.publicMock.some(function (data) {
+               var host='http://'+data.host+':'+data.port;
+                return host==nowHost;
+            })
+        }
         app.get("/change/host*",function (req,res) {
             console.log('change host success');
             nowHost='http://'+req.query.host+':'+req.query.port;
@@ -37,19 +42,30 @@ module.exports=function (app,option) {
         });
 
         app.get("/get/host",function (req,res) {
+
             res.send(getHost());
         });
 
-        app.get('/get/mock',function (req,res) {
+        app.get('/get/mock',function (req,res,next) {
+           // var data=JSON.parse(req.query.data);
+            if(isPublisMock()){
+                next();
+                return false;
+            }
+            console.log(req.query);
             res.send(getMock());
         });
-
-        app.get('/set/mock',function(req,res){
-            console.log(req.query.data);
+        app.get('/set/mock',function(req,res,next){
+            if(isPublisMock()){
+                next();
+                return false;
+            }
             setMock(JSON.parse(req.query.data));
             res.send(JSON.parse(req.query.data));
         });
-
+        app.get('/get/publicmock',function (req,res) {
+            option.publicMock?res.send(option.publicMock):res.send([]);
+        });
         app.get(configPath, function(req, res) {
             res.sendFile(__dirname + '/config.html')
         });
@@ -64,7 +80,7 @@ module.exports=function (app,option) {
             res.sendFile(__dirname+req.url);
         })
         app.all(apiRule,function (req,res,next) {
-            if(nowHost!='http://0:0'){
+            if(nowHost!='http://0:0'&&!option.isPublicServer){
                 next();
                 return false;
             }
