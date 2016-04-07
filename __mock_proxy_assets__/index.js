@@ -13,8 +13,8 @@ var mockData=[];
 //publicMock
 $.get('/get/publicmock',function (data) {
     var html=data.map(function(ip,i){
-        ip.isPublicMock=true;
-        return '<li class="cLi"> <span class="checked">✔</span><a data-index='+i+' class="changeHost" href="#" data-ip='+JSON.stringify(ip)+' >公共mock('+ip.host+':'+ip.port+')</a></li>'
+        ip.name=ip.name?ip.name:"公共mock";
+        return '<li class="cLi"> <span class="checked">✔</span><a data-index='+i+' class="changeHost" href="#" data-ip='+JSON.stringify(ip)+' >'+ip.name+'</a></li>'
     }).join('');
     $('.public-mock').html(html);
 });

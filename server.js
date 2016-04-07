@@ -5,7 +5,7 @@ var express=require('express');
 var app=express();
 var proxyMock=require('./index.js');
 
-app.use(proxyMock(app,{configPath:'/',isMockServer:true}));
+app.use(proxyMock(app,{configPath:'/',publicMock:[{host:'10.199.198.255',port:'80'}]}));
 
 var http = require('http');
 var server = http.createServer(app);
