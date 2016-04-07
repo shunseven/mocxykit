@@ -5,11 +5,11 @@ var express=require('express');
 var app=express();
 var proxyMock=require('./index.js');
 
-app.use(proxyMock(app,{configPath:'/',pageEntry:[{name:'后台',href:'1111'}],publicMock:[{host:'127.0.0.1',port:3001}]}));
+app.use(proxyMock(app,{configPath:'/',isMockServer:true}));
 
 var http = require('http');
 var server = http.createServer(app);
-server.listen(3000, 'localhost', function(err) {
+server.listen(80, '0.0.0.0', function(err) {
     if (err) throw err;
     var addr = server.address();
     console.log('Listening at http://%s:%d', addr.address, addr.port);

@@ -29,10 +29,11 @@ module.exports=function (app,option) {
 
         var proxy = httpProxy.createProxyServer({});
         function isPublisMock() {
-            return option.publicMock.some(function (data) {
+            var is=option.publicMock&&option.publicMock.some(function (data) {
                var host='http://'+data.host+':'+data.port;
                 return host==nowHost;
             })
+            return is;
         }
         app.get("/change/host*",function (req,res) {
             console.log('change host success');
