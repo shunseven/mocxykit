@@ -8,12 +8,16 @@
   当然还可以通过nginx之类的来进行数据转发，但每次切换联调的ip都要修改配制文件的ip重起服务，假如切换切换频繁一个的确让人很烦的事，也不利于与 webpack一起使用，我们都知在webpack开发时都会通过node起动一个服务，那我们应该直接一个插件就把这些功能集成上去，而不用其它多余的工具辅助！
   
 ## 四行代码启动带 props,mock功能的 node 服务！
-### npm install express
-### npm install express-proxy-mock
+```
+ npm install express
+ npm install express-proxy-mock
+```
   先在项目中运行以上两行命令；
   然后在你的项目建个‘server.js’的文件；
+```
   var http=require('http');
   var app=require('express')();
   app.use(proxyMock(app));
   http.createServer(app).listen(3000,'localhost');
-### 最后运行 node server.js  在浏览器打开localhost:3000/config 就能看到props和mock功能界面！
+```
+#### 最后运行 node server.js  在浏览器打开localhost:3000/config 就能看到props和mock功能界面！
