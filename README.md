@@ -20,4 +20,11 @@
   app.use(proxyMock(app));
   http.createServer(app).listen(3000,'localhost');
 ```
-#### 最后运行 node server.js  在浏览器打开localhost:3000/config 就能看到props和mock功能界面！
+最后运行 node server.js  在浏览器打开localhost:3000/config 就能看到props和mock功能界面！
+
+
+
+
+
+
+
