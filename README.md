@@ -23,6 +23,11 @@
   当然还可以通过nginx之类的来进行数据转发，但每次切换联调的ip都要修改配制文件的ip重起服务，假如切换切换频繁一个的确让人很烦的事，也不利于与 webpack一起使用，我们都知在webpack开发时都会通过node起动一个服务，那我们应该直接一个插件就把这些功能集成上去，而不用其它多余的工具辅助！
 ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info1.png)
 
+# mock功能
+  在后台api还没开发完成前，我们经常要一些假数据进行调试，这就是mock的用途，这个插件构建的mock可以让快速可视化的编辑创建，并让api的url保持与线上完全一致！
+![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info2.png)
+![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info3.png)
+
 # 与webpack的结合
 
 
