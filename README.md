@@ -2,7 +2,7 @@
 
 # 使用背景
   在前端开发中有一项很重要的工作是后台同事进行数据联调，联调你就要通过对应不同的同事ip进行通讯，这个时候你会遇到浏览器的同源策略引起的跨域问题，还有你可能想有没有快速切换不同的ip进行联调，不用每次修改配制重起不同的服务，在后台接口还没开发完时，能在本地快速的创建假如据，而且接口与后台完全一制而不用在真正联调时还需要修改url，造成没必要的bug，以上这些问题就是我想开发这个express插件的初衷！
-# 四行代码启动带 props,mock功能的 node 服务！
+# 五行代码启动带 props,mock功能的 node 服务！
 ```
  npm install express
  npm install express-proxy-mock
@@ -11,6 +11,7 @@
   然后在你的项目建个‘server.js’的文件；
 ```
   var http=require('http');
+  var proxyMock＝require('express-proxy-mock');
   var app=require('express')();
   app.use(proxyMock(app));
   http.createServer(app).listen(3000,'localhost');
@@ -29,9 +30,14 @@
 ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info3.png)
 
 # 与webpack的结合
-
-
-
-
+我们给redux官方的[todo](https://github.com/reactjs/redux/tree/master/examples/todos)的例子加上这个功能,
+我们只需要在它的[server.js](https://github.com/reactjs/redux/blob/master/examples/todos/server.js)文件加上两行代码就可以了
+```
+var compiler = webpack(config)
+<font color=red>var proxyMock＝require('express-proxy-mock');</font>
+<font color=red>app.use(proxyMock(app));</font>
+app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
+app.use(webpackHotMiddleware(compiler))
+```
 
 
