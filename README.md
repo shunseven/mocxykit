@@ -34,10 +34,13 @@
 我们只需要在它的[server.js](https://github.com/reactjs/redux/blob/master/examples/todos/server.js)文件加上两行代码就可以了
 ```
 var compiler = webpack(config)
-<font color=red>var proxyMock＝require('express-proxy-mock');</font>
-<font color=red>app.use(proxyMock(app));</font>
+//以下两行为添加的代码
+var proxyMock＝require('express-proxy-mock');
+app.use(proxyMock(app));
+//end
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
 app.use(webpackHotMiddleware(compiler))
 ```
+最后运行localhost:3000/config你就能看到proxy,与mock 操作界面！
 
 
