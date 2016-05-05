@@ -56,7 +56,7 @@ module.exports=function (app,option) {
             res.send(getMock());
         });
         app.all('/get/mock',function (req,res,next) {
-            proxy.web(req, res, { target:nowHost });
+           if(isPublisMock()) proxy.web(req, res, { target:nowHost });
         });
 
         app.get('/set/mock',function(req,res,next){
@@ -68,7 +68,7 @@ module.exports=function (app,option) {
             res.send(JSON.parse(req.query.data));
         });
         app.all('/set/mock',function (req,res,next) {
-            proxy.web(req, res, { target:nowHost });
+           if(isPublisMock()) proxy.web(req, res, { target:nowHost });
         });
 
         app.get('/get/publicmock',function (req,res) {
@@ -88,11 +88,7 @@ module.exports=function (app,option) {
             res.sendFile(__dirname+req.url);
         })
         app.all(apiRule,function (req,res,next) {
-            if(nowHost!='http://0:0'){
-                next();
-                return false;
-            }
-            if(!option.isPublicServer){
+            if(nowHost!='http://0:0'&&!!option.isPublicServer){
                 next();
                 return false;
             }

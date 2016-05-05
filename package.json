@@ -1,6 +1,6 @@
 {
   "name": "express-proxy-mock",
-  "version": "0.7.3",
+  "version": "0.7.6",
   "description": "The tool with proxy and mock for front-end",
   "main": "index.js",
   "scripts": {
