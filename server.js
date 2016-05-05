@@ -9,7 +9,7 @@ app.use(proxyMock(app,{configPath:'/',publicMock:[{host:'10.199.198.255',port:'8
 
 var http = require('http');
 var server = http.createServer(app);
-server.listen(80, '0.0.0.0', function(err) {
+server.listen(3003, '0.0.0.0', function(err) {
     if (err) throw err;
     var addr = server.address();
     console.log('Listening at http://%s:%d', addr.address, addr.port);
