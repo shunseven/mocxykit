@@ -86,6 +86,7 @@
           resolve({
             active:mes.data.mock
           });
+          this.setActiveMock(mes.data.mock);
         })
       },
       methods:{
