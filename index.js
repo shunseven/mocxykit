@@ -9,8 +9,9 @@ var url=require('url');
 module.exports=function (app,option) {
     var configPath=option&&option.configPath?option.configPath:'/config';
     var apiRule=option&&option.apiRule?option.apiRule:'/*';
-    var activeMock=getActiveMock().mock;
+   
     return function (req,res,next) {
+         var activeMock=getActiveMock().mock;
         function getHost(){
             var stat=fs.existsSync('./proxy.json');
             var config=stat?JSON.parse(fs.readFileSync('./proxy.json')):'';
