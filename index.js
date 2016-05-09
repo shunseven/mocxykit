@@ -166,7 +166,7 @@ module.exports=function (app,option) {
             res.sendFile(__dirname+'/assets/dist/'+req.url);
         })
         app.all(apiRule,function (req,res,next) {
-            if(activeMock!='local'&&!!option.isPublicServer){
+            if(activeMock!='local'&&!option.isPublicServer){
                 next();
                 return false;
             }
