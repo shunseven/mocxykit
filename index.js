@@ -74,10 +74,10 @@ module.exports=function (app,option) {
         }
         app.get("/api/change/host*",function (req,res) {
             console.log('change host success');
+            nowHost='http://'+req.query.host+':'+req.query.port;
             if(!req.query.host){
                 nowHost='';
             }
-            nowHost='http://'+req.query.host+':'+req.query.port;
             var proxy=req.query;
             var proxies=getProxies();
             var hasProxy=proxies.some(function (data) {
