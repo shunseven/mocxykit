@@ -9,8 +9,9 @@ var url=require('url');
 module.exports=function (app,option) {
     var configPath=option&&option.configPath?option.configPath:'/config';
     var apiRule=option&&option.apiRule?option.apiRule:'/*';
-   
+
     return function (req,res,next) {
+
          var activeMock=getActiveMock().mock;
         function getHost(){
             var stat=fs.existsSync('./proxy.json');
@@ -114,7 +115,14 @@ module.exports=function (app,option) {
                 next();
                 return false;
             }
-            res.send(getMock());
+            var mock=getMock();
+            mock=mock.map(function (item) {
+              if(typeof item.data!='string'){
+                item.data=JSON.stringify(item.data);
+              }
+              return item
+            });
+            res.send(mock);
         });
         app.all('/api/get/mock',function (req,res,next) {
            if(isPublisMock()) proxy.web(req, res, { target:nowHost });
@@ -130,7 +138,7 @@ module.exports=function (app,option) {
         app.all('/api/set/mock',function (req,res,next) {
             if(isPublisMock()) proxy.web(req, res, { target:nowHost });
         });
-        
+
         app.get('/api/delete/mock',function(req,res,next){
             if(isPublisMock()){
                 next();
@@ -167,13 +175,22 @@ module.exports=function (app,option) {
             res.sendFile(__dirname+'/assets/dist/'+req.url);
         })
         app.all(apiRule,function (req,res,next) {
+            console.log(111)
             if(activeMock!='local'&&!option.isPublicServer){
                 next();
                 return false;
             }
             var pathname=url.parse(req.url).pathname;
             var mock=getMock().reduce(function (reduce,data) {
-                var message=data.data.replace(/\n/g,'');
+                var msg=data.data;
+                var message;
+                if(typeof msg == 'string'){
+                   message=msg.replace(/\n/g,'');
+                }else {
+                   message=msg
+                }
+
+
                 if(isJSON(message)){
                     reduce[url.parse(data.url).pathname]=JSON.parse(message);
                 }else{
