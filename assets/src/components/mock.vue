@@ -1,66 +1,67 @@
 <template>
   <div>
-    <div class="mock-box">
-      <h4 class="text-success">
-        mock
-        <input @click="setActiveMock('')" type="button" class="btn btn-success  btn-xs m-l-10" value="关闭mock"/>
-      </h4>
-      <div class="mock cLi">
-        <span v-bind:class="{active:active=='local'}">✔</span>
-        <a @click="setActiveMock('local')" href="javascript:void(0)" class="mockChange changeHost">本地mock</a>
-      </div>
-      <ul class="public-mock">
+  <div class="mock-box">
+    <h4 class="text-success">
+      mock
+      <input @click="setActiveMock('')" type="button" class="btn btn-success  btn-xs m-l-10" value="关闭mock"/>
+    </h4>
+    <div class="mock cLi">
+      <span v-bind:class="{active:active=='local'}">✔</span>
+      <a @click="setActiveMock('local')" href="javascript:void(0)" class="mockChange changeHost">本地mock</a>
+    </div>
+    <ul class="public-mock">
 
-      </ul>
-      <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">
-          <button type="button" class="btn btn-primary add-mock" data-toggle="modal" data-target=".bs-example-modal-lg">添加api</button>
-        </div>
-        <!-- Table -->
-        <table class="table">
-          <tr v-for="item in mocks">
-            <td>{{item.name}}({{item.url}})</td>
-            <td>
-              <span @click="setMock(item)"  data-toggle="modal"  data-target=".bs-example-modal-lg" class="glyphicon mock-edit glyphicon-edit"></span>
-              <span @click="deleteMock(item)" class="glyphicon glyphicon-trash delete-mock"></span>
-            </td>
-          </tr>
-        </table>
+    </ul>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <button type="button" class="btn btn-primary add-mock" data-toggle="modal" data-target=".bs-example-modal-lg">添加api</button>
       </div>
+      <!-- Table -->
+      <table class="table">
+        <tr v-for="item in mocks">
+          <td>{{item.name}}({{item.url}})</td>
+          <td>
+            <span @click="setMock(item)"  data-toggle="modal"  data-target=".bs-example-modal-lg" class="glyphicon mock-edit glyphicon-edit"></span>
+            <span @click="deleteMock(item)" class="glyphicon glyphicon-trash delete-mock"></span>
+          </td>
+        </tr>
+      </table>
     </div>
-    <div id="mock-modal" class="modal  fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  </div>
+  <div id="mock-modal" class="modal  fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
       <div class="modal-dialog modal-lg">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-              <h4 class="modal-title" id="myLargeModalLabel">设置mock</h4>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="mock-name" class="control-label">name:</label>
-                  <input type="text" class="form-control" v-model="name" id="mock-name">
-                </div>
-                <div class="form-group">
-                  <label for="mock-url" class="control-label">url:</label>
-                  <input type="text" class="form-control" v-model="url" id="mock-url">
-                </div>
-                <div class="form-group">
-                  <label for="mock-message"  class="control-label">data:</label>
-                  <textarea class="form-control" v-model="data" style="height: 200px" id="mock-message"></textarea>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" @click="saveMock"  class="btn btn-primary save-mock">Save changes</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="modal-title" id="myLargeModalLabel">设置mock</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="mock-name" class="control-label">name:</label>
+                <input type="text" class="form-control" v-model="name" id="mock-name">
+              </div>
+              <div class="form-group">
+                <label for="mock-url" class="control-label">url:</label>
+                <input type="text" class="form-control" v-model="url" id="mock-url">
+              </div>
+              <div class="form-group">
+                <label for="mock-message"  class="control-label">data:</label>
+                <editer :content.sync="html" lang="html" theme="chrome" width="100%" height="300" content="dsf"></editer>dfsf
+                <textarea class="form-control" v-model="data" style="height: 200px" id="mock-message"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" @click="saveMock"  class="btn btn-primary save-mock">Save changes</button>
+          </div>
+        </div><!-- /.modal-content -->
       </div>
     </div>
+  </div>
   </div>
 </template>
 
