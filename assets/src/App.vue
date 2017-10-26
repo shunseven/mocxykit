@@ -1,20 +1,20 @@
 <template>
-  <div id="app">
+  <div>
     <props></props>
     <mock></mock>
   </div>
 </template>
 
 <script>
-import Props from './components/props.vue'
-import Mock from './components/mock.vue'
+  import Props from './components/props.vue'
+  import Mock from './components/mock.vue'
 
-export default {
-  components: {
-    Props,
-    Mock
+  export default {
+    components: {
+      Props,
+      Mock
+    }
   }
-}
 </script>
 
 <style>
@@ -35,7 +35,7 @@ export default {
     float: right;
   }
   .m-r-10{
-     margin-right: 10px;
+    margin-right: 10px;
   }
   .m-l-10{
     margin-left: 10px;
