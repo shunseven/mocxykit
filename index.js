@@ -40,7 +40,7 @@ module.exports=function (app,option) {
                     return mock;
                 })
             }
-            fs.writeFileSync('./mock.json',JSON.stringify(mocks));
+            fs.writeFileSync('./mock.json',JSON.stringify(mocks, null, 2));
             return mocks;
         }
 
