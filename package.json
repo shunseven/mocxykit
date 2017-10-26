@@ -9,6 +9,7 @@
   "author": "shunseven",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "http-proxy": "^1.13.2",
     "is-json": "^2.0.0"
   }

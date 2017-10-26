@@ -6,6 +6,7 @@ var fs=require('fs');
 var isJSON = require('is-json');
 var path=require('path');
 var url=require('url');
+
 module.exports=function (app,option) {
     var configPath=option&&option.configPath?option.configPath:'/config';
     var apiRule=option&&option.apiRule?option.apiRule:'/*';
@@ -51,6 +52,7 @@ module.exports=function (app,option) {
             fs.writeFileSync('./mock.json',JSON.stringify(mocks));
             return mocks;
         }
+
         function getActiveMock() {
             var stat=fs.existsSync('./activemock.json');
             var mock=stat?JSON.parse(fs.readFileSync('./activemock.json')):'';
@@ -66,13 +68,7 @@ module.exports=function (app,option) {
             fs.writeFileSync('./proxies.json',JSON.stringify(data));
         }
         var proxy = httpProxy.createProxyServer({});
-        function isPublisMock() {
-            var is=option.publicMock&&option.publicMock.some(function (data) {
-               var host='http://'+data.host+':'+data.port;
-                return host==nowHost;
-            })
-            return is;
-        }
+
         app.get("/api/change/host*",function (req,res) {
             console.log('change host success');
             nowHost='http://'+req.query.host+':'+req.query.port;
@@ -111,44 +107,23 @@ module.exports=function (app,option) {
         });
         app.get('/api/get/mock',function (req,res,next) {
            // var data=JSON.parse(req.query.data);
-            if(isPublisMock()){
-                next();
-                return false;
-            }
             var mock=getMock();
             mock=mock.map(function (item) {
-              if(typeof item.data!='string'){
-                item.data=JSON.stringify(item.data);
-              }
               return item
             });
             res.send(mock);
         });
-        app.all('/api/get/mock',function (req,res,next) {
-           if(isPublisMock()) proxy.web(req, res, { target:nowHost });
+
+
+        app.post('/api/set/mock',function(req,res,next){
+            res.send(setMock(req.body));
         });
 
-        app.get('/api/set/mock',function(req,res,next){
-            if(isPublisMock()){
-                next();
-                return false;
-            }
-            res.send(setMock(req.query));
-        });
-        app.all('/api/set/mock',function (req,res,next) {
-            if(isPublisMock()) proxy.web(req, res, { target:nowHost });
-        });
 
         app.get('/api/delete/mock',function(req,res,next){
-            if(isPublisMock()){
-                next();
-                return false;
-            }
             res.send(deleteMock(req.query));
         });
-        app.all('/api/delete/mock',function (req,res,next) {
-            if(isPublisMock()) proxy.web(req, res, { target:nowHost });
-        });
+
         app.get('/api/get/publicmock',function (req,res) {
             option.publicMock?res.send(option.publicMock):res.send([]);
         });
