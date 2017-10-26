@@ -49,6 +49,7 @@
               </div>
               <div class="form-group">
                 <label for="mock-message"  class="control-label">data:</label>
+                <editer :content.sync="html" lang="html" theme="chrome" width="100%" height="300" content="dsf"></editer>dfsf
                 <textarea class="form-control" v-model="data" style="height: 200px" id="mock-message"></textarea>
               </div>
             </form>
@@ -65,6 +66,7 @@
 </template>
 
 <script>
+   import Editer from 'vue-ace-editor';
    export default {
       data(){
           return {
@@ -88,6 +90,9 @@
           });
           this.setActiveMock(mes.data.mock);
         })
+      },
+      components:{
+        Editer
       },
       methods:{
          saveMock(){
