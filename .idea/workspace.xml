@@ -1,74 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="添加JSON编辑器">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/base/worker/workerMain.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/bat.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/coffee.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/cpp.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/csharp.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/css.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/dockerfile.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/fsharp.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/go.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/handlebars.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/html.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/ini.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/java.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/less.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/lua.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/markdown.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/msdax.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/objective-c.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/php.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/postiats.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/powershell.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/pug.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/python.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/r.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/razor.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/ruby.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/sb.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/scss.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/solidity.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/sql.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/swift.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/vb.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/xml.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/basic-languages/src/yaml.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/contrib/suggest/browser/media/String_16x.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/contrib/suggest/browser/media/String_inverse_16x.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.de.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.es.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.fr.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.hu.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.it.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.ja.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.ko.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.pt-br.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.ru.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.tr.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.zh-cn.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/editor.main.nls.zh-tw.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/editor/standalone/browser/quickOpen/symbol-sprite.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/css/cssMode.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/css/cssWorker.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/html/htmlMode.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/html/htmlWorker.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/json/jsonMode.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/json/jsonWorker.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/typescript/lib/typescriptServices.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/typescript/src/mode.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/language/typescript/src/worker.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/static/vs/loader.js" afterPath="" />
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activemock.json" afterPath="$PROJECT_DIR$/activemock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/src/components/mock.vue" afterPath="$PROJECT_DIR$/assets/src/components/mock.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/.gitignore" afterPath="$PROJECT_DIR$/assets/.gitignore" />
     </list>
     <ignored path="express-proxy-mock.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,6 +23,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="props.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/src/components/props.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="918">
+              <caret line="63" column="11" lean-forward="false" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
@@ -101,8 +46,18 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="130" column="61" lean-forward="false" selection-start-line="130" selection-start-column="57" selection-end-line="130" selection-end-column="61" />
+            <state relative-caret-position="252">
+              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="14" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -118,16 +73,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activemock.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/activemock.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -138,7 +83,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="config.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1620">
@@ -148,41 +93,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="webpack.base.conf.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/build/webpack.base.conf.js">
+      <file leaf-file-name="mock.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="144">
+              <caret line="73" column="18" lean-forward="false" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="webpack.prod.conf.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/build/webpack.prod.conf.js">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="18">
+              <caret line="1" column="13" lean-forward="false" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="check-versions.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/build/check-versions.js">
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vue-loader.conf.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/build/vue-loader.conf.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="735">
+              <caret line="69" column="13" lean-forward="false" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -221,6 +156,8 @@
       <find>setMock</find>
       <find>onChange</find>
       <find>html</find>
+      <find>configPath</find>
+      <find>apiRule</find>
     </findStrings>
     <dirStrings>
       <dir>E:\vis\express-proxy-mock\assets\src</dir>
@@ -260,6 +197,7 @@
         <option value="$PROJECT_DIR$/assets/src/components/mock.vue" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/assets/.gitignore" />
       </list>
     </option>
   </component>
@@ -330,6 +268,108 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JsonEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -338,7 +378,7 @@
     <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
     <property name="javascript.nodejs.core.library.configured.version" value="5.1.1" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../biw-nomal" />
+    <property name="last_opened_file_path" value="E:/vcloud-frontend" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -495,12 +535,20 @@
       <workItem from="1462726028118" duration="1841000" />
       <workItem from="1462727985627" duration="1690000" />
       <workItem from="1462729802735" duration="1824000" />
-      <workItem from="1509072465932" duration="1194000" />
+      <workItem from="1509072465932" duration="3380000" />
     </task>
+    <task id="LOCAL-00001" summary="添加新版本">
+      <created>1509073689098</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1509073689098</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58396000" />
+    <option name="totallyTimeSpent" value="60582000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -513,6 +561,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24920969" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294509" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -521,7 +570,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31953642" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4076539" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -569,7 +618,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="升级为VUE2" />
     <MESSAGE value="添加JSON编辑器" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加JSON编辑器" />
+    <MESSAGE value="添加新版本" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加新版本" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -587,13 +637,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -706,13 +749,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="14" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/static/loader.js" />
     <entry file="file://$PROJECT_DIR$/assets/package.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -733,16 +769,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/src/components/props.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="63" column="11" lean-forward="false" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="11" />
-          <folding>
-            <element signature="e#1484#1491#1" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -777,24 +803,6 @@
             <marker date="1509073258117" expanded="true" signature="108:112" ph="{&quot;name&quot;: &quot;sfsf&quot;...}" />
             <marker date="1509073258117" expanded="true" signature="953:988" ph="{&quot;dd&quot;: &quot;ddffd44435222&quot;...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="709">
-          <caret line="69" column="13" lean-forward="false" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
-          <folding>
-            <element signature="e#92#157#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="73" column="18" lean-forward="false" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -838,14 +846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/activemock.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -870,18 +870,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="130" column="61" lean-forward="false" selection-start-line="130" selection-start-column="57" selection-end-line="130" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1620">
           <caret line="90" column="59" lean-forward="false" selection-start-line="90" selection-start-column="59" selection-end-line="90" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="14" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="69" column="13" lean-forward="false" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/props.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="63" column="11" lean-forward="false" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="73" column="18" lean-forward="false" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="13" lean-forward="false" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
           <folding />
         </state>
       </provider>
