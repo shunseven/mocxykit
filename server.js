@@ -6,7 +6,7 @@ var app=express();
 var proxyMock=require('./index.js');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.use(proxyMock(app,{configPath:'/',publicMock:[{host:'10.199.198.255',port:'80'}]}));
+app.use(proxyMock(app,{configPath:'/'}));
 
 var http = require('http');
 var server = http.createServer(app);

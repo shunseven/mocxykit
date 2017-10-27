@@ -72,15 +72,6 @@
       },
       data(){
           return {
-            json: {
-              'integer': 42,
-              'float': 1.24,
-              'string': 'foo',
-              'array': ['one', 2, 'three'],
-              'object': {
-                'foo': 'bar'
-              }
-            },
             mocks:[],
             url:'',
             data: {},
