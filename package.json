@@ -1,6 +1,6 @@
 {
   "name": "express-proxy-mock",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "The tool with proxy and mock for front-end",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "shunseven",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "http-proxy": "^1.13.2",
     "is-json": "^2.0.0"
   }

@@ -1,15 +1,16 @@
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import resource from 'vue-resource'
-import VueAsyncData from  'vue-async-data'
 
-// use globally
-// you can also just use `VueAsyncData.mixin` where needed
-Vue.use(VueAsyncData);
+Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-Vue.use(resource);
+Vue.use(resource)
+/* eslint-disable no-new */
 new Vue({
-  el: 'body',
+  el: '#app',
+  template: '<App/>',
   components: { App }
 })

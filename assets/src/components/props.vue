@@ -1,30 +1,32 @@
 <template>
-  <h4 class="text-success">
-    切换proxy
-    <input @click="selectHost({host:'',port:'',id:'',name:''})" type="button" class="btn btn-success btn-xs m-l-10" value="关闭proxy"/>
-  </h4>
-  <p class="bg-warning"><strong>当前proxy:</strong><span class='now-host'>{{active.host}}:{{active.port}}({{active.name}})</span></p>
-  <div class="form-inline ip-form">
-    <div class="form-group" class='ip-form'>
-      <label for="name">Name</label>
-      <input type="text" name="name" v-model="name" class="form-control" id="name" placeholder="测试">
+  <div>
+    <h4 class="text-success">
+      切换proxy
+      <input @click="selectHost({host:'',port:'',id:'',name:''})" type="button" class="btn btn-success btn-xs m-l-10" value="关闭proxy"/>
+    </h4>
+    <p class="bg-warning"><strong>当前proxy:</strong><span class='now-host'>{{active.host}}:{{active.port}}({{active.name}})</span></p>
+    <div class="form-inline ip-form">
+      <div class="form-group ip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name" v-model="name" class="form-control" id="name" placeholder="测试">
+      </div>
+      <div class="form-group">
+        <label for="host">host</label>
+        <input type="text" name="host" v-model="host" required class="form-control" id="host" placeholder="localhost">
+      </div>
+      <div class="form-group">
+        <label for="port">port</label>
+        <input value="80" name="port" v-model="port" required type="number" class="form-control" id="port" placeholder="80">
+      </div>
+      <button type="buttom" @click="changeHost" class="btn btn-default">新建并切换</button>
+      <ul class='host-list'>
+        <li class="cLi" v-for="item in hosts">
+          <span  v-bind:class="{'active':item.host==active.host&&item.port==active.port&&item.name==active.name}" class="checked">✔</span>
+          <a @click="selectHost(item)" href="javascript:void(0)">{{item.host}}:{{item.port}}({{item.name}})</a>
+          <button type="button" @click="deleteHost(item)" class="delete-proxy"><span>&times;</span></button>
+        </li>
+      </ul>
     </div>
-    <div class="form-group">
-      <label for="host">host</label>
-      <input type="text" name="host" v-model="host" required class="form-control" id="host" placeholder="localhost">
-    </div>
-    <div class="form-group">
-      <label for="port">port</label>
-      <input value="80" name="port" v-model="port" required type="number" class="form-control" id="port" placeholder="80">
-    </div>
-    <button type="buttom" @click="changeHost" class="btn btn-default">新建并切换</button>
-    <ul class='host-list'>
-      <li class="cLi" v-for="item in hosts">
-        <span  v-bind:class="{'active':item.host==active.host&&item.port==active.port&&item.name==active.name}" class="checked">✔</span>
-        <a @click="selectHost(item)" href="javascript:void(0)">{{item.host}}:{{item.port}}({{item.name}})</a>
-        <button type="button" @click="deleteHost(item)" class="delete-proxy"><span>&times;</span></button>
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -39,24 +41,21 @@ export default {
       active:{}
     }
   },
-  asyncData(resolve,reject){
-     this.$http.get("/api/get/host").then(function (mes) {
-      resolve({
-        active:mes.data
-      });
-       this.selectHost(mes.data);
+  created () {
+    this.$http.get("/api/get/host").then((mes) => {
+      this.active = mes.data
+      this.selectHost(mes.data);
     })
-    this.$http.get("/api/get/proxies").then(function (mes) {
-      resolve({
-        hosts:mes.data
-      });
+    this.$http.get("/api/get/proxies").then((mes) => {
+      this.hosts = mes.data
     })
   },
   methods:{
     changeHost(){
        let {host,port,name} =this;
        let proxy={host,port,name};
-      this.$http.get('/api/change/host',proxy).then(function () {
+       console.log(proxy)
+      this.$http.get('/api/change/host',).then(function () {
             this.host='';
             this.name='';
             this.port='';
@@ -65,12 +64,12 @@ export default {
         });
     },
     selectHost(proxy){
-      this.$http.get('/api/change/host',proxy).then(function () {
+      this.$http.get('/api/change/host',{params: proxy}).then(function () {
         this.active=proxy;
       });
     },
     deleteHost(data){
-      this.$http.get('/api/delete/host',data).then(function (mes) {
+      this.$http.get('/api/delete/host',{params: data}).then(function (mes) {
         this.hosts=mes.data;
       });
     }

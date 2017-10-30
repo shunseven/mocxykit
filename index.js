@@ -6,11 +6,14 @@ var fs=require('fs');
 var isJSON = require('is-json');
 var path=require('path');
 var url=require('url');
+
 module.exports=function (app,option) {
     var configPath=option&&option.configPath?option.configPath:'/config';
     var apiRule=option&&option.apiRule?option.apiRule:'/*';
-    var activeMock='';
+
     return function (req,res,next) {
+
+         var activeMock=getActiveMock().mock;
         function getHost(){
             var stat=fs.existsSync('./proxy.json');
             var config=stat?JSON.parse(fs.readFileSync('./proxy.json')):'';
@@ -37,7 +40,7 @@ module.exports=function (app,option) {
                     return mock;
                 })
             }
-            fs.writeFileSync('./mock.json',JSON.stringify(mocks));
+            fs.writeFileSync('./mock.json',JSON.stringify(mocks, null, 2));
             return mocks;
         }
 
@@ -49,6 +52,7 @@ module.exports=function (app,option) {
             fs.writeFileSync('./mock.json',JSON.stringify(mocks));
             return mocks;
         }
+
         function getActiveMock() {
             var stat=fs.existsSync('./activemock.json');
             var mock=stat?JSON.parse(fs.readFileSync('./activemock.json')):'';
@@ -64,19 +68,13 @@ module.exports=function (app,option) {
             fs.writeFileSync('./proxies.json',JSON.stringify(data));
         }
         var proxy = httpProxy.createProxyServer({});
-        function isPublisMock() {
-            var is=option.publicMock&&option.publicMock.some(function (data) {
-               var host='http://'+data.host+':'+data.port;
-                return host==nowHost;
-            })
-            return is;
-        }
+
         app.get("/api/change/host*",function (req,res) {
             console.log('change host success');
+            nowHost='http://'+req.query.host+':'+req.query.port;
             if(!req.query.host){
                 nowHost='';
             }
-            nowHost='http://'+req.query.host+':'+req.query.port;
             var proxy=req.query;
             var proxies=getProxies();
             var hasProxy=proxies.some(function (data) {
@@ -109,37 +107,23 @@ module.exports=function (app,option) {
         });
         app.get('/api/get/mock',function (req,res,next) {
            // var data=JSON.parse(req.query.data);
-            if(isPublisMock()){
-                next();
-                return false;
-            }
-            res.send(getMock());
-        });
-        app.all('/api/get/mock',function (req,res,next) {
-           if(isPublisMock()) proxy.web(req, res, { target:nowHost });
+            var mock=getMock();
+            mock=mock.map(function (item) {
+              return item
+            });
+            res.send(mock);
         });
 
-        app.get('/api/set/mock',function(req,res,next){
-            if(isPublisMock()){
-                next();
-                return false;
-            }
-            res.send(setMock(req.query));
+
+        app.post('/api/set/mock',function(req,res,next){
+            res.send(setMock(req.body));
         });
-        app.all('/api/set/mock',function (req,res,next) {
-            if(isPublisMock()) proxy.web(req, res, { target:nowHost });
-        });
-        
+
+
         app.get('/api/delete/mock',function(req,res,next){
-            if(isPublisMock()){
-                next();
-                return false;
-            }
             res.send(deleteMock(req.query));
         });
-        app.all('/api/delete/mock',function (req,res,next) {
-            if(isPublisMock()) proxy.web(req, res, { target:nowHost });
-        });
+
         app.get('/api/get/publicmock',function (req,res) {
             option.publicMock?res.send(option.publicMock):res.send([]);
         });
@@ -166,13 +150,22 @@ module.exports=function (app,option) {
             res.sendFile(__dirname+'/assets/dist/'+req.url);
         })
         app.all(apiRule,function (req,res,next) {
-            if(activeMock!='local'&&!!option.isPublicServer){
+            console.log(111)
+            if(activeMock!='local'&&!option.isPublicServer){
                 next();
                 return false;
             }
             var pathname=url.parse(req.url).pathname;
             var mock=getMock().reduce(function (reduce,data) {
-                var message=data.data.replace(/\n/g,'');
+                var msg=data.data;
+                var message;
+                if(typeof msg == 'string'){
+                   message=msg.replace(/\n/g,'');
+                }else {
+                   message=msg
+                }
+
+
                 if(isJSON(message)){
                     reduce[url.parse(data.url).pathname]=JSON.parse(message);
                 }else{

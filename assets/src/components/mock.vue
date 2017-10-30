@@ -3,7 +3,7 @@
   <div class="mock-box">
     <h4 class="text-success">
       mock
-      <input @click="setActiveMock('')" type="button" class="btn btn-success  btn-xs m-l-10" value="关闭mock"/>
+      <input @click="setActiveMock('')" type="button" class="btn btn-success btn-xs m-l-10" value="关闭mock"/>
     </h4>
     <div class="mock cLi">
       <span v-bind:class="{active:active=='local'}">✔</span>
@@ -48,13 +48,13 @@
                 <input type="text" class="form-control" v-model="url" id="mock-url">
               </div>
               <div class="form-group">
-                <label for="mock-message"  class="control-label">data:</label>
-                <textarea class="form-control" v-model="data" style="height: 200px" id="mock-message"></textarea>
+                <label  class="control-label">data:</label>
+                <json-editor ref="jsonEditor" :onError="onError" :onChange="onChange" :json="data"></json-editor>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" @click="initMockData" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" @click="saveMock"  class="btn btn-primary save-mock">Save changes</button>
           </div>
         </div><!-- /.modal-content -->
@@ -65,46 +65,60 @@
 </template>
 
 <script>
+    import JsonEditor from './JsonEditor/index.vue'
    export default {
+      components: {
+        JsonEditor
+      },
       data(){
           return {
             mocks:[],
             url:'',
-            data:'',
+            data: {},
             name:'',
             id:'',
             active:''
           }
       },
-      asyncData(resolve){
-        this.$http.get('/api/get/mock').then(function (mes) {
-          resolve({
-            mocks:mes.data
-          });
+      created () {
+        this.$http.get('/api/get/mock').then( (mes) => {
+          this.mocks = mes.data
         })
         this.$http.get('/api/get/activemock').then(function (mes) {
-          resolve({
-            active:mes.data.mock
-          });
+          this.active = mes.data.mock
+          this.setActiveMock(mes.data.mock);
         })
       },
       methods:{
+        onError () {
+          console.log(1111)
+        },
+        setEditor () {
+          this.$refs.jsonEditor.editor.set(this.data)
+        },
+        initMockData () {
+           this.url=''
+           this.data= {}
+           this.name=''
+           this.id=''
+           this.setEditor()
+         },
          saveMock(){
             let {url,data,name,id}=this;
-            let setData={url,data,name,id};
-            this.$http.get('/api/set/mock',setData).then(function (mes) {
+            let setData={url,
+              data,
+              name,
+              id};
+            this.$http.post('/api/set/mock',setData).then(function (mes) {
                this.mocks=mes.data;
-               this.url='';
-               this.data='';
-               this.name='';
-               this.id='';
+               this.initMockData()
                $('#mock-modal').modal('hide')
             });
           },
           deleteMock(data){
               let {id}=data;
               if(!confirm('是否删除这个mock')) return false;
-              this.$http.get('/api/delete/mock',{id}).then(function (mes) {
+              this.$http.get('/api/delete/mock',{params: {id}}).then(function (mes) {
                 this.mocks=mes.data;
               });
           },
@@ -113,11 +127,17 @@
               this.name=data.name;
               this.data=data.data;
               this.id=data.id;
+              console.log(this.$refs.jsonEditor)
+              this.setEditor()
           },
           setActiveMock(mock){
-            this.$http.get('/api/set/activemock',{mock:mock}).then(function (mes) {
-               this.active=mes.data.mock;
+            this.$http.get('/api/set/activemock',{params: {mock:mock}}).then(function (mes) {
+              this.active = mes.data.mock
             });
+          },
+          onChange (newVal) {
+            console.log(newVal)
+            this.data = newVal
           }
       }
    }
