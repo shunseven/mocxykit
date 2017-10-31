@@ -4,8 +4,7 @@
 var express=require('express');
 var app=express();
 var proxyMock=require('./index.js');
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
+
 app.use(proxyMock(app,{configPath:'/'}));
 
 var http = require('http');

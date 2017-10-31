@@ -38,18 +38,34 @@
             <h4 class="modal-title" id="myLargeModalLabel">设置mock</h4>
           </div>
           <div class="modal-body">
-            <form>
+            <form class="form-horizontal">
               <div class="form-group">
-                <label for="mock-name" class="control-label">name:</label>
-                <input type="text" class="form-control" v-model="name" id="mock-name">
+                <label for="mock-name" class="control-label col-sm-2">name:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" v-model="name" id="mock-name">
+                </div>
               </div>
               <div class="form-group">
-                <label for="mock-url" class="control-label">url:</label>
-                <input type="text" class="form-control" v-model="url" id="mock-url">
+                <label for="mock-url" class="control-label col-sm-2">url:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" v-model="url" id="mock-url">
+                </div>
               </div>
               <div class="form-group">
-                <label  class="control-label">data:</label>
-                <json-editor ref="jsonEditor" :onError="onError" :onChange="onChange" :json="data"></json-editor>
+                <label for="mock-url" class="control-label col-sm-2">duration:</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="text" class="form-control" v-model="duration" id="mock-url">
+                    <div class="input-group-addon">ms</div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="form-group">
+                <label  class="control-label col-sm-2">data:</label>
+                <div class="col-sm-10">
+                  <json-editor ref="jsonEditor" :onError="onError" :onChange="onChange" :json="data"></json-editor>
+                </div>
               </div>
             </form>
           </div>
@@ -77,7 +93,8 @@
             data: {},
             name:'',
             id:'',
-            active:''
+            active:'',
+            duration: ''
           }
       },
       created () {
@@ -104,11 +121,12 @@
            this.setEditor()
          },
          saveMock(){
-            let {url,data,name,id}=this;
+            let {url,data,name,id, duration}=this;
             let setData={url,
               data,
               name,
-              id};
+              id,
+              duration};
             this.$http.post('/api/set/mock',setData).then(function (mes) {
                this.mocks=mes.data;
                this.initMockData()
@@ -127,6 +145,7 @@
               this.name=data.name;
               this.data=data.data;
               this.id=data.id;
+              this.duration = data.duration
               console.log(this.$refs.jsonEditor)
               this.setEditor()
           },

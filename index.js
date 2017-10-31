@@ -6,10 +6,11 @@ var fs=require('fs');
 var isJSON = require('is-json');
 var path=require('path');
 var url=require('url');
-
+var bodyParser = require('body-parser');
 module.exports=function (app,option) {
     var configPath=option&&option.configPath?option.configPath:'/config';
     var apiRule=option&&option.apiRule?option.apiRule:'/*';
+    app.use(bodyParser.json());
 
     return function (req,res,next) {
 
@@ -27,6 +28,34 @@ module.exports=function (app,option) {
             var mock=stat?JSON.parse(fs.readFileSync('./mock.json')):[];
             return mock;
         }
+
+        function getMessage () {
+          return getMock().reduce(function (reduce,data) {
+            var msg=data.data;
+            var message;
+            if(typeof msg == 'string'){
+              message=msg.replace(/\n/g,'');
+            }else {
+              message=msg
+            }
+
+
+            if(isJSON(message)){
+              reduce[url.parse(data.url).pathname]=JSON.parse(message);
+            }else{
+              reduce[url.parse(data.url).pathname]=message;
+            }
+            return reduce;
+          },{});
+        }
+
+      function parseMock () {
+        return getMock().reduce(function (reduce,data) {
+          reduce[url.parse(data.url).pathname]=data
+          return reduce;
+        },{});
+      }
+
         function setMock(data) {
             var mocks=getMock();
             if(!data.id){
@@ -149,30 +178,26 @@ module.exports=function (app,option) {
         app.get('/static*',function (req,res) {
             res.sendFile(__dirname+'/assets/dist/'+req.url);
         })
+        // 延迟加载处理
         app.all(apiRule,function (req,res,next) {
-            console.log(111)
+           var mock = parseMock()
+           var pathname=url.parse(req.url).pathname
+           if (mock[pathname] && mock[pathname].duration) {
+               setTimeout(function () {
+                 next()
+               }, mock[pathname].duration)
+               return
+           }
+           next()
+        })
+
+        app.all(apiRule,function (req,res,next) {
             if(activeMock!='local'&&!option.isPublicServer){
                 next();
                 return false;
             }
             var pathname=url.parse(req.url).pathname;
-            var mock=getMock().reduce(function (reduce,data) {
-                var msg=data.data;
-                var message;
-                if(typeof msg == 'string'){
-                   message=msg.replace(/\n/g,'');
-                }else {
-                   message=msg
-                }
-
-
-                if(isJSON(message)){
-                    reduce[url.parse(data.url).pathname]=JSON.parse(message);
-                }else{
-                    reduce[url.parse(data.url).pathname]=message;
-                }
-                return reduce;
-            },{});
+            var mock= getMessage()
             console.log(mock);
             if(mock[pathname]){
                 var mes=mock[pathname];
