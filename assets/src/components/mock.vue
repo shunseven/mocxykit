@@ -7,7 +7,11 @@
     </h4>
     <div class="mock cLi">
       <span v-bind:class="{active:active=='local'}">✔</span>
-      <a @click="setActiveMock('local')" href="javascript:void(0)" class="mockChange changeHost">本地mock</a>
+      <a @click="setActiveMock('local')" href="javascript:void(0)" class="mockChange changeHost">本地全部mock</a>
+    </div>
+    <div class="mock cLi">
+      <span v-bind:class="{active:active=='part'}">✔</span>
+      <a @click="setActiveMock('part')" href="javascript:void(0)" class="mockChange changeHost">本地部分mock</a>
     </div>
     <ul class="public-mock">
 
@@ -20,6 +24,9 @@
       <!-- Table -->
       <table class="table">
         <tr v-for="item in mocks">
+          <td class="part-checkbox">
+            <input @change="changeItemMock(item)" v-model="item.mock" v-if="active=='part'" type="checkbox">
+          </td>
           <td>{{item.name}}({{item.url}})</td>
           <td>
             <span @click="setMock(item)"  data-toggle="modal"  data-target=".bs-example-modal-lg" class="glyphicon mock-edit glyphicon-edit"></span>
@@ -107,6 +114,9 @@
         })
       },
       methods:{
+        changeItemMock (item) {
+          this.postMock(item)
+        },
         onError () {
           console.log(1111)
         },
@@ -120,6 +130,13 @@
            this.id=''
            this.setEditor()
          },
+         postMock (data) {
+           this.$http.post('/api/set/mock',data).then(function (mes) {
+             this.mocks=mes.data;
+             this.initMockData()
+             $('#mock-modal').modal('hide')
+           });
+         },
          saveMock(){
             let {url,data,name,id, duration}=this;
             let setData={url,
@@ -127,11 +144,7 @@
               name,
               id,
               duration};
-            this.$http.post('/api/set/mock',setData).then(function (mes) {
-               this.mocks=mes.data;
-               this.initMockData()
-               $('#mock-modal').modal('hide')
-            });
+            this.postMock(setData)
           },
           deleteMock(data){
               let {id}=data;
@@ -162,6 +175,9 @@
    }
 </script>
 <style>
+  .part-checkbox {
+    text-align: center;
+  }
   .cLi{
     margin-bottom: 5px;
     font-size: 16px;
@@ -181,7 +197,7 @@
     padding-left: 40px;
   }
   .mock a{
-    color:#B73333;
+    color:#3c763d;
   }
   .mock span{
     opacity: 0;

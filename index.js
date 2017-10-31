@@ -192,11 +192,18 @@ module.exports=function (app,option) {
         })
 
         app.all(apiRule,function (req,res,next) {
-            if(activeMock!='local'&&!option.isPublicServer){
+           var pathname=url.parse(req.url).pathname;
+            if(!activeMock){
                 next();
                 return false;
             }
-            var pathname=url.parse(req.url).pathname;
+            if (activeMock === 'part') {
+              var mock = parseMock()
+              if (mock[pathname] && !mock[pathname].mock) {
+                next()
+                return
+              }
+            }
             var mock= getMessage()
             console.log(mock);
             if(mock[pathname]){
