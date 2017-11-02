@@ -77,8 +77,8 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" @click="initMockData" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" @click="saveMock"  class="btn btn-primary save-mock">Save changes</button>
+            <button type="button" @click="initMockData" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" @click="saveMock"  class="btn btn-primary save-mock">保存</button>
           </div>
         </div><!-- /.modal-content -->
       </div>

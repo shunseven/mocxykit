@@ -29,6 +29,10 @@
 ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info2.png)
 ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info3.png)
 
+# 部分mock功能
+  很多时候我们与别人联调时，可能只是其中某个接口要联调，其它的接口可能会有不通的情况，这个时候部分mock是很好用的功能，我们只需代理转发要联调的接口其它用假数据，这也是其它mock工具比较难实现的功能之一
+  ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info4.png)
+
 # 与webpack的结合
 我们给redux官方的[todo](https://github.com/reactjs/redux/tree/master/examples/todos)的例子加上这个功能,
 我们只需要在它的[server.js](https://github.com/reactjs/redux/blob/master/examples/todos/server.js)文件加上两行代码就可以了
@@ -42,5 +46,12 @@ app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output
 app.use(webpackHotMiddleware(compiler))
 ```
 最后运行localhost:3000/config你就能看到proxy,与mock 操作界面！
+
+# 与vue-cli的结合
+在通过vue-cli构建出来的项目,我们只需要在build/dev-server.js上修改两行代码就能实现这个功能，如图添加前面两行代码，注释掉后面那行代码
+![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info5.png)
+
+
+最后运行npm run dev , 打开localhost:8080/config(8080为你项目配的port)你就能看到proxy,与mock 操作界面！
 
 
