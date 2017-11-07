@@ -49,6 +49,7 @@ app.use(webpackHotMiddleware(compiler))
 
 # 与vue-cli的结合
 在通过vue-cli构建出来的项目,我们只需要在build/dev-server.js上修改两行代码就能实现这个功能，如图添加前面两行代码，注释掉后面那行代码
+
 ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info5.png)
 
 

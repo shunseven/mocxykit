@@ -4,8 +4,7 @@
 var express=require('express');
 var app=express();
 var proxyMock=require('./index.js');
-
-app.use(proxyMock(app,{configPath:'/'}));
+proxyMock(app,{configPath:'/'})
 
 var http = require('http');
 var server = http.createServer(app);

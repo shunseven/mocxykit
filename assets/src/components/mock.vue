@@ -105,10 +105,10 @@
           }
       },
       created () {
-        this.$http.get('/api/get/mock').then( (mes) => {
+        this.$http.get('/proxy-api/get/mock').then( (mes) => {
           this.mocks = mes.data
         })
-        this.$http.get('/api/get/activemock').then(function (mes) {
+        this.$http.get('/proxy-api/get/activemock').then(function (mes) {
           this.active = mes.data.mock
           this.setActiveMock(mes.data.mock);
         })
@@ -131,7 +131,7 @@
            this.setEditor()
          },
          postMock (data) {
-           this.$http.post('/api/set/mock',data).then(function (mes) {
+           this.$http.post('/proxy-api/set/mock',data).then(function (mes) {
              this.mocks=mes.data;
              this.initMockData()
              $('#mock-modal').modal('hide')
@@ -149,7 +149,7 @@
           deleteMock(data){
               let {id}=data;
               if(!confirm('是否删除这个mock')) return false;
-              this.$http.get('/api/delete/mock',{params: {id}}).then(function (mes) {
+              this.$http.get('/proxy-api/delete/mock',{params: {id}}).then(function (mes) {
                 this.mocks=mes.data;
               });
           },
@@ -163,7 +163,7 @@
               this.setEditor()
           },
           setActiveMock(mock){
-            this.$http.get('/api/set/activemock',{params: {mock:mock}}).then(function (mes) {
+            this.$http.get('/proxy-api/set/activemock',{params: {mock:mock}}).then(function (mes) {
               this.active = mes.data.mock
             });
           },
