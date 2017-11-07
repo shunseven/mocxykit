@@ -45,20 +45,20 @@
             <h4 class="modal-title" id="myLargeModalLabel">设置mock</h4>
           </div>
           <div class="modal-body">
-            <form class="form-horizontal">
-              <div class="form-group">
+            <form class="form-horizontal edit-box">
+              <div class="form-group edit-input">
                 <label for="mock-name" class="control-label col-sm-2">name:</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" v-model="name" id="mock-name">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group edit-input">
                 <label for="mock-url" class="control-label col-sm-2">url:</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" v-model="url" id="mock-url">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group edit-input">
                 <label for="mock-url" class="control-label col-sm-2">duration:</label>
                 <div class="col-sm-10">
                   <div class="input-group">
@@ -68,7 +68,7 @@
 
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group edit-editor">
                 <label  class="control-label col-sm-2">data:</label>
                 <div class="col-sm-10">
                   <json-editor ref="jsonEditor" :onError="onError" :onChange="onChange" :json="data"></json-editor>
@@ -175,6 +175,41 @@
    }
 </script>
 <style>
+  .modal.in .modal-dialog {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+  }
+  .modal .modal-content {
+    height: 100%;
+  }
+  .modal .modal-body{
+    height: 88%;
+  }
+  .edit-box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .edit-editor {
+    flex: 1;
+  }
+  .edit-editor .col-sm-10 {
+    position: relative;
+    height: 100%;
+  }
+  .jsoneditor-box {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
   .part-checkbox {
     text-align: center;
   }
