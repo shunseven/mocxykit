@@ -139,7 +139,7 @@ module.exports = function  (app, option) {
         }
         var mes={info:'这个接口没有定意'};
       }
-      res.send(mes);
+      res.send(mes.data);
     });
     next()
   }
