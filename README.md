@@ -13,7 +13,7 @@
   var http=require('http');
   var proxyMock＝require('express-proxy-mock');
   var app=require('express')();
-  app.use(proxyMock(app));
+  proxyMock(app)
   http.createServer(app).listen(3000,'localhost');
 ```
 最后运行 node server.js  在浏览器打开localhost:3000/config 就能看到props和mock功能界面！
@@ -40,7 +40,7 @@
 var compiler = webpack(config)
 //以下两行为添加的代码
 var proxyMock＝require('express-proxy-mock');
-app.use(proxyMock(app));
+proxyMock(app)
 //end
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
 app.use(webpackHotMiddleware(compiler))
