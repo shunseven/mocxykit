@@ -1,5 +1,4 @@
 var fs=require('fs');
-var isJSON = require('is-json');
 var path=require('path');
 var url=require('url');
 const mockPath = './mockData'
@@ -23,30 +22,10 @@ module.exports = function  (app, option) {
       files.forEach(filePath => {
         let data = fs.readFileSync(`${mockPath}/${filePath}`)
         data = JSON.parse(data)
-        console.log(data)
         const name = parseUrlToName(data.url)
         mock[name] = data
       })
-      console.log(mock)
       return mock;
-    }
-
-    function getMessage () {
-      return getMock().reduce(function (reduce,data) {
-        var msg=data.data;
-        var message;
-        if(typeof msg == 'string'){
-          message=msg.replace(/\n/g,'');
-        }else {
-          message=msg
-        }
-        if(isJSON(message)){
-          reduce[url.parse(data.url).pathname]=JSON.parse(message);
-        }else{
-          reduce[url.parse(data.url).pathname]=message;
-        }
-        return reduce;
-      },{});
     }
 
     function setMock(data) {

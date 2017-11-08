@@ -22,7 +22,7 @@
         <button type="button" class="btn btn-primary add-mock" data-toggle="modal" data-target=".bs-example-modal-lg">添加api</button>
       </div>
       <!-- Table -->
-      <table class="table">
+      <table class="table .table-hover">
         <tr v-for="item in mocks">
           <td class="part-checkbox">
             <input @change="changeItemMock(item)" v-model="item.mock" v-if="active=='part'" type="checkbox">
@@ -147,9 +147,8 @@
             this.postMock(setData)
           },
           deleteMock(data){
-              let {id}=data;
               if(!confirm('是否删除这个mock')) return false;
-              this.$http.get('/proxy-api/delete/mock',{params: {id}}).then(function (mes) {
+              this.$http.get('/proxy-api/delete/mock',{params: data}).then(function (mes) {
                 this.mocks=mes.data;
               });
           },
