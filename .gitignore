@@ -1,2 +1,4 @@
+node_modules/
+mockData/
 proxy.json
 mock.json
