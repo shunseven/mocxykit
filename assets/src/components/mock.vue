@@ -22,7 +22,7 @@
         <button type="button" class="btn btn-primary add-mock" data-toggle="modal" data-target=".bs-example-modal-lg">添加api</button>
       </div>
       <!-- Table -->
-      <table class="table .table-hover">
+      <table class="table table-hover">
         <tr v-for="item in mocks">
           <td class="part-checkbox">
             <input @change="changeItemMock(item)" v-model="item.mock" v-if="active=='part'" type="checkbox">
@@ -248,5 +248,8 @@
   }
   .public-mock a{
     color: forestgreen;
+  }
+  .table-hover tr:hover{
+    background: wheat;
   }
 </style>

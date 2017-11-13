@@ -61,7 +61,13 @@ module.exports = function  (app, option) {
 
 
     app.post('/proxy-api/set/mock',function(req,res,next){
-      res.send(setMock(req.body));
+      let body = ''
+      req.on('data', function (data) {
+        body += data
+      } )
+      req.on('end', function () {
+        res.send(setMock(JSON.parse(body.toString())));
+      })
     });
 
 
