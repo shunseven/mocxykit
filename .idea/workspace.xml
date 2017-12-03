@@ -1,804 +1,946 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-    <component name="ChangeListManager">
-        <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="">
-            <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-        </list>
-        <ignored path="express-proxy-mock.iws" />
-        <ignored path=".idea/workspace.xml" />
-        <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-        <option name="TRACKING_ENABLED" value="true" />
-        <option name="SHOW_DIALOG" value="false" />
-        <option name="HIGHLIGHT_CONFLICTS" value="true" />
-        <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
-        <option name="LAST_RESOLUTION" value="IGNORE" />
-    </component>
-    <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
-    <component name="CreatePatchCommitExecutor">
-        <option name="PATCH_PATH" value="" />
-    </component>
-    <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
-    <component name="FavoritesManager">
-        <favorites_list name="express-proxy-mock" />
-    </component>
-    <component name="FileEditorManager">
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-            <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
-                <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="195">
-                            <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
-                            <folding>
-                                <element signature="e#97#139#0" expanded="true" />
-                            </folding>
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-            <file leaf-file-name="props.vue" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/assets/src/components/props.vue">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="60">
-                            <caret line="4" column="7" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
-                            <folding />
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-            <file leaf-file-name="mock.vue" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="75">
-                            <caret line="5" column="77" selection-start-line="5" selection-start-column="77" selection-end-line="5" selection-end-column="77" />
-                            <folding>
-                                <element signature="n#style#0;n#textarea#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-                            </folding>
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-            <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/index.js">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="546">
-                            <caret line="85" column="42" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
-                            <folding />
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-            <file leaf-file-name="mock.json" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/mock.json">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="0">
-                            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                            <folding />
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-            <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/assets/index.html">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="90">
-                            <caret line="6" column="73" selection-start-line="6" selection-start-column="73" selection-end-line="6" selection-end-column="73" />
-                            <folding />
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-            <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/assets/dist/index.html">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="0">
-                            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                            <folding />
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-            <file leaf-file-name="master.js" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/master.js">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="0">
-                            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                            <folding />
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-            <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/server.js">
-                    <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="180">
-                            <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-                            <folding />
-                        </state>
-                    </provider>
-                </entry>
-            </file>
-        </leaf>
-    </component>
-    <component name="FileTemplateManagerImpl">
-        <option name="RECENT_TEMPLATES">
-            <list>
-                <option value="CSS File" />
-                <option value="JavaScript File" />
-            </list>
-        </option>
-    </component>
-    <component name="Git.Settings">
-        <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    </component>
-    <component name="IdeDocumentHistory">
-        <option name="CHANGED_PATHS">
-            <list>
-                <option value="$PROJECT_DIR$/assets/index.js" />
-                <option value="$PROJECT_DIR$/assets/index.css" />
-                <option value="$PROJECT_DIR$/node_modules/.gitignore" />
-                <option value="$PROJECT_DIR$/__mock_proxy_assets__/bootstrap.min.js" />
-                <option value="$PROJECT_DIR$/__mock_proxy_assets__/bootstrap.min.css" />
-                <option value="$PROJECT_DIR$/server.js" />
-                <option value="$PROJECT_DIR$/__mock_proxy_assets__/index.js" />
-                <option value="$PROJECT_DIR$/package.json" />
-                <option value="$PROJECT_DIR$/__mock_proxy_assets__/index.css" />
-                <option value="$PROJECT_DIR$/assets/src/components/Hello.vue" />
-                <option value="$PROJECT_DIR$/assets/index.html" />
-                <option value="$PROJECT_DIR$/assets/build/build.js" />
-                <option value="$PROJECT_DIR$/assets/build/dev-server.js" />
-                <option value="$PROJECT_DIR$/assets/src/main.js" />
-                <option value="$PROJECT_DIR$/proxies.json" />
-                <option value="$PROJECT_DIR$/config.html" />
-                <option value="$PROJECT_DIR$/assets/src/App.vue" />
-                <option value="$PROJECT_DIR$/assets/src/components/mock.vue" />
-                <option value="$PROJECT_DIR$/assets/src/components/props.vue" />
-                <option value="$PROJECT_DIR$/index.js" />
-            </list>
-        </option>
-    </component>
-    <component name="JsBuildToolGruntFileManager" detection-done="true" />
-    <component name="JsBuildToolPackageJson" detection-done="true">
-        <package-json value="$PROJECT_DIR$/package.json" />
-    </component>
-    <component name="JsGulpfileManager">
-        <detection-done>true</detection-done>
-    </component>
-    <component name="ProjectFrameBounds">
-        <option name="y" value="23" />
-        <option name="width" value="1280" />
-        <option name="height" value="720" />
-    </component>
-    <component name="ProjectLevelVcsManager" settingsEditedManually="false">
-        <OptionsSetting value="true" id="Add" />
-        <OptionsSetting value="true" id="Remove" />
-        <OptionsSetting value="true" id="Checkout" />
-        <OptionsSetting value="true" id="Update" />
-        <OptionsSetting value="true" id="Status" />
-        <OptionsSetting value="true" id="Edit" />
-        <ConfirmationsSetting value="0" id="Add" />
-        <ConfirmationsSetting value="0" id="Remove" />
-    </component>
-    <component name="ProjectView">
-        <navigator currentView="ProjectPane" proportions="" version="1">
-            <flattenPackages />
-            <showMembers />
-            <showModules />
-            <showLibraryContents />
-            <hideEmptyPackages />
-            <abbreviatePackageNames />
-            <autoscrollToSource />
-            <autoscrollFromSource />
-            <sortByType />
-            <manualOrder />
-            <foldersAlwaysOnTop value="true" />
-        </navigator>
-        <panes>
-            <pane id="ProjectPane">
-                <subPane>
-                    <PATH>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-                        </PATH_ELEMENT>
-                    </PATH>
-                    <PATH>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                    </PATH>
-                    <PATH>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="assets" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                    </PATH>
-                    <PATH>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="assets" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="static" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                    </PATH>
-                    <PATH>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="assets" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="src" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                    </PATH>
-                    <PATH>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="assets" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="src" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="components" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                    </PATH>
-                    <PATH>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="express-proxy-mock" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="assets" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                        <PATH_ELEMENT>
-                            <option name="myItemId" value="dist" />
-                            <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-                        </PATH_ELEMENT>
-                    </PATH>
-                </subPane>
-            </pane>
-            <pane id="Scope" />
-            <pane id="Scratches" />
-        </panes>
-    </component>
-    <component name="PropertiesComponent">
-        <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
-        <property name="javascript.nodejs.core.library.configured.version" value="5.1.1" />
-        <property name="settings.editor.splitter.proportion" value="0.2" />
-        <property name="HbShouldOpenHtmlAsHb" value="" />
-        <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-        <property name="WebServerToolWindowFactoryState" value="false" />
-        <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-        <property name="list.type.of.created.stylesheet" value="CSS" />
-        <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
-        <property name="editor.config.accepted" value="true" />
-    </component>
-    <component name="RecentsManager">
-        <key name="CopyFile.RECENT_KEYS">
-            <recent name="$PROJECT_DIR$/__mock_proxy_assets__" />
-            <recent name="$PROJECT_DIR$" />
-        </key>
-        <key name="MoveFile.RECENT_KEYS">
-            <recent name="$PROJECT_DIR$" />
-            <recent name="$PROJECT_DIR$/__mock_proxy_assets__" />
-        </key>
-    </component>
-    <component name="RunManager" selected="Node.js.Unnamed">
-        <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
-            <method />
-        </configuration>
-        <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
-            <method />
-        </configuration>
-        <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
-            <config-file value="" />
-            <node-interpreter value="project" />
-            <envs />
-            <method />
-        </configuration>
-        <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-            <method />
-        </configuration>
-        <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
-            <method />
-        </configuration>
-        <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
-            <option name="cucumberJsArguments" value="" />
-            <option name="executablePath" />
-            <option name="filePath" />
-            <method />
-        </configuration>
-        <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-            <node-interpreter>project</node-interpreter>
-            <node-options />
-            <gulpfile />
-            <tasks />
-            <arguments />
-            <envs />
-            <method />
-        </configuration>
-        <configuration default="true" type="js.build_tools.npm" factoryName="npm">
-            <command value="run-script" />
-            <scripts />
-            <node-interpreter value="project" />
-            <envs />
-            <method />
-        </configuration>
-        <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
-            <node-interpreter>project</node-interpreter>
-            <node-options />
-            <working-directory>$PROJECT_DIR$</working-directory>
-            <pass-parent-env>true</pass-parent-env>
-            <envs />
-            <ui>bdd</ui>
-            <extra-mocha-options />
-            <test-kind>DIRECTORY</test-kind>
-            <test-directory />
-            <recursive>false</recursive>
-            <method />
-        </configuration>
-        <configuration default="false" name="Unnamed" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" path-to-js-file="server.js" working-dir="$PROJECT_DIR$">
-            <method />
-        </configuration>
-        <list size="1">
-            <item index="0" class="java.lang.String" itemvalue="Node.js.Unnamed" />
-        </list>
-    </component>
-    <component name="ShelveChangesManager" show_recycled="false">
-        <option name="remove_strategy" value="false" />
-    </component>
-    <component name="SvnConfiguration">
-        <configuration />
-    </component>
-    <component name="TaskManager">
-        <task active="true" id="Default" summary="Default task">
-            <changelist id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="" />
-            <created>1458277075708</created>
-            <option name="number" value="Default" />
-            <option name="presentableId" value="Default" />
-            <updated>1458277075708</updated>
-            <workItem from="1459590100322" duration="2050000" />
-            <workItem from="1459675254044" duration="352000" />
-            <workItem from="1459733782782" duration="455000" />
-            <workItem from="1459734533380" duration="318000" />
-            <workItem from="1459735260701" duration="231000" />
-            <workItem from="1459953057851" duration="12030000" />
-            <workItem from="1462680193540" duration="1566000" />
-            <workItem from="1462683076096" duration="1807000" />
-            <workItem from="1462685267870" duration="1884000" />
-            <workItem from="1462687245512" duration="1799000" />
-            <workItem from="1462691049260" duration="1922000" />
-            <workItem from="1462693333313" duration="1846000" />
-            <workItem from="1462695208000" duration="1851000" />
-            <workItem from="1462697279371" duration="1029000" />
-            <workItem from="1462699219245" duration="1735000" />
-            <workItem from="1462717623146" duration="1741000" />
-            <workItem from="1462720345862" duration="1608000" />
-            <workItem from="1462722186016" duration="1741000" />
-            <workItem from="1462724000221" duration="1239000" />
-            <workItem from="1462726028118" duration="1841000" />
-            <workItem from="1462727985627" duration="1690000" />
-            <workItem from="1462729802735" duration="1824000" />
-            <workItem from="1463183682183" duration="21000" />
-            <workItem from="1463183744670" duration="13000" />
-            <workItem from="1463204725423" duration="30000" />
-        </task>
-        <servers />
-    </component>
-    <component name="TimeTrackingManager">
-        <option name="totallyTimeSpent" value="42623000" />
-    </component>
-    <component name="TodoView">
-        <todo-panel id="selected-file">
-            <is-autoscroll-to-source value="true" />
-        </todo-panel>
-        <todo-panel id="all">
-            <are-packages-shown value="true" />
-            <is-autoscroll-to-source value="true" />
-        </todo-panel>
-    </component>
-    <component name="ToolWindowManager">
-        <frame x="0" y="23" width="1280" height="720" extended-state="6" />
-        <editor active="true" />
-        <layout>
-            <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2494043" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-            <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294509" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-            <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-            <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-            <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-            <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-            <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.327787" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-            <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-            <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-            <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-            <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-            <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-            <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31953642" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-            <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-            <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-            <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-            <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4076539" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-        </layout>
-    </component>
-    <component name="Vcs.Log.UiProperties">
-        <option name="RECENTLY_FILTERED_USER_GROUPS">
-            <collection />
-        </option>
-        <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-            <collection />
-        </option>
-    </component>
-    <component name="VcsContentAnnotationSettings">
-        <option name="myLimit" value="2678400000" />
-    </component>
-    <component name="XDebuggerManager">
-        <breakpoint-manager>
-            <option name="time" value="14" />
-        </breakpoint-manager>
-        <watches-manager />
-    </component>
-    <component name="editorHistoryManager">
-        <entry file="file://$PROJECT_DIR$/index.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                    <folding />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/server.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="210">
-                    <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/config.html">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="720">
-                    <caret line="48" column="28" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="28" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/index.js" />
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/index.css" />
-        <entry file="file://$PROJECT_DIR$/node_modules/express/lib/application.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="450">
-                    <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
-                </state>
-            </provider>
-        </entry>
+  <component name="ChangeListManager">
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="去除第三方的body插件">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+    </list>
+    <ignored path="express-proxy-mock.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="express-proxy-mock" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="16" column="1" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
         </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="30">
-                    <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-                </state>
-            </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
         </entry>
-        <entry file="file://$PROJECT_DIR$/node_modules/express/index.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
+      </file>
+      <file leaf-file-name="Vplus-imKf123456Heartbeat.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mockData/Vplus-imKf123456Heartbeat.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="1" lean-forward="false" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
         </entry>
-        <entry file="file://$PROJECT_DIR$/index.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1335">
-                    <caret line="89" column="52" selection-start-line="89" selection-start-column="52" selection-end-line="89" selection-end-column="52" />
-                    <folding />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/server.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="210">
-                    <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/config.html">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="720">
-                    <caret line="48" column="28" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="28" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/index.js" />
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/index.css" />
-        <entry file="file://$PROJECT_DIR$/node_modules/express/lib/application.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="450">
-                    <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/node_modules/express/LICENSE">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/node_modules/express/index.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="30">
-                    <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/node_modules/express/lib/application.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="450">
-                    <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/bootstrap.min.js" />
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/bootstrap.min.css" />
-        <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/5.1.1/core-modules/net.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="12795">
-                    <caret line="853" column="0" selection-start-line="853" selection-start-column="0" selection-end-line="853" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/node_modules/express/lib/router/index.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4890">
-                    <caret line="332" column="12" selection-start-line="332" selection-start-column="12" selection-end-line="332" selection-end-column="12" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/package.json">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="30">
-                    <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/README.md">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/.gitignore">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/.editorconfig">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/config.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/node_modules/http-proxy/index.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/src/assets/logo.png">
-            <provider selected="true" editor-type-id="images">
-                <state />
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/build/dev-server.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="300">
-                    <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/package.json">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/build/build.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="525">
-                    <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/build/dev-client.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/README.md">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/src/main.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="15">
-                    <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/proxies.json">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="131" selection-start-line="0" selection-start-column="131" selection-end-line="0" selection-end-column="131" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/index.css" />
-        <entry file="file://$PROJECT_DIR$/config.html">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1335">
-                    <caret line="89" column="8" selection-start-line="58" selection-start-column="2" selection-end-line="89" selection-end-column="8" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/proxy.json">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/jquery.min.js" />
-        <entry file="file://$PROJECT_DIR$/master.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                    <folding />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/index.html">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="90">
-                    <caret line="6" column="73" selection-start-line="6" selection-start-column="73" selection-end-line="6" selection-end-column="73" />
-                    <folding />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/assets/dist/index.html">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                    <folding />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/server.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                    <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-                    <folding />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/mock.json">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                    <folding />
-                </state>
-            </provider>
-        </entry>
-        <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/index.js" />
+      </file>
+      <file leaf-file-name="mock.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
-                    <caret line="5" column="77" selection-start-line="5" selection-start-column="77" selection-end-line="5" selection-end-column="77" />
-                    <folding>
-                        <element signature="n#style#0;n#textarea#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-                    </folding>
-                </state>
-            </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2754">
+              <caret line="175" column="7" lean-forward="false" selection-start-line="175" selection-start-column="7" selection-end-line="175" selection-end-column="7" />
+              <folding>
+                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+                <element signature="n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+                <element signature="n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+              </folding>
+            </state>
+          </provider>
         </entry>
-        <entry file="file://$PROJECT_DIR$/assets/src/components/props.vue">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="60">
-                    <caret line="4" column="7" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
-                    <folding />
-                </state>
-            </provider>
-        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.js">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="546">
-                    <caret line="85" column="42" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
-                    <folding />
-                </state>
-            </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
         </entry>
+      </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1206">
+              <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
-            <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="195">
-                    <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
-                    <folding>
-                        <element signature="e#97#139#0" expanded="true" />
-                    </folding>
-                </state>
-            </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="14" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
         </entry>
-    </component>
+      </file>
+      <file leaf-file-name="props.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/src/components/props.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1368">
+              <caret line="76" column="9" lean-forward="false" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="44" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mock/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1278">
+              <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>consol</find>
+      <find>console/__proxy-api__/</find>
+      <find>/__proxy-api__/</find>
+      <find>hosts</find>
+      <find>nowHost</find>
+      <find>now</find>
+      <find>this.hosts.push</find>
+      <find>setProxies</find>
+      <find>这个接口没有定意</find>
+      <find>change/host</find>
+      <find>p</find>
+      <find>po</find>
+      <find>pos</find>
+      <find>getHost</find>
+      <find>/change/host</find>
+      <find>set</find>
+      <find>mockPath</find>
+      <find>parseMock</find>
+      <find>fs</find>
+      <find>post</find>
+      <find>jsoneditor-box</find>
+      <find>getMessage</find>
+      <find>getMock</find>
+      <find>.jsoneditor-box</find>
+      <find>t</find>
+      <find>ta</find>
+      <find>tab</find>
+      <find>console</find>
+      <find>table</find>
+      <find>body</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>getMessage</replace>
+      <replace>/__proxy-api__/</replace>
+      <replace />
+      <replace>/proxy-api/</replace>
+      <replace>req</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>E:\vis\express-proxy-mock\node_modules\body-parser</dir>
+      <dir>E:\vis\express-proxy-mock</dir>
+      <dir>E:\vis\express-proxy-mock\assets\static</dir>
+      <dir>E:\vis\express-proxy-mock\assets</dir>
+      <dir>E:\vis\express-proxy-mock\src</dir>
+      <dir>E:\vis\express-proxy-mock\assets\src</dir>
+      <dir>E:\vis\express-proxy-mock\assets\src\components</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="MERGE" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/assets/index.js" />
+        <option value="$PROJECT_DIR$/assets/index.css" />
+        <option value="$PROJECT_DIR$/node_modules/.gitignore" />
+        <option value="$PROJECT_DIR$/__mock_proxy_assets__/bootstrap.min.js" />
+        <option value="$PROJECT_DIR$/__mock_proxy_assets__/bootstrap.min.css" />
+        <option value="$PROJECT_DIR$/__mock_proxy_assets__/index.js" />
+        <option value="$PROJECT_DIR$/__mock_proxy_assets__/index.css" />
+        <option value="$PROJECT_DIR$/assets/src/components/Hello.vue" />
+        <option value="$PROJECT_DIR$/assets/build/build.js" />
+        <option value="$PROJECT_DIR$/proxies.json" />
+        <option value="$PROJECT_DIR$/config.html" />
+        <option value="$PROJECT_DIR$/assets/src/App.vue" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/src/components/mock.vue" />
+        <option value="$PROJECT_DIR$/src/App.vue" />
+        <option value="$PROJECT_DIR$/src/components/props.vue" />
+        <option value="$PROJECT_DIR$/assets/src/main.js" />
+        <option value="$PROJECT_DIR$/assets/package.json" />
+        <option value="$PROJECT_DIR$/assets/index.html" />
+        <option value="$PROJECT_DIR$/activemock.json" />
+        <option value="$PROJECT_DIR$/mock.json" />
+        <option value="$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue" />
+        <option value="$PROJECT_DIR$/assets/.gitignore" />
+        <option value="$PROJECT_DIR$/src/mock.js" />
+        <option value="$PROJECT_DIR$/src/proxy/fun.js" />
+        <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/assets/build/dev-server.js" />
+        <option value="$PROJECT_DIR$/src/proxy/index.js" />
+        <option value="$PROJECT_DIR$/assets/src/components/props.vue" />
+        <option value="$PROJECT_DIR$/mockData/Vplus-imKf123456Heartbeat.json" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/static/index.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/assets/src/components/mock.vue" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/src/mock/index.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>true</other-services-enabled>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/assets/node_modules" />
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1920" />
+    <option name="height" value="1040" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="express-proxy-mock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="javascript.nodejs.core.library.configured.version" value="5.1.1" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="last_opened_file_path" value="E:/vcloud/src/app" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+    <property name="editor.config.accepted" value="true" />
+    <property name="JavaScriptPreferStrict" value="false" />
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\vis\express-proxy-mock\src\mock" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/__mock_proxy_assets__" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\vis\express-proxy-mock\assets\static" />
+      <recent name="E:\vis\express-proxy-mock\assets\src\components" />
+      <recent name="$PROJECT_DIR$/__mock_proxy_assets__" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Node.js.Unnamed">
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="false" name="Unnamed" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="D:/Program Files/nodejs/node" path-to-js-file="server.js" working-dir="$PROJECT_DIR$">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Node.js.Unnamed" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="" />
+      <created>1458277075708</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1458277075708</updated>
+      <workItem from="1459590100322" duration="2050000" />
+      <workItem from="1459675254044" duration="352000" />
+      <workItem from="1459733782782" duration="455000" />
+      <workItem from="1459734533380" duration="318000" />
+      <workItem from="1459735260701" duration="231000" />
+      <workItem from="1459953057851" duration="12030000" />
+      <workItem from="1462680193540" duration="1566000" />
+      <workItem from="1462683076096" duration="1807000" />
+      <workItem from="1462685267870" duration="1884000" />
+      <workItem from="1462687245512" duration="1799000" />
+      <workItem from="1462691049260" duration="1922000" />
+      <workItem from="1462693333313" duration="1846000" />
+      <workItem from="1462695208000" duration="1851000" />
+      <workItem from="1462697279371" duration="1029000" />
+      <workItem from="1462699219245" duration="1735000" />
+      <workItem from="1462717623146" duration="1741000" />
+      <workItem from="1462720345862" duration="1608000" />
+      <workItem from="1462722186016" duration="1741000" />
+      <workItem from="1462724000221" duration="1239000" />
+      <workItem from="1462726028118" duration="1841000" />
+      <workItem from="1462727985627" duration="1690000" />
+      <workItem from="1462729802735" duration="1824000" />
+      <workItem from="1509072465932" duration="6548000" />
+      <workItem from="1509359911577" duration="17132000" />
+      <workItem from="1509627356319" duration="24584000" />
+      <workItem from="1510558352411" duration="574000" />
+      <workItem from="1510560991362" duration="5900000" />
+      <workItem from="1510717178083" duration="2354000" />
+      <workItem from="1510803121498" duration="4880000" />
+      <workItem from="1511753007293" duration="2114000" />
+      <workItem from="1512098143345" duration="1343000" />
+    </task>
+    <task id="LOCAL-00001" summary="添加新版本">
+      <created>1509073689098</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1509073689098</updated>
+    </task>
+    <task id="LOCAL-00002" summary="添加新版本">
+      <created>1509085213769</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1509085213769</updated>
+    </task>
+    <task id="LOCAL-00003" summary="添加延迟加载数据的功能">
+      <created>1509420635895</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1509420635895</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加本地部分mock与全部mock的功能">
+      <created>1509426752250</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1509426752250</updated>
+    </task>
+    <task id="LOCAL-00005" summary="重构，让每个mock数据做存为单独的文件">
+      <created>1510046077334</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1510046077334</updated>
+    </task>
+    <task id="LOCAL-00006" summary="重构，让每个mock数据做存为单独的文件">
+      <created>1510046120128</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1510046120128</updated>
+    </task>
+    <task id="LOCAL-00007" summary="更新文档">
+      <created>1510046195036</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1510046195036</updated>
+    </task>
+    <task id="LOCAL-00008" summary="修改mock编辑框的样式">
+      <created>1510047813001</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1510047813001</updated>
+    </task>
+    <task id="LOCAL-00009" summary="修改数据的路径">
+      <created>1510053192733</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1510053192733</updated>
+    </task>
+    <task id="LOCAL-00010" summary="添加表单的hover">
+      <created>1510133619861</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1510133619861</updated>
+    </task>
+    <task id="LOCAL-00011" summary="去除第三方的body插件">
+      <created>1510576776722</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1510576776722</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="122631000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1920" height="1040" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25132838" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294509" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28776187" sideWeight="0.5085016" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32855567" sideWeight="0.4914984" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31753033" sideWeight="0.4957492" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28776187" sideWeight="0.47449523" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44432193" sideWeight="0.4978746" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32855567" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="升级为VUE2" />
+    <MESSAGE value="添加JSON编辑器" />
+    <MESSAGE value="添加新版本" />
+    <MESSAGE value="添加延迟加载数据的功能" />
+    <MESSAGE value="添加本地部分mock与全部mock的功能" />
+    <MESSAGE value="重构，让每个mock数据做存为单独的文件" />
+    <MESSAGE value="更新文档" />
+    <MESSAGE value="修改mock编辑框的样式" />
+    <MESSAGE value="修改数据的路径" />
+    <MESSAGE value="添加表单的hover" />
+    <MESSAGE value="去除第三方的body插件" />
+    <option name="LAST_COMMIT_MESSAGE" value="去除第三方的body插件" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="38" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/components/mock.vue" />
+    <entry file="file://$PROJECT_DIR$/src/components/props.vue" />
+    <entry file="file://$PROJECT_DIR$/src/main.js" />
+    <entry file="file://$PROJECT_DIR$/assets/static/loader.js" />
+    <entry file="file://$PROJECT_DIR$/assets/static/vs/base/worker/workerMain.js" />
+    <entry file="file://$PROJECT_DIR$/../biw-nomal/test/data/baili/create.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/build/check-versions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/build/vue-loader.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/build/webpack.base.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/build/webpack.prod.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="13" lean-forward="false" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.html" />
+    <entry file="file://$PROJECT_DIR$/assets/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activemock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/assets/logo.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/info.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/info1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/info2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/info3.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/build/webpack.dev.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/body-parser/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="37" column="34" lean-forward="false" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/body-parser/lib/read.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="48" column="10" lean-forward="true" selection-start-line="48" selection-start-column="10" selection-end-line="48" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/http-proxy/index.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/express/lib/router/route.js" />
+    <entry file="file://$PROJECT_DIR$/assets/build/dev-client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxy/fun.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="1" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-202">
+          <caret line="11" column="35" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/build/dev-server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="28" column="19" lean-forward="false" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="252">
+            <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mock.patch">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mockData/Fhfgh56.json" />
+    <entry file="file://$PROJECT_DIR$/assets/dist/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="31" lean-forward="false" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="16" column="3" lean-forward="false" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/static/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mock/mock.json" />
+    <entry file="file://$PROJECT_DIR$/assets/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mockData/SfsdSdfsdfSdfsdf.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mockData/Vplus-imKf123456Heartbeat.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="1" lean-forward="false" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proxy.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proxies.json" />
+    <entry file="file://$PROJECT_DIR$/assets/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="44" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1206">
+          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="14" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/props.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1368">
+          <caret line="76" column="9" lean-forward="false" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2754">
+          <caret line="175" column="7" lean-forward="false" selection-start-line="175" selection-start-column="7" selection-end-line="175" selection-end-column="7" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mock/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1278">
+          <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="1" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
 </project>

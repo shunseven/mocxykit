@@ -42,11 +42,11 @@ export default {
     }
   },
   created () {
-    this.$http.get("/api/get/host").then((mes) => {
+    this.$http.get("/proxy-api/get/host").then((mes) => {
       this.active = mes.data
       this.selectHost(mes.data);
     })
-    this.$http.get("/api/get/proxies").then((mes) => {
+    this.$http.get("/proxy-api/get/proxies").then((mes) => {
       this.hosts = mes.data
     })
   },
@@ -54,8 +54,7 @@ export default {
     changeHost(){
        let {host,port,name} =this;
        let proxy={host,port,name};
-       console.log(proxy)
-      this.$http.get('/api/change/host',).then(function () {
+      this.$http.get('/proxy-api/change/host',{params: proxy}).then(function () {
             this.host='';
             this.name='';
             this.port='';
@@ -64,12 +63,12 @@ export default {
         });
     },
     selectHost(proxy){
-      this.$http.get('/api/change/host',{params: proxy}).then(function () {
+      this.$http.get('/proxy-api/change/host',{params: proxy}).then(function () {
         this.active=proxy;
       });
     },
     deleteHost(data){
-      this.$http.get('/api/delete/host',{params: data}).then(function (mes) {
+      this.$http.get('/proxy-api/delete/host',{params: data}).then(function (mes) {
         this.hosts=mes.data;
       });
     }

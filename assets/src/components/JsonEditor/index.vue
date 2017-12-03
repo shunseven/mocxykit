@@ -66,7 +66,4 @@
   .jsoneditor-box *{
     transition: initial;
   }
-  .jsoneditor-box{
-    height: 400px;
-  }
 </style>

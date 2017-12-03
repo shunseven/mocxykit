@@ -26,7 +26,7 @@ const proxyTable = config.dev.proxyTable
 const app = express()
 const compiler = webpack(webpackConfig)
 console.log(22222);
-app.all('/api*',function (req,res,next) {
+app.all('/proxy-api*',function (req,res,next) {
   console.log(11111);
   proxy.web(req, res, {target:'http://localhost:3003'});
 })
@@ -64,7 +64,7 @@ Object.keys(proxyTable).forEach(function (context) {
 })
 
 // handle fallback for HTML5 history API
-app.use(require('connect-history-api-fallback')())
+// app.use(require('connect-history-api-fallback')())
 
 // serve webpack bundle output
 app.use(devMiddleware)
