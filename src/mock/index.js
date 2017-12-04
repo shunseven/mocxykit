@@ -17,6 +17,9 @@ module.exports = function  (app, option) {
 
     function getMock() {
       const mock = {}
+      if (!fs.existsSync(mockPath)) {
+        fs.mkdirSync(mockPath);
+      }
       const files=fs.readdirSync(mockPath);
       if (files.length < 1) return mock
       files.forEach(filePath => {
