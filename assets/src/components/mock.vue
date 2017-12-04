@@ -58,6 +58,16 @@
                   <input type="text" class="form-control" v-model="url" id="mock-url">
                 </div>
               </div>
+              <div>
+                <a href="javascript:void(0)" @click="moreOption = true">更多设置</a>
+              </div>
+              <template v-if="moreOption || n">
+                <div class="form-group">
+                  <label for="mock-url" class="control-label">url:</label>
+                  <input type="text" class="form-control" v-model="url" id="mock-url">
+                </div>
+              </template>
+
               <div class="form-group edit-input">
                 <label for="mock-url" class="control-label col-sm-2">duration:</label>
                 <div class="col-sm-10">
@@ -101,7 +111,8 @@
             name:'',
             id:'',
             active:'',
-            duration: ''
+            duration: '',
+            moreOption: false
           }
       },
       created () {
