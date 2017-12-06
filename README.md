@@ -47,7 +47,7 @@ app.use(webpackHotMiddleware(compiler))
 ```
 最后运行localhost:3000/config你就能看到proxy,与mock 操作界面！
 
-# 与vue-cli的结合
+# 与vue-cli的结合(vue-cli 2.9.0 之前的版本)
 在通过vue-cli构建出来的项目,我们只需要在build/dev-server.js上修改两行代码就能实现这个功能，如图添加前面两行代码，注释掉后面那行代码
 
 ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info5.png)
@@ -55,4 +55,10 @@ app.use(webpackHotMiddleware(compiler))
 
 最后运行npm run dev , 打开localhost:8080/config(8080为你项目配的port)你就能看到proxy,与mock 操作界面！
 
+# webpack-dev-server的结合(vue-cli 2.9.0 之后的版本,开始使用webpack-dev-server)
+在 webpack-dev-server的配制参数增加after的回调处理，代码如下（vue-cli 在webpack.dev.conf中devServer下添加after）
+
+![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info6.png)
+
+最后运行npm run dev , 打开localhost:8080/setting(8080为你项目配的port)你就能看到proxy,与mock 操作界面！(由于config会与文件目录冲突，故这里配制成setting)
 
