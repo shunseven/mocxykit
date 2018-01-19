@@ -118,14 +118,14 @@ module.exports = function  (app, option) {
           return
         }
       }
-      if(mock[pathname]){
-        var mes=mock[pathname];
-      }else{
-        if(req.originalUrl.indexOf('proxy-api') !== -1){
-          next();
-          return false;
-        }
-        var mes={info:'这个接口没有定意'};
+      if(mock[pathname]) {
+        var mes = mock[pathname];
+      } else if(req.originalUrl.indexOf('proxy-api') !== -1) {
+        next()
+        return false;
+      }else if (activeMock === 'part') {
+        next();
+        return
       }
       res.send(mes.data);
     });
