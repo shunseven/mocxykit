@@ -3,7 +3,7 @@
   <div class="mock-box">
     <h4 class="text-success">
       mock
-      <input @click="setActiveMock('')" type="button" class="btn btn-success btn-xs m-l-10" value="关闭mock"/>
+      <el-button @click="setActiveMock('')" type="success" size="mini">关闭mock</el-button>
     </h4>
     <div class="mock cLi">
       <span v-bind:class="{active:active=='local'}">✔</span>
@@ -19,17 +19,50 @@
     <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading">
-        <button type="button" class="btn btn-primary add-mock" data-toggle="modal" data-target=".bs-example-modal-lg">添加api</button>
+        <el-button type="primary"  data-toggle="modal" data-target=".bs-example-modal-lg">添加api</el-button>
       </div>
       <!-- Table -->
+      <el-table
+        :data="mocks"
+        tooltip-effect="dark"
+        style="width: 100%"
+        @selection-change="changeItemMock">
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
+        <el-table-column
+          label="url"
+          width="120">
+          <template slot-scope="scope">
+            {{scope.row.name}}({{scope.row.url}})
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          width="120">
+          <template slot-scope="scope">
+            <el-button @click="setMock(scope.row)"  type="text">
+              编辑
+            </el-button>
+            <el-button @click="deleteMock(scope.row)" type="text">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+
+
+
       <table class="table table-hover">
         <tr v-for="item in mocks">
           <td class="part-checkbox">
             <input @change="changeItemMock(item)" v-model="item.mock" v-if="active=='part'" type="checkbox">
           </td>
-          <td>{{item.name}}({{item.url}})</td>
+          <td></td>
           <td>
-            <span @click="setMock(item)"  data-toggle="modal"  data-target=".bs-example-modal-lg" class="glyphicon mock-edit glyphicon-edit"></span>
+            <span   data-toggle="modal"  data-target=".bs-example-modal-lg" class="glyphicon mock-edit glyphicon-edit"></span>
             <span @click="deleteMock(item)" class="glyphicon glyphicon-trash delete-mock"></span>
           </td>
         </tr>
@@ -58,16 +91,6 @@
                   <input type="text" class="form-control" v-model="url" id="mock-url">
                 </div>
               </div>
-              <div>
-                <a href="javascript:void(0)" @click="moreOption = true">更多设置</a>
-              </div>
-              <template v-if="moreOption || n">
-                <div class="form-group">
-                  <label for="mock-url" class="control-label">url:</label>
-                  <input type="text" class="form-control" v-model="url" id="mock-url">
-                </div>
-              </template>
-
               <div class="form-group edit-input">
                 <label for="mock-url" class="control-label col-sm-2">duration:</label>
                 <div class="col-sm-10">
@@ -75,7 +98,6 @@
                     <input type="text" class="form-control" v-model="duration" id="mock-url">
                     <div class="input-group-addon">ms</div>
                   </div>
-
                 </div>
               </div>
               <div class="form-group edit-editor">
@@ -111,8 +133,7 @@
             name:'',
             id:'',
             active:'',
-            duration: '',
-            moreOption: false
+            duration: ''
           }
       },
       created () {
@@ -262,5 +283,8 @@
   }
   .table-hover tr:hover{
     background: wheat;
+  }
+  .text-success {
+    color: #3c763d;
   }
 </style>
