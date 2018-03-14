@@ -106,7 +106,7 @@
       },
       createMock () {
         this.activeData = {
-          data: {}
+          data: []
         }
         this.mockModalVisible = true
       },

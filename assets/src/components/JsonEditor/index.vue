@@ -44,6 +44,9 @@
     },
     mounted () {
       const container = this.$refs.jsoneditor
+      this.$nextTick(() => {
+        container.querySelector('.jsoneditor-menu').innerHTML = '入参'
+      })
       const options = _.extend({
         onChange: this._onChange,
         onError: function () {
@@ -65,5 +68,14 @@
 <style>
   .jsoneditor-box *{
     transition: initial;
+  }
+  .jsoneditor-box .jsoneditor-menu {
+        background: #525e65;
+        line-height: 34px;
+        font-size: 14px;
+        text-indent: 10px;
+      }
+  div.jsoneditor {
+    border: none;
   }
 </style>
