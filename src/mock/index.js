@@ -43,6 +43,25 @@ module.exports = function  (app, option) {
       return mocks;
     }
 
+    function setMockStatus(data) {
+      var mocks=getMock();
+
+      let checkedUrls = data.map(msg => msg.url)
+
+      Object.keys(mocks).forEach(key => {
+        if (checkedUrls.includes(mocks[key].url) && !mocks[key].mock) {
+          mocks[key].mock = true
+          fs.writeFileSync(`${mockPath}/${key}.json`,JSON.stringify(mocks[key], null, 2))
+        } else if (!checkedUrls.includes(mocks[key].url) && mocks[key].mock){
+            mocks[key].mock = false
+            fs.writeFileSync(`${mockPath}/${key}.json`,JSON.stringify(mocks[key], null, 2))
+        }
+      })
+
+      return mocks;
+    }
+
+
     function deleteMock(data) {
       let name = parseUrlToName(data.url)
       var mocks=getMock();
@@ -72,6 +91,17 @@ module.exports = function  (app, option) {
         res.send(setMock(JSON.parse(body.toString())));
       })
     });
+
+    app.post('/proxy-api/set/mockStatus',function(req,res,next){
+      let body = ''
+      req.on('data', function (data) {
+        body += data
+      } )
+      req.on('end', function () {
+        res.send(setMockStatus(JSON.parse(body.toString())));
+      })
+    });
+
 
 
     app.get('/proxy-api/delete/mock',function(req,res,next){

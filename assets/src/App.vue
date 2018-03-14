@@ -21,9 +21,6 @@
   body{
     padding:0 20px;
   }
-  *{
-    transition: all 0.5s;
-  }
   h4{
     margin-top:20px;
     margin-bottom: 10px;

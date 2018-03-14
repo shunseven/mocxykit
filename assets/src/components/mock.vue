@@ -1,5 +1,4 @@
 <template>
-  <div>
   <div class="mock-box">
     <h4 class="text-success">
       mock
@@ -19,28 +18,31 @@
     <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading">
-        <el-button type="primary"  data-toggle="modal" data-target=".bs-example-modal-lg">添加api</el-button>
+        <el-button type="primary"  @click="createMock">添加api</el-button>
       </div>
       <!-- Table -->
       <el-table
         :data="mocks"
         tooltip-effect="dark"
         style="width: 100%"
-        @selection-change="changeItemMock">
+        row-key="url"
+        ref="multipleTable"
+        @select-all ="changeItemMock"
+        @select="changeItemMock">
         <el-table-column
+          v-if="active=='part'"
+          :reserve-selection="true"
           type="selection"
           width="55">
         </el-table-column>
         <el-table-column
-          label="url"
-          width="120">
+          label="url">
           <template slot-scope="scope">
             {{scope.row.name}}({{scope.row.url}})
           </template>
         </el-table-column>
         <el-table-column
-          label="操作"
-          width="120">
+          label="操作">
           <template slot-scope="scope">
             <el-button @click="setMock(scope.row)"  type="text">
               编辑
@@ -51,159 +53,75 @@
           </template>
         </el-table-column>
       </el-table>
-
-
-
-
-      <table class="table table-hover">
-        <tr v-for="item in mocks">
-          <td class="part-checkbox">
-            <input @change="changeItemMock(item)" v-model="item.mock" v-if="active=='part'" type="checkbox">
-          </td>
-          <td></td>
-          <td>
-            <span   data-toggle="modal"  data-target=".bs-example-modal-lg" class="glyphicon mock-edit glyphicon-edit"></span>
-            <span @click="deleteMock(item)" class="glyphicon glyphicon-trash delete-mock"></span>
-          </td>
-        </tr>
-      </table>
     </div>
-  </div>
-  <div id="mock-modal" class="modal  fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <h4 class="modal-title" id="myLargeModalLabel">设置mock</h4>
-          </div>
-          <div class="modal-body">
-            <form class="form-horizontal edit-box">
-              <div class="form-group edit-input">
-                <label for="mock-name" class="control-label col-sm-2">name:</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" v-model="name" id="mock-name">
-                </div>
-              </div>
-              <div class="form-group edit-input">
-                <label for="mock-url" class="control-label col-sm-2">url:</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" v-model="url" id="mock-url">
-                </div>
-              </div>
-              <div class="form-group edit-input">
-                <label for="mock-url" class="control-label col-sm-2">duration:</label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input type="text" class="form-control" v-model="duration" id="mock-url">
-                    <div class="input-group-addon">ms</div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group edit-editor">
-                <label  class="control-label col-sm-2">data:</label>
-                <div class="col-sm-10">
-                  <json-editor ref="jsonEditor" :onError="onError" :onChange="onChange" :json="data"></json-editor>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" @click="initMockData" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" @click="saveMock"  class="btn btn-primary save-mock">保存</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div>
-    </div>
-  </div>
+    <mock-modal :data="activeData" :visible.sync="mockModalVisible" :onSuccess="setMockSuccess"></mock-modal>
   </div>
 </template>
 
 <script>
-    import JsonEditor from './JsonEditor/index.vue'
-   export default {
-      components: {
-        JsonEditor
-      },
-      data(){
-          return {
-            mocks:[],
-            url:'',
-            data: {},
-            name:'',
-            id:'',
-            active:'',
-            duration: ''
-          }
-      },
-      created () {
-        this.$http.get('/proxy-api/get/mock').then( (mes) => {
-          this.mocks = mes.data
-        })
-        this.$http.get('/proxy-api/get/activemock').then(function (mes) {
-          this.active = mes.data.mock
-          this.setActiveMock(mes.data.mock);
-        })
-      },
-      methods:{
-        changeItemMock (item) {
-          this.postMock(item)
-        },
-        onError () {
-          console.log(1111)
-        },
-        setEditor () {
-          this.$refs.jsonEditor.editor.set(this.data)
-        },
-        initMockData () {
-           this.url=''
-           this.data= {}
-           this.name=''
-           this.id=''
-           this.setEditor()
-         },
-         postMock (data) {
-           this.$http.post('/proxy-api/set/mock',data).then(function (mes) {
-             this.mocks=mes.data;
-             this.initMockData()
-             $('#mock-modal').modal('hide')
-           });
-         },
-         saveMock(){
-            let {url,data,name,id, duration}=this;
-            let setData={url,
-              data,
-              name,
-              id,
-              duration};
-            this.postMock(setData)
-          },
-          deleteMock(data){
-              if(!confirm('是否删除这个mock')) return false;
-              this.$http.get('/proxy-api/delete/mock',{params: data}).then(function (mes) {
-                this.mocks=mes.data;
-              });
-          },
-          setMock(data){
-              this.url=data.url;
-              this.name=data.name;
-              this.data=data.data;
-              this.id=data.id;
-              this.duration = data.duration
-              console.log(this.$refs.jsonEditor)
-              this.setEditor()
-          },
-          setActiveMock(mock){
-            this.$http.get('/proxy-api/set/activemock',{params: {mock:mock}}).then(function (mes) {
-              this.active = mes.data.mock
-            });
-          },
-          onChange (newVal) {
-            console.log(newVal)
-            this.data = newVal
-          }
+  import mockModal from './mockModal.vue'
+  export default {
+    components: {
+      mockModal
+    },
+    data(){
+      return {
+        mocks: [],
+        active: '',
+        mockModalVisible: false,
+        activeData: {}
       }
-   }
+    },
+    created () {
+      this.$http.get('/proxy-api/get/mock').then((mes) => {
+        this.mocks = this.parseMock(mes.data)
+        this.mocks.forEach(row => {
+          if (row.mock) {
+            this.$refs.multipleTable.toggleRowSelection(row)
+          }
+        })
+      })
+      this.$http.get('/proxy-api/get/activemock').then(function (mes) {
+        this.active = mes.data.mock
+        this.setActiveMock(mes.data.mock);
+      })
+    },
+    methods: {
+      setMockSuccess (data) {
+        this.mocks = this.parseMock(data)
+      },
+      parseMock (data) {
+        return Object.keys(data).map(key => data[key])
+      },
+      changeItemMock (data) {
+        this.$http.post('/proxy-api/set/mockStatus', data).then(function (mes) {
+          this.mocks = this.parseMock(mes.data)
+        });
+      },
+      deleteMock(data){
+        if (!confirm('是否删除这个mock')) return false;
+        this.$http.get('/proxy-api/delete/mock', {params: data}).then(function (mes) {
+          this.mocks = this.parseMock(mes.data)
+        });
+      },
+      createMock () {
+        this.activeData = {
+          data: {}
+        }
+        this.mockModalVisible = true
+      },
+      setMock(data){
+        console.log('active', data)
+        this.activeData = data
+        this.mockModalVisible = true
+      },
+      setActiveMock(mock){
+        this.$http.get('/proxy-api/set/activemock', {params: {mock: mock}}).then(function (mes) {
+          this.active = mes.data.mock
+        });
+      }
+    }
+  }
 </script>
 <style>
   .modal.in .modal-dialog {
