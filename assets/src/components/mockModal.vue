@@ -12,6 +12,7 @@
           <template slot="append">ms</template>
         </el-input>
       </el-form-item>
+      <span class="info">注：优先返回，参数字段最多个相等那个</span>
       <section class="dataBox">
         <article class="tabs">
           <div :class="{active: activeData === item}" v-for="item in formData.data" @click="selectData(item)">
@@ -164,6 +165,9 @@
   }
 </script>
 <style scoped>
+  .info {
+    color: #f57639;
+  }
   .dataBox .tabs .name {
     border: none;
     color: #ddd;

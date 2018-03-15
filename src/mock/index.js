@@ -102,7 +102,7 @@ module.exports = function  (app, option) {
         return 0.5
       }
       let level = Object.keys(queryFormatData).reduce((level, key) => {
-        if (mockFormatData[key] &&  mockFormatData[key] == queryFormatData[key]) {
+        if (mockFormatData[key] !== undefined &&  mockFormatData[key] == queryFormatData[key]) {
           level++
         }
         return level
@@ -116,6 +116,7 @@ module.exports = function  (app, option) {
       let targetData = mockData[0] ? mockData[0].responseData : {}
       mockData.forEach(item => {
          let newLevel = getLevel(query, item.requestData)
+          console.log(item.requestData)
          if (newLevel > level) {
            level = newLevel
            targetData = item.responseData
