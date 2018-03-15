@@ -33,6 +33,9 @@
       },
       onError: {
         type: Function
+      },
+      title: {
+        type: String
       }
     },
     methods: {
@@ -45,7 +48,7 @@
     mounted () {
       const container = this.$refs.jsoneditor
       this.$nextTick(() => {
-        container.querySelector('.jsoneditor-menu').innerHTML = '入参'
+        container.querySelector('.jsoneditor-menu').innerHTML = this.title
       })
       const options = _.extend({
         onChange: this._onChange,

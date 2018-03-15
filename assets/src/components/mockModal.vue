@@ -18,19 +18,19 @@
             <span>
               <input @blur="nameInputBlur" disabled class="name" v-model="item.name" type="text">
             </span>
-            <span v-if="formData.data.length > 0" class="iconBox">
-              <i @click.prevent="editName" class="el-icon-edit-outline"></i>
-              <i @click.prevent="deleteItemMock(item)" class="el-icon-delete"></i>
+            <span class="iconBox">
+              <i @click.prevent="editName" class="el-icon-edit"></i>
+              <i v-if="formData.data.length > 1" @click.prevent="deleteItemMock(item)" class="el-icon-delete"></i>
             </span>
           </div>
           <el-button style="margin-left: 20px" @click="addData" icon="el-icon-circle-plus" type="info" size="mini">添加参数</el-button>
         </article>
         <article class="content">
           <div class="paramJsonEditorBox">
-            <json-editor ref="jsonEditorParam" :onError="onError" :onChange="onParamChange" :json="activeData.requestData"></json-editor>
+            <json-editor title="入参" ref="jsonEditorParam" :onError="onError" :onChange="onParamChange" :json="activeData.requestData"></json-editor>
           </div>
           <div class="jsonEditorBox">
-            <json-editor ref="jsonEditor" :onError="onError" :onChange="onResChange" :json="activeData.responseData"></json-editor>
+            <json-editor title="出参" ref="jsonEditor" :onError="onError" :onChange="onResChange" :json="activeData.responseData"></json-editor>
           </div>
         </article>
       </section>

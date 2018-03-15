@@ -25,6 +25,13 @@ module.exports = function  (app, option) {
       files.forEach(filePath => {
         let data = fs.readFileSync(`${mockPath}/${filePath}`)
         data = JSON.parse(data)
+        if (!Array.isArray(data.data) || (Array.isArray(data.data) && (!data.data[0] || !data.data[0].requestData) )) {
+          data.data = [{
+            requestData: {},
+            responseData: data.data,
+            name: '请求参数'
+          }]
+        }
         const name = parseUrlToName(data.url)
         mock[name] = data
       })
@@ -75,6 +82,67 @@ module.exports = function  (app, option) {
       var mock=stat?JSON.parse(fs.readFileSync('./activemock.json')):'';
       return mock;
     }
+
+
+    function formatMockData (data, targetData = {}, parentPath = '') {
+      Object.keys(data).forEach(key => {
+        if (Object.prototype.toString.call(data[key]) === '[object Object]' ) {
+          targetData = formatMockData(data[key], targetData, parentPath + key)
+          return
+        }
+        targetData[parentPath + key] = data[key]
+      })
+
+      return targetData
+    }
+    function getLevel (query, data) {
+      let queryFormatData = formatMockData(query)
+      let mockFormatData = formatMockData(data)
+      if (Object.keys(mockFormatData).length === 0) {
+        return 0.5
+      }
+      let level = Object.keys(queryFormatData).reduce((level, key) => {
+        if (mockFormatData[key] &&  mockFormatData[key] == queryFormatData[key]) {
+          level++
+        }
+        return level
+      }, 0)
+      if (Object.keys(queryFormatData).length === Object.keys(mockFormatData).length && Object.keys(queryFormatData).length  === level) level++
+      return level
+    }
+
+    function getMockTargetData(query, mockData) {
+      let level = 0
+      let targetData = mockData[0] ? mockData[0].responseData : {}
+      mockData.forEach(item => {
+         let newLevel = getLevel(query, item.requestData)
+         if (newLevel > level) {
+           level = newLevel
+           targetData = item.responseData
+         }
+      })
+      return targetData
+    }
+
+    function  getSendMockData(req, mockData) {
+
+      let query = req.query
+      let body = ''
+      if (req.method.toLowerCase() === 'post' || req.method.toLowerCase() === 'put') {
+        return new Promise(resolve => {
+          req.on('data', function (data) {
+            body += data
+          } )
+          req.on('end', function () {
+            body = body ? JSON.parse(body.toString()) : {}
+            resolve(getMockTargetData(Object.assign(query, body), mockData))
+          })
+        })
+      }
+      return Promise.resolve(getMockTargetData(query, mockData))
+    }
+
+
     app.get('/proxy-api/get/mock',function (req,res,next) {
       // var data=JSON.parse(req.query.data);
       var mock=getMock();
@@ -150,6 +218,9 @@ module.exports = function  (app, option) {
       }
       if(mock[pathname]) {
         var mes = mock[pathname];
+        getSendMockData(req, mes.data).then(msg => {
+          res.send(msg);
+        })
       } else if(req.originalUrl.indexOf('proxy-api') !== -1) {
         next()
         return false;
@@ -157,7 +228,7 @@ module.exports = function  (app, option) {
         next();
         return
       }
-      res.send(mes.data);
+
     });
     next()
   }
