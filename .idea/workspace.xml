@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue" afterPath="$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/src/components/mock.vue" afterPath="$PROJECT_DIR$/assets/src/components/mock.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/src/components/mockModal.vue" afterPath="$PROJECT_DIR$/assets/src/components/mockModal.vue" />
     </list>
@@ -25,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mock.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="mock.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="108" column="18" lean-forward="false" selection-start-line="108" selection-start-column="18" selection-end-line="108" selection-end-column="18" />
+            <state relative-caret-position="421">
+              <caret line="125" column="27" lean-forward="true" selection-start-line="125" selection-start-column="27" selection-end-line="125" selection-end-column="27" />
               <folding>
                 <element signature="n#style#0;n#el-table#0;n#div#2;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -47,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mockModal.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mockModal.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/src/components/mockModal.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="112" column="24" lean-forward="false" selection-start-line="112" selection-start-column="24" selection-end-line="112" selection-end-column="24" />
+            <state relative-caret-position="1152">
+              <caret line="94" column="36" lean-forward="false" selection-start-line="94" selection-start-column="36" selection-end-line="94" selection-end-column="36" />
               <folding>
                 <element signature="n#style#0;n#el-button#0;n#article#0;n#section#0;n#el-form#0;n#el-dialog#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -149,7 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>console</find>
       <find>table</find>
       <find>body</find>
       <find>json</find>
@@ -171,7 +169,6 @@
       <find>initMockData</find>
       <find>JsonEditor</find>
       <find>changeItemMock</find>
-      <find>setMock</find>
       <find>$</find>
       <find>data</find>
       <find>transition</find>
@@ -179,6 +176,8 @@
       <find>jsonEditorBox</find>
       <find>setEditor</find>
       <find>editor</find>
+      <find>selectData</find>
+      <find>setMock</find>
     </findStrings>
     <replaceStrings>
       <replace>getMessage</replace>
@@ -253,8 +252,8 @@
         <option value="$PROJECT_DIR$/src/mock/index.js" />
         <option value="$PROJECT_DIR$/assets/src/App.vue" />
         <option value="$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue" />
-        <option value="$PROJECT_DIR$/assets/src/components/mock.vue" />
         <option value="$PROJECT_DIR$/assets/src/components/mockModal.vue" />
+        <option value="$PROJECT_DIR$/assets/src/components/mock.vue" />
       </list>
     </option>
   </component>
@@ -618,7 +617,7 @@
       <workItem from="1510803121498" duration="4880000" />
       <workItem from="1511753007293" duration="2114000" />
       <workItem from="1512098143345" duration="2724000" />
-      <workItem from="1520917385925" duration="29084000" />
+      <workItem from="1520917385925" duration="33675000" />
     </task>
     <task id="LOCAL-00001" summary="添加新版本">
       <created>1509073689098</created>
@@ -725,11 +724,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521017590895</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="添加入参设置">
+      <created>1521028180954</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1521028180954</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156326000" />
+    <option name="totallyTimeSpent" value="160917000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -812,7 +818,9 @@
     <MESSAGE value="添加错误信息打印" />
     <MESSAGE value="添加elementUI" />
     <MESSAGE value="修改UI库为 element" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改UI库为 element" />
+    <MESSAGE value="添加mock数据" />
+    <MESSAGE value="添加入参设置" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加入参设置" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1140,22 +1148,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
+    <entry file="file://$PROJECT_DIR$/assets/src/components/mockModal.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="108" column="18" lean-forward="false" selection-start-line="108" selection-start-column="18" selection-end-line="108" selection-end-column="18" />
+        <state relative-caret-position="1152">
+          <caret line="94" column="36" lean-forward="false" selection-start-line="94" selection-start-column="36" selection-end-line="94" selection-end-column="36" />
           <folding>
-            <element signature="n#style#0;n#el-table#0;n#div#2;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-button#0;n#article#0;n#section#0;n#el-form#0;n#el-dialog#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/src/components/mockModal.vue">
+    <entry file="file://$PROJECT_DIR$/assets/src/components/mock.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="112" column="24" lean-forward="false" selection-start-line="112" selection-start-column="24" selection-end-line="112" selection-end-column="24" />
+        <state relative-caret-position="421">
+          <caret line="125" column="27" lean-forward="true" selection-start-line="125" selection-start-column="27" selection-end-line="125" selection-end-column="27" />
           <folding>
-            <element signature="n#style#0;n#el-button#0;n#article#0;n#section#0;n#el-form#0;n#el-dialog#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#div#2;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

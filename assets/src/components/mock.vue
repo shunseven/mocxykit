@@ -111,8 +111,7 @@
         this.mockModalVisible = true
       },
       setMock(data){
-        console.log('active', data)
-        this.activeData = data
+        this.activeData = JSON.parse(JSON.stringify(data))
         this.mockModalVisible = true
       },
       setActiveMock(mock){

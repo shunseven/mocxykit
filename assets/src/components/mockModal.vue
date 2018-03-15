@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :fullscreen="true" :modal="false" :visible.sync="currentVisible" title="设置mock" :before-close="close">
+  <el-dialog :fullscreen="true" :modal="false" @open="initDialog" :visible.sync="currentVisible" title="设置mock" :before-close="close">
     <el-form  :model="formData" label-width="80px">
       <el-form-item label="name">
         <el-input v-model="formData.name"></el-input>
@@ -14,9 +14,15 @@
       </el-form-item>
       <section class="dataBox">
         <article class="tabs">
-          <span :class="{active: activeData === item}" v-for="item in formData.data" @click="selectData(item)">
-            {{item.name}}
-          </span>
+          <div :class="{active: activeData === item}" v-for="item in formData.data" @click="selectData(item)">
+            <span>
+              <input @blur="nameInputBlur" disabled class="name" v-model="item.name" type="text">
+            </span>
+            <span v-if="formData.data.length > 0" class="iconBox">
+              <i @click.prevent="editName" class="el-icon-edit-outline"></i>
+              <i @click.prevent="deleteItemMock(item)" class="el-icon-delete"></i>
+            </span>
+          </div>
           <el-button style="margin-left: 20px" @click="addData" icon="el-icon-circle-plus" type="info" size="mini">添加参数</el-button>
         </article>
         <article class="content">
@@ -57,22 +63,6 @@
     computed: {
       currentVisible: {
         get () {
-          if (this.visible) {
-            this.formData = this.data
-            if(!this.data.data || this.data.data.length === 0 ) {
-              this.data.data = [
-                {
-                  name: '请求参数1',
-                  requestData: {},
-                  responseData: {}
-                }
-              ]
-            }
-            this.$nextTick(() => {
-              this.activeData = this.data.data[0]
-              this.setEditor()
-            })
-          }
           return this.visible
         },
         set (val) {
@@ -101,12 +91,44 @@
       }
     },
     methods: {
+      nameInputBlur (event) {
+        event.target.disabled = true
+      },
+      editName (event) {
+        let nameInput = event.target.parentNode.parentNode.querySelector('.name')
+        nameInput.disabled = false
+        nameInput.focus()
+      },
+      deleteItemMock (data) {
+        this.formData.data = this.formData.data.filter(itemData => itemData !== data )
+        this.activeData = this.formData.data[0]
+        this.setEditor()
+      },
+      initDialog () {
+        this.formData = this.data
+        if(!this.data.data || this.data.data.length === 0 ) {
+          this.data.data = [
+            {
+              name: '请求参数1',
+              requestData: {},
+              responseData: {}
+            }
+          ]
+        }
+        this.$nextTick(() => {
+          this.activeData = this.data.data[0]
+          this.setEditor()
+        })
+      },
       addData () {
-        this.formData.data.push({
-          name: `请求参数${this.formData.data.length}`,
+        let data = {
+          name: `请求参数${this.formData.data.length + 1}`,
           requestData: {},
           responseData: {}
-        })
+        }
+        this.formData.data.push(data)
+        this.activeData = data
+        this.setEditor()
       },
       selectData (data) {
         this.activeData = data
@@ -142,6 +164,19 @@
   }
 </script>
 <style scoped>
+  .dataBox .tabs .name {
+    border: none;
+    color: #ddd;
+    width: 80px;
+    background: transparent;
+  }
+  .dataBox .tabs .name:disabled {
+    cursor: pointer;
+  }
+  .dataBox .tabs .name:focus {
+    border: none;
+    outline: none;
+  }
   .active {
     background: #2f4463;
     color: #fff;
@@ -164,20 +199,27 @@
     padding: 0;
     margin: 0;
   }
-  .dataBox .tabs span {
-    display: block;
-    text-indent: 10px;
+  .dataBox .tabs div {
+    display: flex;
+    justify-content: space-between;
     line-height: 30px;
     height: 30px;
-    padding: 0;
+    padding: 0 10px;
     margin: 0;
     text-decoration: none;
     color: #ddd;
     list-style-type: none;
+
   }
-  .dataBox .tabs span:hover {
+  .dataBox .tabs div:hover {
     background: #1E2E45;
     cursor: pointer;
+  }
+  .dataBox .tabs div .iconBox {
+    display: none;
+  }
+  .dataBox .tabs div:hover .iconBox {
+    display: block;
   }
   .dataBox .content {
     flex: 1;
