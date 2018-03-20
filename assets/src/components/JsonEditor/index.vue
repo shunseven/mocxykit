@@ -79,6 +79,6 @@
         text-indent: 10px;
       }
   div.jsoneditor {
-    border: none;
+    border: none !important;
   }
 </style>
