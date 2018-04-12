@@ -135,7 +135,12 @@ module.exports = function  (app, option) {
             body += data
           } )
           req.on('end', function () {
-            body = body ? JSON.parse(body.toString()) : {}
+            console.log('bodyddd', body)
+            try {
+              body = body ? JSON.parse(body.toString()) : {}
+            } catch (e) {
+              body = {}
+            }
             resolve(getMockTargetData(Object.assign(query, body), mockData))
           })
         })
