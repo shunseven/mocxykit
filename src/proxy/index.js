@@ -29,15 +29,15 @@ module.exports = function (app, option) {
       fs.writeFileSync('./proxy.json',JSON.stringify(proxy));
       res.send(req.query);
     });
-    
+
     app.get('/proxy-api/get/proxies',function (req,res) {
       res.send(getProxies());
     })
-    
+
     app.get("/proxy-api/get/host",function (req,res) {
       res.send(getHost());
     });
-    
+
     app.get("/proxy-api/delete/host",function (req,res) {
       var deleteProxy=req.query;
       var proxies=getProxies().filter(function (data) {
@@ -46,11 +46,27 @@ module.exports = function (app, option) {
       setProxies(proxies);
       res.send(proxies);
     });
-    
+
     app.all(apiRule,function (req,res,next) {
-      proxy.web(req, res, { target:nowHost });
+      proxy.web(req, res, {
+        target:nowHost,
+        /**
+         * This ensures targets are more likely to
+         * accept each request
+         */
+        changeOrigin: true,
+        /**
+         * This handles redirects
+         */
+        autoRewrite: true,
+        /**
+         * This allows our self-signed certs to be used for development
+         */
+        secure: false,
+        ws: true
+      });
     });
-    
+
     next();
     return this;
   }
