@@ -1,6 +1,6 @@
 let propsFun = require('./fun')
 var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({});
+var path = require('path')
 var fs=require('fs');
 var url=require('url');
 const {getHost, getProxies, setProxies} = propsFun
@@ -8,6 +8,14 @@ module.exports = function (app, option) {
   var host=getHost();
   var nowHost=host?'http://'+host.host+':'+host.port:'';
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
+  var serverOption = {}
+  if (option.https) {
+    serverOption.ssh = {
+      key:  fs.readFileSync(path.resolve(__dirname, 'server.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'server.csr'))
+    }
+  }
+  var proxy = httpProxy.createProxyServer(serverOption).listen(443);
   return function (req, res, next) {
     app.get("/proxy-api/change/host*",function (req,res) {
 

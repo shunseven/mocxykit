@@ -73,6 +73,12 @@
       }
     },
     created () {
+      this.$http.get('/proxy-api/get/activemock').then(function (mes) {
+        this.active = mes.data.mock
+        this.setActiveMock(mes.data.mock);
+      })
+    },
+    mounted () {
       this.$http.get('/proxy-api/get/mock').then((mes) => {
         this.mocks = this.parseMock(mes.data)
         this.mocks.forEach(row => {
@@ -80,10 +86,6 @@
             this.$refs.multipleTable.toggleRowSelection(row)
           }
         })
-      })
-      this.$http.get('/proxy-api/get/activemock').then(function (mes) {
-        this.active = mes.data.mock
-        this.setActiveMock(mes.data.mock);
       })
     },
     methods: {
