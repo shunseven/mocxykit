@@ -14,8 +14,8 @@ module.exports = function (app, option) {
       key:  fs.readFileSync(path.resolve(__dirname, 'server.key')),
       cert: fs.readFileSync(path.resolve(__dirname, 'server.csr'))
     }
+    var proxy = httpProxy.createProxyServer(serverOption).listen(443);
   }
-  var proxy = httpProxy.createProxyServer(serverOption).listen(443);
   return function (req, res, next) {
     app.get("/proxy-api/change/host*",function (req,res) {
 

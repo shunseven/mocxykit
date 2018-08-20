@@ -7,7 +7,7 @@
       <el-form-item label="url" required>
         <el-input v-model="formData.url"></el-input>
       </el-form-item>
-      <el-form-item label="duration" required>
+      <el-form-item label="延时" required>
         <el-input placeholder="请输入内容" v-model.number="formData.duration">
           <template slot="append">ms</template>
         </el-input>

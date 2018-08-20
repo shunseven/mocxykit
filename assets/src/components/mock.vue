@@ -18,7 +18,7 @@
     <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading">
-        <el-button type="primary"  @click="createMock">添加api</el-button>
+        <el-button type="primary"  @click="createMock">添加mock数据</el-button>
       </div>
       <!-- Table -->
       <el-table
