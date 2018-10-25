@@ -234,7 +234,7 @@ module.exports = function  (app, option) {
         next();
         return
       }
-
+      next()
     });
     next()
   }

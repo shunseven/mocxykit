@@ -1,23 +1,31 @@
 <template>
   <div>
-    <props></props>
+    <h1>全局代理</h1>
+    <Proxy></Proxy>
+    <h2>单独代理</h2>
+    <item-proxy></item-proxy>
+    <h1>mock数据</h1>
     <mock></mock>
   </div>
 </template>
 
 <script>
-  import Props from './components/props.vue'
+  import Proxy from './components/proxy.vue'
   import Mock from './components/mock.vue'
-
+  import ItemProxy from './components/itemProxy'
   export default {
     components: {
-      Props,
-      Mock
+      Proxy,
+      Mock,
+      ItemProxy
     }
   }
 </script>
 
-<style>
+<style scoped>
+  h1 {
+    font-size: 22px;
+  }
   body{
     padding:0 20px;
   }

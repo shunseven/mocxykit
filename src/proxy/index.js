@@ -1,20 +1,21 @@
-let propsFun = require('./fun')
-var httpProxy = require('http-proxy');
-var path = require('path')
-var fs=require('fs');
-var url=require('url');
-const {getHost, getProxies, setProxies} = propsFun
+const proxyFun = require('./fun')
+const httpProxy = require('http-proxy');
+const path = require('path')
+const fs=require('fs');
+const url=require('url');
+const {getHost, getProxies, setProxies} = proxyFun
+var proxy = httpProxy.createProxyServer({});
 module.exports = function (app, option) {
-  var host=getHost();
-  var nowHost=host?'http://'+host.host+':'+host.port:'';
-  var apiRule=option&&option.apiRule?option.apiRule:'/*';
-  var serverOption = {}
+  let host=getHost();
+  let nowHost=host?'http://'+host.host+':'+host.port:'';
+  let apiRule=option&&option.apiRule?option.apiRule:'/*';
+  let serverOption = {}
   if (option.https) {
     serverOption.ssh = {
       key:  fs.readFileSync(path.resolve(__dirname, 'server.key')),
       cert: fs.readFileSync(path.resolve(__dirname, 'server.csr'))
     }
-    var proxy = httpProxy.createProxyServer(serverOption).listen(443);
+    proxy = httpProxy.createProxyServer(serverOption).listen(443);
   }
   return function (req, res, next) {
     app.get("/proxy-api/change/host*",function (req,res) {
@@ -24,9 +25,9 @@ module.exports = function (app, option) {
       if(!req.query.host){
         nowHost='';
       }
-      var proxy=req.query;
-      var proxies=getProxies();
-      var hasProxy=proxies.some(function (data) {
+      let proxy=req.query;
+      let proxies=getProxies();
+      let hasProxy=proxies.some(function (data) {
         return proxy.host==data.host&&proxy.name==data.name&&proxy.port==data.port;
       })
       console.log(hasProxy);
@@ -47,32 +48,40 @@ module.exports = function (app, option) {
     });
 
     app.get("/proxy-api/delete/host",function (req,res) {
-      var deleteProxy=req.query;
-      var proxies=getProxies().filter(function (data) {
+      let deleteProxy=req.query;
+      let proxies=getProxies().filter(function (data) {
         return !(deleteProxy.host==data.host&&deleteProxy.name==data.name&&deleteProxy.port==data.port);
       });
       setProxies(proxies);
       res.send(proxies);
     });
 
+    // 部分代理
+
+
+    // 全局代理
     app.all(apiRule,function (req,res,next) {
-      proxy.web(req, res, {
-        target:nowHost,
-        /**
-         * This ensures targets are more likely to
-         * accept each request
-         */
-        changeOrigin: true,
-        /**
-         * This handles redirects
-         */
-        autoRewrite: true,
-        /**
-         * This allows our self-signed certs to be used for development
-         */
-        secure: false,
-        ws: true
-      });
+      if (host.host) {
+        proxy.web(req, res, {
+          target:nowHost,
+          /**
+           * This ensures targets are more likely to
+           * accept each request
+           */
+          changeOrigin: true,
+          /**
+           * This handles redirects
+           */
+          autoRewrite: true,
+          /**
+           * This allows our self-signed certs to be used for development
+           */
+          secure: false,
+          ws: true
+        });
+      } else {
+        res.send('无全局代理，请设定')
+      }
     });
 
     next();
