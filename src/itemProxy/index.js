@@ -37,9 +37,9 @@ module.exports = function (app, option) {
       const refererPath = req.headers.referer ? url.parse(req.headers.referer).pathname : ''
       const proxyItem = itemProxy.find(proxyData => {
         const match = routeMatch(proxyData.url)
-        return match(pathname) || match(refererPath)
+        return (match(pathname) || match(refererPath)) && proxyData.hasProxy
       })
-      if (proxyItem && proxyItem.hasProxy) {
+      if (proxyItem) {
         proxy.web(req, res, {
           target: proxyItem.target,
           changeOrigin: true,

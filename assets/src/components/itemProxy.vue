@@ -19,7 +19,9 @@
       :data="tableData"
       tooltip-effect="dark"
       style="width: 100%"
-      @select="handleSelectionChange">
+      @select="handleSelectionChange"
+      @select-all="handleSelectionChange"
+    >
       <el-table-column
         type="selection"
         width="55">
@@ -102,13 +104,14 @@ export default {
         }
       })
     },
+
     handleSelectionChange(val) {
+      console.log(val)
       this.proxyDataAry.forEach(item => item.hasProxy = false)
       val.forEach(item => item.hasProxy = true)
       this.setProxy()
     },
     deleteProxy (index) {
-      console.log(1111, index)
       this.proxyDataAry.splice(index, 1)
       this.setProxy()
     }

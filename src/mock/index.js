@@ -142,6 +142,7 @@ module.exports = function  (app, option) {
               body = {}
             }
             resolve(getMockTargetData(Object.assign(query, body), mockData))
+            body = null
           })
         })
       }
@@ -227,6 +228,7 @@ module.exports = function  (app, option) {
         getSendMockData(req, mes.data).then(msg => {
           res.send(msg);
         })
+        return
       } else if(req.originalUrl.indexOf('proxy-api') !== -1) {
         next()
         return false;
