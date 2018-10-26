@@ -3,10 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/components/itemProxy.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/itemProxy.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activemock.json" beforeDir="false" afterPath="$PROJECT_DIR$/activemock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/itemProxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/itemProxy/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/proxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy/index.js" afterDir="false" />
     </list>
     <ignored path="express-proxy-mock.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,20 +25,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+            <state relative-caret-position="289">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/itemProxy/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="36" lean-forward="true" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+            <state relative-caret-position="391">
+              <caret line="29" column="39" lean-forward="true" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -75,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/src/static/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
-              <caret line="17" column="23" lean-forward="true" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+              <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -92,8 +92,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-102">
-              <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="44" />
+            <state relative-caret-position="1394">
+              <caret line="82" column="14" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -230,13 +230,13 @@
         <option value="$PROJECT_DIR$/src/ItemProxy/index.js" />
         <option value="$PROJECT_DIR$/itemProxy.json" />
         <option value="$PROJECT_DIR$/src/itemProxy/fun.js" />
-        <option value="$PROJECT_DIR$/src/proxy/index.js" />
         <option value="$PROJECT_DIR$/assets/build/dev-server.js" />
         <option value="$PROJECT_DIR$/src/mock/index.js" />
         <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/src/itemProxy/index.js" />
         <option value="$PROJECT_DIR$/assets/src/components/itemProxy.vue" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/proxy/index.js" />
+        <option value="$PROJECT_DIR$/src/itemProxy/index.js" />
       </list>
     </option>
   </component>
@@ -278,6 +278,35 @@
             <path>
               <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
               <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="itemProxy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mock" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="proxy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -451,7 +480,7 @@
       <workItem from="1532660327871" duration="601000" />
       <workItem from="1534771446826" duration="3448000" />
       <workItem from="1535264119634" duration="1912000" />
-      <workItem from="1540461646426" duration="22301000" />
+      <workItem from="1540461646426" duration="23581000" />
     </task>
     <task id="LOCAL-00001" summary="添加新版本">
       <created>1509073689098</created>
@@ -621,11 +650,18 @@
       <option name="project" value="LOCAL" />
       <updated>1540533746280</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="添加是否代理path的功能">
+      <created>1540545306031</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1540545306031</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="222086000" />
+    <option name="totallyTimeSpent" value="223366000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -640,7 +676,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12961012" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12961012" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32852387" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.505071" side_tool="true" weight="0.3140676" />
@@ -648,7 +684,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4914984" weight="0.10796074" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49492902" weight="0.31624863" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4702444" visible="true" weight="0.057797164" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4702444" weight="0.075245366" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4957492" weight="0.44395116" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -726,7 +762,8 @@
     <MESSAGE value="修改http引起的问题" />
     <MESSAGE value="添加单独api 代理选项" />
     <MESSAGE value="添加来源判断" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加来源判断" />
+    <MESSAGE value="添加是否代理path的功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加是否代理path的功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -935,7 +972,7 @@
     <entry file="file://$PROJECT_DIR$/src/static/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
-          <caret line="17" column="23" lean-forward="true" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -952,27 +989,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/itemProxy/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="36" lean-forward="true" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mock/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2622">
-          <caret line="210" selection-start-line="210" selection-end-line="210" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/src/components/itemProxy.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-289">
@@ -986,8 +1002,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+        <state relative-caret-position="289">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mock/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2622">
+          <caret line="210" selection-start-line="210" selection-end-line="210" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1394">
+          <caret line="82" column="14" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itemProxy/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="29" column="39" lean-forward="true" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
         </state>
       </provider>
     </entry>

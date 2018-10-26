@@ -4,7 +4,13 @@ const path = require('path')
 const fs=require('fs');
 const url=require('url');
 const {getItemProxy} = proxyFun
-var proxy = httpProxy.createProxyServer({});
+const proxy = httpProxy.createProxyServer({});
+const routeMatch = require('path-match')({
+  // path-to-regexp options
+  sensitive: false,
+  strict: false,
+  end: true,
+})
 module.exports = function (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
   return function (req, res, next) {
@@ -29,7 +35,10 @@ module.exports = function (app, option) {
       const itemProxy = JSON.parse(getItemProxy())
       const pathname = url.parse(req.url).pathname
       const refererPath = req.headers.referer ? url.parse(req.headers.referer).pathname : ''
-      const proxyItem = itemProxy.find(proxyData => proxyData.url === pathname || proxyData.url === refererPath)
+      const proxyItem = itemProxy.find(proxyData => {
+        const match = routeMatch(proxyData.url)
+        return match(pathname) || match(refererPath)
+      })
       if (proxyItem && proxyItem.hasProxy) {
         proxy.web(req, res, {
           target: proxyItem.target,

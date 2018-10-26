@@ -80,7 +80,7 @@ module.exports = function (app, option) {
           ws: true
         });
       } else {
-        res.send('无全局代理，请设定')
+        next()
       }
     });
 
