@@ -28,24 +28,13 @@ module.exports = function (app, option) {
     app.all(apiRule, function (req, res, next) {
       const itemProxy = JSON.parse(getItemProxy())
       const pathname = url.parse(req.url).pathname
-      const proxyItem = itemProxy.find(proxyData => proxyData.url === pathname)
+      const refererPath = req.headers.referer ? url.parse(req.headers.referer).pathname : ''
+      const proxyItem = itemProxy.find(proxyData => proxyData.url === pathname || proxyData.url === refererPath)
+      console.log(222222, req.headers.referer, pathname)
       if (proxyItem) {
         proxy.web(req, res, {
           target: proxyItem.target,
-          /**
-           * This ensures targets are more likely to
-           * accept each request
-           */
           changeOrigin: true,
-          /**
-           * This handles redirects
-           */
-          autoRewrite: true,
-          /**
-           * This allows our self-signed certs to be used for development
-           */
-          secure: false,
-          ws: true
         });
         return
       }
