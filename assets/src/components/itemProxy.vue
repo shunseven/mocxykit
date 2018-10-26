@@ -1,11 +1,14 @@
 <template>
   <div>
-    <el-form style="margin-top: 10px" :inline="true" class="demo-form-inline">
-      <el-form-item label="url">
+    <el-form required style="margin-top: 10px" :inline="true" class="demo-form-inline">
+      <el-form-item required label="url">
         <el-input v-model="proxyData.url" placeholder="要代理的url"></el-input>
       </el-form-item>
       <el-form-item required label="代理地址">
         <el-input v-model="proxyData.target" placeholder="代理地址"></el-input>
+      </el-form-item>
+      <el-form-item >
+        <el-checkbox v-model="proxyData.ignorePath">不代理path</el-checkbox>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="addProxy">添加</el-button>
@@ -33,6 +36,14 @@
       >
       </el-table-column>
       <el-table-column
+        prop="target"
+        label="是否代理path"
+      >
+        <template slot-scope="scope">
+          {{scope.row.ignorePath ? '否' : '是'}}
+        </template>
+      </el-table-column>
+      <el-table-column
         label="操作">
         <template slot-scope="scope">
           <el-button @click="deleteProxy(scope.$index)" type="text">
@@ -51,7 +62,8 @@ export default {
       proxyData: {
         url: '',
         target: '',
-        hasProxy: true
+        hasProxy: true,
+        ignorePath: false
       },
       proxyDataAry: [],
       tableData: [],

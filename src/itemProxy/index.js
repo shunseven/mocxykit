@@ -30,11 +30,25 @@ module.exports = function (app, option) {
       const pathname = url.parse(req.url).pathname
       const refererPath = req.headers.referer ? url.parse(req.headers.referer).pathname : ''
       const proxyItem = itemProxy.find(proxyData => proxyData.url === pathname || proxyData.url === refererPath)
-      console.log(222222, req.headers.referer, pathname)
-      if (proxyItem) {
+      if (proxyItem && proxyItem.hasProxy) {
         proxy.web(req, res, {
           target: proxyItem.target,
           changeOrigin: true,
+          /**
+           * This ensures targets are more likely to
+           * accept each request
+           */
+          changeOrigin: true,
+          /**
+           * This handles redirects
+           */
+          autoRewrite: true,
+          /**
+           * This allows our self-signed certs to be used for development
+           */
+          secure: false,
+          ws: true,
+          ignorePath: proxyItem.ignorePath
         });
         return
       }
