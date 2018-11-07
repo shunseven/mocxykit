@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="">
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="[-]修改单独代理的处理">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/itemProxy/fun.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/itemProxy/fun.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/itemProxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/itemProxy/index.js" afterDir="false" />
     </list>
     <ignored path="express-proxy-mock.iws" />
@@ -24,7 +22,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
@@ -36,17 +34,17 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/itemProxy/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="29" column="39" lean-forward="true" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
+            <state relative-caret-position="484">
+              <caret line="37" column="7" lean-forward="true" selection-start-line="37" selection-start-column="7" selection-end-line="37" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="itemProxy.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="itemProxy.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/itemProxy.json">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="50" selection-start-column="50" selection-end-column="50" />
+              <caret column="23" lean-forward="true" selection-start-column="23" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -90,20 +88,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fun.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/itemProxy/fun.js">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="73" lean-forward="true" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
+            <state relative-caret-position="-17">
+              <caret line="5" column="26" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="26" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="fun.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/proxy/fun.js">
+        <entry file="file://$PROJECT_DIR$/src/itemProxy/fun.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="19" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="19" />
+            <state relative-caret-position="68">
+              <caret line="4" column="73" lean-forward="true" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -231,9 +229,9 @@
         <option value="$PROJECT_DIR$/src/mock/index.js" />
         <option value="$PROJECT_DIR$/assets/src/components/itemProxy.vue" />
         <option value="$PROJECT_DIR$/src/itemProxy/fun.js" />
+        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/itemProxy/index.js" />
         <option value="$PROJECT_DIR$/itemProxy.json" />
-        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -276,6 +274,40 @@
             <path>
               <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
               <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="mockData" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="itemProxy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mock" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="proxy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -449,7 +481,7 @@
       <workItem from="1534771446826" duration="3448000" />
       <workItem from="1535264119634" duration="1912000" />
       <workItem from="1540461646426" duration="26369000" />
-      <workItem from="1541571374954" duration="2783000" />
+      <workItem from="1541571374954" duration="3328000" />
     </task>
     <task id="LOCAL-00001" summary="添加新版本">
       <created>1509073689098</created>
@@ -647,11 +679,18 @@
       <option name="project" value="LOCAL" />
       <updated>1541571505120</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="[-]修改单独代理的处理">
+      <created>1541574386199</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1541574386199</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="228937000" />
+    <option name="totallyTimeSpent" value="229482000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -670,11 +709,11 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32852387" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.505071" side_tool="true" weight="0.3140676" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4914984" weight="0.10796074" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4914984" weight="0.5474373" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49492902" weight="0.31624863" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4702444" visible="true" weight="0.4972737" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4702444" visible="true" weight="0.15049073" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4957492" weight="0.44395116" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -728,7 +767,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="添加延迟加载数据的功能" />
     <MESSAGE value="添加本地部分mock与全部mock的功能" />
     <MESSAGE value="重构，让每个mock数据做存为单独的文件" />
     <MESSAGE value="更新文档" />
@@ -753,7 +791,8 @@
     <MESSAGE value="添加是否代理path的功能,添加path" />
     <MESSAGE value="解决内存益出的问题" />
     <MESSAGE value="修改itemProxy初始没有数据会报错的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改itemProxy初始没有数据会报错的问题" />
+    <MESSAGE value="[-]修改单独代理的处理" />
+    <option name="LAST_COMMIT_MESSAGE" value="[-]修改单独代理的处理" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -987,24 +1026,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/proxy/fun.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="19" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/itemProxy/fun.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="73" lean-forward="true" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
         </state>
       </provider>
     </entry>
@@ -1017,34 +1042,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proxies.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="39" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/itemProxy/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="29" column="39" lean-forward="true" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/itemProxy.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="50" selection-start-column="50" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -1055,6 +1056,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proxies.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itemProxy/fun.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="73" lean-forward="true" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itemProxy/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="37" column="7" lean-forward="true" selection-start-line="37" selection-start-column="7" selection-end-line="37" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/itemProxy.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" lean-forward="true" selection-start-column="23" selection-end-column="23" />
         </state>
       </provider>
     </entry>

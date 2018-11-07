@@ -32,7 +32,10 @@ module.exports = function (app, option) {
     });
 
     app.all(apiRule, function (req, res, next) {
-      const itemProxy = getItemProxy()
+      let itemProxy = getItemProxy()
+      if (typeof itemProxy === 'string') {
+        itemProxy = JSON.parse(itemProxy)
+      }
       const pathname = url.parse(req.url).pathname
       const refererPath = req.headers.referer ? url.parse(req.headers.referer).pathname : ''
       const proxyItem = itemProxy.find(proxyData => {
