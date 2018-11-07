@@ -26,13 +26,13 @@ module.exports = function (app, option) {
       } )
       req.on('end', function () {
         const bodyData = body.toString()
-        fs.writeFileSync('./itemProxy.json',JSON.stringify(bodyData));
+        fs.writeFileSync('./itemProxy.json', bodyData);
         res.send(JSON.parse(bodyData));
       })
     });
 
     app.all(apiRule, function (req, res, next) {
-      const itemProxy = JSON.parse(getItemProxy())
+      const itemProxy = getItemProxy()
       const pathname = url.parse(req.url).pathname
       const refererPath = req.headers.referer ? url.parse(req.headers.referer).pathname : ''
       const proxyItem = itemProxy.find(proxyData => {
