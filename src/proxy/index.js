@@ -28,7 +28,7 @@ module.exports = function (app, option) {
       let proxy=req.query;
       let proxies=getProxies();
       let hasProxy=proxies.some(function (data) {
-        return proxy.host==data.host&&proxy.name==data.name&&proxy.port==data.port;
+        return proxy.host==data.host && proxy.name==data.name && proxy.port==data.port;
       })
       console.log(hasProxy);
       if(!hasProxy&&req.query.host){
@@ -61,6 +61,7 @@ module.exports = function (app, option) {
 
     // 全局代理
     app.all(apiRule,function (req,res,next) {
+      console.log('proxy')
       if (host.host) {
         proxy.web(req, res, {
           target:nowHost,

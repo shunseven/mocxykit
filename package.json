@@ -1,16 +1,17 @@
 {
   "name": "express-proxy-mock",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "description": "The tool with proxy and mock for front-end",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "node server.js"
+    "dev": "node server.js"
   },
   "author": "shunseven",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "brace": "^0.11.1",
     "express": "^4.16.2",
     "http-proxy": "^1.13.2",
     "is-json": "^2.0.0",

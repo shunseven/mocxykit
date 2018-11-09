@@ -1,19 +1,13 @@
 var fs=require('fs');
 var path=require('path');
 var url=require('url');
+var {parseUrlToName} = require('../util/fun')
+
 const mockPath = './mockData'
 module.exports = function  (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
   return function (req,res,next) {
     var activeMock=getActiveMock().mock;
-
-    function firstUpperCase(str) {
-      return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
-    }
-
-    function parseUrlToName (url) {
-      return url.split('/').map(item => firstUpperCase(item)).join('')
-    }
 
     function getMock() {
       const mock = {}
@@ -181,10 +175,6 @@ module.exports = function  (app, option) {
 
     app.get('/proxy-api/delete/mock',function(req,res,next){
       res.send(deleteMock(req.query));
-    });
-
-    app.get('/proxy-api/get/publicmock',function (req,res) {
-      option.publicMock?res.send(option.publicMock):res.send([]);
     });
 
     app.get('/proxy-api/get/activemock',function (req,res,next) {
