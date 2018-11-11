@@ -5,7 +5,7 @@
         <el-input v-model="proxyData.url" placeholder="要代理的url"></el-input>
       </el-form-item>
       <el-form-item required label="代理地址">
-        <el-input v-model="proxyData.target" placeholder="代理地址"></el-input>
+        <el-input v-model="proxyData.target" placeholder="http://localhost:7000"></el-input>
       </el-form-item>
       <el-form-item >
         <el-checkbox v-model="proxyData.ignorePath">不代理path</el-checkbox>
