@@ -54,6 +54,8 @@
 
   以部分代码段
   ```
+    epm.requestData.body // post 请求中的参数
+    epm.requestData.query // url 上带的参数
     const mockData = epm.getMockData({ // 获取mock数据
        url: '/test'
     })

@@ -4,6 +4,7 @@
     <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="express-proxy-mock.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,8 +47,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="53" column="1" lean-forward="false" selection-start-line="53" selection-start-column="1" selection-end-line="53" selection-end-column="1" />
+            <state relative-caret-position="162">
+              <caret line="57" column="38" lean-forward="false" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -85,6 +86,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+              <folding>
+                <marker date="1541944198648" expanded="true" signature="0:506" ph="{&quot;name&quot;: &quot;express-proxy-mock&quot;...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="codeFun.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/code/codeFun.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -111,19 +124,6 @@
             <state relative-caret-position="281">
               <caret line="19" column="40" lean-forward="true" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fun.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/util/fun.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="30" column="5" lean-forward="false" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-              <folding>
-                <marker date="1541907196692" expanded="true" signature="241:980" ph="{...}" />
-                <marker date="1541907196692" expanded="true" signature="1000:1042" ph="{&quot;parseUrlToName&quot;: parseUrlToName...}" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -167,8 +167,8 @@
       <find>setMock</find>
       <find>stat</find>
       <find>getLevel</find>
-      <find>match</find>
       <find>getRequestData</find>
+      <find>match</find>
       <find>responseData</find>
     </findStrings>
     <replaceStrings>
@@ -245,7 +245,6 @@
         <option value="$PROJECT_DIR$/assets/src/components/jsEditor/index.vue" />
         <option value="$PROJECT_DIR$/assets/src/components/mockCode.vue" />
         <option value="$PROJECT_DIR$/assets/src/App.vue" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/assets/src/components/mock/mock.vue" />
         <option value="$PROJECT_DIR$/src/proxy/index.js" />
         <option value="$PROJECT_DIR$/index.js" />
@@ -261,6 +260,7 @@
         <option value="$PROJECT_DIR$/assets/src/components/mock/mockModal.vue" />
         <option value="$PROJECT_DIR$/src/code/epm.js" />
         <option value="$PROJECT_DIR$/mockData/YhfJhhgjCc.json" />
+        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -530,11 +530,25 @@
       <option name="project" value="LOCAL" />
       <updated>1541943627561</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="更新文档">
+      <created>1541943881438</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1541943881438</updated>
+    </task>
+    <task id="LOCAL-00004" summary="更新文档">
+      <created>1541944017744</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1541944017744</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="272980000" />
+    <option name="totallyTimeSpent" value="273277000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -655,16 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4890">
           <caret line="332" column="12" lean-forward="false" selection-start-line="332" selection-start-column="12" selection-end-line="332" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding>
-            <marker date="1541934584560" expanded="true" signature="0:506" ph="{&quot;name&quot;: &quot;express-proxy-mock&quot;...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -935,6 +939,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/code/epm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="41" column="53" lean-forward="false" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+          <folding>
+            <marker date="1541944198648" expanded="true" signature="0:506" ph="{&quot;name&quot;: &quot;express-proxy-mock&quot;...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/assets/src/components/mock/mockModal.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -942,14 +964,6 @@
           <folding>
             <element signature="n#style#0;n#el-button#0;n#article#0;n#section#0;n#el-form#0;n#el-dialog#0;n#template#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/code/epm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="41" column="53" lean-forward="false" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -963,8 +977,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="53" column="1" lean-forward="false" selection-start-line="53" selection-start-column="1" selection-end-line="53" selection-end-column="1" />
+        <state relative-caret-position="162">
+          <caret line="57" column="38" lean-forward="false" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
           <folding />
         </state>
       </provider>
