@@ -66,7 +66,9 @@
         }
 
     }，
-     false // true将不管之前有没有数据，真接覆盖原来的数据，false 将根据请求参数（requestData）合并，如请求参数一致，将覆盖否则增加一条，默认false
+     false // true将不管之前有没有数据，真接覆盖原来的数据，false 将根据请求参数（requestData）合并，
+
+     如请求参数一致，将覆盖否则增加一条，默认false
     )
     epm.deleteMockData({
         url: '/test', // 要删除的URL
@@ -74,7 +76,7 @@
         }
     })
     epm.send({}) 设置这次请求的返加数据
-    epm.next() 跳过代码快，继续往下命中, 如mock数据设置了相同的url，就会返回mock数据
+    epm.next() 跳过代码块，继续往下命中, 如mock数据设置了相同的url，就会返回mock数据
   ```
     emp.send与emp.next在代码快中必须存在一个
 
