@@ -2,6 +2,8 @@
 
 # 使用背景
   在前端开发中有一项很重要的工作是后台同事进行数据联调，联调你就要通过对应不同的同事ip进行通讯，这个时候你会遇到浏览器的同源策略引起的跨域问题，还有你可能想有没有快速切换不同的ip进行联调，不用每次修改配制重起不同的服务，在后台接口还没开发完时，能在本地快速的创建假如据，而且接口与后台完全一制而不用在真正联调时还需要修改url，造成没必要的bug，以上这些问题就是我想开发这个express插件的初衷！
+
+
 # 五行代码启动带 props,mock功能的 node 服务！
 ```
  npm install express
@@ -19,10 +21,19 @@
 最后运行 node server.js  在浏览器打开localhost:3000/config 就能看到props和mock功能界面！
 ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info.png)
 
-# props功能
-  代理是用来解决浏器同源策略引起的跨域问题（这要保证你上线时与后同是在同一域），当然还有很多其它的解决方案比如直接关掉浏览器的同源策略就可以与后台联调，但这们做会引发很多问题，可能某些上线后真的会夸域的也会跳过，而且要在url上面绑定对应的ip，与线上的代码有些不同会造成没必要的bug；
-  当然还可以通过nginx之类的来进行数据转发，但每次切换联调的ip都要修改配制文件的ip重起服务，假如切换切换频繁一个的确让人很烦的事，也不利于与 webpack一起使用，我们都知在webpack开发时都会通过node起动一个服务，那我们应该直接一个插件就把这些功能集成上去，而不用其它多余的工具辅助！
+# 命中规则
+  同一个url 在多个功能上都有配制！命中先后顺序为 （代码块-> mock数据 -> 部分代理 -> 全局代理）
+
+# 全局代理
+  功能： 代理是用来解决浏器同源策略引起的跨域问题 和 开发联调时直接指定机器进行联调，如后端同事的ip,开发环境的IP，测试环境的IP。
 ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info1.png)
+
+# 部分代理
+  功能：某个URL不想走全局代理，可以独设置代理的请求。
+  参数：
+  url: 你要代理的url （注：/test/*, test/**/dd 可以通过这种方式设定开头匹配，或中间匹配）
+  代理地址： 你要代理到的完整地址，(注： 一定要填写完整的地址如--http://localhost:3000， 代理地址可带path)
+  是否代理Path： 如是，装url拼到代理上，如否的话，将忽略url,以代理地址为准。
 
 # mock功能
   在后台api还没开发完成前，我们经常要一些假数据进行调试，这就是mock的用途，这个插件构建的mock可以让快速可视化的编辑创建，并让api的url保持与线上完全一致！
@@ -32,6 +43,37 @@
 # 部分mock功能
   很多时候我们与别人联调时，可能只是其中某个接口要联调，其它的接口可能会有不通的情况，这个时候部分mock是很好用的功能，我们只需代理转发要联调的接口其它用假数据，这也是其它mock工具比较难实现的功能之一
   ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info4.png)
+
+
+# 代码段
+  功能： 能功代码段提代的epm的sdk, 可以对mock数据进行增删改查的操作，以最简单快速的方式，对一些业务逻辑模拟
+  以部分代码段
+  ```
+    const mockData = epm.getMockData({ // 获取mock数据
+       url: '/test'
+    })
+    epm.setMockData({  // 设置mock数据
+        url: '/test2',
+        name: '测试数据二'
+        data: {  // 同时设置多个不同，可以是数组
+          requestData: {}, // 请求参数
+          responseData: {}  // 返还数据
+        }
+
+    }，
+     false // true将不管之前有没有数据，真接覆盖原来的数据，false 将根据请求参数（requestData）合并，如请求参数一致，将覆盖否则增加一条，默认false
+    )
+    epm.deleteMockData({
+        url: '/test', // 要删除的URL
+        requestData: { // 没有requestData将会把'/test'整条删除，有requestData将删除与requestData一致请求参数项
+        }
+    })
+    epm.send({}) 设置这次请求的返加数据
+    epm.next() 跳过代码快，继续往下命中, 如mock数据设置了相同的url，就会返回mock数据
+  ```
+    emp.send与emp.next在代码快中必须存在一个
+
+
 
 # 与webpack的结合
 我们给redux官方的[todo](https://github.com/reactjs/redux/tree/master/examples/todos)的例子加上这个功能,
