@@ -28,10 +28,10 @@
         </article>
         <article class="content">
           <div class="paramJsonEditorBox">
-            <json-editor title="入参" ref="jsonEditorParam" :onError="onError" :onChange="onParamChange" :json="activeData.requestData"></json-editor>
+            <json-editor title="入参" ref="jsonEditorParam" :onError="onError" :onChange="onParamChange" :json="activeData.requestData || {}"></json-editor>
           </div>
           <div class="jsonEditorBox">
-            <json-editor title="出参" ref="jsonEditor" :onError="onError" :onChange="onResChange" :json="activeData.responseData"></json-editor>
+            <json-editor title="出参" ref="jsonEditor" :onError="onError" :onChange="onResChange" :json="activeData.responseData || {}"></json-editor>
           </div>
         </article>
       </section>
