@@ -1,10 +1,16 @@
 <template>
   <div class="mock-box">
-
+    <el-alert
+      class="info"
+      title="通过提供emp的sdk, 可以对mock数据增删改查，简单的模拟业物场景"
+      type="info"
+      :closable="false"
+    >
+    </el-alert>
     <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading">
-        <el-button type="primary"  @click="createMockCode">添加代码段</el-button>
+        <el-button type="waring"  @click="createMockCode">添加代码段11</el-button>
       </div>
       <!-- Table -->
       <el-table
@@ -99,6 +105,9 @@
   }
 </script>
 <style  scoped>
+  .info {
+    margin-bottom: 10px;
+  }
   .modal.in .modal-dialog {
     width: 100%;
     height: 100%;
