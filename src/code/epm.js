@@ -1,6 +1,6 @@
 var {parseUrlToName} = require('../util/fun')
 var fs=require('fs');
-const mockPath = './mockData'
+const {mockPath, getMock} = require('../mock/mockFun')
 
 function  Emp(req, res, next, data) {
     this.requestData = data
@@ -15,13 +15,13 @@ Emp.prototype.send = function (...ary) {
     this.res.send(...ary)
 }
 
-Emp.prototype.getMockData = function () {
+Emp.prototype.getMockData = function (path) {
     const data = fs.readFileSync(`${mockPath}/${parseUrlToName(path)}.json`)
     return JSON.parse(data.toString())
 }
 
 Emp.prototype.setMockData = function (path) {
-    const mockData = this.getMockData(path)
+
 }
 
 

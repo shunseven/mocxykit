@@ -49,7 +49,6 @@ module.exports = function  (app, option) {
           getRequestData(req).then(data => {
               try {
                   // emp处理
-                  console.log(222, data)
                   var mes = mockCode[pathname]
                   var epm = new Epm(req, res, next, data)
                   eval(mes.code)
