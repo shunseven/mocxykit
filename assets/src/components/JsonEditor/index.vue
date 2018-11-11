@@ -1,4 +1,4 @@
-<template>
+cc<template>
   <div class="jsoneditor-box" ref="jsoneditor">
   </div>
 </template>
