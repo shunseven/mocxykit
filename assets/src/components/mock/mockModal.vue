@@ -142,7 +142,6 @@
         this.activeData.requestData = newVal
       },
       onError () {
-        console.log(1111)
       },
       saveMock () {
         this.$http.post('/proxy-api/set/mock',this.formData).then(function (mes) {

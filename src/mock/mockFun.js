@@ -105,7 +105,6 @@ function getMockTargetData(query, mockData) {
     let targetData = mockData[0] ? mockData[0].responseData : {}
     mockData.forEach(item => {
         let newLevel = getLevel(query, item.requestData)
-        console.log(item.requestData)
         if (newLevel > level) {
             level = newLevel
             targetData = item.responseData
@@ -124,7 +123,6 @@ function  getSendMockData(req, mockData) {
                 body += data
             } )
             req.on('end', function () {
-                console.log('bodyddd', body)
                 try {
                     body = body ? JSON.parse(body.toString()) : {}
                 } catch (e) {

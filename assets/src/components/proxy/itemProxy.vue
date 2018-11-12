@@ -106,7 +106,6 @@ export default {
     },
 
     handleSelectionChange(val) {
-      console.log(val)
       this.proxyDataAry.forEach(item => item.hasProxy = false)
       val.forEach(item => item.hasProxy = true)
       this.setProxy()

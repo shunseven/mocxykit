@@ -8,7 +8,6 @@ module.exports = function (app, option) {
     })
 
     app.get(configPath, function(req, res) {
-      console.log(rootPath)
       res.sendFile(rootPath + '/assets/dist/index.html')
     });
     app.get('/proxy-api/page/entry',function (req,res) {

@@ -30,7 +30,6 @@ module.exports = function (app, option) {
       let hasProxy=proxies.some(function (data) {
         return proxy.host==data.host && proxy.name==data.name && proxy.port==data.port;
       })
-      console.log(hasProxy);
       if(!hasProxy&&req.query.host){
         proxies.push(proxy);
         setProxies(proxies);
@@ -61,7 +60,7 @@ module.exports = function (app, option) {
 
     // 全局代理
     app.all(apiRule,function (req,res,next) {
-      console.log('proxy')
+      console.log('set all proxy')
       if (host.host) {
         proxy.web(req, res, {
           target:nowHost,

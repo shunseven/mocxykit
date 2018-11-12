@@ -15,7 +15,6 @@ function  getRequestData(req) {
                 body += data
             } )
             req.on('end', function () {
-                console.log('bodyddd', body)
                 try {
                     body = body ? JSON.parse(body.toString()) : {}
                 } catch (e) {
