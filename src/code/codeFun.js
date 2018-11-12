@@ -36,10 +36,10 @@ function setMockStatus(data) {
     let checkedUrls = data.map(msg => msg.url)
 
     Object.keys(mocksCode).forEach(key => {
-        if (checkedUrls.includes(mocksCode[key].url) && !mocksCode[key].mock) {
+        if (checkedUrls.includes(mocksCode[key].url)) {
             mocksCode[key].mock = true
             fs.writeFileSync(`${codePath}/${key}.json`,JSON.stringify(mocksCode[key], null, 2))
-        } else if (!checkedUrls.includes(mocksCode[key].url) && mocksCode[key].mocksCode){
+        } else if (!checkedUrls.includes(mocksCode[key].url)){
             mocksCode[key].mock = false
             fs.writeFileSync(`${codePath}/${key}.json`,JSON.stringify(mocksCode[key], null, 2))
         }

@@ -45,7 +45,7 @@ module.exports = function  (app, option) {
     app.all(apiRule,function (req,res,next) {
       const mockCode = getMockCode()
       const pathname=parseUrlToName(url.parse(req.url).pathname)
-      if(mockCode[pathname] && mockCode[pathname].code) {
+      if(mockCode[pathname] && mockCode[pathname].code && mockCode[pathname].mock) {
           getRequestData(req).then(data => {
               try {
                   // emp处理

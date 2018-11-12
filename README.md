@@ -49,16 +49,20 @@
   ![image](https://raw.githubusercontent.com/shunseven/express-proxy-mock/master/images/info4.png)
 
 
-# 代码段
-  功能： 能功代码段提代的epm的sdk, 可以对mock数据进行增删改查的操作，以最简单快速的方式，对一些业务逻辑模拟
+# 代码片段
+  功能： 代码片段提代的epm的sdk, 可以对mock数据进行增删改查的操作，以最简单快速的方式，对一些业务逻辑模拟
 
-  以部分代码段
+  以部分代码片段
   ```
     epm.requestData.body // post 请求中的参数
     epm.requestData.query // url 上带的参数
-    const mockData = epm.getMockData({ // 获取mock数据
-       url: '/test'
+    emp.url // 这个请求url
+    const mockData = epm.getMockData('/test') // 获取mock完整的数据
+    const responseData = emp.getResponseData({ // 获取mock数据的返回值
+        url: '/test', // 获取mock数据的url
+        requertData: {} // mock数据的请求参数
     })
+    const selfResponseData = epm.getResponseData() // 获取当前请求的mock数据上的返回数据
     epm.setMockData({  // 设置mock数据
         url: '/test2',
         name: '测试数据二'

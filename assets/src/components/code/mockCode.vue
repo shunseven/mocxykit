@@ -10,7 +10,7 @@
     <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading">
-        <el-button type="waring"  @click="createMockCode">添加代码段11</el-button>
+        <el-button type="waring"  @click="createMockCode">添加代码片段</el-button>
       </div>
       <!-- Table -->
       <el-table

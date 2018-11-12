@@ -3,7 +3,7 @@
     <el-tab-pane label="全局代理" name="proxy"> <Proxy></Proxy></el-tab-pane>
     <el-tab-pane label="单独代理" name="itemProxy"><item-proxy></item-proxy></el-tab-pane>
     <el-tab-pane label="mock数据" name="mock">  <mock></mock></el-tab-pane>
-    <el-tab-pane label="代码段" name="code"> <mock-code></mock-code></el-tab-pane>
+    <el-tab-pane label="代码片段" name="code"> <mock-code></mock-code></el-tab-pane>
   </el-tabs>
 </template>
 

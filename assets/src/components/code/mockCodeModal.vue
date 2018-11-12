@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :fullscreen="true" :modal="false" @open="initDialog" :visible.sync="currentVisible" title="编写代码段" :before-close="close">
+  <el-dialog :fullscreen="true" :modal="false" @open="initDialog" :visible.sync="currentVisible" title="编写代码片段" :before-close="close">
     <el-form  :model="formData" label-width="80px">
       <el-form-item label="name">
         <el-input v-model="formData.name"></el-input>
