@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="删除一些调试的log">
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/components/code/mockCode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/code/mockCode.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/components/code/mockCodeModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/code/mockCodeModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/code/codeFun.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/codeFun.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/code/epm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/epm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/code/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mock/mockFun.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/mock/mockFun.js" afterDir="false" />
     </list>
     <ignored path="express-proxy-mock.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,11 +21,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="epm.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="epm.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/code/epm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+            <state relative-caret-position="153">
+              <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -95,7 +96,7 @@
         <entry file="file://$PROJECT_DIR$/src/code/codeFun.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="86">
-              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -112,7 +113,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setActiveMockCode</find>
       <find>data</find>
       <find>active</find>
       <find>getActiveMock</find>
@@ -142,6 +142,7 @@
       <find>setMockStatus</find>
       <find>getSendMockData</find>
       <find>getMockCode</find>
+      <find>object</find>
     </findStrings>
     <replaceStrings>
       <replace>getMessage</replace>
@@ -227,7 +228,6 @@
         <option value="$PROJECT_DIR$/src/mock/index.js" />
         <option value="$PROJECT_DIR$/assets/src/components/mock/mockModal.vue" />
         <option value="$PROJECT_DIR$/mockData/YhfJhhgjCc.json" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/assets/src/components/proxy/itemProxy.vue" />
         <option value="$PROJECT_DIR$/assets/src/components/code/mockCode.vue" />
         <option value="$PROJECT_DIR$/src/code/codeFun.js" />
@@ -235,6 +235,7 @@
         <option value="$PROJECT_DIR$/src/mock/mockFun.js" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/code/epm.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -316,7 +317,7 @@
     <property name="editor.config.accepted" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="5.1.1" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="E:/cybertron-mp" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -465,7 +466,7 @@
       <workItem from="1509377616190" duration="1924000" />
       <workItem from="1512306884688" duration="84000" />
       <workItem from="1541991345437" duration="7719000" />
-      <workItem from="1542016618645" duration="1791000" />
+      <workItem from="1542016618645" duration="3210000" />
     </task>
     <task id="LOCAL-00001" summary="web">
       <created>1463204769877</created>
@@ -523,11 +524,25 @@
       <option name="project" value="LOCAL" />
       <updated>1542002607076</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="[+] 添加获取自己的返回值，还有目标url的返回值的sdk">
+      <created>1542022118375</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1542022118375</updated>
+    </task>
+    <task id="LOCAL-00010" summary="[+] 更新版本">
+      <created>1542022634966</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1542022634966</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="283730000" />
+    <option name="totallyTimeSpent" value="285149000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -542,15 +557,15 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16280295" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16280295" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3294509" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3295082" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31952018" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31952018" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.38495094" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.38495094" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.40676117" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -601,7 +616,9 @@
     <MESSAGE value="添加说明" />
     <MESSAGE value="修改错字" />
     <MESSAGE value="删除一些调试的log" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除一些调试的log" />
+    <MESSAGE value="[+] 添加获取自己的返回值，还有目标url的返回值的sdk" />
+    <MESSAGE value="[+] 更新版本" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] 更新版本" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -762,13 +779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/mock/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -827,7 +837,7 @@
     <entry file="file://$PROJECT_DIR$/src/code/codeFun.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="86">
-          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -840,8 +850,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/code/epm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+        <state relative-caret-position="153">
+          <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
