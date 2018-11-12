@@ -2,7 +2,7 @@
   <div class="mock-box">
     <el-alert
       class="info"
-      title="通过提供epm的sdk, 可以对mock数据增删改查，简单的模拟业物场景"
+      title="通过提供epm的sdk, 可以对mock数据增删改查，简单的模拟业务场景"
       type="info"
       :closable="false"
     >
