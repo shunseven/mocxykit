@@ -14,6 +14,10 @@ const routeMatch = require('path-match')({
 module.exports = function (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
   return function (req, res, next) {
+    if (option.disabled && option.disabled.includes('itemProxy')) {
+      next()
+      return
+    }
     app.get("/proxy-api/get/itemProxy",function (req,res) {
       res.send(getItemProxy())
     });

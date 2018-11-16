@@ -10,8 +10,8 @@
     <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading">
-        <el-button type="waring"  @click="createMockCode">添加代码片段</el-button>
-      </div>
+        <el-button type="waring"  v-if="!disabledOption.includes('setCode')" @click="createMockCode">添加代码片段</el-button>
+    </div>
       <!-- Table -->
       <el-table
         :data="mocks"
@@ -35,7 +35,7 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button @click="setMockCode(scope.row)"  type="text">
+            <el-button v-if="!disabledOption.includes('setCode')" @click="setMockCode(scope.row)"  type="text">
               编辑
             </el-button>
             <el-button @click="deleteMockCode(scope.row)" type="text">
@@ -52,6 +52,12 @@
 <script>
   import mockCodeModal from './mockCodeModal.vue'
   export default {
+    props: {
+      disabledOption: {
+        type: Array,
+        defaultValue: []
+      }
+    },
     components: {
       mockCodeModal
     },

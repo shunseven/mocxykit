@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="">
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="[+]">
+      <change afterPath="$PROJECT_DIR$/src/common/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/ace.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/css/app.31005f939b889286fa7d55ca5770b06a.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/fonts/element-icons.6f0a763.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/img/jsoneditor-icons.bfab7b1.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/app.3c536c881f0b6e05a5a6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/app.3c536c881f0b6e05a5a6.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/manifest.2ae2e69a05c33dfc65f8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/manifest.2ae2e69a05c33dfc65f8.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/vendor.e69f70fc6fc33642c504.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/vendor.e69f70fc6fc33642c504.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/mode-json.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/static/worker-json.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/src/components/code/mockCode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/code/mockCode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/code/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/itemProxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/itemProxy/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mock/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/mock/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/proxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy/index.js" afterDir="false" />
     </list>
     <ignored path="express-proxy-mock.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -21,11 +46,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="epm.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/code/epm.js">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/code/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+            <state relative-caret-position="136">
+              <caret line="17" column="25" lean-forward="true" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -39,25 +64,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mockFun.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mock/mockFun.js">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/common/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1751">
-              <caret line="103" column="9" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
+            <state relative-caret-position="34">
+              <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="324">
-                <caret line="64" column="48" selection-start-line="64" selection-start-column="33" selection-end-line="64" selection-end-column="48" />
-              </first_editor>
-              <second_editor>
-                <markdownNavigatorState />
-              </second_editor>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -66,37 +86,55 @@
         <entry file="file://$PROJECT_DIR$/assets/src/components/code/mockCode.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
-              <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+              <caret line="37" column="23" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mockModal.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/src/components/mock/mockModal.vue">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
-              <folding>
-                <element signature="n#style#0;n#el-button#0;n#article#0;n#section#0;n#el-form#0;n#el-dialog#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="102">
+              <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/code/index.js">
+        <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="58" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
+            <state relative-caret-position="187">
+              <caret line="11" column="35" lean-forward="true" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="codeFun.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/code/codeFun.js">
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
-              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+            <state relative-caret-position="85">
+              <caret line="5" column="87" lean-forward="true" selection-start-line="5" selection-start-column="87" selection-end-line="5" selection-end-column="87" />
+              <folding>
+                <element signature="e#397#445#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="itemProxy.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/src/components/proxy/itemProxy.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="83" column="9" lean-forward="true" selection-start-line="79" selection-start-column="6" selection-end-line="83" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/itemProxy/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="25" column="35" lean-forward="true" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -113,8 +151,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>data</find>
-      <find>active</find>
       <find>getActiveMock</find>
       <find>activeMock</find>
       <find>getMock</find>
@@ -143,6 +179,8 @@
       <find>getSendMockData</find>
       <find>getMockCode</find>
       <find>object</find>
+      <find>props</find>
+      <find>setMockCode</find>
     </findStrings>
     <replaceStrings>
       <replace>getMessage</replace>
@@ -168,9 +206,10 @@
       <dir>E:\vis\express-proxy-mock\assets\src</dir>
       <dir>E:\vis\express-proxy-mock\assets\src\components</dir>
       <dir>E:\vis\express-proxy-mock</dir>
-      <dir>D:\express-proxy-mock\assets\src</dir>
       <dir>D:\express-proxy-mock\src</dir>
       <dir>D:\express-proxy-mock</dir>
+      <dir>D:\express-proxy-mock\assets\src</dir>
+      <dir>D:\express-proxy-mock\assets</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -185,12 +224,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/activemock.json" />
         <option value="$PROJECT_DIR$/mock.json" />
         <option value="$PROJECT_DIR$/assets/.gitignore" />
         <option value="$PROJECT_DIR$/src/mock.js" />
         <option value="$PROJECT_DIR$/src/proxy/fun.js" />
-        <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/mockData/Vplus-imKf123456Heartbeat.json" />
         <option value="$PROJECT_DIR$/src/static/index.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
@@ -213,28 +250,30 @@
         <option value="$PROJECT_DIR$/assets/build/dev-server.js" />
         <option value="$PROJECT_DIR$/assets/src/components/itemProxy.vue" />
         <option value="$PROJECT_DIR$/src/itemProxy/fun.js" />
-        <option value="$PROJECT_DIR$/src/itemProxy/index.js" />
         <option value="$PROJECT_DIR$/itemProxy.json" />
         <option value="$PROJECT_DIR$/assets/src/components/jsEditor/index.vue" />
         <option value="$PROJECT_DIR$/assets/src/components/mockCode.vue" />
-        <option value="$PROJECT_DIR$/assets/src/App.vue" />
         <option value="$PROJECT_DIR$/assets/src/components/mock/mock.vue" />
-        <option value="$PROJECT_DIR$/src/proxy/index.js" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/assets/src/components/code/mockCodeModal.vue" />
         <option value="$PROJECT_DIR$/assets/src/components/JsonEditor/index.vue" />
         <option value="$PROJECT_DIR$/src/util/fun.js" />
         <option value="$PROJECT_DIR$/src/mock/mocFun.js" />
-        <option value="$PROJECT_DIR$/src/mock/index.js" />
         <option value="$PROJECT_DIR$/assets/src/components/mock/mockModal.vue" />
         <option value="$PROJECT_DIR$/mockData/YhfJhhgjCc.json" />
         <option value="$PROJECT_DIR$/assets/src/components/proxy/itemProxy.vue" />
-        <option value="$PROJECT_DIR$/assets/src/components/code/mockCode.vue" />
         <option value="$PROJECT_DIR$/src/code/codeFun.js" />
-        <option value="$PROJECT_DIR$/src/code/index.js" />
         <option value="$PROJECT_DIR$/src/mock/mockFun.js" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/code/epm.js" />
+        <option value="$PROJECT_DIR$/src/mock/index.js" />
+        <option value="$PROJECT_DIR$/src/proxy/index.js" />
+        <option value="$PROJECT_DIR$/src/itemProxy/index.js" />
+        <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/src/common/index.js" />
+        <option value="$PROJECT_DIR$/assets/src/App.vue" />
+        <option value="$PROJECT_DIR$/assets/src/components/code/mockCode.vue" />
+        <option value="$PROJECT_DIR$/src/code/index.js" />
         <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
@@ -258,10 +297,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-7" />
+    <option name="y" value="13" />
+    <option name="width" value="1036" />
+    <option name="height" value="726" />
   </component>
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
@@ -287,12 +326,23 @@
             <path>
               <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
               <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
-              <item name="mockCode" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
               <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
-              <item name="mockData" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="express-proxy-mock" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="proxy" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="express-proxy-mock" type="b2602c69:ProjectViewProjectNode" />
@@ -317,7 +367,7 @@
     <property name="editor.config.accepted" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="5.1.1" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="last_opened_file_path" value="E:/cybertron-mp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -326,19 +376,19 @@
     <property name="settings.editor.selected.configurable" value="MarkdownNavigator.Settings.Html" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\express-proxy-mock\src" />
-      <recent name="D:\express-proxy-mock\assets\src\components\code" />
-      <recent name="D:\express-proxy-mock\assets\src\components" />
-      <recent name="E:\vis\express-proxy-mock\mockData" />
-      <recent name="E:\vis\express-proxy-mock\assets\static" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\express-proxy-mock\assets\src\components\code" />
       <recent name="D:\express-proxy-mock\assets\src\components\proxy" />
       <recent name="D:\express-proxy-mock\assets\src\components\mock" />
       <recent name="E:\vis\express-proxy-mock\images" />
       <recent name="E:\vis\express-proxy-mock\src\mock" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\express-proxy-mock\src" />
+      <recent name="D:\express-proxy-mock\assets\src\components\code" />
+      <recent name="D:\express-proxy-mock\assets\src\components" />
+      <recent name="E:\vis\express-proxy-mock\mockData" />
+      <recent name="E:\vis\express-proxy-mock\assets\static" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -466,7 +516,10 @@
       <workItem from="1509377616190" duration="1924000" />
       <workItem from="1512306884688" duration="84000" />
       <workItem from="1541991345437" duration="7719000" />
-      <workItem from="1542016618645" duration="3210000" />
+      <workItem from="1542016618645" duration="6083000" />
+      <workItem from="1542288797879" duration="1197000" />
+      <workItem from="1542355586287" duration="597000" />
+      <workItem from="1542359209049" duration="2489000" />
     </task>
     <task id="LOCAL-00001" summary="web">
       <created>1463204769877</created>
@@ -538,11 +591,18 @@
       <option name="project" value="LOCAL" />
       <updated>1542022634966</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="[+] 更新版本">
+      <created>1542028218395</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1542028218395</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="285149000" />
+    <option name="totallyTimeSpent" value="292305000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -561,13 +621,14 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3294509" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info id="npm" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3295082" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.31952018" />
+      <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.38495094" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.38495094" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.40676117" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.40676117" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -575,7 +636,6 @@
       <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -626,6 +686,37 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/assets/src/components/code/mockCode.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/mock/mockModal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
+          <folding>
+            <element signature="n#style#0;n#el-button#0;n#article#0;n#section#0;n#el-form#0;n#el-dialog#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/code/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="58" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/code/codeFun.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/code/epm.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -718,31 +809,10 @@
     <entry file="file://$PROJECT_DIR$/mock.json" />
     <entry file="file://$PROJECT_DIR$/__mock_proxy_assets__/index.js" />
     <entry file="file://$PROJECT_DIR$/assets/src/components/props.vue" />
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="83" column="42" selection-start-line="83" selection-start-column="42" selection-end-line="83" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -772,31 +842,10 @@
     <entry file="file://$PROJECT_DIR$/mockData/HhhIiiOoo.json" />
     <entry file="file://$PROJECT_DIR$/mockData/YhfJhhgj.json" />
     <entry file="file://$PROJECT_DIR$/mockData/YhfJhhgjCc.json" />
-    <entry file="file://$PROJECT_DIR$/assets/src/components/proxy/itemProxy.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="79" selection-start-line="7" selection-start-column="79" selection-end-line="7" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mock/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mockData/Dfdsfds.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/src/components/code/mockCode.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -820,7 +869,7 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="324">
+          <first_editor relative-caret-position="1088">
             <caret line="64" column="48" selection-start-line="64" selection-start-column="33" selection-end-line="64" selection-end-column="48" />
           </first_editor>
           <second_editor>
@@ -834,24 +883,107 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/code/epm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/code/codeFun.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        <state relative-caret-position="272">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mock/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/express/lib/router/layer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="94" selection-start-line="94" selection-end-line="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/express/lib/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="316" column="12" selection-start-line="316" selection-start-column="12" selection-end-line="316" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itemProxy/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="25" column="35" lean-forward="true" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/epm.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/proxy/itemProxy.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="83" column="9" lean-forward="true" selection-start-line="79" selection-start-column="6" selection-end-line="83" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxy/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="87" lean-forward="true" selection-start-line="5" selection-start-column="87" selection-end-line="5" selection-end-column="87" />
+          <folding>
+            <element signature="e#397#445#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/src/components/code/mockCode.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="37" column="23" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="35" lean-forward="true" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/code/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="58" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/code/epm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+        <state relative-caret-position="136">
+          <caret line="17" column="25" lean-forward="true" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
         </state>
       </provider>
     </entry>

@@ -4,7 +4,7 @@
 var express=require('express');
 var app=express();
 var proxyMock=require('./index.js');
-proxyMock(app,{configPath:'/'})
+proxyMock(app,{configPath:'/', disabled: ['setCode']})
 
 var http = require('http');
 var server = http.createServer(app);

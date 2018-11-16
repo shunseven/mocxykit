@@ -8,7 +8,10 @@ const {getMockCode, setMockStatus, setMockCode, deleteMock} = require('./codeFun
 module.exports = function  (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
   return function (req,res,next) {
-
+    if (option.disabled && option.disabled.includes('code')) {
+      next()
+      return
+    }
     app.get('/proxy-api/get/mockCode',function (req,res,next) {
       // var data=JSON.parse(req.query.data);
       var mockCode=getMockCode();
@@ -17,6 +20,10 @@ module.exports = function  (app, option) {
 
 
     app.post('/proxy-api/set/mockCode',function(req,res,next){
+      if (option.disabled && option.disabled.includes('setCode')) {
+        next()
+        return
+      }
       let body = ''
       req.on('data', function (data) {
         body += data

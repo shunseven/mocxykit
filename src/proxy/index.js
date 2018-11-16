@@ -5,7 +5,7 @@ const fs=require('fs');
 const url=require('url');
 const {getHost, getProxies, setProxies} = proxyFun
 var proxy = httpProxy.createProxyServer({});
-module.exports = function (app, option) {
+module.exports = function (app, option = {}) {
   let host=getHost();
   let nowHost=host?'http://'+host.host+':'+host.port:'';
   let apiRule=option&&option.apiRule?option.apiRule:'/*';
@@ -18,6 +18,10 @@ module.exports = function (app, option) {
     proxy = httpProxy.createProxyServer(serverOption).listen(443);
   }
   return function (req, res, next) {
+    if (option.disabled && option.disabled.includes('proxy')) {
+      next()
+      return
+    }
     app.get("/proxy-api/change/host*",function (req,res) {
 
       console.log('change host success');

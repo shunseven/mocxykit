@@ -6,6 +6,10 @@ var {setMock, getMock, setMockStatus, deleteMock, getActiveMock, getSendMockData
 module.exports = function  (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
   return function (req,res,next) {
+    if (option.disabled && option.disabled.includes('mock')) {
+      next()
+      return
+    }
     var activeMock=getActiveMock().mock;
 
     app.get('/proxy-api/get/mock',function (req,res,next) {
