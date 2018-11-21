@@ -1,4 +1,6 @@
-# express-proxy-mock
+# [express-proxy-mock](https://shunseven.gitbook.io/express-proxy-mock/)
+
+# [文档](https://shunseven.gitbook.io/express-proxy-mock/)
 
 # 使用背景
   在前端开发中有一项很重要的工作是后台同事进行数据联调，联调你就要通过对应不同的同事ip进行通讯，这个时候你会遇到浏览器的同源策略引起的跨域问题，还有你可能想有没有快速切换不同的ip进行联调，不用每次修改配制重起不同的服务，在后台接口还没开发完时，能在本地快速的创建假如据，而且接口与后台完全一制而不用在真正联调时还需要修改url，造成没必要的bug，以上这些问题就是我想开发这个express插件的初衷！
