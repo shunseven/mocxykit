@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "seven.zhong <seven.zhong@vipshop.com>",
-  "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "npm run dev",
