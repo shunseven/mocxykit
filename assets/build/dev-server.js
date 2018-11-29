@@ -25,9 +25,7 @@ const proxyTable = config.dev.proxyTable
 
 const app = express()
 const compiler = webpack(webpackConfig)
-console.log(22222);
 app.all('/proxy-api*',function (req,res,next) {
-  console.log(11111);
   proxy.web(req, res, {target:'http://localhost:3003'});
 })
 

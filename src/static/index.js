@@ -7,9 +7,16 @@ module.exports = function (app, option) {
       res.send(null);
     })
 
-    app.get(configPath, function(req, res) {
-      res.sendFile(rootPath + '/assets/dist/index.html')
-    });
+    // app.get(configPath, function(req, res) {
+    //   res.sendFile(rootPath + '/assets/dist/index.html')
+    // });
+
+    if (req.url === configPath) {
+      res.type('.html');
+      res.send(fs.readFileSync(rootPath + '/assets/dist/index.html'))
+      return
+    }
+
     app.get('/proxy-api/page/entry',function (req,res) {
       if(option.pageEntry){
         res.send(option.pageEntry)
