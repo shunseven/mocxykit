@@ -2,6 +2,7 @@ var fs=require('fs');
 var url=require('url');
 var {parseUrlToName} = require('../util/fun')
 var {setMock, getMock, setMockStatus, deleteMock, getActiveMock, getSendMockData} = require('./mockFun')
+const mockjs = require('mockjs')
 
 module.exports = function  (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
@@ -84,7 +85,7 @@ module.exports = function  (app, option) {
       if(mock[pathname]) {
         var mes = mock[pathname];
         getSendMockData(req, mes.data).then(msg => {
-          res.send(msg);
+          res.send(mockjs.mock(msg));
         })
         return
       } else if(req.originalUrl.indexOf('proxy-api') !== -1) {
