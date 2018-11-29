@@ -8,12 +8,13 @@ proxyMock(app,{configPath:'/', disabled: ['setCode']})
 
 var http = require('http');
 var server = http.createServer(app);
-server.listen(3003, '0.0.0.0', function(err) {
+server.listen(3008, '0.0.0.0', function(err) {
     if (err) throw err;
     var addr = server.address();
     console.log('Listening at http://%s:%d', addr.address, addr.port);
 });
 
+module.exports = app
 process.on('uncaughtException', function (err) {
     //打印出错误
     console.log(err);

@@ -4,7 +4,7 @@
   "description": "The tool with proxy and mock for front-end",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/mocha/bin/mocha",
     "dev": "node server.js"
   },
   "author": "shunseven",
@@ -18,5 +18,11 @@
     "lodash": "^4.17.11",
     "mockjs": "^1.0.1-beta3",
     "path-match": "^1.2.4"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "supertest": "^3.3.0"
   }
 }
