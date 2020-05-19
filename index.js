@@ -9,12 +9,12 @@ const itemProxyApp = require('./src/itemProxy/index')
 const mockCodeApp = require('./src/code/index')
 const commonApp = require('./src/common/index')
 module.exports=function (app,option = {}) {
-    app.use(commonApp(app, option))
-    app.use(staticApp(app, option))
-    app.use(mockCodeApp(app, option))
-    app.use(mockApp(app, option))
-    app.use(itemProxyApp(app, option))
-    app.use(proxyApp(app, option))
+    commonApp(app, option)()
+    staticApp(app, option)()
+    mockCodeApp(app, option)()
+    mockApp(app, option)()
+    itemProxyApp(app, option)()
+    proxyApp(app, option)()
 }
 
 process.on('uncaughtException', function (err) {

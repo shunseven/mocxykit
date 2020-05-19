@@ -6,7 +6,7 @@ const mockjs = require('mockjs')
 
 module.exports = function  (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
-  return function (req,res,next) {
+  return function () {
     if (option.disabled && option.disabled.includes('mock')) {
       next()
       return
@@ -97,6 +97,5 @@ module.exports = function  (app, option) {
       }
       next()
     });
-    next()
   }
 }

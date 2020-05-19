@@ -7,7 +7,7 @@ const {getMockCode, setMockStatus, setMockCode, deleteMock} = require('./codeFun
 
 module.exports = function  (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
-  return function (req,res,next) {
+  return function () {
     if (option.disabled && option.disabled.includes('code')) {
       next()
       return
@@ -69,6 +69,5 @@ module.exports = function  (app, option) {
       }
       next()
     });
-    next()
   }
 }

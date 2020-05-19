@@ -17,13 +17,8 @@ module.exports = function (app, option = {}) {
     }
     proxy = httpProxy.createProxyServer(serverOption).listen(443);
   }
-  return function (req, res, next) {
-    if (option.disabled && option.disabled.includes('proxy')) {
-      next()
-      return
-    }
+  return function () {
     app.get("/proxy-api/change/host*",function (req,res) {
-
       console.log('change host success');
       nowHost='http://'+req.query.host+':'+req.query.port;
       if(!req.query.host){
@@ -65,6 +60,10 @@ module.exports = function (app, option = {}) {
     // 全局代理
     app.all(apiRule,function (req,res,next) {
       console.log('set all proxy')
+      if (option.disabled && option.disabled.includes('proxy')) {
+        next()
+        return
+      }
       if (host.host) {
         proxy.web(req, res, {
           target:nowHost,
@@ -87,8 +86,5 @@ module.exports = function (app, option = {}) {
         next()
       }
     });
-
-    next();
-    return this;
   }
 }

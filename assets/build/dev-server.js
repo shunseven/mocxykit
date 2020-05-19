@@ -25,9 +25,9 @@ const proxyTable = config.dev.proxyTable
 
 const app = express()
 const compiler = webpack(webpackConfig)
-app.all('/proxy-api*',function (req,res,next) {
-  proxy.web(req, res, {target:'http://localhost:3003'});
-})
+// app.all('/proxy-api*',function (req,res,next) {
+//   proxy.web(req, res, {target:'http://localhost:3003'});
+// })
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
@@ -69,7 +69,7 @@ app.use(devMiddleware)
 
 // serve pure static assets
 const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
-app.use(staticPath, express.static('./static'))
+app.use(staticPath, express.static('./eptStatic'))
 
 const uri = 'http://localhost:' + port
 

@@ -2,20 +2,20 @@ const path = require('path')
 module.exports = function (app, option) {
   var configPath=option&&option.configPath?option.configPath:'/config';
   var rootPath = path.join(__dirname,'../../')
-  return function (req, res, next) {
+  return function () {
     app.get('/favicon.ico',function (req,res, next) {
       res.send(null);
     })
 
-    // app.get(configPath, function(req, res) {
-    //   res.sendFile(rootPath + '/assets/dist/index.html')
-    // });
+    app.get(configPath, function(req, res) {
+      res.sendFile(rootPath + '/assets/dist/index.html')
+    });
 
-    if (req.url === configPath) {
-      res.type('.html');
-      res.send(fs.readFileSync(rootPath + '/assets/dist/index.html'))
-      return
-    }
+    // if (req.url === configPath) {
+    //   res.type('.html');
+    //   res.send(fs.readFileSync(rootPath + '/assets/dist/index.html'))
+    //   return
+    // }
 
     app.get('/proxy-api/page/entry',function (req,res) {
       if(option.pageEntry){
@@ -25,9 +25,8 @@ module.exports = function (app, option) {
       }
     });
 
-    app.get('/static*',function (req,res) {
+    app.get('/eptStatic*',function (req,res) {
       res.sendFile(rootPath+'/assets/dist/'+req.url);
     })
-    next ()
   }
 }

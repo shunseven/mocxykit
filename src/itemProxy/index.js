@@ -13,11 +13,7 @@ const routeMatch = require('path-match')({
 })
 module.exports = function (app, option) {
   var apiRule=option&&option.apiRule?option.apiRule:'/*';
-  return function (req, res, next) {
-    if (option.disabled && option.disabled.includes('itemProxy')) {
-      next()
-      return
-    }
+  return function () {
     app.get("/proxy-api/get/itemProxy",function (req,res) {
       res.send(getItemProxy())
     });
@@ -37,6 +33,10 @@ module.exports = function (app, option) {
 
     app.all(apiRule, function (req, res, next) {
       let itemProxy = getItemProxy()
+      if (option.disabled && option.disabled.includes('itemProxy')) {
+        next()
+        return
+      }
       if (typeof itemProxy === 'string') {
         itemProxy = JSON.parse(itemProxy)
       }
@@ -70,8 +70,5 @@ module.exports = function (app, option) {
       }
       next()
     })
-
-
-    next();
   }
 }
