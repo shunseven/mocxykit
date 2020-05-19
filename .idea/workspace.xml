@@ -1,43 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="修改万年的遗留问题，historyApiFallback不再需要专门设置为false">
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="修改createReactApp下不能正常使用的问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/build/dev-server.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/build/dev-server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/build/webpack.prod.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/build/webpack.prod.conf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/config/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/ace.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/ace.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/css/app.52e01a8943dde77e868255a720c3b1a9.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/fonts/element-icons.6f0a763.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/img/jsoneditor-icons.bfab7b1.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/app.57130bb2998cb6389cec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/app.57130bb2998cb6389cec.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/manifest.3ad1d5771e9b13dbdad2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/manifest.3ad1d5771e9b13dbdad2.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/vendor.e69f70fc6fc33642c504.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/js/vendor.e69f70fc6fc33642c504.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/mode-json.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/mode-json.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/static/worker-json.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/worker-json.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/assets/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/ace.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/mode-json.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/worker-json.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/code/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/itemProxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/itemProxy/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mock/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/mock/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/static/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/static/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/static/ace.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/ace.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/static/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/bootstrap.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/static/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/static/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/jquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/static/mode-json.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/mode-json.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/static/worker-json.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/worker-json.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +190,7 @@
       <workItem from="1542607887600" duration="8388000" />
       <workItem from="1543217446201" duration="3435000" />
       <workItem from="1543323942391" duration="1210000" />
-      <workItem from="1589873998532" duration="1816000" />
+      <workItem from="1589873998532" duration="2130000" />
     </task>
     <task id="LOCAL-00001" summary="web">
       <created>1463204769877</created>
@@ -324,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543493923321</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="修改createReactApp下不能正常使用的问题">
+      <created>1589876478790</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1589876478790</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -418,9 +398,14 @@
     <MESSAGE value="添加MOCKJS的写法" />
     <MESSAGE value="添加支持MOCKJS的写法" />
     <MESSAGE value="修改万年的遗留问题，historyApiFallback不再需要专门设置为false" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改万年的遗留问题，historyApiFallback不再需要专门设置为false" />
+    <MESSAGE value="修改createReactApp下不能正常使用的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改createReactApp下不能正常使用的问题" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="803" y="294" key="CommitChangelistDialog2" timestamp="1589876478387">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876478387" />
     <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog" timestamp="1589876243975">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
@@ -429,6 +414,10 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="1027" y="423" key="VCS.ChangeListViewerDialog/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876224490" />
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2" timestamp="1589876523313">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876523313" />
     <state x="1087" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589874013627">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
