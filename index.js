@@ -8,6 +8,7 @@ const staticApp = require('./src/static/index')
 const itemProxyApp = require('./src/itemProxy/index')
 const mockCodeApp = require('./src/code/index')
 const commonApp = require('./src/common/index')
+
 module.exports=function (app,option = {}) {
     commonApp(app, option)()
     staticApp(app, option)()

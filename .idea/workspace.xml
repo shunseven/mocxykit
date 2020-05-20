@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="修改createReactApp下不能正常使用的问题">
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="删除无用代码">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/ace.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/ace.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/mode-json.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/mode-json.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/static/worker-json.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/eptStatic/worker-json.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/ace.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/css/app.edcebf3a5a00e07c42d22818ffc7a9b7.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/fonts/element-icons.6f0a763.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/img/jsoneditor-icons.bfab7b1.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/app.a622fbf37199f525721d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/app.a622fbf37199f525721d.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/manifest.37f23e80a991b15c6cae.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/manifest.37f23e80a991b15c6cae.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/vendor.e69f70fc6fc33642c504.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/vendor.e69f70fc6fc33642c504.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/mode-json.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/worker-json.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/proxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +199,8 @@
       <workItem from="1542607887600" duration="8388000" />
       <workItem from="1543217446201" duration="3435000" />
       <workItem from="1543323942391" duration="1210000" />
-      <workItem from="1589873998532" duration="2130000" />
+      <workItem from="1589873998532" duration="6707000" />
+      <workItem from="1589970890351" duration="565000" />
     </task>
     <task id="LOCAL-00001" summary="web">
       <created>1463204769877</created>
@@ -304,7 +314,21 @@
       <option name="project" value="LOCAL" />
       <updated>1589876478790</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="删除无用代码">
+      <created>1589876846710</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1589876846710</updated>
+    </task>
+    <task id="LOCAL-00018" summary="删除无用代码">
+      <created>1589877325584</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1589877325584</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -399,13 +423,14 @@
     <MESSAGE value="添加支持MOCKJS的写法" />
     <MESSAGE value="修改万年的遗留问题，historyApiFallback不再需要专门设置为false" />
     <MESSAGE value="修改createReactApp下不能正常使用的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改createReactApp下不能正常使用的问题" />
+    <MESSAGE value="删除无用代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="删除无用代码" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="803" y="294" key="CommitChangelistDialog2" timestamp="1589876478387">
+    <state x="803" y="294" key="CommitChangelistDialog2" timestamp="1589877325516">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876478387" />
+    <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589877325516" />
     <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog" timestamp="1589876243975">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
@@ -414,14 +439,14 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="1027" y="423" key="VCS.ChangeListViewerDialog/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876224490" />
-    <state x="880" y="460" key="Vcs.Push.Dialog.v2" timestamp="1589876523313">
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2" timestamp="1589877347245">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="880" y="460" key="Vcs.Push.Dialog.v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876523313" />
-    <state x="1087" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589874013627">
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589877347245" />
+    <state x="1087" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589877223081">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="1087" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589874013627" />
+    <state x="1087" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589877223081" />
     <state x="964" y="469" width="631" height="502" key="find.popup" timestamp="1589876048090">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>

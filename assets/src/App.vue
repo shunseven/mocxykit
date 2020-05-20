@@ -1,6 +1,5 @@
 <template>
   <el-tabs v-model="activeType">
-    ddd
     <el-tab-pane v-if="!disabledOption.includes('proxy')" label="全局代理" name="proxy"> <Proxy></Proxy></el-tab-pane>
     <el-tab-pane v-if="!disabledOption.includes('itemProxy')" label="单独代理" name="itemProxy"><item-proxy></item-proxy></el-tab-pane>
     <el-tab-pane v-if="!disabledOption.includes('mock')" label="mock数据" name="mock">  <mock></mock></el-tab-pane>

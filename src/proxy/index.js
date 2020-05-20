@@ -4,6 +4,8 @@ const path = require('path')
 const fs=require('fs');
 const url=require('url');
 const {getHost, getProxies, setProxies} = proxyFun
+const HttpsProxyAgent = require('https-proxy-agent')
+const HttpProxyAgent = require('http-proxy-agent')
 var proxy = httpProxy.createProxyServer({});
 module.exports = function (app, option = {}) {
   let host=getHost();
@@ -64,24 +66,36 @@ module.exports = function (app, option = {}) {
         next()
         return
       }
+      if (option.https) {
+        nowHost = nowHost.replace('http', 'https')
+      }
+      const proxyOptions = {
+        target:nowHost,
+        /**
+         * This ensures targets are more likely to
+         * accept each request
+         */
+        changeOrigin: true,
+        /**
+         * This handles redirects
+         */
+        autoRewrite: true,
+        /**
+         * This allows our self-signed certs to be used for development
+         */
+        secure: false,
+        ws: true
+      }
+      if (option.agentProxy) {
+        if (option.https) {
+          proxyOptions.agent = new HttpsProxyAgent(option.agentProxy)
+        } else {
+          proxyOptions.agent = new HttpProxyAgent(option.agentProxy)
+        }
+      }
+
       if (host.host) {
-        proxy.web(req, res, {
-          target:nowHost,
-          /**
-           * This ensures targets are more likely to
-           * accept each request
-           */
-          changeOrigin: true,
-          /**
-           * This handles redirects
-           */
-          autoRewrite: true,
-          /**
-           * This allows our self-signed certs to be used for development
-           */
-          secure: false,
-          ws: true
-        });
+        proxy.web(req, res, proxyOptions);
       } else {
         next()
       }
