@@ -5,11 +5,11 @@ const fs=require('fs');
 const url=require('url');
 const {getHost, getProxies, setProxies} = proxyFun
 const HttpsProxyAgent = require('https-proxy-agent')
-const HttpProxyAgent = require('http-proxy-agent')
 var proxy = httpProxy.createProxyServer({});
 module.exports = function (app, option = {}) {
   let host=getHost();
-  let nowHost=host?'http://'+host.host+':'+host.port:'';
+  const pre = option.https ? 'https://' : 'http://'
+  let nowHost= host? pre + host.host+':'+host.port:'';
   let apiRule=option&&option.apiRule?option.apiRule:'/*';
   let serverOption = {}
   if (option.https) {
@@ -22,7 +22,8 @@ module.exports = function (app, option = {}) {
   return function () {
     app.get("/proxy-api/change/host*",function (req,res) {
       console.log('change host success');
-      nowHost='http://'+req.query.host+':'+req.query.port;
+      const pre = option.https ? 'https://' : 'http://'
+      nowHost= pre + req.query.host+':'+req.query.port;
       if(!req.query.host){
         nowHost='';
       }
@@ -66,11 +67,8 @@ module.exports = function (app, option = {}) {
         next()
         return
       }
-      if (option.https) {
-        nowHost = nowHost.replace('http', 'https')
-      }
-      const proxyOptions = {
-        target:nowHost,
+      const proxyOption = {
+        target: nowHost,
         /**
          * This ensures targets are more likely to
          * accept each request
@@ -84,21 +82,32 @@ module.exports = function (app, option = {}) {
          * This allows our self-signed certs to be used for development
          */
         secure: false,
+        cookieDomainRewrite: "",
         ws: true
       }
+      proxy.on('proxyRes', function (proxyRes, req, res) {
+        const sc = proxyRes.headers['set-cookie'];
+        if (Array.isArray(sc)) {
+          proxyRes.headers['set-cookie'] = sc.map(sc => {
+            return sc.split(';')
+                .filter(v => v.trim().toLowerCase() !== 'secure')
+                .join(';')
+          });
+        }
+      })
       if (option.agentProxy) {
         if (option.https) {
-          proxyOptions.agent = new HttpsProxyAgent(option.agentProxy)
+          proxyOption.agent = new HttpsProxyAgent(option.agentProxy)
         } else {
-          proxyOptions.agent = new HttpProxyAgent(option.agentProxy)
+          proxyOption.agent = new HttpProxyAgent(option.agentProxy)
         }
       }
-
       if (host.host) {
-        proxy.web(req, res, proxyOptions);
-      } else {
-        next()
+        proxy.web(req, res, proxyOption);
       }
+      proxy.on('error', function (err, req, res) {
+        console.log('err')
+      });
     });
   }
 }
