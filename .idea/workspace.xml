@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="删除无用代码">
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="添加agentProxy 解决node代理的问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/ace.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/css/app.edcebf3a5a00e07c42d22818ffc7a9b7.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/fonts/element-icons.6f0a763.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/img/jsoneditor-icons.bfab7b1.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/app.a622fbf37199f525721d.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/app.a622fbf37199f525721d.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/manifest.37f23e80a991b15c6cae.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/manifest.37f23e80a991b15c6cae.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/vendor.e69f70fc6fc33642c504.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/vendor.e69f70fc6fc33642c504.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/mode-json.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/worker-json.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/proxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy/index.js" afterDir="false" />
@@ -51,10 +37,6 @@
     <exe-path />
     <annotation-enable>false</annotation-enable>
     <other-services-enabled>true</other-services-enabled>
-  </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="2560" />
-    <option name="height" value="1440" />
   </component>
   <component name="ProjectId" id="1c7K4BAoKfJyuHV4IykJx21qbC1" />
   <component name="ProjectLevelVcsManager">
@@ -200,7 +182,12 @@
       <workItem from="1543217446201" duration="3435000" />
       <workItem from="1543323942391" duration="1210000" />
       <workItem from="1589873998532" duration="6707000" />
-      <workItem from="1589970890351" duration="565000" />
+      <workItem from="1589970890351" duration="5850000" />
+      <workItem from="1590390333891" duration="6000" />
+      <workItem from="1591099810137" duration="1680000" />
+      <workItem from="1591671774108" duration="1438000" />
+      <workItem from="1592186844853" duration="3925000" />
+      <workItem from="1593592111136" duration="780000" />
     </task>
     <task id="LOCAL-00001" summary="web">
       <created>1463204769877</created>
@@ -328,7 +315,21 @@
       <option name="project" value="LOCAL" />
       <updated>1589877325584</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="添加agentProxy 解决node代理的问题">
+      <created>1589971572013</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1589971572013</updated>
+    </task>
+    <task id="LOCAL-00020" summary="fix: 修复cookie的问题">
+      <created>1591099946465</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1591099946465</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -424,32 +425,40 @@
     <MESSAGE value="修改万年的遗留问题，historyApiFallback不再需要专门设置为false" />
     <MESSAGE value="修改createReactApp下不能正常使用的问题" />
     <MESSAGE value="删除无用代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除无用代码" />
+    <MESSAGE value="添加agentProxy 解决node代理的问题" />
+    <MESSAGE value="fix: 修复cookie的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 修复cookie的问题" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="803" y="294" key="CommitChangelistDialog2" timestamp="1589877325516">
+    <state x="803" y="294" key="CommitChangelistDialog2" timestamp="1593592122352">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589877325516" />
-    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog" timestamp="1589876243975">
+    <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1370/2560.23.2560.1417@0.0.2560.1370" timestamp="1589974869350" />
+    <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1593592122352" />
+    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog" timestamp="1591099914565">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876243975" />
+    <state x="100" y="100" key="DiffContextDialog/0.0.2560.1370/2560.23.2560.1417@0.0.2560.1370" timestamp="1589974867037" />
+    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1591099914565" />
     <state x="1027" y="423" key="VCS.ChangeListViewerDialog" timestamp="1589876224490">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="1027" y="423" key="VCS.ChangeListViewerDialog/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876224490" />
-    <state x="880" y="460" key="Vcs.Push.Dialog.v2" timestamp="1589877347245">
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2" timestamp="1591099948525">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="880" y="460" key="Vcs.Push.Dialog.v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589877347245" />
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1591099948525" />
     <state x="1087" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589877223081">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="1087" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589877223081" />
-    <state x="964" y="469" width="631" height="502" key="find.popup" timestamp="1589876048090">
+    <state x="964" y="469" width="631" height="534" key="find.popup" timestamp="1591099858087">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="964" y="469" width="631" height="502" key="find.popup/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876048090" />
+    <state x="964" y="469" width="631" height="534" key="find.popup/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1591099858087" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1589977904856">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589977904856" />
   </component>
 </project>

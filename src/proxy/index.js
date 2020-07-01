@@ -5,6 +5,7 @@ const fs=require('fs');
 const url=require('url');
 const {getHost, getProxies, setProxies} = proxyFun
 const HttpsProxyAgent = require('https-proxy-agent')
+const HttpProxyAgent = require('http-proxy-agent')
 var proxy = httpProxy.createProxyServer({});
 module.exports = function (app, option = {}) {
   let host=getHost();
