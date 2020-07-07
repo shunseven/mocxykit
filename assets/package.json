@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "element-ui": "^2.2.1",
-    "jsoneditor": "^5.9.6",
+    "jsoneditor": "^9.0.3",
     "lodash": "^4.17.11",
     "vue": "^2.5.2",
     "vue-async-data": "^1.0.2",

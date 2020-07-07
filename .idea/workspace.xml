@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="添加agentProxy 解决node代理的问题">
+    <list default="true" id="50849dd7-3520-4457-9aaf-b37b0e0642a3" name="Default" comment="添加http的agent代理">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/css/app.77274d9513207b5c576a8339d1aa6dbb.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/img/jsoneditor-icons.bfab7b1.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/app.146aeaec8ef331b941bc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/app.146aeaec8ef331b941bc.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/manifest.37f23e80a991b15c6cae.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dist/eptStatic/js/manifest.37f23e80a991b15c6cae.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/vendor.e69f70fc6fc33642c504.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/eptStatic/js/vendor.e69f70fc6fc33642c504.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proxy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +195,10 @@
       <workItem from="1591099810137" duration="1680000" />
       <workItem from="1591671774108" duration="1438000" />
       <workItem from="1592186844853" duration="3925000" />
-      <workItem from="1593592111136" duration="780000" />
+      <workItem from="1593592111136" duration="1223000" />
+      <workItem from="1593596783145" duration="382000" />
+      <workItem from="1593676579619" duration="3000" />
+      <workItem from="1594105064536" duration="330000" />
     </task>
     <task id="LOCAL-00001" summary="web">
       <created>1463204769877</created>
@@ -329,7 +340,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591099946465</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="添加http的agent代理">
+      <created>1593593139196</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1593593139198</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -427,27 +445,28 @@
     <MESSAGE value="删除无用代码" />
     <MESSAGE value="添加agentProxy 解决node代理的问题" />
     <MESSAGE value="fix: 修复cookie的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: 修复cookie的问题" />
+    <MESSAGE value="添加http的agent代理" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加http的agent代理" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="803" y="294" key="CommitChangelistDialog2" timestamp="1593592122352">
+    <state x="803" y="294" key="CommitChangelistDialog2" timestamp="1593593139025">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1370/2560.23.2560.1417@0.0.2560.1370" timestamp="1589974869350" />
-    <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1593592122352" />
-    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog" timestamp="1591099914565">
+    <state x="803" y="294" key="CommitChangelistDialog2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1593593139025" />
+    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog" timestamp="1593593115776">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="100" y="100" key="DiffContextDialog/0.0.2560.1370/2560.23.2560.1417@0.0.2560.1370" timestamp="1589974867037" />
-    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1591099914565" />
+    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1593593115776" />
     <state x="1027" y="423" key="VCS.ChangeListViewerDialog" timestamp="1589876224490">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="1027" y="423" key="VCS.ChangeListViewerDialog/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1589876224490" />
-    <state x="880" y="460" key="Vcs.Push.Dialog.v2" timestamp="1591099948525">
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2" timestamp="1593593140561">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="880" y="460" key="Vcs.Push.Dialog.v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1591099948525" />
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1593593140561" />
     <state x="1087" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589877223081">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
