@@ -91,7 +91,7 @@ module.exports = function (app, option = {}) {
         if (Array.isArray(sc)) {
           proxyRes.headers['set-cookie'] = sc.map(sc => {
             return sc.split(';')
-                .filter(v => v.trim().toLowerCase() !== 'secure' ||  v.trim().toLowerCase() !== 'samesite')
+                .filter(v => v.trim().toLowerCase() !== 'secure' && !v.trim().toLowerCase().includes('samesite='))
                 .join(';')
           });
         }
