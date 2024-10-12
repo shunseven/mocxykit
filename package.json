@@ -1,30 +1,31 @@
 {
   "name": "express-proxy-mock",
-  "version": "1.9.9",
+  "version": "2.0.0",
   "description": "The tool with proxy and mock for front-end",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
-    "dev": "node server.js"
+    "start": "ts-node server.ts",
+    "build": "tsc"
   },
   "author": "shunseven",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "brace": "^0.11.1",
-    "express": "^4.16.2",
-    "http-proxy": "^1.13.2",
-    "http-proxy-agent": "^4.0.1",
-    "https-proxy-agent": "^5.0.0",
-    "is-json": "^2.0.0",
-    "lodash": "^4.17.11",
-    "mockjs": "^1.0.1-beta3",
-    "path-match": "^1.2.4"
+    "@ant-design/icons": "^5.5.1",
+    "antd": "^5.21.3",
+    "express": "^4.21.1",
+    "express-react-views": "^0.11.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "assert": "^1.4.1",
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "supertest": "^3.3.0"
+    "@babel/core": "^7.25.8",
+    "@babel/preset-env": "^7.25.8",
+    "@babel/preset-react": "^7.25.7",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.5",
+    "babel-plugin-import": "^1.13.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   }
 }

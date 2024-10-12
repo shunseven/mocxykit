@@ -2,7 +2,9 @@ node_modules/
 mockData/
 proxy.json
 mock.json
+package-lock.json
 .idea
 .idea/
 .idea/*
 .idea*
+.history
