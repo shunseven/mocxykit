@@ -11,9 +11,8 @@ interface ProxyList {
 interface ApiConfig {
   url: string;
   key: string;
-  customProxy: any[];
+  customProxy: string;
   selectCustomProxy: string;
-  selectMock: string;
   target: 'proxy' | 'mock' | 'customProxy';
 }
 
@@ -21,4 +20,16 @@ interface ApiData {
   proxy: ProxyList[];
   selectProxy: string;
   apiList: ApiConfig[];
+}
+interface MockRequestData {
+  name: string;
+  requestData: object;
+  responseData: object;
+}
+
+interface MockData {
+  data: MockRequestData[];
+  url: string;
+  name: string;
+  duration: number;
 }
