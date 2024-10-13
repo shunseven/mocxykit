@@ -1,5 +1,6 @@
 interface ProxyMockOptions {
   apiRule: string;
+  https?: boolean; // 是否启用 https
 }
 
 interface ProxyList {

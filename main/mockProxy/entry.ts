@@ -1,9 +1,10 @@
 import { Application, NextFunction, Request, Response } from "express";
 import { getApiData } from "./common/fetchJsonData";
 import { parseUrlToKey } from "./common/fun";
+import createProxyServer from "./proxy";
 
 export default function entry(app: Application, options: ProxyMockOptions) {
-  
+  const proxyServer = createProxyServer(app, options);
   app.get(options.apiRule, (req: Request, res: Response, next: NextFunction) => {
      const apiData = getApiData();
      const key = parseUrlToKey(req.url);
@@ -11,6 +12,7 @@ export default function entry(app: Application, options: ProxyMockOptions) {
      if (apiConfig?.target === 'proxy' || !apiConfig) {
        // 走全局代理
        console.log(`${req.url} 代理 => ${apiData.selectProxy}`);
+       proxyServer(req, res, next, apiData);
      } else if (apiConfig?.target === 'mock') {
        // 走 mock 数据
        console.log(`${req.url} mock => ${apiConfig.selectMock}`);
