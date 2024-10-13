@@ -2,14 +2,23 @@ import fs from 'fs';
 import { parseUrlToKey } from './fun';
 import { Request } from 'express';
 
+interface AllMockData {
+  [key: string]: MockData
+}
+
+const apiDataFilePath = './proxyMockData/api.json'
 export function getApiData():ApiData {
-  const stat=fs.existsSync('./proxyMockData/api.json');
-  const config=stat ? JSON.parse(fs.readFileSync('./proxyMockData/api.json').toString()) : {};
+  const stat=fs.existsSync(apiDataFilePath);
+  const config=stat ? JSON.parse(fs.readFileSync(apiDataFilePath).toString()) : {
+    proxy: [],
+    selectProxy: '',
+    apiList: []
+  };
   return config;
 }
 
-interface AllMockData {
-  [key: string]: MockData
+export function setApiData(data: ApiData) {
+  fs.writeFileSync(apiDataFilePath,JSON.stringify(data));
 }
 
 const mockPath = './proxyMockData/mockData'

@@ -34,9 +34,13 @@ function List() {
 
   return <>
     <Space style={{marginBottom: '15px'}} size={10}>
-      <Button type="primary">切换为全局代理</Button>
-      <Button type="primary">首选MOCK</Button>
-      <Button type="primary">首选自定义代理</Button>
+      <Button 
+      size='small'
+      style={{
+        background: '#f50'
+      }} type="primary">切换为全局代理</Button>
+      <Button size='small' type="primary">首选MOCK</Button>
+      <Button size='small' type="primary">首选自定义代理</Button>
     </Space>
     <Table pagination={false} dataSource={data}>
       <Column title="URL" dataIndex="URL" key="firstName" />

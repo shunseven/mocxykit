@@ -3,6 +3,7 @@ import { getApiData } from "./common/fetchJsonData";
 import { parseUrlToKey } from "./common/fun";
 import createProxyServer from "./proxy";
 import createMock from "./mock";
+import viewRequest from "./viewRequest";
 
 
 export default function entry(app: Application, options: ProxyMockOptions) {
@@ -34,5 +35,7 @@ export default function entry(app: Application, options: ProxyMockOptions) {
         console.log(`${req.url} 未匹配`);
         next();
      }
-  });
+  })
+  // 界面操作
+  viewRequest(app)
 }
