@@ -1,12 +1,13 @@
 
 import { Space, Table, Tag, Radio, Button } from 'antd';
 import { useState } from 'react';
+import ApiEdit from './edit';
 const { Column } = Table;
 
 const data = [
   {
     key: '1',
-    firstName: 'John',
+    url: 'JohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohn',
     lastName: 'Brown',
     age: 32,
     address: 'New York No. 1 Lake Park',
@@ -31,19 +32,41 @@ const data = [
 ];
 function List() {
   const [targetType, setTargetType] = useState('proxy')
+  const [editVisible, setEditVisible] = useState(false)
 
   return <>
-    <Space style={{marginBottom: '15px'}} size={10}>
-      <Button 
-      size='small'
-      style={{
-        background: '#f50'
-      }} type="primary">切换为全局代理</Button>
-      <Button size='small' type="primary">首选MOCK</Button>
-      <Button size='small' type="primary">首选自定义代理</Button>
-    </Space>
-    <Table pagination={false} dataSource={data}>
-      <Column title="URL" dataIndex="URL" key="firstName" />
+    <div style={{
+      marginBottom: '15px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      paddingLeft: '14px',
+      paddingRight: '14px'
+    }}>
+      <Space size={10}>
+        <Button 
+        size='small'
+        style={{
+          borderColor: '#f50',
+          color: '#f50'
+        }} variant="outlined">切换为全局代理</Button>
+        <Button size='small' color="primary"  variant="outlined" >首选MOCK</Button>
+        <Button size='small' color="primary"  variant="outlined">首选自定义代理</Button>
+       
+      </Space>
+      <Button
+      onClick={() => setEditVisible(true)}  type='primary'>
+          新增MOCK数据&自定义代理
+      </Button>
+    </div>
+   
+    <Table 
+      pagination={false} 
+      dataSource={data}
+      scroll={{
+        x: 'max-content',
+      }}
+    >
+      <Column title="URL" dataIndex="url" key="ur" />
       <Column
         title="当前生效"
         dataIndex="tags"
@@ -64,7 +87,11 @@ function List() {
           </>
         )}
       />
-      <Column title="启用" render={(_, record) => (
+      <Column 
+        title="启用" 
+        fixed="right"
+        width={380}
+        render={(_, record) => (
         <Radio.Group name="radiogroup" onChange={(event) => {
           setTargetType(event.target.value)
         }} value={targetType}>
@@ -79,14 +106,13 @@ function List() {
       <Column
         title="操作"
         key="action"
+        fixed="right"
+        width={120}
         render={(_, record) => (
           <Space size="middle">
             <a style={{
               marginRight: '10px'
-            }}>MOCK设置</a>
-            <a style={{
-              marginRight: '10px'
-            }}>自定义代理设置</a>
+            }}>设置</a>
             <a
               style={{
                 color: 'red'
@@ -96,6 +122,7 @@ function List() {
         )}
       />
     </Table>
+    <ApiEdit visible={editVisible} onCancel={() => setEditVisible(false)} />
   </>
 }
 

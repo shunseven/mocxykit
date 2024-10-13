@@ -28,7 +28,7 @@ export default function entry(app: Application, options: ProxyMockOptions) {
        // 走自定义代理
        console.log(`${req.url} 自定义代理 => ${apiConfig.selectCustomProxy}`);
        proxyServer(req, res, next, {
-        proxyUrl: apiConfig.customProxy,
+        proxyUrl: apiConfig.selectCustomProxy,
         ignorePath: false,
        });
      } else {

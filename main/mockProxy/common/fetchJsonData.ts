@@ -17,6 +17,11 @@ export function getApiData():ApiData {
   return config;
 }
 
+export function getTargetApiData(key: string): ApiConfig | null {
+  const apiData = getApiData()
+  return apiData.apiList.find(item => item.key === key || parseUrlToKey(item.url) === key) || null;
+ }
+
 export function setApiData(data: ApiData) {
   fs.writeFileSync(apiDataFilePath,JSON.stringify(data));
 }
