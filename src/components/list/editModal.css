@@ -9,19 +9,26 @@
 .edit-modal .ant-modal-content {
   height: calc(100vh - 50px);
 }
-.edit-modal .jsoneditor {
-  height: calc(100vh - 380px);
-  
+
+.edit-modal .editor-req .jsoneditor-menu {
+  display: none;
 }
+
+.edit-modal .editor-res .jsoneditor {
+  height: calc(100vh - 625px); 
+}
+
 .edit-modal .form-item-mock-editor {
   height: calc(100vh - 365px); 
 }
 .mock-editor-box {
-  height: calc(100vh - 365px);
+  height: calc(100vh - 400px);
   display: flex;
+  background: #f5f5f5;
+  padding-top: 10px;
 }
 .mock-editor-box .mock-editor-menu {
-  width: 100px;
+  width: 230px;
 }
 .mock-editor-warp {
   flex: 1;

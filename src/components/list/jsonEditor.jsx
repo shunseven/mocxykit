@@ -74,7 +74,6 @@ const Editor = ({
   schemaRefs,
   onChange,
   onError,
-  onModeChange,
   ace,
   ajv,
   theme,
@@ -86,7 +85,7 @@ const Editor = ({
   tag: Tag = 'div',
   htmlElementProps,
   innerRef,
-  sortObjectKeys = false
+  sortObjectKeys = false,
 }) => {
   const htmlElementRef = useRef(null);
   const jsonEditorRef = useRef(null);

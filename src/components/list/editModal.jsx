@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import GProxy from "../proxy/proxy";
-import { Button, Form, Input, Select, Space } from 'antd'
+import { Menu, Form, Input } from 'antd'
 import './editModal.css'
 import JSONEditor from './jsonEditor'
 
@@ -47,17 +47,35 @@ export default function ApiEdit(props) {
       <Form.Item className="form-item-mock-editor" name="mock" layout="vertical" label="Mock数据">
         <div className="mock-editor-box">
            <div className="mock-editor-menu">
-
+           <Menu
+              onClick={() => {}}
+              defaultSelectedKeys={['1']}
+              defaultOpenKeys={['sub1']}
+              mode="inline"
+              items={[{
+                key: '1',
+                label: '接口信息'
+              }, {
+                key: '2',
+                label: '接口信息3'
+              }]}
+            />
            </div>
            <div className="mock-editor-warp">
              <div>
                入参:
              </div>
-             <JSONEditor className="editor-req" mode="code"/>
+             <JSONEditor
+                htmlElementProps={{
+                  className: 'editor-req'
+                }} 
+                mode="code"/>
              <div>
                 出参:
              </div>
-             <JSONEditor className="editor-res" mode="code" />
+             <JSONEditor htmlElementProps={{
+              className: 'editor-res'
+             }} mode="code" />
            </div>
           
         </div>
