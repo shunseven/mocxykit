@@ -1,18 +1,24 @@
 import { Modal } from "antd";
 import GProxy from "../proxy/proxy";
-import { Menu, Form, Input } from 'antd'
+import { Form, Input, Button } from 'antd'
 import './editModal.css'
-import JSONEditor from './jsonEditor'
+import MockEditor from "./mockEditor";
+import { useState } from "react";
+
 
 export default function ApiEdit(props) {
   const { onCancel } = props;
   const [form] = Form.useForm();
+  const [showRequest, setShowRequest] = useState()
 
-  return <Modal 
-    className="edit-modal" 
-    centered={true} 
-    onCancel={onCancel} 
-    title="Basic Modal"
+  return <Modal
+    className="edit-modal"
+    centered={true}
+    onCancel={() => {
+      onCancel()
+      setShowRequest(false)
+    }}
+    title="MOCK数据&自定义代理"
     okText="保存"
     cancelText="取消"
     onOk={() => {
@@ -21,65 +27,35 @@ export default function ApiEdit(props) {
     open={props.visible}>
     <Form
       form={form}
-      onFinish={() =>{}}
-      style={{ width:' 100%' }}
+      onFinish={() => { }}
+      style={{ width: ' 100%' }}
+      layout="inline"
     >
-      <Form.Item name="name" label="名称" rules={[{ required: true }]}>
+      <Form.Item className="ant-form-mock-item" width="30%" name="name" layout="inline" label="名称" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-      <Form.Item name="duration" label="延时" rules={[{ required: true }]}>
+      <Form.Item className="ant-form-mock-item" width="30%" name="name" layout="inline" label="URL" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-      <Form.Item>
-        <GProxy
-          label="自定义代理:"
-          deleteComfirm={true}
-          proxyList={[]} 
-          selectProxy={''}
-          onProxyChange={async (data) => {
-          }}
-          onProxyDelete={async (data) => {
-          }}
-          onProxyCreate={async (data) => {
-          }}
-        />
-      </Form.Item>
-      <Form.Item className="form-item-mock-editor" name="mock" layout="vertical" label="Mock数据">
-        <div className="mock-editor-box">
-           <div className="mock-editor-menu">
-           <Menu
-              onClick={() => {}}
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
-              mode="inline"
-              items={[{
-                key: '1',
-                label: '接口信息'
-              }, {
-                key: '2',
-                label: '接口信息3'
-              }]}
-            />
-           </div>
-           <div className="mock-editor-warp">
-             <div>
-               入参:
-             </div>
-             <JSONEditor
-                htmlElementProps={{
-                  className: 'editor-req'
-                }} 
-                mode="code"/>
-             <div>
-                出参:
-             </div>
-             <JSONEditor htmlElementProps={{
-              className: 'editor-res'
-             }} mode="code" />
-           </div>
-          
-        </div>
+      <Form.Item className="ant-form-mock-item" width="30%" name="duration" layout="inline" label="延时">
+        <Input />
       </Form.Item>
     </Form>
+    <GProxy
+      label="自定义代理:"
+      deleteComfirm={true}
+      proxyList={[]}
+      selectProxy={''}
+      onProxyChange={async (data) => {
+      }}
+      onProxyDelete={async (data) => {
+      }}
+      onProxyCreate={async (data) => {
+      }}
+    />
+    <div className="mock-editor-title">
+      <div>MOCK数据</div> <Button variant="outlined" onClick={()=>setShowRequest(true)} color="primary">添加入参</Button>
+    </div>
+    <MockEditor showRequest={showRequest} />
   </Modal>
 }
