@@ -1,0 +1,28 @@
+.edit-modal {
+  width: 100vw !important;
+  overflow-y: auto;
+}
+
+.edit-modal .ant-form-item-label {
+  width: 80px;
+}
+.edit-modal .ant-modal-content {
+  height: calc(100vh - 50px);
+}
+.edit-modal .jsoneditor {
+  height: calc(100vh - 380px);
+  
+}
+.edit-modal .form-item-mock-editor {
+  height: calc(100vh - 365px); 
+}
+.mock-editor-box {
+  height: calc(100vh - 365px);
+  display: flex;
+}
+.mock-editor-box .mock-editor-menu {
+  width: 100px;
+}
+.mock-editor-warp {
+  flex: 1;
+}
