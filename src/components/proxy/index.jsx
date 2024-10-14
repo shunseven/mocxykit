@@ -19,22 +19,23 @@ function Index() {
 
   return (
     <GProxy
-        deleteComfirm={true}
-        proxyList={proxyList} 
-        selectProxy={selectProxy}
-        onProxyChange={async (data) => {
-          await fetchChangeProxy(data)
-          fetchProxyData();
-        }}
-        onProxyDelete={async (data) => {
-          await fetchDeleteProxy(data)
-          fetchProxyData();
-        }}
-        onProxyCreate={async (data) => {
-          await fetchCreateProxy(data)
-          fetchProxyData();
-        }}
-      />
+      label="全局代理:"
+      deleteComfirm={true}
+      proxyList={proxyList}
+      selectProxy={selectProxy}
+      onProxyChange={async (data) => {
+        await fetchChangeProxy(data)
+        fetchProxyData();
+      }}
+      onProxyDelete={async (data) => {
+        await fetchDeleteProxy(data)
+        fetchProxyData();
+      }}
+      onProxyCreate={async (data) => {
+        await fetchCreateProxy(data)
+        fetchProxyData();
+      }}
+    />
   );
 }
 

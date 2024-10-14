@@ -8,8 +8,8 @@ async function createServer() {
     apiRule: '/api/*'
   })
   // 创建 Vite 服务器
-  app.listen(8800, () => {
-    console.log('Server is running at http://localhost:8800');
+  app.listen(8822, () => {
+    console.log('Server is running at http://localhost:8822');
   });
 }
 

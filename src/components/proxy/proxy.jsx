@@ -4,7 +4,7 @@ import { useState } from 'react';
 function GProxy(props) {
   const [isCreate, setIsCreate] = useState(false)
   const [form] = Form.useForm()
-  const {proxyList, selectProxy, onProxyChange, onProxyDelete, onProxyCreate, deleteComfirm} = props
+  const {proxyList, selectProxy, onProxyChange, onProxyDelete, onProxyCreate, deleteComfirm, label} = props
 
   let hasDelete = false;
 
@@ -12,7 +12,7 @@ function GProxy(props) {
     <Space style={{ marginTop: '15px' }}>
       {
         !isCreate && <Space>
-          <div>全局代理:</div>
+          <div>{label}</div>
           <Select
             size='middle'
             value={selectProxy}
@@ -88,7 +88,7 @@ function GProxy(props) {
             form.resetFields()
           }}
         >
-          <Form.Item name='name' label="name">
+          <Form.Item name='name' label="名称">
             <Input size='middle' placeholder="请输入代理的名称" />
           </Form.Item>
           <Form.Item

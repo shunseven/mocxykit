@@ -1,7 +1,7 @@
 
 import { Space, Table, Tag, Radio, Button } from 'antd';
 import { useState } from 'react';
-import ApiEdit from './edit';
+import ApiEdit from './editModal';
 const { Column } = Table;
 
 const data = [
