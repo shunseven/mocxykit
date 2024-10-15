@@ -42,9 +42,10 @@ export default function viewRequest(app: Application) {
   })
 
   // 添加mock
-  app.post('/express-proxy-mock/save-costommock-proxy', (req: Request, res: Response) => {
+  app.post('/express-proxy-mock/save-customproxy-mock', (req: Request, res: Response) => {
     getReqBodyData(req).then((data) => {
       setCustomProxyAndMock(data as CustomProxyAndMock)
+      res.send(successData)
     })
   })
   // 获取mock数据

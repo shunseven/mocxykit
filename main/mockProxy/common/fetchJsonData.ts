@@ -30,12 +30,20 @@ export function getTargetApiData(key: string, apiData?: ApiData): ApiConfig | nu
 }
 
 export function setApiData(data: ApiData) {
-  fs.writeFileSync(apiDataFilePath,JSON.stringify(data));
+  const stat=fs.existsSync('./proxyMockData');
+  if (!stat) {
+    fs.mkdirSync('./proxyMockData');
+  }
+  fs.writeFileSync(apiDataFilePath,JSON.stringify(data), 'utf-8');
 }
 
 const mockPath = './proxyMockData/mockData'
 
 export function setMockData(key: string, data: MockData) {
+  const stat=fs.existsSync(mockPath);
+  if (!stat) {
+    fs.mkdirSync(mockPath);
+  }
   fs.writeFileSync(`${mockPath}/${key}.json`,JSON.stringify(data));
 }
 
@@ -48,7 +56,7 @@ export function setCustomProxyAndMock(data: CustomProxyAndMock) {
       url: data.url,
       key,
       customProxy: data.customProxy,
-      selectCustomProxy: data.customProxy[0],
+      selectCustomProxy: data.selectCustomProxy,
       target: 'proxy',
       duration: data.duration,
       name: data.name
@@ -57,8 +65,10 @@ export function setCustomProxyAndMock(data: CustomProxyAndMock) {
     apiData.apiList[apiIndex].customProxy = data.customProxy;
     apiData.apiList[apiIndex].duration = data.duration;
     apiData.apiList[apiIndex].name = data.name;
+    apiData.apiList[apiIndex].selectCustomProxy = data.selectCustomProxy;
   }
   setMockData(key, data.mockData);
+  setApiData(apiData);
 }
 
 export function getMock(): AllMockData {

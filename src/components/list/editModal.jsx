@@ -4,11 +4,16 @@ import { Form, Input, Button } from 'antd'
 import './editModal.css'
 import MockEditor from "./mockEditor";
 import { useState } from "react";
+import { saveCustomProxyData } from "../../api/api";
 
 export default function ApiEdit(props) {
   const { onCancel } = props;
   const [form] = Form.useForm();
   const [showRequest, setShowRequest] = useState()
+  const [mockData, setMockData] = useState({requestData:{},responseData:{}});
+  const [hasError, setHasError] = useState(false);
+  const [customProxy, setCustomProxy] = useState([]);
+  const [selectCustomProxy, setSelectCustomProxy] = useState('');
 
   return <Modal
     className="edit-modal"
@@ -26,14 +31,25 @@ export default function ApiEdit(props) {
     open={props.visible}>
     <Form
       form={form}
-      onFinish={() => { }}
+      onFinish={async (value) => {
+        if (hasError) {
+          return
+        }
+        await saveCustomProxyData({
+          ...value,
+          mockData,
+          customProxy,
+          selectCustomProxy
+        })
+        onCancel()
+      }}
       style={{ width: ' 100%' }}
       layout="inline"
     >
       <Form.Item className="ant-form-mock-item" width="30%" name="name" layout="inline" label="名称" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-      <Form.Item className="ant-form-mock-item" width="30%" name="name" layout="inline" label="URL" rules={[{ required: true }]}>
+      <Form.Item className="ant-form-mock-item" width="30%" name="url" layout="inline" label="URL" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
       <Form.Item className="ant-form-mock-item" width="30%" name="duration" layout="inline" label="延时">
@@ -43,18 +59,25 @@ export default function ApiEdit(props) {
     <GProxy
       label="自定义代理:"
       deleteComfirm={true}
-      proxyList={[]}
-      selectProxy={''}
-      onProxyChange={async (data) => {
+      proxyList={customProxy}
+      selectProxy={selectCustomProxy}
+      onProxyChange={async ({proxy}) => {
+        setSelectCustomProxy(proxy);
       }}
-      onProxyDelete={async (data) => {
+      onProxyDelete={async ({proxy}) => {
+        setCustomProxy(customProxy.filter(item => item.proxy !== proxy));
+        if(proxy === selectCustomProxy) {
+          setSelectCustomProxy(customProxy[0]?.proxy || '');
+        }
       }}
       onProxyCreate={async (data) => {
+        setCustomProxy([...customProxy, data]);
+        setSelectCustomProxy(data.proxy);
       }}
     />
     <div className="mock-editor-title">
       <div>MOCK数据</div> <Button variant="outlined" onClick={()=>setShowRequest(true)} color="primary">添加入参</Button>
     </div>
-    <MockEditor showRequest={showRequest} />
+    <MockEditor value={mockData} onChange={setMockData} onStateChange={setHasError} showRequest={showRequest} />
   </Modal>
 }

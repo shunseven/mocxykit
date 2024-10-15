@@ -46,3 +46,10 @@ export async function fetchChangeProxy (data) {
   })
   return res
 }
+
+export async function saveCustomProxyData (data) {
+  await request('/express-proxy-mock/save-customproxy-mock', {
+    data,
+    method: 'POST'
+  })
+}

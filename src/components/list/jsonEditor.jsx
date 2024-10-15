@@ -89,7 +89,6 @@ const Editor = ({
 }) => {
   const htmlElementRef = useRef(null);
   const jsonEditorRef = useRef(null);
-  console.log(111111, value, mode)
 
   useEffect(() => {
     createEditor();

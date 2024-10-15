@@ -41,4 +41,5 @@ interface CustomProxyAndMock{
   duration: number;
   customProxy: string[];
   mockData: MockData;
+  selectCustomProxy: string;
 }
