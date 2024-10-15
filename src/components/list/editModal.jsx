@@ -41,6 +41,9 @@ export default function ApiEdit(props) {
           customProxy,
           selectCustomProxy
         })
+        setMockData({requestData:{},responseData:{}})
+        setCustomProxy([])
+        setSelectCustomProxy('')
         onCancel()
       }}
       style={{ width: ' 100%' }}

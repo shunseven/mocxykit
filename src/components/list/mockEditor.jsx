@@ -31,14 +31,13 @@ function MockEditor({
           mode="code"
           value={requestData}
           onError={(...argument)=> {
-            console.log(111, argument);
             onStateChange(true)
           }}
           onChange={data => {
             onStateChange(false)
             onChange({
               ...value,
-              requestData: data || {},
+              requestData: data,
             })
           }}
         />
