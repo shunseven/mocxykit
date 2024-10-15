@@ -4,42 +4,63 @@ import fs from "fs";
 import path from "path";
 import { parseUrlToKey, sleep } from "../common/fun";
 import { getTargetApiData } from "../common/fetchJsonData";
+import { s } from "vite/dist/node/types.d-aGj9QkWt";
 
 interface ProxyConfig {
   proxyUrl: string;
   ignorePath: boolean;
 }
 
+interface proxyOptionTarget {
+  protocol: 'https:' | 'http:';
+  host: string;
+  port: number;
+  pfx: any;
+  passphrase: string;
+}
+
+interface proxyOption {
+  target: string | proxyOptionTarget;
+  changeOrigin?: boolean;
+  autoRewrite?: boolean;
+  secure?: boolean;
+  cookieDomainRewrite?: string;
+  [s: string]: any;
+}
+
 export default function createProxyServer (app: Application, options: ProxyMockOptions) {
-  const httpProxyServer = httpProxy.createProxyServer({});
-  let httpsProxyServer: undefined | httpProxy;
-  const serverOption: httpProxy.ServerOptions = {}
-  if (options.https) {
-    serverOption.agent = {
-      key:  fs.readFileSync(path.resolve(__dirname, 'server.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'server.csr'))
+  const p12 = fs.readFileSync(path.resolve(__dirname, 'certificate', 'certificate.p12'))
+  let config = {}
+  if(options.https) {
+    config = {
+      target: {
+        protocol: 'https:',
+        host: 'localhost',
+        port: 443,
+        pfx: p12,
+        passphrase: '',
+      },
+      changeOrigin: true,
     }
-    httpsProxyServer = httpProxy.createProxyServer(serverOption).listen(443);
   }
+  const httpProxyServer = httpProxy.createProxyServer(config);
+    
   return async function(req: Request, res: Response, next: NextFunction, proxyConfig: ProxyConfig) {
     let proxy = httpProxyServer
     const pathKey = parseUrlToKey(req.url);
     const apiData = getTargetApiData(pathKey)
-    const proxyOption = {
+    let proxyOption: proxyOption = {
       target: proxyConfig.proxyUrl,
       changeOrigin: true,
       autoRewrite: true,
-      secure: false,
+      secure: true,
       cookieDomainRewrite: "",
-      ws: true,
-    }
-    if (proxyConfig.proxyUrl.includes('https') && httpsProxyServer) {
-      proxy = httpsProxyServer
     }
     if (apiData && apiData.duration) {
       await sleep(apiData.duration)
     }
-    // 去除一些浏览的限制
+    proxy.web(req, res, proxyOption);
+     // 去除一些浏览器的限制
     proxy.on('proxyRes', function (proxyRes, req, res) {
       const sc = proxyRes.headers['set-cookie'];
       if (Array.isArray(sc)) {
@@ -50,7 +71,7 @@ export default function createProxyServer (app: Application, options: ProxyMockO
         });
       }
     })
-    proxy.web(req, res, proxyOption);
+    
     proxy.on('error', function (err, req, res) {
       console.error('err', err);
       next(err);

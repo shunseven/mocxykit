@@ -9,7 +9,7 @@ import viewRequest from "./viewRequest";
 export default function entry(app: Application, options: ProxyMockOptions) {
   const proxyServer = createProxyServer(app, options);
   const mockFun = createMock();
-  app.get(options.apiRule, (req: Request, res: Response, next: NextFunction) => {
+  app.all(options.apiRule, (req: Request, res: Response, next: NextFunction) => {
      const apiData = getApiData();
      const key = parseUrlToKey(req.url);
      const apiConfig = apiData.apiList.find(item => item.key === key|| parseUrlToKey(item.url) === key);

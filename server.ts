@@ -5,7 +5,7 @@ import { mockProxy } from './main/index';
 async function createServer() {
   const app = express();
   mockProxy(app, {
-    apiRule: '/api/*'
+    apiRule: '/api/*',
   })
   // 创建 Vite 服务器
   app.listen(8822, () => {

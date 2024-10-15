@@ -9,7 +9,8 @@ import { ViteDevServer } from '../node_modules/vite/dist/node/index';
 import entry from './mockProxy/entry';
 
 const defaultConfig = {
-  apiRule: '/api/*'
+  apiRule: '/api/*',
+  https: true,
 }
 
 export function mockProxy (app: Application, options: ProxyMockOptions = defaultConfig) {
