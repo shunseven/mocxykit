@@ -15,6 +15,7 @@ interface ApiConfig {
   selectCustomProxy: string;
   target: 'proxy' | 'mock' | 'customProxy';
   duration: number;
+  name: string;
 }
 
 interface ApiData {
@@ -32,4 +33,12 @@ interface MockData {
   data: MockRequestData[];
   url: string;
   name: string;
+}
+
+interface CustomProxyAndMock{
+  name: string;
+  url: string;
+  duration: number;
+  customProxy: string[];
+  mockData: MockData;
 }

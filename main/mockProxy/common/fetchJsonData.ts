@@ -1,6 +1,7 @@
 import fs from 'fs';
-import { parseUrlToKey } from './fun';
+import { getReqBodyData, parseUrlToKey } from './fun';
 import { Request } from 'express';
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 interface AllMockData {
   [key: string]: MockData
@@ -17,16 +18,49 @@ export function getApiData():ApiData {
   return config;
 }
 
-export function getTargetApiData(key: string): ApiConfig | null {
-  const apiData = getApiData()
+
+export function getTargetApiDataIndex(key: string, apiData: ApiData): number{
+  if(!apiData) apiData = getApiData()
+  return apiData.apiList.findIndex(item => item.key === key || parseUrlToKey(item.url) === key);
+}
+
+export function getTargetApiData(key: string, apiData?: ApiData): ApiConfig | null {
+  if(!apiData) apiData = getApiData()
   return apiData.apiList.find(item => item.key === key || parseUrlToKey(item.url) === key) || null;
- }
+}
 
 export function setApiData(data: ApiData) {
   fs.writeFileSync(apiDataFilePath,JSON.stringify(data));
 }
 
 const mockPath = './proxyMockData/mockData'
+
+export function setMockData(key: string, data: MockData) {
+  fs.writeFileSync(`${mockPath}/${key}.json`,JSON.stringify(data));
+}
+
+export function setCustomProxyAndMock(data: CustomProxyAndMock) {
+  const key = parseUrlToKey(data.url);
+  const apiData = getApiData();
+  const apiIndex = getTargetApiDataIndex(key, apiData);
+  if (apiIndex === -1) {
+    apiData.apiList.push({
+      url: data.url,
+      key,
+      customProxy: data.customProxy,
+      selectCustomProxy: data.customProxy[0],
+      target: 'proxy',
+      duration: data.duration,
+      name: data.name
+    })
+  } else {
+    apiData.apiList[apiIndex].customProxy = data.customProxy;
+    apiData.apiList[apiIndex].duration = data.duration;
+    apiData.apiList[apiIndex].name = data.name;
+  }
+  setMockData(key, data.mockData);
+}
+
 export function getMock(): AllMockData {
   const mock: AllMockData = {}
   if (!fs.existsSync(mockPath)) {
@@ -54,7 +88,6 @@ export function formatMockData(data: Record<string, any>, targetData: Record<str
 
   return targetData
 }
-
 
 
 export function getLevel(query: Record<string, any>, data: Record<string, any>) {
@@ -86,24 +119,12 @@ export function getMockTargetData(query: Record<string, any>, mockData: MockRequ
   return targetData
 }
 
+
 export function getSendMockData(req: Request, mockData: MockRequestData[]) {
   let query = req.query
-  let body = ''
-  let bodyData: Record<string, any> | null = {};
   if (req.method.toLowerCase() === 'post' || req.method.toLowerCase() === 'put') {
-    return new Promise(resolve => {
-      req.on('data', function (data) {
-        body += data
-      })
-      req.on('end', function () {
-        try {
-          bodyData = body ? JSON.parse(body.toString()) : {}
-        } catch (e) {
-          bodyData = {}
-        }
-        resolve(getMockTargetData(Object.assign(query, body), mockData))
-        bodyData = null
-      })
+    return getReqBodyData(req).then((data) => {
+      return getMockTargetData(Object.assign(query, data), mockData)
     })
   }
   return Promise.resolve(getMockTargetData(query, mockData))

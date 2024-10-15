@@ -1,5 +1,6 @@
 import JSONEditor from './jsonEditor'
-import { Menu, Button } from 'antd'
+import ReqMenu from './reqMenu';
+
 function MockEditor({
   showRequest
 }) {
@@ -7,18 +8,7 @@ function MockEditor({
   return <>
     <div className="mock-editor-box">
       {
-        show && <div className="mock-editor-menu">
-        <Menu
-          onClick={() => { }}
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          mode="inline"
-          items={[{
-            key: '1',
-            label: '请求参数'
-          }]}
-        />
-      </div>
+        show && <ReqMenu />
       }
       <div className="mock-editor-warp">
         {

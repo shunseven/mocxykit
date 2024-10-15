@@ -61,3 +61,38 @@
 .mock-editor-menu {
   padding-top: 3px;
 }
+
+.req-menu-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 10px 6px 0;
+  background: #fff;
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-bottom: 4px;
+  height: 32px;
+  cursor: pointer;
+  align-items: center;
+}
+.req-menu-item:hover {
+  background-color: #d6e9ff;
+}
+.req-menu-item:hover .req-menu-icon {
+  display: inline;
+}
+.req-menu-item.active {
+  background-color: #e6f4ff;
+  color: #1677ff;
+}
+
+.req-menu-icon {
+  height: 20px;
+  display: none;
+  margin-left: 5px;
+}
+.req-menu-option {
+  display: flex;
+}
+.req-menu-name {
+  padding-left: 10px;
+}
