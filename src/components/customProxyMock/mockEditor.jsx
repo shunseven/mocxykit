@@ -16,7 +16,8 @@ function MockEditor({
 }) {
   const [selectMockIndex, setSelectMockIndex] = useState(0);
   const [isEditRequest, setIsEditRequest] = useState(false);
-  const showRequest = isEditRequest || (value.data.length > 1 || Object.keys(value.data[selectMockIndex]?.requestData).length > 0);
+  const reqData = value.data[selectMockIndex]?.requestData || {};
+  const showRequest = isEditRequest || (value.data.length > 1 || Object.keys(reqData).length > 0);
   
   const {
     requestData = {},
