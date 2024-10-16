@@ -101,11 +101,12 @@ export default function ApiEdit(props) {
         <Input />
       </Form.Item>
       <Form.Item className="ant-form-mock-item" width="30%" name="duration" layout="inline" label="延时">
-        <Input />
+        <Input type="number" />
       </Form.Item>
     </Form>
     {
       visible && <GProxy
+        color='#1677ff'
         label="自定义代理:"
         deleteComfirm={true}
         proxyList={customProxy}
@@ -114,9 +115,13 @@ export default function ApiEdit(props) {
           setSelectCustomProxy(proxy);
         }}
         onProxyDelete={async ({proxy}) => {
-          setCustomProxy(customProxy.filter(item => item.proxy !== proxy));
+          const data = customProxy.filter(item => item.proxy !== proxy);
+          setCustomProxy(data);
           if(proxy === selectCustomProxy) {
             setSelectCustomProxy(customProxy[0]?.proxy || '');
+          }
+          if (data.length === 0) {
+            setSelectCustomProxy('');
           }
         }}
         onProxyCreate={async (data) => {

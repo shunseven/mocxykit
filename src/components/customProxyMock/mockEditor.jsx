@@ -1,30 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import JSONEditor from './jsonEditor'
 import ReqMenu from './reqMenu';
 import { Button } from 'antd'
+
+let resDataIsNull = false;
+let reqDataIsNull = false;
 
 function MockEditor({
   value = {
     data: [{}]
   },
   onChange,
-  onStateChange
+  onStateChange,
+  mode = 'code'
 }) {
   const [selectMockIndex, setSelectMockIndex] = useState(0);
   const [isEditRequest, setIsEditRequest] = useState(false);
   const showRequest = isEditRequest || (value.data.length > 1 || Object.keys(value.data[selectMockIndex]?.requestData).length > 0);
+  
   const {
     requestData = {},
     responseData = {},
   } = value.data[selectMockIndex] || {};
+  useEffect(() => {
+    resDataIsNull = false;
+    reqDataIsNull = false;
+  }, [])
+
+
   return <>
    <div className="mock-editor-title">
-      <div>MOCK数据</div> 
       {
-        !showRequest && <Button variant="outlined" onClick={()=>setIsEditRequest(true)} color="primary">修改入参</Button>
+        mode === 'code' && <div>MOCK数据</div> 
       }
       {
-        showRequest && <Button variant="outlined" onClick={()=>{
+        !showRequest && mode === 'code' && <Button variant="outlined" onClick={()=>setIsEditRequest(true)} color="primary">修改入参</Button>
+      }
+      {
+        showRequest && mode === 'code' && <Button variant="outlined" onClick={()=>{
           const data = [...value.data, {
             "name": `请求参数${value.data.length + 1}`,
             "requestData": {},
@@ -44,6 +57,7 @@ function MockEditor({
           list={value.data} 
           active={selectMockIndex} 
           onChangeActive={setSelectMockIndex}
+          hasSettting={mode === 'code'}
           onDelete={(index) => {
             onChange({
               ...value,
@@ -79,13 +93,16 @@ function MockEditor({
           htmlElementProps={{
             className: 'editor-req'
           }}
-          mode="code"
+          mode={mode}
           value={requestData}
           onError={(...argument)=> {
-            onStateChange(true)
+            if (!reqDataIsNull) {
+              onStateChange(true)
+            }
           }}
           onChange={data => {
             onStateChange(false)
+            reqDataIsNull = data === null;
             onChange({
               ...value,
               data: value.data.map((item, i) => {
@@ -108,9 +125,14 @@ function MockEditor({
         }
         <JSONEditor 
           value={responseData}
-          onError={()=> onStateChange(true)}
+          onError={()=> {
+            if (!resDataIsNull) {
+              onStateChange(true)
+            }
+          }}
           onChange={data => {
             onStateChange(false)
+            resDataIsNull = data === null
             onChange({
               ...value,
               data: value.data.map((item, i) => {
@@ -127,7 +149,7 @@ function MockEditor({
           htmlElementProps={{
           className: showRequest ? 'editor-res' : 'only-res editor-res'
         }} 
-          mode="code" 
+          mode={mode}
         />
       </div>
 

@@ -1,13 +1,21 @@
 
-import { Space, Table, Tag, Radio, Button } from 'antd';
-import { useState, useTransition } from 'react';
+import { Space, Table, Tag, Radio, Button, Popconfirm } from 'antd';
+import { useState } from 'react';
 import ApiEdit from '../customProxyMock/editModal';
+import { fetchDeleteApiData } from '../../api/api';
+import PreviewMockModal from '../customProxyMock/previewMockModal';
 const { Column } = Table;
 
-function List({data, globalProxy, onTargetChange, onBatchChangeTargetType, onApiDataChange}) {
-  const [editVisible, setEditVisible] = useState(false)
-  const [itemTargetKey, setItemTargetKey] = useState('');
+const colorMap = {
+  proxy: '#f50',
+  mock: '#389e0d',
+  customProxy: '#1677ff'
+}
 
+function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onApiDataChange }) {
+  const [editVisible, setEditVisible] = useState(false)
+  const [preveiwVisible, setPreviewVisible] = useState(false)
+  const [itemTargetKey, setItemTargetKey] = useState('');
   return <>
     <div style={{
       marginBottom: '15px',
@@ -17,29 +25,32 @@ function List({data, globalProxy, onTargetChange, onBatchChangeTargetType, onApi
       paddingRight: '14px'
     }}>
       <Space size={10}>
-        <Button 
-        size='small'
-        style={{
-          borderColor: '#f50',
-          color: '#f50'
-        }} variant="outlined"
+        <Button
+          size='small'
+          style={{
+            borderColor: '#f50',
+            color: '#f50'
+          }} variant="outlined"
           onClick={() => onBatchChangeTargetType('proxy')}
         >切换为全局代理</Button>
-        <Button onClick={() => onBatchChangeTargetType('mock')} size='small' color="primary"  variant="outlined" >首选MOCK</Button>
-        <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary"  variant="outlined">首选自定义代理</Button>
-       
+        <Button style={{
+          color: '#389e0d',
+          borderColor: '#389e0d'
+        }} onClick={() => onBatchChangeTargetType('mock')} size='small' color="primary" variant="outlined" >首选MOCK</Button>
+        <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary" variant="outlined">首选自定义代理</Button>
+
       </Space>
       <Button
         onClick={() => {
           setItemTargetKey('')
           setEditVisible(true)
-        }}  type='primary'>
-          新增MOCK数据&自定义代理
+        }} type='primary'>
+        新增MOCK数据&自定义代理
       </Button>
     </div>
-   
-    <Table 
-      pagination={false} 
+
+    <Table
+      pagination={false}
       dataSource={data}
       scroll={{
         x: 'max-content',
@@ -53,32 +64,37 @@ function List({data, globalProxy, onTargetChange, onBatchChangeTargetType, onApi
         key="target"
         render={(target, itemData) => (
           <>
-            <Tag color='green' key={target}>
+            {
+              target && <Tag onClick={() => {
+                setItemTargetKey(itemData.key)
+                setPreviewVisible(true)
+              }} color={colorMap[target]} key={target}>
               {target === 'proxy' && globalProxy}
               {target === 'mock' && '查看MOCK数据'}
-              {target === 'customProxy' &&  itemData.selectCustomProxy}
+              {target === 'customProxy' && itemData.selectCustomProxy}
             </Tag>
+            }
           </>
         )}
       />
-      <Column 
-        title="启用" 
+      <Column
+        title="启用"
         fixed="right"
         width={380}
         render={(_, itemData) => (
-        <Radio.Group name="radiogroup" onChange={(event) => {
-          onTargetChange({
-            key: itemData.key,
-            target: event.target.value
-          })
-        }} value={itemData.target}>
-          <Space >
-            <Radio value={'proxy'}>全局代理</Radio>
-            <Radio disabled={!itemData.hasMockData} value={'mock'}>MOCK数据</Radio>
-            <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>自定义代理</Radio>
-          </Space>
-        </Radio.Group>
-      )} key="address" />
+          <Radio.Group name="radiogroup" onChange={(event) => {
+            onTargetChange({
+              key: itemData.key,
+              target: event.target.value
+            })
+          }} value={itemData.target}>
+            <Space >
+              <Radio value={'proxy'}>全局代理</Radio>
+              <Radio disabled={!itemData.hasMockData} value={'mock'}>MOCK数据</Radio>
+              <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>自定义代理</Radio>
+            </Space>
+          </Radio.Group>
+        )} key="address" />
 
       <Column
         title="操作"
@@ -87,24 +103,42 @@ function List({data, globalProxy, onTargetChange, onBatchChangeTargetType, onApi
         width={120}
         render={(_, record) => (
           <Space size="middle">
-            <a 
-            onClick={() => {
-              setItemTargetKey(record.key)
-              setEditVisible(true)
-            }}
-            style={{
-              marginRight: '10px'
-            }}>设置</a>
             <a
-              style={{
-                color: 'red'
+              onClick={() => {
+                setItemTargetKey(record.key)
+                setEditVisible(true)
               }}
-            >删除</a>
+              style={{
+                marginRight: '10px'
+              }}>设置</a>
+            <Popconfirm
+              title="请确认"
+              description="是否要删除这个代理"
+              onConfirm={() => {
+                fetchDeleteApiData({
+                  key: record.key,
+                })
+                onApiDataChange()
+              }}
+              okText="删除"
+              cancelText="取消"
+            >
+              <a
+                onClick={() => {
+                  event.stopPropagation()
+                }}
+                style={{
+                  color: 'red'
+                }}
+              >删除</a>
+            </Popconfirm>
+
           </Space>
         )}
       />
     </Table>
     <ApiEdit onApiDataChange={onApiDataChange} targetKey={itemTargetKey} visible={editVisible} onCancel={() => setEditVisible(false)} />
+    <PreviewMockModal targetKey={itemTargetKey} visible={preveiwVisible} onCancel={() => setPreviewVisible(false)} />  
   </>
 }
 

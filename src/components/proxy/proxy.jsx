@@ -1,10 +1,11 @@
 import { Select, Space, Tag, Button, Form, Input, Popconfirm } from 'antd';
 import { useState } from 'react';
+import './proxy.css'
 
 function GProxy(props) {
   const [isCreate, setIsCreate] = useState(false)
   const [form] = Form.useForm()
-  const {proxyList, selectProxy, onProxyChange, onProxyDelete, onProxyCreate, deleteComfirm, label} = props
+  const {proxyList, selectProxy, onProxyChange, onProxyDelete, onProxyCreate, deleteComfirm, label, color='#f50'} = props
 
   let hasDelete = false;
 
@@ -29,18 +30,20 @@ function GProxy(props) {
               })
             }}
             labelRender={({ label }) => {
-              return <Tag size='middle' color="#f50">{label}</Tag>
+              return label && <Tag size='middle' color={color}>{label}</Tag>
             }}
             options={proxyList.map(item => ({
               label: `${item.name}(${item.proxy})`,
               value: item.proxy
             }))}
             optionRender={(item) => {
-              return <div style={{
+              return <divb className="proxy-item" style={{
                 display: 'flex',
                 justifyContent: 'space-between'
               }}>
-                <div>
+                <div style={{
+                  overflow: 'auto',
+                }}>
                   {item.label}
                 </div>
                 <div>
@@ -54,14 +57,14 @@ function GProxy(props) {
                   okText="删除"
                   cancelText="取消"
                 >
-                  <Button size='small' onClick={(event) => {
+                  <Button className='proxy-delete' size='small' onClick={(event) => {
                     event.stopPropagation()
                     hasDelete = true;
                   }} danger>删除</Button>
                 </Popconfirm>
                 }
                 {
-                  !deleteComfirm && <Button size='small' onClick={(event) => {
+                  !deleteComfirm && <Button size='small' className='proxy-delete' onClick={(event) => {
                     event.stopPropagation()
                     onProxyDelete({proxy: item.value});
                     hasDelete = true;
@@ -69,7 +72,7 @@ function GProxy(props) {
                 }
                   
                 </div>
-              </div>
+              </divb>
             }}
           />
         </Space>

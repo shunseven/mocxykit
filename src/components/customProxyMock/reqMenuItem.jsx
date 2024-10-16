@@ -10,7 +10,8 @@ export default function ReqMenuItem({
   onChangeName,
   onDelete,
   onSelect,
-  hideDelete = false
+  hideDelete = false,
+  hasSettting = true
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const ref = useRef(null)
@@ -29,7 +30,8 @@ export default function ReqMenuItem({
         !isEdit && <div onClick={() => onSelect(index)} className='req-menu-name'>{name}</div>
       }
     </div>
-    <div className='req-menu-option'>
+    {
+      hasSettting && <div className='req-menu-option'>
       <img className='req-menu-icon' src={EditSVG} onClick={() => {
         setIsEdit(true)
         setTimeout(() => {
@@ -40,5 +42,6 @@ export default function ReqMenuItem({
         !hideDelete && <img className='req-menu-icon' src={DeleteSVG} onClick={() => onDelete(index)} />
       }
     </div>
+    }
   </div>
 }

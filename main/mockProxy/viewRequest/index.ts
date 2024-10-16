@@ -1,5 +1,5 @@
 import { Application, Request, Response } from "express";
-import { getApiData, getApiDataHasMockStatus, getMock, getMockTargetData, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
+import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getMockTargetData, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData } from "../common/fun";
 
 const successData = {
@@ -12,6 +12,17 @@ export default function viewRequest(app: Application) {
     const apiData = getApiDataHasMockStatus()
     res.send(apiData)
   })
+
+   // 删除代理数据
+   app.get('/express-proxy-mock/delete-api-data', (req: Request, res: Response) => {
+    const apiData = getApiData()
+    const key = req.query.key as string
+    apiData.apiList = apiData.apiList.filter(item => item.key !== key)
+    setApiData(apiData)
+    deleteMock(key)
+    res.send(successData)
+  })
+
   // 添加代理
   app.get('/express-proxy-mock/create-proxy', (req: Request, res: Response) => {
     const apiData = getApiData()

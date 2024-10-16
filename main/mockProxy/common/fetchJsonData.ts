@@ -81,6 +81,10 @@ export function getMock(): AllMockData {
   return mock;
 }
 
+export function deleteMock(key: string) {
+  fs.unlinkSync(`${mockPath}/${key}.json`)
+}
+
 export function formatMockData(data: Record<string, any>, targetData: Record<string, any> = {}, parentPath = '') {
   Object.keys(data).forEach(key => {
     if (Object.prototype.toString.call(data[key]) === '[object Object]') {

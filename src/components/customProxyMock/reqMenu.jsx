@@ -5,13 +5,15 @@ export default function ReqMenu({
   list = [],
   onChangeActive,
   onChangeName,
-  onDelete
+  onDelete,
+  hasSettting = true
 }) {
   
   return <div className="mock-editor-menu">
     {
       list.map((item, index) => {
-        return <ReqMenuItem 
+        return <ReqMenuItem
+          hasSettting={hasSettting}
           key={index} 
           name={item.name} 
           onDelete={onDelete} 
