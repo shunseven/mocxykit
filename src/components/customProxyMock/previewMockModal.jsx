@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import MockEditor from "./mockEditor";
 import { useEffect, useState } from "react";
 import { fetctApiItemDataAndMockData } from "../../api/api";
-import './editModal'
+import './previewMockModal.css'
 
 export default function PreviewMockModal(props) {
   const { onCancel, visible, targetKey } = props;
@@ -21,7 +21,7 @@ export default function PreviewMockModal(props) {
   }, [targetKey, visible])
 
   return <Modal
-    className="edit-modal"
+    className="preview-modal"
     centered={true}
     onCancel={() => {
       onCancel()
@@ -29,7 +29,9 @@ export default function PreviewMockModal(props) {
     title="查看MOCK数据"
     okText=""
     cancelText="取消"
+    footer={null}
     open={visible}>
+    
     {
       mockData && <MockEditor mode="view" value={mockData} onChange={setMockData} />
     }

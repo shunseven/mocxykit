@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import JSONEditor from './jsonEditor'
-import ReqMenu from './reqMenu';
+import ReqMenu from './reqMenu/reqMenu';
 import { Button } from 'antd'
 
 let resDataIsNull = false;

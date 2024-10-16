@@ -11,7 +11,7 @@ function App(props) {
 
   function fetchProxyData() {
     requestApiData().then(apiData => {
-      if (apiData.selectProxy) setSelectProxy(apiData.selectProxy)
+      if (apiData.selectProxy !== undefined) setSelectProxy(apiData.selectProxy)
       if (apiData.proxy) setProxyList(apiData.proxy)
       if(apiData.apiList) setApiList(apiData.apiList)
     });

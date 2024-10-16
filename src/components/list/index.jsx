@@ -65,9 +65,15 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         render={(target, itemData) => (
           <>
             {
-              target && <Tag onClick={() => {
-                setItemTargetKey(itemData.key)
-                setPreviewVisible(true)
+              target && <Tag 
+                style={{
+                  cursor: target === 'mock' ? 'pointer' : 'default'
+                }}
+                onClick={() => {
+                  if (target === 'mock') {
+                    setItemTargetKey(itemData.key)
+                    setPreviewVisible(true)
+                  }
               }} color={colorMap[target]} key={target}>
               {target === 'proxy' && globalProxy}
               {target === 'mock' && '查看MOCK数据'}

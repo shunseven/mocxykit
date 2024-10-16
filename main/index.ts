@@ -14,7 +14,7 @@ const defaultConfig = {
 }
 
 export function mockProxy (app: Application, options: ProxyMockOptions = defaultConfig) {
-  entry(app, options);
+   entry(app, options);
   // 使用 Vite 的 Connect 实例作为中间件
    createViteServer({
     server: {
@@ -24,5 +24,4 @@ export function mockProxy (app: Application, options: ProxyMockOptions = default
   }).then((vite: ViteDevServer) =>{
     app.use(viteClientMiddleware(vite, options));
   })
- 
 }

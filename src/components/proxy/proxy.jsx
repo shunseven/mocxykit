@@ -37,7 +37,7 @@ function GProxy(props) {
               value: item.proxy
             }))}
             optionRender={(item) => {
-              return <divb className="proxy-item" style={{
+              return <div className="proxy-item" style={{
                 display: 'flex',
                 justifyContent: 'space-between'
               }}>
@@ -72,7 +72,7 @@ function GProxy(props) {
                 }
                   
                 </div>
-              </divb>
+              </div>
             }}
           />
         </Space>

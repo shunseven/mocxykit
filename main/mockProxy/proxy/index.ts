@@ -46,6 +46,10 @@ export default function createProxyServer (app: Application, options: ProxyMockO
   const httpProxyServer = httpProxy.createProxyServer(config);
     
   return async function(req: Request, res: Response, next: NextFunction, proxyConfig: ProxyConfig) {
+    if (!proxyConfig.proxyUrl) {
+      return res.send('请设置代理');
+    }
+
     let proxy = httpProxyServer
     const pathKey = parseUrlToKey(req.url);
     const apiData = getTargetApiData(pathKey)

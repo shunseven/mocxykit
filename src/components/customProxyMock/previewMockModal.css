@@ -1,0 +1,58 @@
+.preview-modal {
+  width: 100vw !important;
+  overflow-y: auto;
+}
+
+.preview-modal .ant-form-item-label {
+  width: 80px;
+}
+.preview-modal .ant-modal-content {
+  height: calc(100vh - 50px);
+}
+
+.preview-modal .editor-req .jsoneditor-menu {
+  display: none;
+}
+
+.preview-modal .editor-req {
+  height: 200px;
+}
+
+.preview-modal .editor-res .jsoneditor {
+  height: calc(100vh - 625px); 
+  min-height: 250px;
+}
+.preview-modal .editor-res.only-res .jsoneditor {
+  height: calc(100vh - 150px); 
+}
+
+.preview-modal .form-item-mock-editor {
+  height: calc(100vh - 365px); 
+}
+.preview-modal .mock-editor-box {
+  height: calc(100vh - 150px);
+  display: flex;
+  padding-top: 10px;
+}
+.preview-modal .mock-editor-box .mock-editor-menu {
+  width: 230px;
+}
+.preview-modal .mock-editor-warp {
+  flex: 1;
+}
+.preview-modal .ant-modal-body{
+  overflow: auto;
+}
+.preview-modal .mock-editor-q {
+  padding: 5px 0 5px 0;
+}
+.preview-modal .mock-editor-q .div.jsoneditor-outer.has-main-menu-bar {
+  margin-top: 0;
+  padding-top: 0;
+}
+.preview-modal .ant-menu-light.ant-menu-root.ant-menu-inline {
+  border-inline-end: none !important;
+}
+.preview-modal .ant-form-mock-item {
+  width: 30%;
+}

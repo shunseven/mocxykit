@@ -5,7 +5,7 @@ function firstUpperCase(str: string): string {
 }
 
 export function parseUrlToKey (url: string): string {
-  return url.split('/').map(item => firstUpperCase(item)).join('')
+  return url ? url.split('/').map(item => firstUpperCase(item)).join('') : '';
 }
 
 export function sleep(ms: number): Promise<void> {

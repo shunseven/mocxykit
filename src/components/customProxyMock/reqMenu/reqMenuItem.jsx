@@ -1,7 +1,8 @@
 import { Input } from 'antd'
-import DeleteSVG from '../../assets/delete.svg'
-import EditSVG from '../../assets/edit.svg'
+import DeleteSVG from '../../../assets/delete.svg'
+import EditSVG from '../../../assets/edit.svg'
 import { useRef, useState } from 'react'
+import './reqMenu.css'
 
 export default function ReqMenuItem({
   active,

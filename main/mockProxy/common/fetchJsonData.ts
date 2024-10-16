@@ -67,6 +67,9 @@ export function setCustomProxyAndMock(data: CustomProxyAndMock) {
 
 export function getMock(): AllMockData {
   const mock: AllMockData = {}
+  if (!fs.existsSync('./proxyMockData')) {
+    fs.mkdirSync('./proxyMockData');
+  }
   if (!fs.existsSync(mockPath)) {
     fs.mkdirSync(mockPath);
   }

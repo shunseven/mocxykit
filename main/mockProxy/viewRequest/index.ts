@@ -38,8 +38,11 @@ export default function viewRequest(app: Application) {
   app.get('/express-proxy-mock/delete-proxy', (req: Request, res: Response) => {
     const apiData = getApiData()
     apiData.proxy = apiData.proxy.filter(item => item.proxy !== req.query.proxy)
-    if (apiData.selectProxy === req.query.proxy) {
+    if (apiData.selectProxy === req.query.proxy && apiData.proxy.length > 0) {
       apiData.selectProxy = apiData.proxy[0].proxy
+    }
+    if (apiData.proxy.length === 0) {
+      apiData.selectProxy = ''
     }
     setApiData(apiData)
     res.send(successData);

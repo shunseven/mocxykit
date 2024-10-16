@@ -25,24 +25,24 @@
 .edit-modal .form-item-mock-editor {
   height: calc(100vh - 365px); 
 }
-.mock-editor-box {
+.edit-modal .mock-editor-box {
   height: calc(100vh - 310px);
   display: flex;
   padding-top: 10px;
 }
-.mock-editor-box .mock-editor-menu {
+.edit-modal .mock-editor-box .mock-editor-menu {
   width: 230px;
 }
-.mock-editor-warp {
+.edit-modal .mock-editor-warp {
   flex: 1;
 }
 .edit-modal .ant-modal-body{
   overflow: auto;
 }
-.mock-editor-q {
+.edit-modal .mock-editor-q {
   padding: 5px 0 5px 0;
 }
-.mock-editor-q .div.jsoneditor-outer.has-main-menu-bar {
+.edit-modal .mock-editor-q .div.jsoneditor-outer.has-main-menu-bar {
   margin-top: 0;
   padding-top: 0;
 }
@@ -57,50 +57,4 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.mock-editor-menu {
-  padding-top: 3px;
-}
-
-.req-menu-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 10px 0px 0;
-  background: #fff;
-  border-radius: 5px;
-  margin-right: 10px;
-  margin-bottom: 4px;
-  align-items: center;
-  height: 44px;
-  cursor: pointer;
-  align-items: center;
-}
-.req-menu-item:hover {
-  background-color: #d6e9ff;
-}
-.req-menu-item:hover .req-menu-icon {
-  display: inline;
-}
-.req-menu-item.active {
-  background-color: #e6f4ff;
-  color: #1677ff;
-}
-
-.req-menu-icon {
-  height: 20px;
-  display: none;
-  margin-left: 5px;
-}
-.req-menu-option {
-  display: flex;
-}
-.req-menu-name {
-  padding-left: 10px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-}
-.req-menu-input-box {
-  flex: 1;
-  width: 100%;
 }
