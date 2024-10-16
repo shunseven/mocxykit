@@ -59,3 +59,9 @@ export async function fetchChangeTargetType (data) {
     query: data
   })
 }
+
+export async function fetchBatchChangeTargetType (data) {
+  await request('/express-proxy-mock/batch-change-target', {
+    query: data
+  })
+}

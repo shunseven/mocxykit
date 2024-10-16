@@ -1,6 +1,6 @@
 import { Application, Request, Response } from "express";
-import { getApiData, getMock, getMockTargetData, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
-import { getReqBodyData } from "../common/fun";
+import { getApiData, getApiDataHasMockStatus, getMock, getMockTargetData, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
+import { getReqBodyData, hasMockData } from "../common/fun";
 
 const successData = {
   msg: 'success'
@@ -9,12 +9,7 @@ const successData = {
 export default function viewRequest(app: Application) {
   // 获取代理数据
   app.get('/express-proxy-mock/get-api-list', (req: Request, res: Response) => {
-    const apiData = getApiData()
-    const mockDatas = getMock()
-    apiData.apiList.forEach(item => {
-      const mockData = mockDatas[item.key]
-      item.hasMockData = !!mockData
-    })
+    const apiData = getApiDataHasMockStatus()
     res.send(apiData)
   })
   // 添加代理
@@ -86,5 +81,25 @@ export default function viewRequest(app: Application) {
     setApiData(apiData)
     res.send(successData)
   })
-
+ 
+  app.get('/express-proxy-mock/batch-change-target', (req: Request, res: Response) => {
+    const apiData = getApiData()
+    const AllMockData = getMock()
+    const target = req.query.target as 'proxy' | 'mock' | 'customProxy'
+    apiData.apiList.forEach(item => {
+      switch (target) {
+        case 'proxy':
+          item.target = 'proxy'
+          break
+        case 'mock':
+          item.target = hasMockData(item, AllMockData) ? 'mock' : 'proxy'
+          break
+        case 'customProxy':
+          item.target = item.selectCustomProxy ? 'customProxy' : 'proxy'
+          break
+      }
+    })
+    setApiData(apiData)
+    res.send(successData)
+  })
 }

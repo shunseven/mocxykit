@@ -138,14 +138,9 @@ export function getSendMockData(req: Request, mockData: MockRequestData[]) {
 export function getApiDataHasMockStatus() {
     const apiData = getApiData()
     const mockDatas = getMock()
-    for (const item of apiData.apiList) {
-      if (hasMockData(item, mockDatas)) {
-        item.hasMockData = true
-        break
-      }
-    }
-    apiData.apiList.forEach(item => {
-      const mockData = mockDatas[item.key]
-      item.hasMockData = !!mockData
+    apiData.apiList = apiData.apiList.map(item => {
+      item.hasMockData = hasMockData(item, mockDatas)
+      return item
     })
+    return apiData
 }

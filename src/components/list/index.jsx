@@ -4,8 +4,7 @@ import { useState } from 'react';
 import ApiEdit from '../customProxyMock/editModal';
 const { Column } = Table;
 
-function List({data, globalProxy, onTargetChange}) {
-  const [targetType, setTargetType] = useState('proxy')
+function List({data, globalProxy, onTargetChange, onBatchChangeTargetType}) {
   const [editVisible, setEditVisible] = useState(false)
 
   return <>
@@ -22,13 +21,15 @@ function List({data, globalProxy, onTargetChange}) {
         style={{
           borderColor: '#f50',
           color: '#f50'
-        }} variant="outlined">切换为全局代理</Button>
-        <Button size='small' color="primary"  variant="outlined" >首选MOCK</Button>
-        <Button size='small' color="primary"  variant="outlined">首选自定义代理</Button>
+        }} variant="outlined"
+          onClick={() => onBatchChangeTargetType('proxy')}
+        >切换为全局代理</Button>
+        <Button onClick={() => onBatchChangeTargetType('mock')} size='small' color="primary"  variant="outlined" >首选MOCK</Button>
+        <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary"  variant="outlined">首选自定义代理</Button>
        
       </Space>
       <Button
-      onClick={() => setEditVisible(true)}  type='primary'>
+        onClick={() => setEditVisible(true)}  type='primary'>
           新增MOCK数据&自定义代理
       </Button>
     </div>
@@ -69,7 +70,7 @@ function List({data, globalProxy, onTargetChange}) {
         }} value={itemData.target}>
           <Space >
             <Radio value={'proxy'}>全局代理</Radio>
-            <Radio disable={!itemData.hasMockData} value={'mock'}>MOCK数据</Radio>
+            <Radio disabled={!itemData.hasMockData} value={'mock'}>MOCK数据</Radio>
             <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>自定义代理</Radio>
           </Space>
         </Radio.Group>

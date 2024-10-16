@@ -32,6 +32,6 @@ export function getReqBodyData(req: Request): Promise<Record<string, any>> {
 export function hasMockData (apiItemData: ApiConfig, mockDatas: AllMockData): boolean {
   let hasMockData = false
   const mockData = mockDatas[apiItemData.key]
-  hasMockData = mockData && mockData.data.find(item => Object.keys(item.requestData).length > 0) ? true : false 
+  hasMockData = mockData && mockData.data.find(item => Object.keys(item.responseData).length > 0 || Object.keys(item.requestData).length > 0) ? true : false 
   return hasMockData
 }

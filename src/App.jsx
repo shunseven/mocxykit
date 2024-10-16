@@ -1,7 +1,7 @@
 import { Divider } from 'antd'
 import List from './components/list'
 import { useEffect, useState } from 'react';
-import { fetchCreateProxy, fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType } from './api/api';
+import { fetchCreateProxy, fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType, fetchBatchChangeTargetType } from './api/api';
 import GProxy from './components/proxy/proxy';
 
 function App(props) {
@@ -46,6 +46,10 @@ function App(props) {
         globalProxy={selectProxy}
         onTargetChange={async ({target, key}) => {
           await fetchChangeTargetType({target, key})
+          fetchProxyData();
+        }}
+        onBatchChangeTargetType={async (target) => {
+          await fetchBatchChangeTargetType({target})
           fetchProxyData();
         }}
       />
