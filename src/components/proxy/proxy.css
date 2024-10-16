@@ -1,0 +1,6 @@
+.ant-select-item-option:hover .proxy-item .proxy-delete {
+  display: block;
+} 
+.proxy-item .proxy-delete {
+  display: none;
+}
