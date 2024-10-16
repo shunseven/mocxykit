@@ -53,3 +53,9 @@ export async function saveCustomProxyData (data) {
     method: 'POST'
   })
 }
+
+export async function fetchChangeTargetType (data) {
+  await request('/express-proxy-mock/change-target', {
+    query: data
+  })
+}

@@ -1,13 +1,54 @@
 import { Divider } from 'antd'
-import Proxy from './components/proxy'
 import List from './components/list'
+import { useEffect, useState } from 'react';
+import { fetchCreateProxy, fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType } from './api/api';
+import GProxy from './components/proxy/proxy';
 
 function App(props) {
+  const [proxyList, setProxyList] = useState([])
+  const [selectProxy, setSelectProxy] = useState([])
+  const [apiList, setApiList] = useState([])
+
+  function fetchProxyData() {
+    requestApiData().then(apiData => {
+      if (apiData.selectProxy) setSelectProxy(apiData.selectProxy)
+      if (apiData.proxy) setProxyList(apiData.proxy)
+      if(apiData.apiList) setApiList(apiData.apiList)
+    });
+  }
+
+  useEffect(() => {
+    fetchProxyData();
+  }, []);
   return (
     <div>
-      <Proxy  />
+      <GProxy
+        label="全局代理:"
+        deleteComfirm={true}
+        proxyList={proxyList}
+        selectProxy={selectProxy}
+        onProxyChange={async (data) => {
+          await fetchChangeProxy(data)
+          fetchProxyData();
+        }}
+        onProxyDelete={async (data) => {
+          await fetchDeleteProxy(data)
+          fetchProxyData();
+        }}
+        onProxyCreate={async (data) => {
+          await fetchCreateProxy(data)
+          fetchProxyData();
+        }}
+      />
       <Divider />
-      <List />
+      <List 
+        data={apiList}
+        globalProxy={selectProxy}
+        onTargetChange={({target, key}) => {
+          fetchChangeTargetType({target, key})
+          fetchProxyData();
+        }}
+      />
     </div>
   );
 }

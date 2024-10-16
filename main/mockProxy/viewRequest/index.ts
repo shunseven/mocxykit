@@ -10,6 +10,11 @@ export default function viewRequest(app: Application) {
   // 获取代理数据
   app.get('/express-proxy-mock/get-api-list', (req: Request, res: Response) => {
     const apiData = getApiData()
+    const mockDatas = getMock()
+    apiData.apiList.forEach(item => {
+      const mockData = mockDatas[item.key]
+      item.hasMockData = !!mockData
+    })
     res.send(apiData)
   })
   // 添加代理
@@ -67,6 +72,19 @@ export default function viewRequest(app: Application) {
       ...apiData,
       mockData
     })
+  })
+
+  app.get('/express-proxy-mock/change-target', (req: Request, res: Response) => {
+    const apiData = getApiData()
+    const key = req.query.key as string
+    const target = req.query.target as 'proxy' | 'mock' | 'customProxy'
+    apiData.apiList.forEach(item => {
+      if (item.key === key) {
+        item.target = target
+      }
+    })
+    setApiData(apiData)
+    res.send(successData)
   })
 
 }

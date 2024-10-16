@@ -1,36 +1,10 @@
 
 import { Space, Table, Tag, Radio, Button } from 'antd';
 import { useState } from 'react';
-import ApiEdit from './editModal';
+import ApiEdit from '../customProxyMock/editModal';
 const { Column } = Table;
 
-const data = [
-  {
-    key: '1',
-    url: 'JohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohnJohn',
-    lastName: 'Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    firstName: 'Jim',
-    lastName: 'Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-function List() {
+function List({data, globalProxy, onTargetChange}) {
   const [targetType, setTargetType] = useState('proxy')
   const [editVisible, setEditVisible] = useState(false)
 
@@ -66,24 +40,19 @@ function List() {
         x: 'max-content',
       }}
     >
+      <Column title="名称" dataIndex="name" key="name" />
       <Column title="URL" dataIndex="url" key="ur" />
       <Column
         title="当前生效"
-        dataIndex="tags"
-        key="tags"
-        render={(tags) => (
+        dataIndex="target"
+        key="target"
+        render={(target, itemData) => (
           <>
-            {tags.map((tag) => {
-              let color = tag.length > 5 ? 'geekblue' : 'green';
-              if (tag === 'loser') {
-                color = 'volcano';
-              }
-              return (
-                <Tag color={color} key={tag}>
-                  {tag}
-                </Tag>
-              );
-            })}
+            <Tag color='green' key={target}>
+              {target === 'proxy' && globalProxy}
+              {target === 'mock' && 'MOCK数据'}
+              {target === 'customProxy' &&  itemData.selectCustomProxy}
+            </Tag>
           </>
         )}
       />
@@ -91,10 +60,10 @@ function List() {
         title="启用" 
         fixed="right"
         width={380}
-        render={(_, record) => (
+        render={(_, itemData) => (
         <Radio.Group name="radiogroup" onChange={(event) => {
-          setTargetType(event.target.value)
-        }} value={targetType}>
+          
+        }} value={itemData.target}>
           <Space >
             <Radio value={'proxy'}>全局代理</Radio>
             <Radio value={'mock'}>MOCK数据</Radio>
@@ -122,7 +91,9 @@ function List() {
         )}
       />
     </Table>
-    <ApiEdit visible={editVisible} onCancel={() => setEditVisible(false)} />
+    {
+      editVisible && <ApiEdit visible={editVisible} onCancel={() => setEditVisible(false)} />
+    }
   </>
 }
 
