@@ -44,8 +44,8 @@ function App(props) {
       <List 
         data={apiList}
         globalProxy={selectProxy}
-        onTargetChange={({target, key}) => {
-          fetchChangeTargetType({target, key})
+        onTargetChange={async ({target, key}) => {
+          await fetchChangeTargetType({target, key})
           fetchProxyData();
         }}
       />

@@ -45,3 +45,7 @@ interface CustomProxyAndMock{
   mockData: MockData;
   selectCustomProxy: string;
 }
+
+interface AllMockData {
+  [key: string]: MockData;
+}

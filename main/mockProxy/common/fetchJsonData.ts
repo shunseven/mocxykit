@@ -1,11 +1,6 @@
 import fs from 'fs';
-import { getReqBodyData, parseUrlToKey } from './fun';
+import { getReqBodyData, hasMockData, parseUrlToKey } from './fun';
 import { Request } from 'express';
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
-
-interface AllMockData {
-  [key: string]: MockData
-}
 
 const apiDataFilePath = './proxyMockData/api.json'
 export function getApiData():ApiData {
@@ -17,7 +12,6 @@ export function getApiData():ApiData {
   };
   return config;
 }
-
 
 export function getTargetApiDataIndex(key: string, apiData: ApiData): number{
   if(!apiData) apiData = getApiData()
@@ -138,4 +132,20 @@ export function getSendMockData(req: Request, mockData: MockRequestData[]) {
     })
   }
   return Promise.resolve(getMockTargetData(query, mockData))
+}
+
+
+export function getApiDataHasMockStatus() {
+    const apiData = getApiData()
+    const mockDatas = getMock()
+    for (const item of apiData.apiList) {
+      if (hasMockData(item, mockDatas)) {
+        item.hasMockData = true
+        break
+      }
+    }
+    apiData.apiList.forEach(item => {
+      const mockData = mockDatas[item.key]
+      item.hasMockData = !!mockData
+    })
 }

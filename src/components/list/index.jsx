@@ -43,14 +43,14 @@ function List({data, globalProxy, onTargetChange}) {
       <Column title="名称" dataIndex="name" key="name" />
       <Column title="URL" dataIndex="url" key="ur" />
       <Column
-        title="当前生效"
+        title="目标"
         dataIndex="target"
         key="target"
         render={(target, itemData) => (
           <>
             <Tag color='green' key={target}>
               {target === 'proxy' && globalProxy}
-              {target === 'mock' && 'MOCK数据'}
+              {target === 'mock' && '查看MOCK数据'}
               {target === 'customProxy' &&  itemData.selectCustomProxy}
             </Tag>
           </>
@@ -62,12 +62,15 @@ function List({data, globalProxy, onTargetChange}) {
         width={380}
         render={(_, itemData) => (
         <Radio.Group name="radiogroup" onChange={(event) => {
-          
+          onTargetChange({
+            key: itemData.key,
+            target: event.target.value
+          })
         }} value={itemData.target}>
           <Space >
             <Radio value={'proxy'}>全局代理</Radio>
-            <Radio value={'mock'}>MOCK数据</Radio>
-            <Radio value={'customProxy'}>自定义代理</Radio>
+            <Radio disable={!itemData.hasMockData} value={'mock'}>MOCK数据</Radio>
+            <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>自定义代理</Radio>
           </Space>
         </Radio.Group>
       )} key="address" />
