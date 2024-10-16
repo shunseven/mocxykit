@@ -92,14 +92,26 @@ export default function viewRequest(app: Application) {
           item.target = 'proxy'
           break
         case 'mock':
-          item.target = hasMockData(item, AllMockData) ? 'mock' : 'proxy'
+          item.target = hasMockData(item, AllMockData) ? 'mock' : item.target
           break
         case 'customProxy':
-          item.target = item.selectCustomProxy ? 'customProxy' : 'proxy'
+          item.target = item.selectCustomProxy ? 'customProxy' : item.target
           break
       }
     })
     setApiData(apiData)
     res.send(successData)
   })
+
+  app.get('/express-proxy-mock/get-api-item-and-mock', (req: Request, res: Response) => {
+    const key = req.query.key as string
+    const apiData = getTargetApiData(key)
+    const AllMockData = getMock()
+    const mockData = AllMockData[key] || null
+    res.send({
+      apiData,
+      mockData
+    })
+  })
 }
+

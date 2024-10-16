@@ -3,8 +3,8 @@ import GProxy from "../proxy/proxy";
 import { Form, Input } from 'antd'
 import './editModal.css'
 import MockEditor from "./mockEditor";
-import { useState } from "react";
-import { saveCustomProxyData } from "../../api/api";
+import { useCallback, useEffect, useState } from "react";
+import { saveCustomProxyData, fetctApiItemDataAndMockData } from "../../api/api";
 import { parseUrlToKey } from "../../common/fun";
 
 const initMockData = {
@@ -20,21 +20,51 @@ const initMockData = {
 }
 
 export default function ApiEdit(props) {
-  const { onCancel } = props;
+  const { onCancel, visible, targetKey, onApiDataChange } = props;
   const [form] = Form.useForm();
-  const [mockData, setMockData] = useState(initMockData);
+  const [mockData, setMockData] = useState('');
   const [hasError, setHasError] = useState(false);
   const [customProxy, setCustomProxy] = useState([]);
   const [selectCustomProxy, setSelectCustomProxy] = useState('');
+
+  const reset = useCallback(() => {
+    setMockData('')
+    setHasError(false)
+    setCustomProxy([])
+    setSelectCustomProxy('')
+    form.resetFields()
+  }, [])
+  
+  useEffect(() => {
+    if (targetKey && visible) {
+      fetctApiItemDataAndMockData({
+        key: targetKey
+      }).then(data => {
+        if (data.mockData) {
+          setMockData(data.mockData)
+        }
+        if (data.apiData) {
+          form.setFieldsValue({
+            name: data.apiData.name,
+            url: data.apiData.url,
+            duration: data.apiData.duration
+          })
+          setCustomProxy(data.apiData.customProxy)
+          setSelectCustomProxy(data.apiData.selectCustomProxy || '')
+        }
+      })
+    }
+    if (!targetKey && visible) {
+      setMockData(initMockData)
+    }
+  }, [targetKey, visible])
 
   return <Modal
     className="edit-modal"
     centered={true}
     onCancel={() => {
       onCancel()
-      setMockData(initMockData)
-      setCustomProxy([])
-      setHasError(false)
+      reset()
     }}
     title="MOCK数据&自定义代理"
     okText="保存"
@@ -42,7 +72,7 @@ export default function ApiEdit(props) {
     onOk={() => {
       form.submit()
     }}
-    open={props.visible}>
+    open={visible}>
     <Form
       form={form}
       onFinish={async (value) => {
@@ -58,6 +88,8 @@ export default function ApiEdit(props) {
           selectCustomProxy
         })
         onCancel()
+        onApiDataChange()
+        reset()
       }}
       style={{ width: ' 100%' }}
       layout="inline"
@@ -72,25 +104,29 @@ export default function ApiEdit(props) {
         <Input />
       </Form.Item>
     </Form>
-    <GProxy
-      label="自定义代理:"
-      deleteComfirm={true}
-      proxyList={customProxy}
-      selectProxy={selectCustomProxy}
-      onProxyChange={async ({proxy}) => {
-        setSelectCustomProxy(proxy);
-      }}
-      onProxyDelete={async ({proxy}) => {
-        setCustomProxy(customProxy.filter(item => item.proxy !== proxy));
-        if(proxy === selectCustomProxy) {
-          setSelectCustomProxy(customProxy[0]?.proxy || '');
-        }
-      }}
-      onProxyCreate={async (data) => {
-        setCustomProxy([...customProxy, data]);
-        setSelectCustomProxy(data.proxy);
-      }}
-    />
-    <MockEditor value={mockData} onChange={setMockData} onStateChange={setHasError} />
+    {
+      visible && <GProxy
+        label="自定义代理:"
+        deleteComfirm={true}
+        proxyList={customProxy}
+        selectProxy={selectCustomProxy}
+        onProxyChange={async ({proxy}) => {
+          setSelectCustomProxy(proxy);
+        }}
+        onProxyDelete={async ({proxy}) => {
+          setCustomProxy(customProxy.filter(item => item.proxy !== proxy));
+          if(proxy === selectCustomProxy) {
+            setSelectCustomProxy(customProxy[0]?.proxy || '');
+          }
+        }}
+        onProxyCreate={async (data) => {
+          setCustomProxy([...customProxy, data]);
+          setSelectCustomProxy(data.proxy);
+        }}
+      />
+    }
+    {
+      mockData && <MockEditor value={mockData} onChange={setMockData} onStateChange={setHasError} />
+    }
   </Modal>
 }

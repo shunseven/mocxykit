@@ -48,20 +48,30 @@ export async function fetchChangeProxy (data) {
 }
 
 export async function saveCustomProxyData (data) {
-  await request('/express-proxy-mock/save-customproxy-mock', {
+  const res = await request('/express-proxy-mock/save-customproxy-mock', {
     data,
     method: 'POST'
   })
+  return res
 }
 
 export async function fetchChangeTargetType (data) {
-  await request('/express-proxy-mock/change-target', {
+  const res = await request('/express-proxy-mock/change-target', {
     query: data
   })
+  return res
 }
 
 export async function fetchBatchChangeTargetType (data) {
-  await request('/express-proxy-mock/batch-change-target', {
+  const res = await request('/express-proxy-mock/batch-change-target', {
     query: data
   })
+  return res
+}
+
+export async function fetctApiItemDataAndMockData (data) {
+  const res = await request('/express-proxy-mock/get-api-item-and-mock', {
+    query: data
+  })
+  return res
 }

@@ -52,6 +52,7 @@ function App(props) {
           await fetchBatchChangeTargetType({target})
           fetchProxyData();
         }}
+        onApiDataChange={fetchProxyData}
       />
     </div>
   );

@@ -1,11 +1,12 @@
 
 import { Space, Table, Tag, Radio, Button } from 'antd';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import ApiEdit from '../customProxyMock/editModal';
 const { Column } = Table;
 
-function List({data, globalProxy, onTargetChange, onBatchChangeTargetType}) {
+function List({data, globalProxy, onTargetChange, onBatchChangeTargetType, onApiDataChange}) {
   const [editVisible, setEditVisible] = useState(false)
+  const [itemTargetKey, setItemTargetKey] = useState('');
 
   return <>
     <div style={{
@@ -29,7 +30,10 @@ function List({data, globalProxy, onTargetChange, onBatchChangeTargetType}) {
        
       </Space>
       <Button
-        onClick={() => setEditVisible(true)}  type='primary'>
+        onClick={() => {
+          setItemTargetKey('')
+          setEditVisible(true)
+        }}  type='primary'>
           新增MOCK数据&自定义代理
       </Button>
     </div>
@@ -41,7 +45,7 @@ function List({data, globalProxy, onTargetChange, onBatchChangeTargetType}) {
         x: 'max-content',
       }}
     >
-      <Column title="名称" dataIndex="name" key="name" />
+      <Column width={150} title="名称" dataIndex="name" key="name" />
       <Column title="URL" dataIndex="url" key="ur" />
       <Column
         title="目标"
@@ -83,7 +87,12 @@ function List({data, globalProxy, onTargetChange, onBatchChangeTargetType}) {
         width={120}
         render={(_, record) => (
           <Space size="middle">
-            <a style={{
+            <a 
+            onClick={() => {
+              setItemTargetKey(record.key)
+              setEditVisible(true)
+            }}
+            style={{
               marginRight: '10px'
             }}>设置</a>
             <a
@@ -95,9 +104,7 @@ function List({data, globalProxy, onTargetChange, onBatchChangeTargetType}) {
         )}
       />
     </Table>
-    {
-      editVisible && <ApiEdit visible={editVisible} onCancel={() => setEditVisible(false)} />
-    }
+    <ApiEdit onApiDataChange={onApiDataChange} targetKey={itemTargetKey} visible={editVisible} onCancel={() => setEditVisible(false)} />
   </>
 }
 
