@@ -42,7 +42,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
 
       </Space>
       <Space size={10} >
-        <CacheRequestHistoryData />
+        <CacheRequestHistoryData onApiDataChange={onApiDataChange} />
         <Button
           onClick={() => {
             setItemTargetKey('')

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Badge, Button } from 'antd';
 import { getCacheRequestHistoryLength } from '../../api/api';
 import RequestHistoryListModal from './requestHistoryListModal';
-export default function CacheRequestHistoryData() {
+export default function CacheRequestHistoryData({onApiDataChange}) {
   const [requsetCacheHistoryLength, setRequestCacheHistoryLength] = useState(0);
   const [visible, setVisible] = useState(false);
   
@@ -23,6 +23,6 @@ export default function CacheRequestHistoryData() {
     <Badge count={requsetCacheHistoryLength}>
        <Button variant='dashed' onClick={() =>setVisible(true)} color='danger' >转换最近请求为MOCK数据</Button>
     </Badge>
-    <RequestHistoryListModal onCancel={() => setVisible(false)} visible={visible} />
+    <RequestHistoryListModal onApiDataChange={onApiDataChange} onCancel={() => setVisible(false)} visible={visible} />
   </div>
 }

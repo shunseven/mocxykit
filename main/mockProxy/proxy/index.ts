@@ -63,7 +63,7 @@ export default function createProxyServer (app: Application, options: ProxyMockO
       // 缓存响应数据
       try{
         setCacheRequestHistory({
-          url: req.url as string,
+          url: (req.url as string).split('?')[0],
           key: parseUrlToKey(req.url as string),
           data: JSON.parse(body.toString()),
           time: new Date().toLocaleString()

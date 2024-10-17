@@ -1,7 +1,7 @@
 import { Application, Request, Response } from "express";
 import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getMockTargetData, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData } from "../common/fun";
-import { getCacheRequestHistory } from "../common/cacheRequestHistory";
+import { clearCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 
 const successData = {
   msg: 'success'
@@ -153,11 +153,22 @@ export default function viewRequest(app: Application) {
           key,
           url: data.url,
         }
-        mockData.data.unshift({
-          name: '导入数据',
-          requestData: [],
-          responseData: data.data
-        })
+
+        const mockDataIndex = mockData.data.findIndex(item => Object.keys(item.requestData).length === 0)
+        if (mockDataIndex !== -1) {
+          mockData.data[mockDataIndex] = {
+            name: '导入数据',
+            requestData: {},
+            responseData: data.data
+          }
+        } else {
+          mockData.data.unshift({
+            name: '导入数据',
+            requestData: {},
+            responseData: data.data
+          })
+        }
+
         setCustomProxyAndMock({
           mockData,
           name: '导入数据',
@@ -168,6 +179,12 @@ export default function viewRequest(app: Application) {
         })
       }
     })
+    res.send(successData)
+  })
+
+  app.get('/express-proxy-mock/clear-request-cache', (req: Request, res: Response) => {
+    clearCacheRequestHistory()
+    res.send(successData)
   })
 
 }

@@ -11,3 +11,7 @@ export function setCacheRequestHistory(data: CacheRequestHistoryData, max = 20) 
 export function getCacheRequestHistory(): CacheRequestHistoryData[] {
   return cacheRequestHistory;
 }
+
+export function clearCacheRequestHistory() {
+  cacheRequestHistory = [];
+}

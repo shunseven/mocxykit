@@ -102,3 +102,8 @@ export async function getCacheRequestHistory () {
   return res
 }
 
+export async function clearCacheRequestHistory () {
+  const res = await request('/express-proxy-mock/clear-request-cache')
+  return res
+}
+

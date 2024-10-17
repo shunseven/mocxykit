@@ -4,8 +4,9 @@ function firstUpperCase(str: string): string {
   return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
 }
 
-export function parseUrlToKey (url: string): string {
-  return url ? url.split('/').map(item => firstUpperCase(item)).join('') : '';
+export function parseUrlToKey(url: string): string {
+  const cleanUrl = url.split('?')[0];
+  return cleanUrl.split('/').map(item => firstUpperCase(item)).join('');
 }
 
 export function sleep(ms: number): Promise<void> {

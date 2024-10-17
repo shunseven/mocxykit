@@ -22,7 +22,7 @@ export default function entry(app: Application, options: ProxyMockOptions) {
        });
      } else if (apiConfig?.target === 'mock') {
        // 走 mock 数据
-       console.log(`${req.url} mock`);
+       console.log(`${req.url} => mock数据`);
        mockFun(req, res, next)
      } else if (apiConfig?.target === 'customProxy') {
        // 走自定义代理

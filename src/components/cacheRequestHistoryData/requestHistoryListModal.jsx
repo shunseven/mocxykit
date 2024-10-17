@@ -1,20 +1,22 @@
 import { Button, Modal, Table, Input } from "antd";
 import React, { useEffect, useState } from "react";
-import { getCacheRequestHistory } from "../../api/api";
+import { batchImportRequestCacheToMock, clearCacheRequestHistory, getCacheRequestHistory } from "../../api/api";
 const { Search } = Input;
 
-export default function RequestHistoryListModal({ visible, onCancel }) {
+export default function RequestHistoryListModal({ visible, onCancel, onApiDataChange }) {
   const [requsetCacheHistory, setRequestCacheHistory] = useState([]);
+  const [keys, setKeys] = useState([])
+  const getRequestCache = () => {
+    getCacheRequestHistory().then((data) => {
+      setRequestCacheHistory(data)
+    })
+  }
   useEffect(() => {
     let timer;
     if (visible) {
-      getCacheRequestHistory().then((data) => {
-        setRequestCacheHistory(data)
-      })
+      getRequestCache()
       timer = setInterval(() => {
-        getCacheRequestHistory().then((data) => {
-          setRequestCacheHistory(data)
-        })
+        getRequestCache()
       }, 1000)
     } 
     return () => {
@@ -43,16 +45,27 @@ export default function RequestHistoryListModal({ visible, onCancel }) {
             }} 
           />
           <div>
-            <Button type="primary">批量导入MOCK数据</Button>
-            <Button color="danger" variant="link">清空当前数据</Button>
+          <Button type="primary" onClick={async () => {
+              await batchImportRequestCacheToMock({keys})
+              onCancel()
+              onApiDataChange()
+            }} >批量导入MOCK数据</Button>
+            <Button 
+               color="danger" 
+               variant="link"
+               onClick={async() => {
+                 await clearCacheRequestHistory()
+                 getRequestCache()
+               }}
+            >清空当前数据</Button>
           </div>
          
         </div>
         <Table
           rowSelection={{
             type: 'checkbox',
-            onChange: (selectedRowKeys, selectedRows) => {
-              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            onChange: (selectedRowKeys) => {
+              setKeys(selectedRowKeys)
             }
           }}
           scroll={{
