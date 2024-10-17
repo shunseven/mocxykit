@@ -44,7 +44,7 @@ export default function createProxyServer (app: Application, options: ProxyMockO
     }
   }
   const httpProxyServer = httpProxy.createProxyServer(config);
-    
+
   return async function(req: Request, res: Response, next: NextFunction, proxyConfig: ProxyConfig) {
     if (!proxyConfig.proxyUrl) {
       return res.send('请设置代理');
@@ -74,6 +74,16 @@ export default function createProxyServer (app: Application, options: ProxyMockO
               .join(';')
         });
       }
+      let body = '';
+      proxyRes.on('data', (chunk) => {
+        body += chunk;
+      });
+  
+      proxyRes.on('end', () => {
+        console.log('Response from target:', body);
+        // 你可以在这里处理响应数据
+        console.log('Response from target:', body.toString());
+      });
     })
     
     proxy.on('error', function (err, req, res) {

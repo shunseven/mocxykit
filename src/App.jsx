@@ -1,5 +1,5 @@
 import { Divider } from 'antd'
-import List from './components/list'
+import List from './components/apiList/apiList'
 import { useEffect, useState } from 'react';
 import { fetchCreateProxy, fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType, fetchBatchChangeTargetType } from './api/api';
 import GProxy from './components/proxy/proxy';
