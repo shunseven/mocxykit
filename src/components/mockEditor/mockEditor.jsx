@@ -6,7 +6,6 @@ import eventButs from './eventBus';
 
 let resDataIsNull = false;
 let reqDataIsNull = false;
-let hasResetEvet = false
 
 function MockEditor({
   value = {
@@ -15,7 +14,6 @@ function MockEditor({
   onChange,
   onStateChange,
   mode = 'code',
-  visible = false
 }) {
   const [selectMockIndex, setSelectMockIndex] = useState(0);
   const [isEditRequest, setIsEditRequest] = useState(false);
@@ -61,12 +59,19 @@ function MockEditor({
   useEffect(() => {
     const changeValue = () => {
       setTimeout(() => {
+        setSelectMockIndex(0)
         reqEditorRef.current?.set({});
         resEditorRef.current?.set({});
-        valueRef.current = value;
+        valueRef.current = {
+          name: '请求参数',
+          url: '',
+          data: [{
+            requestData: {},
+            responseData: {}
+          }]
+        };;
         selectIndexRef.current = 0;
-      })
-      debugger
+      }, 300)
     }
     eventButs.on('reset', changeValue)
     return () => {
@@ -164,6 +169,7 @@ function MockEditor({
                   return item;
                 })
               }
+              valueRef.current = newData
               eventButs.emit('value', newData)
             }}
           />
@@ -197,6 +203,7 @@ function MockEditor({
                 return item;
               })
             }
+            valueRef.current = newData
             eventButs.emit('value', newData)
           }}
           htmlElementProps={{
