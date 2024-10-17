@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ApiEdit from '../mockEditorModal/editModal';
 import { fetchDeleteApiData } from '../../api/api';
 import PreviewMockModal from '../previewMockModal/previewMockModal';
-import CacheRequestHistoryData from '../CacheRequestHistoryData/CacheRequestHistoryData';
+import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 const { Column } = Table;
 
 const colorMap = {

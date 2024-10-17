@@ -1,10 +1,3 @@
-interface CacheRequestHistoryData {
-  url: string;
-  key: string;
-  data: Record<string, any>;
-  time: string;
-}
-
 let cacheRequestHistory: CacheRequestHistoryData[] = [];
 
 export function setCacheRequestHistory(data: CacheRequestHistoryData, max = 20) {

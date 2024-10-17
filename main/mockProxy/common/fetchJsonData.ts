@@ -51,7 +51,7 @@ export function setCustomProxyAndMock(data: CustomProxyAndMock) {
       key,
       customProxy: data.customProxy,
       selectCustomProxy: data.selectCustomProxy,
-      target: 'proxy',
+      target: data.target || 'proxy',
       duration: data.duration,
       name: data.name
     })

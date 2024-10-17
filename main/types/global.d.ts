@@ -45,8 +45,16 @@ interface CustomProxyAndMock{
   customProxy: string[];
   mockData: MockData;
   selectCustomProxy: string;
+  target?: 'proxy' | 'mock' | 'customProxy';
 }
 
 interface AllMockData {
   [key: string]: MockData;
+}
+
+interface CacheRequestHistoryData {
+  url: string;
+  key: string;
+  data: Record<string, any>;
+  time: string;
 }

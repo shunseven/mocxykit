@@ -139,5 +139,36 @@ export default function viewRequest(app: Application) {
       length: cacheRequestHistory.length
     })
   })
+
+  app.post('/express-proxy-mock/batch-import-request-cache-to-mock', async (req: Request, res: Response) => {
+    const result =  await getReqBodyData(req);
+    const {keys} = result as {keys: string[]}
+    const cacheRequestHistory = getCacheRequestHistory()
+    const AllMockData = getMock()
+    keys.forEach(key => {
+      const data = cacheRequestHistory.find(item => item.key === key)
+      if (data) {
+        const mockData = AllMockData[key] || {
+          data: [],
+          key,
+          url: data.url,
+        }
+        mockData.data.unshift({
+          name: '导入数据',
+          requestData: [],
+          responseData: data.data
+        })
+        setCustomProxyAndMock({
+          mockData,
+          name: '导入数据',
+          url: data.url,
+          duration: 0,
+          customProxy: [],
+          selectCustomProxy: '',
+        })
+      }
+    })
+  })
+
 }
 

@@ -62,6 +62,15 @@ export async function saveCustomProxyData (data) {
   return res
 }
 
+export async function batchImportRequestCacheToMock (data) {
+  const res = await request('/express-proxy-mock/batch-import-request-cache-to-mock', {
+    data,
+    method: 'POST'
+  })
+  return res
+}
+
+
 export async function fetchChangeTargetType (data) {
   const res = await request('/express-proxy-mock/change-target', {
     query: data
@@ -92,3 +101,4 @@ export async function getCacheRequestHistory () {
   const res = await request('/express-proxy-mock/get-request-cache')
   return res
 }
+
