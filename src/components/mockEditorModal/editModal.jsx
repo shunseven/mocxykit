@@ -59,6 +59,13 @@ export default function ApiEdit(props) {
     }
   }, [targetKey, visible])
 
+  useEffect(() => {
+    if (!visible) {
+      setMockData('')
+    }
+  }, [visible])
+
+
   return <Modal
     className="edit-modal"
     centered={true}
@@ -76,9 +83,6 @@ export default function ApiEdit(props) {
     <Form
       form={form}
       onFinish={async (value) => {
-        if (hasError) {
-          return
-        }
         mockData.url = value.url;
         mockData.key = parseUrlToKey(value.url);
         await saveCustomProxyData({
@@ -131,7 +135,7 @@ export default function ApiEdit(props) {
       />
     }
     {
-      mockData && <MockEditor value={mockData} onChange={setMockData} onStateChange={setHasError} />
+      mockData && <MockEditor visible={visible} value={mockData} onChange={setMockData} onStateChange={setHasError} />
     }
   </Modal>
 }
