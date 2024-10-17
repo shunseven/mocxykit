@@ -1,6 +1,7 @@
 import { Application, Request, Response } from "express";
 import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getMockTargetData, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData } from "../common/fun";
+import { getCacheRequestHistory } from "../common/cacheRequestHistory";
 
 const successData = {
   msg: 'success'
@@ -125,6 +126,17 @@ export default function viewRequest(app: Application) {
     res.send({
       apiData,
       mockData
+    })
+  })
+
+  app.get('/express-proxy-mock/get-request-cache', (req: Request, res: Response) => {
+    res.send(getCacheRequestHistory())
+  })
+
+  app.get('/express-proxy-mock/get-request-cache-length', (req: Request, res: Response) => {
+    const cacheRequestHistory = getCacheRequestHistory()
+    res.send({
+      length: cacheRequestHistory.length
     })
   })
 }

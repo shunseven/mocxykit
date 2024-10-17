@@ -1,6 +1,7 @@
 interface ProxyMockOptions {
   apiRule: string;
   https?: boolean; // 是否启用 https
+  cacheRequestHistoryMaxLen?: number; // 缓存请求历史的最大长度
 }
 
 interface ProxyList {

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import ApiEdit from '../mockEditorModal/editModal';
 import { fetchDeleteApiData } from '../../api/api';
 import PreviewMockModal from '../previewMockModal/previewMockModal';
+import CacheRequestHistoryData from '../CacheRequestHistoryData/CacheRequestHistoryData';
 const { Column } = Table;
 
 const colorMap = {
@@ -40,13 +41,16 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary" variant="outlined">首选自定义代理</Button>
 
       </Space>
-      <Button
-        onClick={() => {
-          setItemTargetKey('')
-          setEditVisible(true)
-        }} type='primary'>
-        新增MOCK数据&自定义代理
-      </Button>
+      <Space size={10} >
+        <CacheRequestHistoryData />
+        <Button
+          onClick={() => {
+            setItemTargetKey('')
+            setEditVisible(true)
+          }} type='primary'>
+          新增MOCK数据&自定义代理
+        </Button>
+      </Space>
     </div>
 
     <Table

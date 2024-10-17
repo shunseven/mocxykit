@@ -7,10 +7,14 @@ import { createServer as createViteServer } from 'vite';
 import viteClientMiddleware from './viteClientMiddleware';
 import { ViteDevServer } from '../node_modules/vite/dist/node/index';
 import entry from './mockProxy/entry';
+import events from 'events';
+
+events.EventEmitter.defaultMaxListeners = 20; 
 
 const defaultConfig = {
   apiRule: '/api/*',
   https: true,
+  cacheRequestHistoryMaxLen: 20,
 }
 
 export function mockProxy (app: Application, options: ProxyMockOptions = defaultConfig) {

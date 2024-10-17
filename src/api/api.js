@@ -82,3 +82,13 @@ export async function fetctApiItemDataAndMockData (data) {
   })
   return res
 }
+
+export async function getCacheRequestHistoryLength () {
+  const res = await request('/express-proxy-mock/get-request-cache-length')
+  return res
+}
+
+export async function getCacheRequestHistory () {
+  const res = await request('/express-proxy-mock/get-request-cache')
+  return res
+}
