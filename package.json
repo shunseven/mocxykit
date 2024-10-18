@@ -1,38 +1,40 @@
 {
  "name": "express-proxy-mock",
- "version": "2.0.1",
+ "version": "2.0.2",
  "description": "The tool with proxy and mock for front-end",
  "main": "serverDist/index.js",
  "author": "shunseven",
  "license": "ISC",
  "scripts": {
-  "build": "tsc & npm run build:view",
+  "build": "tsc & npm run build:view & npm run copy-files",
   "lint": "eslint .",
   "start": "ts-node server.ts",
-  "build:view": "vite build"
+  "build:view": "vite build",
+  "copy-files": "copyfiles -u 1 'main/**/*.p12' 'serverDist'"
  },
  "dependencies": {
   "@eslint/js": "^9.11.1",
   "@types/express": "^5.0.0",
   "@types/react": "^18.3.10",
   "@types/react-dom": "^18.3.0",
+  "antd": "^5.21.3",
   "http-proxy": "^1.18.1",
   "jsoneditor": "^10.1.0",
   "react": "^18.3.1",
-  "react-dom": "^18.3.1",
-  "antd": "^5.21.3"
+  "react-dom": "^18.3.1"
  },
  "devDependencies": {
   "@types/http-proxy": "^1.17.15",
+  "@vitejs/plugin-react-swc": "^3.5.0",
+  "copyfiles": "^2.4.1",
   "eslint": "^9.11.1",
   "eslint-plugin-react": "^7.37.0",
   "eslint-plugin-react-hooks": "^5.1.0-rc.0",
   "eslint-plugin-react-refresh": "^0.4.12",
+  "express": "^4.21.1",
   "globals": "^15.9.0",
   "ts-node": "^10.9.2",
   "typescript": "^5.6.3",
-  "@vitejs/plugin-react-swc": "^3.5.0",
-  "express": "^4.21.1",
   "vite": "^5.4.8"
  }
 }

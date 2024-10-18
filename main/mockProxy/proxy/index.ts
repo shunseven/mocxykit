@@ -4,7 +4,6 @@ import fs from "fs";
 import path from "path";
 import { parseUrlToKey, sleep } from "../common/fun";
 import { getTargetApiData } from "../common/fetchJsonData";
-import { c, s } from "vite/dist/node/types.d-aGj9QkWt";
 import { setCacheRequestHistory } from "../common/cacheRequestHistory";
 
 interface ProxyConfig {

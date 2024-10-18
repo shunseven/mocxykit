@@ -16,7 +16,7 @@ const defaultConfig: ProxyMockOptions = {
   configPath: '/config',
 }
 
-export function mockProxy(app: Application, options: ProxyMockOptions = defaultConfig) {
+export function proxyMock(app: Application, options: ProxyMockOptions = defaultConfig) {
   const config = Object.assign({}, defaultConfig, options);
   entry(app, config);
   // 开发环境使用 Vite 的 Connect 实例作为中间件
@@ -24,3 +24,5 @@ export function mockProxy(app: Application, options: ProxyMockOptions = defaultC
     app.use(clientMiddleware(config));
   }
 }
+
+export default proxyMock;
