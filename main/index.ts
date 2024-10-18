@@ -22,7 +22,7 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
   const entryMiddleware = entry(config);
   const clientMiddleware = clientEntry(config);
   return function (req: Request, res: Response, next: NextFunction) {
-    let isClient = true
+    let isClient = false;
     if (process.env.PROCY_MOCK_NODE_ENV !== 'development') {
        isClient = clientMiddleware(req, res)
     }

@@ -141,7 +141,7 @@ export default function viewRequest(req: Request, res: Response) {
     const mockDatas = getMock()
     const mockData = mockDatas[req.query.key as string] || {}
     res.send({
-      ...apiData,
+      apiData,
       mockData
     })
     return true

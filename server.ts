@@ -16,7 +16,6 @@ function viteClientMiddleware(vite: ViteDevServer) {
 
 async function createServer() {
   const app = express();
-  app.use(proxyMockMiddleware())
   createViteServer({
     server: {
       middlewareMode: true,
@@ -25,6 +24,7 @@ async function createServer() {
   }).then((vite: ViteDevServer) => {
     app.use(viteClientMiddleware(vite));
   })
+  app.use(proxyMockMiddleware())
   // 创建 Vite 服务器
   app.listen(8822, () => {
     console.log('Server is running at http://localhost:8822');
