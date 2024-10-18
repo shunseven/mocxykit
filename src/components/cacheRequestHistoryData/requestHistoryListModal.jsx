@@ -9,6 +9,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
   const [keys, setKeys] = useState([])
   const [checkValueVisible, setCheckValueVisible] = useState(false)
   const [checkValue, setCheckValue] = useState(null)
+  const [searchValue, setSearchValue] = useState('')
   const getRequestCache = () => {
     getCacheRequestHistory().then((data) => {
       setRequestCacheHistory(data)
@@ -21,7 +22,9 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
       timer = setInterval(() => {
         getRequestCache()
       }, 1000)
-    } 
+    } else {
+      setSearchValue('')
+    }
     return () => {
       clearInterval(timer)
     }
@@ -39,9 +42,13 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-          <Search placeholder="input search text"
+          <Search placeholder="请输入URL"
             onSearch={(value) => {
-              setRequestCacheHistory(requsetCacheHistory.filter(item => item.url.includes(value)))
+              if (value) {
+                setSearchValue(requsetCacheHistory.filter(item => item.url.includes(value)))
+              } else {
+                setSearchValue('')
+              }
             }}
             style={{
               width: 200,
@@ -74,7 +81,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
           }}
           scroll={{
             y: 800
-          }} pagination={false} dataSource={requsetCacheHistory}>
+          }} pagination={false} dataSource={ searchValue || requsetCacheHistory}>
           <Table.Column title="URL" dataIndex="url" key="url" />
           <Table.Column title="请求时间" dataIndex="time" key="time" />
           <Table.Column

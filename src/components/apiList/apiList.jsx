@@ -38,8 +38,8 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         <Button style={{
           color: '#389e0d',
           borderColor: '#389e0d'
-        }} onClick={() => onBatchChangeTargetType('mock')} size='small' color="primary" variant="outlined" >首选MOCK</Button>
-        <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary" variant="outlined">首选自定义代理</Button>
+        }} onClick={() => onBatchChangeTargetType('mock')} size='small' color="primary" variant="outlined" >MOCK数据优先</Button>
+        <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary" variant="outlined">自定义代理优先</Button>
 
       </Space>
       <Space size={10} >

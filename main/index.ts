@@ -23,7 +23,6 @@ export function proxyMock(app: Application, options: ProxyMockOptions = defaultC
   }
   entry(app, config);
   // 开发环境使用 Vite 的 Connect 实例作为中间件
-  
 }
 
 export default proxyMock;
