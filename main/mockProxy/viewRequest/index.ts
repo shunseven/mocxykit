@@ -137,9 +137,10 @@ export default function viewRequest(req: Request, res: Response) {
 
   // 获取单个请求数据
   if (matchRouter('/express-proxy-mock/get-api-item-and-mock', req.path)) {
-    const apiData = getTargetApiData(req.query.key as string)
-    const mockDatas = getMock()
-    const mockData = mockDatas[req.query.key as string] || {}
+    const key = req.query.key as string
+    const apiData = getTargetApiData(key)
+    const AllMockData = getMock()
+    const mockData = AllMockData[key] || null
     res.send({
       apiData,
       mockData
