@@ -18,7 +18,7 @@ const defaultConfig: ProxyMockOptions = {
 
 export function proxyMock(app: Application, options: ProxyMockOptions = defaultConfig) {
   const config = Object.assign({}, defaultConfig, options);
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.PROCY_MOCK_NODE_ENV !== 'development') {
     clientMiddleware(app, config)
   }
   entry(app, config);

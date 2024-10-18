@@ -2,7 +2,7 @@ import express from 'express';
 import { proxyMock } from './main/index';
 import { Request, Response, NextFunction } from 'express';
 
-process.env.NODE_ENV = 'developmenteee';
+process.env.PROCY_MOCK_NODE_ENV = 'development';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 function viteClientMiddleware(vite: ViteDevServer) {
   return function(req: Request, res: Response, next: NextFunction) {
