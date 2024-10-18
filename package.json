@@ -8,7 +8,8 @@
  "scripts": {
   "build": "tsc",
   "lint": "eslint .",
-  "start": "ts-node server.ts"
+  "start": "ts-node server.ts",
+  "build:view": "vite build"
  },
  "dependencies": {
   "@eslint/js": "^9.11.1",

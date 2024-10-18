@@ -14,7 +14,7 @@ export default function CacheRequestHistoryData({onApiDataChange}) {
       getCacheRequestHistoryLength().then(({length}) => {
         setRequestCacheHistoryLength(length)
       })
-    }, 8000)
+    }, 1000)
     return () => {
       clearInterval(timer)
     }

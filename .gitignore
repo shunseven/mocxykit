@@ -26,3 +26,4 @@ dist-ssr
 package-lock.json
 proxyMockData
 .vscode
+views

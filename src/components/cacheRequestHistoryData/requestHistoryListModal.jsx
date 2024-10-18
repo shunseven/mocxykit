@@ -56,6 +56,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
                onClick={async() => {
                  await clearCacheRequestHistory()
                  getRequestCache()
+                 onApiDataChange()
                }}
             >清空当前数据</Button>
           </div>
@@ -87,8 +88,11 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
                 marginRight: '10px'
               }}>查看数据</a>
              <a
-                onClick={() => {
+                onClick={async () => {
                   event.stopPropagation()
+                  await batchImportRequestCacheToMock({keys: [record.key]})
+                  getCacheRequestHistory()
+                  onApiDataChange()
                 }}
                 style={{
                   color: '#389e0d'

@@ -1,7 +1,7 @@
 import { Application, Request, Response } from "express";
 import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getMockTargetData, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData } from "../common/fun";
-import { clearCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
+import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 
 const successData = {
   msg: 'success'
@@ -168,7 +168,6 @@ export default function viewRequest(app: Application) {
             responseData: data.data
           })
         }
-
         setCustomProxyAndMock({
           mockData,
           name: '导入数据',
@@ -177,6 +176,7 @@ export default function viewRequest(app: Application) {
           customProxy: [],
           selectCustomProxy: '',
         })
+        deleteCacheRequestHistory(key)
       }
     })
     res.send(successData)

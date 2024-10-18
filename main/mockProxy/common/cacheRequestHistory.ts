@@ -15,3 +15,7 @@ export function getCacheRequestHistory(): CacheRequestHistoryData[] {
 export function clearCacheRequestHistory() {
   cacheRequestHistory = [];
 }
+
+export function deleteCacheRequestHistory(key: string) {
+  cacheRequestHistory = cacheRequestHistory.filter(item => item.key !== key);
+}
