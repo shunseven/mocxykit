@@ -39,9 +39,7 @@ export function hasMockData (apiItemData: ApiConfig, mockDatas: AllMockData): bo
 }
 
 export function matchRouter(path: string, reqPath: string) {
-  console.log(reqPath, path, reqPath.includes(path))
   path = path.replace("*", '*path')
   const regexp = pathToRegexp(path);
-  console.log('regexp', regexp.regexp)
   return regexp.regexp.test(reqPath);
 }
