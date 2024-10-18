@@ -5,6 +5,7 @@ import ApiEdit from '../mockEditorModal/editModal';
 import { fetchDeleteApiData } from '../../api/api';
 import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
+import eventButs from '../mockEditor/eventBus';
 const { Column } = Table;
 
 const colorMap = {
@@ -47,6 +48,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
           onClick={() => {
             setItemTargetKey('')
             setEditVisible(true)
+            eventButs.emit('reset')
           }} type='primary'>
           新增MOCK数据&自定义代理
         </Button>

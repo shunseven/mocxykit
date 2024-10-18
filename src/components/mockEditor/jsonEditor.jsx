@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import JSONEditor from 'jsoneditor/dist/jsoneditor.min.js';
 import 'jsoneditor/dist/jsoneditor.min.css';
 
+
 /**
  * @typedef {{
  * tree: string,
@@ -86,9 +87,9 @@ const Editor = ({
   htmlElementProps,
   innerRef,
   sortObjectKeys = false,
+  jsonEditorRef,
 }) => {
   const htmlElementRef = useRef(null);
-  const jsonEditorRef = useRef(null);
 
   useEffect(() => {
     createEditor();
@@ -117,8 +118,7 @@ const Editor = ({
         }
       }
     }
-  }, [schema, schemaRefs, name, theme]);
-
+  }, [schema, schemaRefs, name, theme]); 
   const createEditor = () => {
     if (jsonEditorRef.current) {
       jsonEditorRef.current.destroy();
