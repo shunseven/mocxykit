@@ -3,10 +3,7 @@
  */
 /// <reference path="./types/global.d.ts" />
 import { Application } from 'express';
-import { createServer as createViteServer, esbuildVersion } from 'vite';
-import viteClientMiddleware from './viteClientMiddleware';
 import clientMiddleware from './clientMiddleware';
-import { ViteDevServer } from '../node_modules/vite/dist/node/index';
 import entry from './mockProxy/entry';
 import events from 'events';
 
@@ -23,18 +20,7 @@ export function mockProxy(app: Application, options: ProxyMockOptions = defaultC
   const config = Object.assign({}, defaultConfig, options);
   entry(app, config);
   // 开发环境使用 Vite 的 Connect 实例作为中间件
-  if (process.env.NODE_ENV === 'development') {
-    createViteServer({
-      server: {
-        middlewareMode: true,
-        port: 4343
-      }
-    }).then((vite: ViteDevServer) => {
-      app.use(viteClientMiddleware(vite, config));
-    })
-  } else {
-    // 生产环境使用静态资源
+  if (process.env.NODE_ENV !== 'development') {
     app.use(clientMiddleware(config));
   }
-
 }

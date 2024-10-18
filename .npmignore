@@ -27,4 +27,10 @@ package-lock.json
 proxyMockData
 .vscode
 main
-scc
+src
+server.ts
+public
+eslint.config.js
+index.html
+tsconfig.json
+vite.config.js
