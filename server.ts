@@ -1,5 +1,5 @@
 import express from 'express';
-import { proxyMock } from './main/index';
+import { proxyMockMiddleware } from './main/index';
 import { Request, Response, NextFunction } from 'express';
 
 process.env.PROCY_MOCK_NODE_ENV = 'development';
@@ -16,9 +16,9 @@ function viteClientMiddleware(vite: ViteDevServer) {
 
 async function createServer() {
   const app = express();
-  proxyMock(app, {
+  app.use(proxyMockMiddleware({
     apiRule: '/api/*',
-  })
+  }))
   createViteServer({
     server: {
       middlewareMode: true,

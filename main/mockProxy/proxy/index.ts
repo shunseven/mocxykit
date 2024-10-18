@@ -28,7 +28,7 @@ interface proxyOption {
   [s: string]: any;
 }
 
-export default function createProxyServer (app: Application, options: ProxyMockOptions) {
+export default function createProxyServer (options: ProxyMockOptions) {
   const p12 = fs.readFileSync(path.resolve(__dirname, 'certificate', 'certificate.p12'))
   let config = {}
   if(options.https) {

@@ -1,31 +1,33 @@
-import { Application, Request, Response } from "express";
-import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getMockTargetData, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
-import { getReqBodyData, hasMockData } from "../common/fun";
+import { Request, Response } from "express";
+import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
+import { getReqBodyData, hasMockData, matchRouter } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 
 const successData = {
   msg: 'success'
 };
 
-export default function viewRequest(app: Application) {
+export default function viewRequest(req: Request, res: Response) {
   // 获取代理数据
-  app.get('/express-proxy-mock/get-api-list', (req: Request, res: Response) => {
+  if (matchRouter('/express-proxy-mock/get-api-list', req.path)) {
     const apiData = getApiDataHasMockStatus()
     res.send(apiData)
-  })
+    return
+  }
 
-   // 删除代理数据
-   app.get('/express-proxy-mock/delete-api-data', (req: Request, res: Response) => {
+  // 删除代理数据
+  if (matchRouter('/express-proxy-mock/delete-api-data', req.path)) {
     const apiData = getApiData()
     const key = req.query.key as string
     apiData.apiList = apiData.apiList.filter(item => item.key !== key)
     setApiData(apiData)
     deleteMock(key)
     res.send(successData)
-  })
+    return
+  }
 
   // 添加代理
-  app.get('/express-proxy-mock/create-proxy', (req: Request, res: Response) => {
+  if (matchRouter('/express-proxy-mock/create-proxy', req.path)) {
     const apiData = getApiData()
     apiData.proxy.push({
       proxy: req.query.proxy as string,
@@ -34,9 +36,11 @@ export default function viewRequest(app: Application) {
     apiData.selectProxy = req.query.proxy as string
     setApiData(apiData)
     res.send(successData)
-  })
+    return
+  }
+
   // 删除代理
-  app.get('/express-proxy-mock/delete-proxy', (req: Request, res: Response) => {
+  if (matchRouter('/express-proxy-mock/delete-proxy', req.path)) {
     const apiData = getApiData()
     apiData.proxy = apiData.proxy.filter(item => item.proxy !== req.query.proxy)
     if (apiData.selectProxy === req.query.proxy && apiData.proxy.length > 0) {
@@ -47,24 +51,29 @@ export default function viewRequest(app: Application) {
     }
     setApiData(apiData)
     res.send(successData);
-  })
+    return
+  }
+
   // 修改代理
-  app.get('/express-proxy-mock/change-proxy', (req: Request, res: Response) => {
+  if (matchRouter('/express-proxy-mock/change-proxy', req.path)) {
     const apiData = getApiData()
     apiData.selectProxy = req.query.proxy as string
     setApiData(apiData)
     res.send(successData)
-  })
+    return
+  }
 
   // 添加mock
-  app.post('/express-proxy-mock/save-customproxy-mock', (req: Request, res: Response) => {
+  if (matchRouter('/express-proxy-mock/save-customproxy-mock', req.path)) {
     getReqBodyData(req).then((data) => {
       setCustomProxyAndMock(data as CustomProxyAndMock)
       res.send(successData)
     })
-  })
+    return
+  }
+
   // 获取mock数据
-  app.get('/express-proxy-mock/get-costommock-proxy', (req: Request, res: Response) => {
+  if (matchRouter('/express-proxy-mock/get-costommock-proxy', req.path)) {
     const apiData = getTargetApiData(req.query.key as string)
     const mockDatas = getMock()
     const mockData = mockDatas[req.query.key as string] || {}
@@ -72,9 +81,12 @@ export default function viewRequest(app: Application) {
       ...apiData,
       mockData
     })
-  })
+    return
+  }
 
-  app.get('/express-proxy-mock/get-api-list', (req: Request, res: Response) => {
+
+  // 获取 API 列表
+  if (matchRouter('/express-proxy-mock/get-api-list', req.path)) {
     const apiData = getTargetApiData(req.query.key as string)
     const mockDatas = getMock()
     const mockData = mockDatas[req.query.key as string] || {}
@@ -82,9 +94,11 @@ export default function viewRequest(app: Application) {
       ...apiData,
       mockData
     })
-  })
+    return
+  }
 
-  app.get('/express-proxy-mock/change-target', (req: Request, res: Response) => {
+  // 修改目标
+  if (matchRouter('/express-proxy-mock/change-target', req.path)) {
     const apiData = getApiData()
     const key = req.query.key as string
     const target = req.query.target as 'proxy' | 'mock' | 'customProxy'
@@ -95,9 +109,11 @@ export default function viewRequest(app: Application) {
     })
     setApiData(apiData)
     res.send(successData)
-  })
- 
-  app.get('/express-proxy-mock/batch-change-target', (req: Request, res: Response) => {
+    return
+  }
+
+  // 批量修改目标
+  if (matchRouter('/express-proxy-mock/batch-change-target', req.path)) {
     const apiData = getApiData()
     const AllMockData = getMock()
     const target = req.query.target as 'proxy' | 'mock' | 'customProxy'
@@ -116,76 +132,88 @@ export default function viewRequest(app: Application) {
     })
     setApiData(apiData)
     res.send(successData)
-  })
+    return
+  }
 
-  app.get('/express-proxy-mock/get-api-item-and-mock', (req: Request, res: Response) => {
-    const key = req.query.key as string
-    const apiData = getTargetApiData(key)
-    const AllMockData = getMock()
-    const mockData = AllMockData[key] || null
+  // 获取单个请求数据
+  if (matchRouter('/express-proxy-mock/get-api-item-and-mock', req.path)) {
+    const apiData = getTargetApiData(req.query.key as string)
+    const mockDatas = getMock()
+    const mockData = mockDatas[req.query.key as string] || {}
     res.send({
-      apiData,
+      ...apiData,
       mockData
     })
-  })
+    return
+  }
 
-  app.get('/express-proxy-mock/get-request-cache', (req: Request, res: Response) => {
+  // 获取请求历史
+  if (matchRouter('/express-proxy-mock/get-request-cache', req.path)) {
     res.send(getCacheRequestHistory())
-  })
+    return
+  }
 
-  app.get('/express-proxy-mock/get-request-cache-length', (req: Request, res: Response) => {
+  // 获取请求历史的长度
+  if (matchRouter('/express-proxy-mock/get-request-cache-length', req.path)) {
     const cacheRequestHistory = getCacheRequestHistory()
     res.send({
       length: cacheRequestHistory.length
     })
-  })
+    return
+  }
 
-  app.post('/express-proxy-mock/batch-import-request-cache-to-mock', async (req: Request, res: Response) => {
-    const result =  await getReqBodyData(req);
-    const {keys} = result as {keys: string[]}
-    const cacheRequestHistory = getCacheRequestHistory()
-    const AllMockData = getMock()
-    keys.forEach(key => {
-      const data = cacheRequestHistory.find(item => item.key === key)
-      if (data) {
-        const mockData = AllMockData[key] || {
-          data: [],
-          key,
-          url: data.url,
-        }
-
-        const mockDataIndex = mockData.data.findIndex(item => Object.keys(item.requestData).length === 0)
-        if (mockDataIndex !== -1) {
-          mockData.data[mockDataIndex] = {
-            name: '导入数据',
-            requestData: {},
-            responseData: data.data
+  // 批量导入请求历史
+  if (matchRouter('/express-proxy-mock/batch-import-request-cache-to-mock', req.path)) {
+    getReqBodyData(req).then(result => {
+      const { keys } = result as { keys: string[] }
+      const cacheRequestHistory = getCacheRequestHistory()
+      const AllMockData = getMock()
+      keys.forEach(key => {
+        const data = cacheRequestHistory.find(item => item.key === key)
+        if (data) {
+          const mockData = AllMockData[key] || {
+            data: [],
+            key,
+            url: data.url,
           }
-        } else {
-          mockData.data.unshift({
-            name: '导入数据',
-            requestData: {},
-            responseData: data.data
-          })
-        }
-        setCustomProxyAndMock({
-          mockData,
-          name: '导入数据',
-          url: data.url,
-          duration: 0,
-          customProxy: [],
-          selectCustomProxy: '',
-        })
-        deleteCacheRequestHistory(key)
-      }
-    })
-    res.send(successData)
-  })
 
-  app.get('/express-proxy-mock/clear-request-cache', (req: Request, res: Response) => {
+          const mockDataIndex = mockData.data.findIndex(item => Object.keys(item.requestData).length === 0)
+          if (mockDataIndex !== -1) {
+            mockData.data[mockDataIndex] = {
+              name: '导入数据',
+              requestData: {},
+              responseData: data.data
+            }
+          } else {
+            mockData.data.unshift({
+              name: '导入数据',
+              requestData: {},
+              responseData: data.data
+            })
+          }
+          setCustomProxyAndMock({
+            mockData,
+            name: '导入数据',
+            url: data.url,
+            duration: 0,
+            customProxy: [],
+            selectCustomProxy: '',
+          })
+          deleteCacheRequestHistory(key)
+        }
+      })
+      res.send(successData)
+    })
+
+    return
+  }
+
+  // 删除请求历史
+  if (matchRouter('/express-proxy-mock/clear-request-cache', req.path)) {
     clearCacheRequestHistory()
     res.send(successData)
-  })
+    return
+  }
 
 }
 
