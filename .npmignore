@@ -26,5 +26,5 @@ dist-ssr
 package-lock.json
 proxyMockData
 .vscode
-serverDist
-viewsDist
+main
+scc

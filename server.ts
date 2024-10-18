@@ -1,6 +1,6 @@
 import express from 'express';
 import { mockProxy } from './main/index';
-
+process.env.NODE_ENV = 'development';
 
 async function createServer() {
   const app = express();

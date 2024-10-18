@@ -3,7 +3,7 @@
    "target": "ES6", // 或者 "ES2020" 等
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./dist",
+    "outDir": "./serverDist",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,

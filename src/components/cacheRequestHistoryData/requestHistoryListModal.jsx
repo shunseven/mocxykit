@@ -1,11 +1,14 @@
 import { Button, Modal, Table, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { batchImportRequestCacheToMock, clearCacheRequestHistory, getCacheRequestHistory } from "../../api/api";
+import HistoryDataPreviewModal from "./historyDataPreviewModal";
 const { Search } = Input;
 
 export default function RequestHistoryListModal({ visible, onCancel, onApiDataChange }) {
   const [requsetCacheHistory, setRequestCacheHistory] = useState([]);
   const [keys, setKeys] = useState([])
+  const [checkValueVisible, setCheckValueVisible] = useState(false)
+  const [checkValue, setCheckValue] = useState(null)
   const getRequestCache = () => {
     getCacheRequestHistory().then((data) => {
       setRequestCacheHistory(data)
@@ -83,6 +86,8 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
           <div>
             <a
               onClick={() => {
+                setCheckValueVisible(true)
+                setCheckValue(record)
               }}
               style={{
                 marginRight: '10px'
@@ -104,6 +109,11 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
       />
         </Table>  
       </div>
-    
+      {
+        checkValue && visible && <HistoryDataPreviewModal value={checkValue} onCancel={() => {
+          setCheckValueVisible(false)
+          setCheckValue(null)
+        }} visible={checkValueVisible} />
+      }
   </Modal>
 }

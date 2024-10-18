@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: 'views', // 指定打包输出目录为 'build'
+    outDir: 'viewsDist',
+    assetsDir: 'expressProxyMockAsset', // 指定打包输出目录为 'build'
   },
 })

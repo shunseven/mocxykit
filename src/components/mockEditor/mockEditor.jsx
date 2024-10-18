@@ -47,8 +47,8 @@ function MockEditor({
   }, [selectMockIndex])
 
   useEffect(() => {
-    const changeValue = (value) => {
-      onChange(value)
+    const changeValue = (event) => {
+      onChange(event.target)
     }
     eventButs.on('value', changeValue)
     return () => {
