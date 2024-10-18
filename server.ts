@@ -1,8 +1,8 @@
 import express from 'express';
-import { mockProxy } from './main/index';
-import { Request, Response, NextFunction, Application } from 'express';
+import { proxyMock } from './main/index';
+import { Request, Response, NextFunction } from 'express';
 
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'developmenteee';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 function viteClientMiddleware(vite: ViteDevServer) {
   return function(req: Request, res: Response, next: NextFunction) {
@@ -16,7 +16,7 @@ function viteClientMiddleware(vite: ViteDevServer) {
 
 async function createServer() {
   const app = express();
-  mockProxy(app, {
+  proxyMock(app, {
     apiRule: '/api/*',
   })
   createViteServer({
