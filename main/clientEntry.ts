@@ -7,11 +7,12 @@ export default function (options: ProxyMockOptions) {
   return function (req: Request, res: Response) {
     if (matchRouter(options.configPath as string, req.path)){
       res.sendFile(rootPath + '/index.html');
-      return
+      return true;
     }
-    if (matchRouter('/expressProxyMockAsset*', req.path)){
+    if (matchRouter('/expressProxyMockAsset/*', req.path)){
       res.sendFile(rootPath + req.url);
-      return
+      return true;
     }
+    return false;
   }
 }

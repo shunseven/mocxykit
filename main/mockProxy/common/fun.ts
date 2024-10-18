@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { match } from "path-to-regexp";
+import { pathToRegexp } from "path-to-regexp";
 
 function firstUpperCase(str: string): string {
   return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
@@ -39,6 +39,9 @@ export function hasMockData (apiItemData: ApiConfig, mockDatas: AllMockData): bo
 }
 
 export function matchRouter(path: string, reqPath: string) {
-  const matchRoute = match(path);
-  return matchRoute(reqPath)
+  console.log(reqPath, path, reqPath.includes(path))
+  path = path.replace("*", '*path')
+  const regexp = pathToRegexp(path);
+  console.log('regexp', regexp.regexp)
+  return regexp.regexp.test(reqPath);
 }

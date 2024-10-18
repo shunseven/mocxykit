@@ -18,12 +18,17 @@ const defaultConfig: ProxyMockOptions = {
 }
 
 export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
-  const entryMiddleware = entry(options);
-  const clientMiddleware = clientEntry(options);
+  const config = Object.assign({}, defaultConfig, options);
+  const entryMiddleware = entry(config);
+  const clientMiddleware = clientEntry(config);
   return function (req: Request, res: Response, next: NextFunction) {
-    clientMiddleware(req, res)
-    viewRequest(req, res);
-    entryMiddleware(req, res, next);
+    console.log(22222, req.path)
+    const isClient = clientMiddleware(req, res)
+    const isViews = viewRequest(req, res);
+    const isProxyMock =entryMiddleware(req, res, next);
+    if (!isClient && !isViews && !isProxyMock) {
+      next();
+    }
   }
 }
 

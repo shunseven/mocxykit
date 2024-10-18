@@ -16,9 +16,7 @@ function viteClientMiddleware(vite: ViteDevServer) {
 
 async function createServer() {
   const app = express();
-  app.use(proxyMockMiddleware({
-    apiRule: '/api/*',
-  }))
+  app.use(proxyMockMiddleware())
   createViteServer({
     server: {
       middlewareMode: true,

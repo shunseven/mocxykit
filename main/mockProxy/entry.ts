@@ -1,17 +1,14 @@
 import {  NextFunction, Request, Response } from "express";
 import { getApiData } from "./common/fetchJsonData";
-import { parseUrlToKey } from "./common/fun";
+import { matchRouter, parseUrlToKey } from "./common/fun";
 import createProxyServer from "./proxy";
 import createMock from "./mock";
-import {  match } from 'path-to-regexp';
-
 
 export default function entry(options: ProxyMockOptions) {
   const proxyServer = createProxyServer(options);
   const mockFun = createMock();
-  const matchRoute = match('/api/*');
   return (req: Request, res: Response, next: NextFunction) => {
-    if (matchRoute(req.path)) {
+    if (matchRouter(options.apiRule, req.path)) {
       const apiData = getApiData();
       const key = parseUrlToKey(req.url);
       const apiConfig = apiData.apiList.find(item => item.key === key || parseUrlToKey(item.url) === key);
@@ -33,12 +30,9 @@ export default function entry(options: ProxyMockOptions) {
           proxyUrl: apiConfig.selectCustomProxy,
           ignorePath: false,
         });
-      } else {
-        console.log(`${req.url} 未匹配`);
-        next();
       }
-    } else {
-      next();
+      return true;
     }
+    return false;
   }
 }

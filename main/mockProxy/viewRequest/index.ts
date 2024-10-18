@@ -12,7 +12,7 @@ export default function viewRequest(req: Request, res: Response) {
   if (matchRouter('/express-proxy-mock/get-api-list', req.path)) {
     const apiData = getApiDataHasMockStatus()
     res.send(apiData)
-    return
+    return true
   }
 
   // 删除代理数据
@@ -23,7 +23,7 @@ export default function viewRequest(req: Request, res: Response) {
     setApiData(apiData)
     deleteMock(key)
     res.send(successData)
-    return
+    return true
   }
 
   // 添加代理
@@ -36,7 +36,7 @@ export default function viewRequest(req: Request, res: Response) {
     apiData.selectProxy = req.query.proxy as string
     setApiData(apiData)
     res.send(successData)
-    return
+    return true
   }
 
   // 删除代理
@@ -51,7 +51,7 @@ export default function viewRequest(req: Request, res: Response) {
     }
     setApiData(apiData)
     res.send(successData);
-    return
+    return true
   }
 
   // 修改代理
@@ -60,7 +60,7 @@ export default function viewRequest(req: Request, res: Response) {
     apiData.selectProxy = req.query.proxy as string
     setApiData(apiData)
     res.send(successData)
-    return
+    return true
   }
 
   // 添加mock
@@ -69,7 +69,7 @@ export default function viewRequest(req: Request, res: Response) {
       setCustomProxyAndMock(data as CustomProxyAndMock)
       res.send(successData)
     })
-    return
+    return true
   }
 
   // 获取mock数据
@@ -81,7 +81,7 @@ export default function viewRequest(req: Request, res: Response) {
       ...apiData,
       mockData
     })
-    return
+    return true
   }
 
 
@@ -94,7 +94,7 @@ export default function viewRequest(req: Request, res: Response) {
       ...apiData,
       mockData
     })
-    return
+    return true
   }
 
   // 修改目标
@@ -109,7 +109,7 @@ export default function viewRequest(req: Request, res: Response) {
     })
     setApiData(apiData)
     res.send(successData)
-    return
+    return true
   }
 
   // 批量修改目标
@@ -132,7 +132,7 @@ export default function viewRequest(req: Request, res: Response) {
     })
     setApiData(apiData)
     res.send(successData)
-    return
+    return true
   }
 
   // 获取单个请求数据
@@ -144,13 +144,13 @@ export default function viewRequest(req: Request, res: Response) {
       ...apiData,
       mockData
     })
-    return
+    return true
   }
 
   // 获取请求历史
   if (matchRouter('/express-proxy-mock/get-request-cache', req.path)) {
     res.send(getCacheRequestHistory())
-    return
+    return true
   }
 
   // 获取请求历史的长度
@@ -159,7 +159,7 @@ export default function viewRequest(req: Request, res: Response) {
     res.send({
       length: cacheRequestHistory.length
     })
-    return
+    return true
   }
 
   // 批量导入请求历史
@@ -205,15 +205,15 @@ export default function viewRequest(req: Request, res: Response) {
       res.send(successData)
     })
 
-    return
+    return true
   }
 
   // 删除请求历史
   if (matchRouter('/express-proxy-mock/clear-request-cache', req.path)) {
     clearCacheRequestHistory()
     res.send(successData)
-    return
+    return true
   }
-
+  return false
 }
 
