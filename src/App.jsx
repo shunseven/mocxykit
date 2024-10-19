@@ -3,6 +3,7 @@ import List from './components/apiList/apiList'
 import { useEffect, useState } from 'react';
 import { fetchCreateProxy, fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType, fetchBatchChangeTargetType } from './api/api';
 import GProxy from './components/proxy/proxy';
+import { t } from './common/fun';
 
 function App(props) {
   const [proxyList, setProxyList] = useState([])
@@ -23,7 +24,7 @@ function App(props) {
   return (
     <div>
       <GProxy
-        label="全局代理:"
+        label={`${t('全局代理')}:`}
         deleteComfirm={true}
         proxyList={proxyList}
         selectProxy={selectProxy}

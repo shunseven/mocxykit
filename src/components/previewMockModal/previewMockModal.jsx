@@ -3,6 +3,7 @@ import MockEditor from "../mockEditor/mockEditor";
 import { useEffect, useState } from "react";
 import { fetctApiItemDataAndMockData } from "../../api/api";
 import './previewMockModal.css'
+import { t } from "../../common/fun";
 
 export default function PreviewMockModal(props) {
   const { onCancel, visible, targetKey } = props;
@@ -26,9 +27,9 @@ export default function PreviewMockModal(props) {
     onCancel={() => {
       onCancel()
     }}
-    title="查看MOCK数据"
+    title={t('查看MOCK数据')}
     okText=""
-    cancelText="取消"
+    cancelText={t('取消')}
     footer={null}
     open={visible}>
     

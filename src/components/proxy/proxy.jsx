@@ -1,6 +1,7 @@
 import { Select, Space, Tag, Button, Form, Input, Popconfirm } from 'antd';
 import { useState } from 'react';
 import './proxy.css'
+import { t } from '../../common/fun';
 
 function GProxy(props) {
   const [isCreate, setIsCreate] = useState(false)
@@ -49,18 +50,18 @@ function GProxy(props) {
                 <div>
                 {
                   deleteComfirm && <Popconfirm
-                  title="请确认"
-                  description="是否要删除这个代理"
+                  title={t('请确认')}
+                  description={t('是否删除该代理')}
                   onConfirm={() => {
                     onProxyDelete({proxy: item.value});
                   }}
-                  okText="删除"
-                  cancelText="取消"
+                  okText={t('删除')}
+                  cancelText={t('取消')}
                 >
                   <Button className='proxy-delete' size='small' onClick={(event) => {
                     event.stopPropagation()
                     hasDelete = true;
-                  }} danger>删除</Button>
+                  }} danger>{t('删除')}</Button>
                 </Popconfirm>
                 }
                 {
@@ -68,7 +69,7 @@ function GProxy(props) {
                     event.stopPropagation()
                     onProxyDelete({proxy: item.value});
                     hasDelete = true;
-                  }} danger>删除</Button>
+                  }} danger>{t('删除')}</Button>
                 }
                   
                 </div>
@@ -91,24 +92,24 @@ function GProxy(props) {
             form.resetFields()
           }}
         >
-          <Form.Item name='name' label="名称">
-            <Input size='middle' placeholder="请输入代理的名称" />
+          <Form.Item name='name' label={t('名称')}>
+            <Input size='middle' placeholder={t('请输入代理的名称')} />
           </Form.Item>
           <Form.Item
-            label="代理"
+            label={t('代理')}
             name='proxy'
             rules={[
               {
                 required: true,
-                message: '请输入代理地址'
+                message: t('请输入代理地址')
               },
               {
                 pattern: /^(http|https):\/\/.+$/,              
-                message: '请输入正确的代理地址'
+                message: t('请输入正确的代理地址')
               },
               {
                 validator: (rule, val) => {
-                  return proxyList.find(item => item.proxy === val) ? Promise.reject('代理地址已存在') : Promise.resolve()
+                  return proxyList.find(item => item.proxy === val) ? Promise.reject(t('代理地址已存在')) : Promise.resolve()
                 }
               }
             ]}
@@ -116,14 +117,14 @@ function GProxy(props) {
             <Input size='middle' style={{width: '300px'}} placeholder="http://127.0.0.1:8800" />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" size='middle' htmlType="submit">创建</Button>
+            <Button type="primary" size='middle' htmlType="submit">{t('创建')}</Button>
           </Form.Item>
           <Form.Item>
             <Button size='middle' danger onClick={() => {
               form.resetFields()
               setIsCreate(false)
             }}>
-              取消
+              {t('取消')}
             </Button>
           </Form.Item>
         </Form>
@@ -131,7 +132,7 @@ function GProxy(props) {
 
      {
        !isCreate && <Button onClick={() => setIsCreate(true)} color="primary" size='middle' variant="outlined">
-       新增
+       {t('新增')}
      </Button>
      }
     </Space>

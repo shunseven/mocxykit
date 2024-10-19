@@ -20,7 +20,7 @@ export default function ReqMenuItem({
     <div className='req-menu-input-box'>
       {
         isEdit && <Input 
-          placeholder="输入请求参数名称" 
+          placeholder={t('输入请求参数名称')} 
           ref={ref} value={name} 
           variant="borderless" 
           onChange={event => onChangeName(event.target.value, index)} 

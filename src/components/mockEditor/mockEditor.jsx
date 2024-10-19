@@ -3,6 +3,7 @@ import JSONEditor from './jsonEditor'
 import ReqMenu from '../mockReqMenu/reqMenu';
 import { Button } from 'antd'
 import eventButs from './eventBus';
+import { t } from '../../common/fun';
 
 let resDataIsNull = false;
 let reqDataIsNull = false;
@@ -63,7 +64,7 @@ function MockEditor({
         reqEditorRef.current?.set({});
         resEditorRef.current?.set({});
         valueRef.current = {
-          name: '请求参数',
+          name: `${t('请求参数')}1`,
           url: '',
           data: [{
             requestData: {},
@@ -83,15 +84,15 @@ function MockEditor({
   return <>
     <div className="mock-editor-title">
       {
-        mode === 'code' && <div>MOCK数据</div>
+        mode === 'code' && <div>{t('MOCK数据')}</div>
       }
       {
-        !showRequest && mode === 'code' && <Button variant="outlined" onClick={() => setIsEditRequest(true)} color="primary">修改入参</Button>
+        !showRequest && mode === 'code' && <Button variant="outlined" onClick={() => setIsEditRequest(true)} color="primary">{t('修改入参')}</Button>
       }
       {
         showRequest && mode === 'code' && <Button variant="outlined" onClick={() => {
           const data = [...value.data, {
-            "name": `请求参数${value.data.length + 1}`,
+            "name": `${t('请求参数')}${value.data.length + 1}`,
             "requestData": {},
             "responseData": {}
           }]
@@ -100,7 +101,7 @@ function MockEditor({
             data
           })
           setSelectMockIndex(data.length - 1)
-        }} color="primary">增加入参MOCK数据</Button>
+        }} color="primary">{t('增加入参MOCK数据')}</Button>
       }
     </div>
     <div className="mock-editor-box">
@@ -137,10 +138,10 @@ function MockEditor({
       <div className="mock-editor-warp">
         {
           showRequest && <div className='mock-editor-q'>
-            入参:<span style={{
+            {t('入参')}:<span style={{
               color: 'red',
               marginLeft: '10px'
-            }}>优化返回入参匹配最多的数据</span>
+            }}>{t('优先返回入参匹配最多的数据')}</span>
           </div>
         }
         {
@@ -179,7 +180,7 @@ function MockEditor({
         }
         {
           showRequest && <div className='mock-editor-q'>
-            出参:
+            {t('出参')}:
           </div>
         }
         <JSONEditor

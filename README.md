@@ -4,7 +4,7 @@
 - [中文](./README_ZH.md)
 - [English](./README.md)
 
-![Description](./public/proxymock.png)
+![Description](./public/proxymock_en.png)
 
 Middleware for express, mainly used for proxy requests and MOCK data. It can be used for all development projects that start services with webpack, vite, and other express-based servers. This middleware should only be used for **development**.
 
