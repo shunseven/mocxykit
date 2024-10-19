@@ -1,70 +1,73 @@
 
 # express-proxy-mock
 
-![描述](./public/proxymock.png)
+- [中文](./README_ZH.md)
+- [English](./README.md)
 
-express的中间件，主要用于代理请求和 MOCK 数据，可用于所有 webpack,vite和其它所有 express 启动服务的开发项目,
-此中间件应仅用于**开发**。
+![Description](./public/proxymock.png)
 
-使用此中间件的一些好处包括：
+Middleware for express, mainly used for proxy requests and MOCK data. It can be used for all development projects that start services with webpack, vite, and other express-based servers. This middleware should only be used for **development**.
 
-- 代理请求和 MOCK数据
-- 可视化的管理 MOCK 数据及代理功能
-- 代理支持全局代理和某一个 URL 的自定义代理
-- 可随时切换某一个URL进行代理转发或 MOCK 数据
-- 可通过不同的入参，返回不同的MOCK 数据
-- 可以快速把最近的请求返回的数据，存为 MOCK 数据
+Some benefits of using this middleware include:
 
-## 入门
+- Proxy requests and MOCK data
+- Visual management of MOCK data and proxy functions
+- Proxy support for global proxy and custom proxy for a specific URL
+- Switch between proxy forwarding or MOCK data for a specific URL at any time
+- Return different MOCK data based on different parameters
+- Quickly save the data returned by the most recent request as MOCK data
 
-首先，安装模块：
+## Getting Started
+
+First, install the module:
 
 ```console
 npm install express-proxy-mock --save-dev
 ```
 
-## 用法
+## Usage
 
 ```js
 const webpack = require("webpack");
-const {proxyMockMiddleware} = require("express-proxy-mock");
+const { proxyMockMiddleware } = require("express-proxy-mock");
 const compiler = webpack({
-  // webpack 选项
+  // webpack options
 });
 const express = require("express");
 const app = express();
 
 app.use(
   proxyMockMiddleware({
-    // express-proxy-mock 选项
+    // express-proxy-mock options
   }),
 );
 
-app.listen(3000, () => console.log("示例应用正在监听 3000 端口！"));
+app.listen(3000, () => console.log("Example app listening on port 3000!"));
 ```
-浏览器打开 http://localhost:3000/config 就可以看到代理与 MOCK 数据的配制界面
+Open the browser at http://localhost:3000/config to see the configuration interface for proxy and MOCK data.
 
-请参阅[下文](#其他服务器)以获取 vite, 与 webpack, 及 vueConfig 使用示例。
+Refer to [below](#other-servers) for usage examples with vite, webpack, and vueConfig.
 
-## 选项
+## Options
 
-|                      名称                       |               类型                |                    默认值                    | 描述                                                                                                          |
+|                      Name                       |               Type                |                    Default                    | Description                                                                                                          |
 | :---------------------------------------------: | :-------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
-|            **`apiRule`**            |              `string`              |              `/api/*`              | 全局代理的匹配规则,默认为所有 api 开头的请求                                          |
-|            **`https`**            |     `Array\|Object\|Function`     |                  `true`               | 是否代理 https 请求。                                                                  |
-|              **`configPath`**              |         `string`         |                 `/config`                  | 打开配制页面的地址，默认为http://localhost:3000/config                     |
-|          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  缓存请求数据的最大条数                                                          |
+|            **`apiRule`**            |              `string`              |              `/api/*`              | Global proxy matching rule, default is all requests starting with api                                          |
+|            **`https`**            |     `Array\|Object\|Function`     |                  `true`               | Whether to proxy https requests.                                                                  |
+|              **`configPath`**              |         `string`         |                 `/config`                  | Address to open the configuration page, default is http://localhost:3000/config                     |
+|          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  Maximum number of cached request data                                                          |
+|          **`language`**          |             `number`              |                  `zh`                  |  Language (en,zh)                                                      |
 
 
-## 其他服务器
+## Other Servers
 
-这里将展示与其他服务器一起使用的示例。
+Here are examples of usage with other servers.
 
 ### Webpack >= 5.0
-修改 config 文件，如 vue.config.js
+Modify the config file, such as vue.config.js
 
 ```js
-// vue.config.js 或者其它 webpack config 文件
+// vue.config.js or other webpack config files
 const { proxyMockMiddleware } = require('express-proxy-mock')
 
 module.exports = {
@@ -72,7 +75,7 @@ module.exports = {
   setupMiddlewares(middlewares, devServer) {
       devServer.app.use(proxyMockMiddleware({
         apiRule: '/api/*',
-        configPath: '/config'
+        language: 'en'
       }))
       return middlewares
   }
@@ -82,7 +85,7 @@ module.exports = {
 ### Webpack <= 4+
 
 ```js
-// vue.config.js 或者其它 webpack config 文件 
+// vue.config.js or other webpack config files 
 const { proxyMockMiddleware } = require('express-proxy-mock')
 
 module.exports = {
@@ -90,15 +93,15 @@ module.exports = {
   before(app) {
       app.use(proxyMockMiddleware({
         apiRule: '/api/*',
-        configPath: '/config'
-        }))
+        language: 'en'
+      }))
     }
   };
 ```
 
 ### vite
 
-在根目录中创建 server.js 文件，并把package.json 中的 scripts下 dev 改为值"node server.js" 
+Create a server.js file in the root directory, and change the value of dev under scripts in package.json to "node server.js"
 
 ```js
 import express from 'express';
@@ -108,24 +111,25 @@ const { proxyMockMiddleware } = require('express-proxy-mock')
 async function createServer() {
   const app = express();
   
-  // 创建 Vite 服务器
+  // Create Vite server
   const vite = await createViteServer({
     server: {
       middlewareMode: 'ssr',
       hmr: {
-        // 配置 HMR 选项，例如指定 WebSocket 服务器的端口
+        // Configure HMR options, such as specifying the WebSocket server port
         port: 8838
       }
     }
   });
 
-  // 引入我们的的代理工具
-  app.use(proxyMockMiddleware())
+  // Introduce our proxy tool
+  app.use(proxyMockMiddleware({
+    apiRule: '/api/*',
+    language: 'en'
+  }))
 
-  // 使用 Vite 的 Connect 实例作为中间件
+  // Use Vite's Connect instance as middleware
   app.use(vite.middlewares);
-
- 
 
   app.listen(8800, () => {
     console.log('Server is running at http://localhost:8800');
@@ -135,9 +139,9 @@ async function createServer() {
 createServer();
 ```
 
-## 联系我
+## Contact Me
 
-QQ群：930832439
+QQ Group: 930832439
 
 ## License
 
