@@ -1,6 +1,6 @@
 {
  "name": "express-proxy-mock",
- "version": "2.1.0",
+ "version": "2.1.2",
  "description": "the express middleware for proxy and mock",
  "main": "serverDist/index.js",
  "author": "shunseven",
