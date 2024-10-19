@@ -3,7 +3,7 @@
 
 ![描述](./public/proxymock.png)
 
-express 开发中间件，主要用于代理请求和 MOCK 数据，可用于所有 webpack,vite和其它所有 express 启动服务的开发项目,
+express的中间件，主要用于代理请求和 MOCK 数据，可用于所有 webpack,vite和其它所有 express 启动服务的开发项目,
 此中间件应仅用于**开发**。
 
 使用此中间件的一些好处包括：
