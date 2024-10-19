@@ -15,6 +15,7 @@ const defaultConfig: ProxyMockOptions = {
   https: true,
   cacheRequestHistoryMaxLen: 30,
   configPath: '/config',
+  lang: 'zh',
 }
 
 export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {

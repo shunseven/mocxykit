@@ -33,7 +33,7 @@ module.exports = {
     setupMiddlewares(middlewares, devServer) {
       devServer.app.use(proxyMockMiddleware({
         apiRule: '/api/*',
-        language: 'en'
+        lang: 'en'
       }))
       return middlewares
    }
@@ -67,7 +67,7 @@ app.listen(3000, () => console.log("Example app listening on port 3000!"));
 |            **`https`**            |     `boolean`     |                  `true`               | 是否代理 https 请求。                                                                  |
 |              **`configPath`**              |         `string`         |                 `/config`                  | 打开配制页面的地址，默认为http://localhost:3000/config                     |
 |          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  缓存请求数据的最大条数                                                          |
-|          **`language`**          |             `number`              |                  `zh`                  |  语言                                                          |
+|          **`lang`**          |             `number`              |                  `zh`                  |  语言                                                          |
 
 
 ## 其他服务器
@@ -107,7 +107,7 @@ module.exports = {
      before(app) {
       app.use(proxyMockMiddleware({
         apiRule: '/api/*',
-        language: 'en'
+        lang: 'en'
       }))
     }
    }
