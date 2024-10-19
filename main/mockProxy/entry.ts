@@ -7,7 +7,7 @@ import createMock from "./mock";
 export default function entry(options: ProxyMockOptions) {
   const proxyServer = createProxyServer(options);
   const mockFun = createMock();
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): boolean => {
     if (matchRouter(options.apiRule, req.path)) {
       const apiData = getApiData();
       const key = parseUrlToKey(req.url);

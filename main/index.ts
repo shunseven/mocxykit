@@ -26,8 +26,8 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
     if (process.env.PROCY_MOCK_NODE_ENV !== 'development') {
        isClient = clientMiddleware(req, res)
     }
-    const isViews = viewRequest(req, res);
     const isProxyMock =entryMiddleware(req, res, next);
+    const isViews = viewRequest(req, res);
     if (!isClient && !isViews && !isProxyMock) {
       // 都没成功匹配到路由
       next();

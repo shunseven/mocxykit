@@ -7,7 +7,7 @@ const successData = {
   msg: 'success'
 };
 
-export default function viewRequest(req: Request, res: Response) {
+export default function viewRequest(req: Request, res: Response): boolean {
   // 获取代理数据
   if (matchRouter('/express-proxy-mock/get-api-list', req.path)) {
     const apiData = getApiDataHasMockStatus()

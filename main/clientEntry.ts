@@ -4,7 +4,7 @@ import { matchRouter } from './mockProxy/common/fun';
 
 var rootPath = path.join(__dirname,'../viewsDist')  
 export default function (options: ProxyMockOptions) {
-  return function (req: Request, res: Response) {
+  return function (req: Request, res: Response): boolean {
     if (matchRouter(options.configPath as string, req.path)){
       res.sendFile(rootPath + '/index.html');
       return true;
