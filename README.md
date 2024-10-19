@@ -27,12 +27,25 @@ npm install express-proxy-mock --save-dev
 
 ## Usage
 
+### webpack.config.js
 ```js
-const webpack = require("webpack");
+module.exports = {
+  //...
+  devServer: {
+    setupMiddlewares(middlewares, devServer) {
+      devServer.app.use(proxyMockMiddleware({
+        apiRule: '/api/*',
+        language: 'en'
+      }))
+      return middlewares
+   }
+  },
+};
+```
+
+### express
+```js
 const { proxyMockMiddleware } = require("express-proxy-mock");
-const compiler = webpack({
-  // webpack options
-});
 const express = require("express");
 const app = express();
 
@@ -72,12 +85,14 @@ const { proxyMockMiddleware } = require('express-proxy-mock')
 
 module.exports = {
   //...
-  setupMiddlewares(middlewares, devServer) {
-      devServer.app.use(proxyMockMiddleware({
-        apiRule: '/api/*',
-        language: 'en'
-      }))
-      return middlewares
+  devServer: {
+     setupMiddlewares(middlewares, devServer) {
+        devServer.app.use(proxyMockMiddleware({
+          apiRule: '/api/*',
+          language: 'en'
+        }))
+        return middlewares
+    }
   }
 };
 ```
@@ -90,12 +105,14 @@ const { proxyMockMiddleware } = require('express-proxy-mock')
 
 module.exports = {
   //...
-  before(app) {
+   devServer: {
+     before(app) {
       app.use(proxyMockMiddleware({
         apiRule: '/api/*',
         language: 'en'
       }))
     }
+   }
   };
 ```
 

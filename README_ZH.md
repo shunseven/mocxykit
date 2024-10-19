@@ -25,22 +25,35 @@ npm install express-proxy-mock --save-dev
 
 ## 用法
 
+### webpack.config.js
 ```js
-const webpack = require("webpack");
-const {proxyMockMiddleware} = require("express-proxy-mock");
-const compiler = webpack({
-  // webpack 选项
-});
+module.exports = {
+  //...
+  devServer: {
+    setupMiddlewares(middlewares, devServer) {
+      devServer.app.use(proxyMockMiddleware({
+        apiRule: '/api/*',
+        language: 'en'
+      }))
+      return middlewares
+   }
+  },
+};
+```
+
+### express
+```js
+const { proxyMockMiddleware } = require("express-proxy-mock");
 const express = require("express");
 const app = express();
 
 app.use(
   proxyMockMiddleware({
-    // express-proxy-mock 选项
+    // express-proxy-mock options
   }),
 );
 
-app.listen(3000, () => console.log("示例应用正在监听 3000 端口！"));
+app.listen(3000, () => console.log("Example app listening on port 3000!"));
 ```
 浏览器打开 http://localhost:3000/config 就可以看到代理与 MOCK 数据的配制界面
 
@@ -70,12 +83,14 @@ const { proxyMockMiddleware } = require('express-proxy-mock')
 
 module.exports = {
   //...
-  setupMiddlewares(middlewares, devServer) {
+  devServer: {
+    setupMiddlewares(middlewares, devServer) {
       devServer.app.use(proxyMockMiddleware({
         apiRule: '/api/*',
         configPath: '/config'
       }))
       return middlewares
+   }
   }
 };
 ```
@@ -88,13 +103,15 @@ const { proxyMockMiddleware } = require('express-proxy-mock')
 
 module.exports = {
   //...
-  before(app) {
+   devServer: {
+     before(app) {
       app.use(proxyMockMiddleware({
         apiRule: '/api/*',
-        configPath: '/config'
-        }))
+        language: 'en'
+      }))
     }
-  };
+   }
+};
 ```
 
 ### vite
