@@ -137,7 +137,10 @@ function MockEditor({
       <div className="mock-editor-warp">
         {
           showRequest && <div className='mock-editor-q'>
-            入参:
+            入参:<span style={{
+              color: 'red',
+              marginLeft: '10px'
+            }}>优化返回入参匹配最多的数据</span>
           </div>
         }
         {
