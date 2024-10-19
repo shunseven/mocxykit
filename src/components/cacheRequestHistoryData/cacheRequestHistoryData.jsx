@@ -21,7 +21,7 @@ export default function CacheRequestHistoryData({onApiDataChange}) {
     }
   }, []);
   return <div>
-    <Badge count={18}>
+    <Badge count={requsetCacheHistoryLength}>
        <Button variant='dashed' onClick={() =>setVisible(true)} color='danger' >{t('转换最近请求为MOCK数据')}</Button>
     </Badge>
     <RequestHistoryListModal onApiDataChange={onApiDataChange} onCancel={() => setVisible(false)} visible={visible} />
