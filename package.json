@@ -4,7 +4,7 @@
  "description": "the express middleware for proxy and mock",
  "main": "serverDist/index.js",
  "author": "shunseven",
- "license": "ISC",
+ "license": "MIT",
  "scripts": {
   "build": "tsc & npm run build:view & npm run copy-files",
   "lint": "eslint .",
