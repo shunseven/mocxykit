@@ -29,7 +29,7 @@ proxyMockData
 /main
 /src
 /server.ts
-/public
+public
 /eslint.config.js
 /tsconfig.json
 /vite.config.js

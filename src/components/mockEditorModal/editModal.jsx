@@ -6,13 +6,14 @@ import MockEditor from "../mockEditor/mockEditor";
 import { useCallback, useEffect, useState } from "react";
 import { saveCustomProxyData, fetctApiItemDataAndMockData } from "../../api/api";
 import { parseUrlToKey } from "../../common/fun";
+import { t } from "../../common/fun";
 
 const initMockData = {
   url: '',
   key: '',
   data: [
     {
-      "name": "请求参数1",
+      "name": `${t('请求参数')}1`,
       "requestData": {},
       "responseData": {}
     }
@@ -73,9 +74,9 @@ export default function ApiEdit(props) {
       onCancel()
       reset()
     }}
-    title="MOCK数据&自定义代理"
-    okText="保存"
-    cancelText="取消"
+    title={t('MOCK数据&自定义代理')}
+    okText={t('保存')}
+    cancelText={t('取消')}
     onOk={() => {
       form.submit()
     }}
@@ -98,20 +99,20 @@ export default function ApiEdit(props) {
       style={{ width: ' 100%' }}
       layout="inline"
     >
-      <Form.Item className="ant-form-mock-item" width="30%" name="name" layout="inline" label="名称" rules={[{ required: true }]}>
+      <Form.Item className="ant-form-mock-item" width="30%" name="name" layout="inline" label={t('名称')} rules={[{ required: true }]}>
         <Input />
       </Form.Item>
       <Form.Item className="ant-form-mock-item" width="30%" name="url" layout="inline" label="URL" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-      <Form.Item className="ant-form-mock-item" width="30%" name="duration" layout="inline" label="延时">
+      <Form.Item className="ant-form-mock-item" width="30%" name="duration" layout="inline" label={t('延时')}>
         <Input type="number" />
       </Form.Item>
     </Form>
     {
       visible && <GProxy
         color='#1677ff'
-        label="自定义代理:"
+        label={`${t('自定义代理')}:`}
         deleteComfirm={true}
         proxyList={customProxy}
         selectProxy={selectCustomProxy}

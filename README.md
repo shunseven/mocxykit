@@ -4,7 +4,7 @@
 - [中文](./README_ZH.md)
 - [English](./README.md)
 
-![Description](./public/proxymock.png)
+![Description](./public/proxymock_en.png)
 
 Middleware for express, mainly used for proxy requests and MOCK data. It can be used for all development projects that start services with webpack, vite, and other express-based servers. This middleware should only be used for **development**.
 
@@ -35,7 +35,7 @@ module.exports = {
     setupMiddlewares(middlewares, devServer) {
       devServer.app.use(proxyMockMiddleware({
         apiRule: '/api/*',
-        language: 'en'
+        lang: 'en'
       }))
       return middlewares
    }
@@ -69,7 +69,7 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 |            **`https`**            |     `boolean`     |                  `true`               | Whether to proxy https requests.                                                                  |
 |              **`configPath`**              |         `string`         |                 `/config`                  | Address to open the configuration page, default is http://localhost:3000/config                     |
 |          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  Maximum number of cached request data                                                          |
-|          **`language`**          |             `number`              |                  `zh`                  |  Language (en,zh)                                                      |
+|          **`lang`**          |             `number`              |                  `zh`                  |  lang (en,zh)                                                      |
 
 
 ## Other Servers
@@ -89,7 +89,7 @@ module.exports = {
      setupMiddlewares(middlewares, devServer) {
         devServer.app.use(proxyMockMiddleware({
           apiRule: '/api/*',
-          language: 'en'
+          lang: 'en'
         }))
         return middlewares
     }
@@ -109,7 +109,7 @@ module.exports = {
      before(app) {
       app.use(proxyMockMiddleware({
         apiRule: '/api/*',
-        language: 'en'
+        lang: 'en'
       }))
     }
    }
@@ -142,7 +142,7 @@ async function createServer() {
   // Introduce our proxy tool
   app.use(proxyMockMiddleware({
     apiRule: '/api/*',
-    language: 'en'
+    lang: 'en'
   }))
 
   // Use Vite's Connect instance as middleware

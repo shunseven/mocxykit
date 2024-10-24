@@ -2,6 +2,7 @@ import { Button, Modal, Table, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { batchImportRequestCacheToMock, clearCacheRequestHistory, getCacheRequestHistory } from "../../api/api";
 import HistoryDataPreviewModal from "./historyDataPreviewModal";
+import { t } from "../../common/fun";
 const { Search } = Input;
 
 export default function RequestHistoryListModal({ visible, onCancel, onApiDataChange }) {
@@ -33,7 +34,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
     width={1200}
     centered={true}
     onCancel={onCancel}
-    title="历史请求数据"
+    title={t('历史请求数据')}
     footer={null}
     open={visible}>
       <div>
@@ -42,7 +43,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-          <Search placeholder="请输入URL"
+          <Search placeholder={t('请输入URL')}
             onSearch={(value) => {
               if (value) {
                 setSearchValue(requsetCacheHistory.filter(item => item.url.includes(value)))
@@ -59,7 +60,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
               await batchImportRequestCacheToMock({keys})
               onCancel()
               onApiDataChange()
-            }} >批量导入MOCK数据</Button>
+            }} >{t('批量导入MOCK数据')}</Button>
             <Button 
                color="danger" 
                variant="link"
@@ -68,7 +69,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
                  getRequestCache()
                  onApiDataChange()
                }}
-            >清空当前数据</Button>
+            >{t('清空当前数据')}</Button>
           </div>
          
         </div>
@@ -83,9 +84,9 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
             y: 800
           }} pagination={false} dataSource={ searchValue || requsetCacheHistory}>
           <Table.Column title="URL" dataIndex="url" key="url" />
-          <Table.Column title="请求时间" dataIndex="time" key="time" />
+          <Table.Column title={t('请求时间')} dataIndex="time" key="time" />
           <Table.Column
-        title="操作"
+        title={t('操作')}
         key="action"
         fixed="right"
         width={160}
@@ -98,7 +99,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
               }}
               style={{
                 marginRight: '10px'
-              }}>查看数据</a>
+              }}>{t('查看数据')}</a>
              <a
                 onClick={async () => {
                   event.stopPropagation()
@@ -109,7 +110,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
                 style={{
                   color: '#389e0d'
                 }}
-              >导入数据</a>
+              >{t('导入数据')}</a>
 
           </div>
         )}

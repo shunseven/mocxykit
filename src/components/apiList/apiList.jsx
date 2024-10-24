@@ -6,6 +6,7 @@ import { fetchDeleteApiData } from '../../api/api';
 import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
+import { t } from '../../common/fun';
 const { Column } = Table;
 
 const colorMap = {
@@ -34,12 +35,12 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
             color: '#f50'
           }} variant="outlined"
           onClick={() => onBatchChangeTargetType('proxy')}
-        >切换为全局代理</Button>
+        >{t('切换为全局代理')}</Button>
         <Button style={{
           color: '#389e0d',
           borderColor: '#389e0d'
-        }} onClick={() => onBatchChangeTargetType('mock')} size='small' color="primary" variant="outlined" >MOCK数据优先</Button>
-        <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary" variant="outlined">自定义代理优先</Button>
+        }} onClick={() => onBatchChangeTargetType('mock')} size='small' color="primary" variant="outlined" >{t('MOCK数据优先')}</Button>
+        <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary" variant="outlined">{t('自定义代理优先')}</Button>
 
       </Space>
       <Space size={10} >
@@ -50,7 +51,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
             setEditVisible(true)
             eventButs.emit('reset')
           }} type='primary'>
-          新增MOCK数据&自定义代理
+          {t('新增MOCK数据&自定义代理')}
         </Button>
       </Space>
     </div>
@@ -62,10 +63,10 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         x: 'max-content',
       }}
     >
-      <Column width={150} title="名称" dataIndex="name" key="name" />
+      <Column width={150} title={t('名称')} dataIndex="name" key="name" />
       <Column title="URL" dataIndex="url" key="ur" />
       <Column
-        title="目标"
+        title={t('目标')}
         dataIndex="target"
         key="target"
         render={(target, itemData) => (
@@ -82,7 +83,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
                   }
               }} color={colorMap[target]} key={target}>
               {target === 'proxy' && globalProxy}
-              {target === 'mock' && '查看MOCK数据'}
+              {target === 'mock' && t('查看MOCK数据')}
               {target === 'customProxy' && itemData.selectCustomProxy}
             </Tag>
             }
@@ -90,7 +91,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         )}
       />
       <Column
-        title="启用"
+        title={t('启用')}
         fixed="right"
         width={380}
         render={(_, itemData) => (
@@ -101,15 +102,15 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
             })
           }} value={itemData.target}>
             <Space >
-              <Radio value={'proxy'}>全局代理</Radio>
-              <Radio disabled={!itemData.hasMockData} value={'mock'}>MOCK数据</Radio>
-              <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>自定义代理</Radio>
+              <Radio value={'proxy'}>{t('全局代理')}</Radio>
+              <Radio disabled={!itemData.hasMockData} value={'mock'}>{t('MOCK数据')}</Radio>
+              <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>{t('自定义代理')}</Radio>
             </Space>
           </Radio.Group>
         )} key="address" />
 
       <Column
-        title="操作"
+        title={t('操作')}
         key="action"
         fixed="right"
         width={120}
@@ -122,18 +123,18 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
               }}
               style={{
                 marginRight: '10px'
-              }}>设置</a>
+              }}>{t('设置')}</a>
             <Popconfirm
-              title="请确认"
-              description="是否要删除这个代理"
+              title={t('请确认')}
+              description={t('是否要删除这个代理')}
               onConfirm={() => {
                 fetchDeleteApiData({
                   key: record.key,
                 })
                 onApiDataChange()
               }}
-              okText="删除"
-              cancelText="取消"
+              okText={t('删除')}
+              cancelText={t('取消')}
             >
               <a
                 onClick={() => {
@@ -142,7 +143,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
                 style={{
                   color: 'red'
                 }}
-              >删除</a>
+              >{t('删除')}</a>
             </Popconfirm>
 
           </Space>

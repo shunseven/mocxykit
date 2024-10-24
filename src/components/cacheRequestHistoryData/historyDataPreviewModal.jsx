@@ -1,6 +1,7 @@
 import { Modal, Space } from "antd";
 import JSONEditor from "../mockEditor/jsonEditor";
 import React, { useRef } from "react";
+import { t } from "../../common/fun";
 
 
 export default function HistoryDataPreviewModal({ visible, onCancel, value }) {
@@ -10,7 +11,7 @@ export default function HistoryDataPreviewModal({ visible, onCancel, value }) {
     width={1200}
     centered={true}
     onCancel={onCancel}
-    title="查看数据"
+    title={t('查看数据')}
     footer={null}
     open={visible}>
       <div >
@@ -18,10 +19,10 @@ export default function HistoryDataPreviewModal({ visible, onCancel, value }) {
         margin: '0px 0 10px 0',
       }} size={50}>
           <div>
-          请求地址: {value.url}
+          {t('请求地址')}: {value.url}
           </div>
           <div>
-          请求时间: {value.time}
+          {t('请求时间')}: {value.time}
           </div>
         </Space>
         <JSONEditor jsonEditorRef={jsonEditorRef} value={value.data} />
