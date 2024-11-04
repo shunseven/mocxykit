@@ -21,7 +21,7 @@ const initMockData = {
 }
 
 export default function ApiEdit(props) {
-  const { onCancel, visible, targetKey, onApiDataChange } = props;
+  const { onCancel, visible, targetKey, onApiDataChange, proxyList } = props;
   const [form] = Form.useForm();
   const [mockData, setMockData] = useState('');
   const [hasError, setHasError] = useState(false);
@@ -114,7 +114,7 @@ export default function ApiEdit(props) {
         color='#1677ff'
         label={`${t('自定义代理')}:`}
         deleteComfirm={true}
-        proxyList={customProxy}
+        proxyList={[...proxyList,...customProxy]}
         selectProxy={selectCustomProxy}
         onProxyChange={async ({proxy}) => {
           setSelectCustomProxy(proxy);

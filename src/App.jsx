@@ -44,6 +44,7 @@ function App(props) {
       <Divider />
       <List 
         data={apiList}
+        proxyList={proxyList}
         globalProxy={selectProxy}
         onTargetChange={async ({target, key}) => {
           await fetchChangeTargetType({target, key})

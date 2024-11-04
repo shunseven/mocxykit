@@ -15,7 +15,7 @@ const colorMap = {
   customProxy: '#1677ff'
 }
 
-function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onApiDataChange }) {
+function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onApiDataChange, proxyList }) {
   const [editVisible, setEditVisible] = useState(false)
   const [preveiwVisible, setPreviewVisible] = useState(false)
   const [itemTargetKey, setItemTargetKey] = useState('');
@@ -150,7 +150,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         )}
       />
     </Table>
-    <ApiEdit onApiDataChange={onApiDataChange} targetKey={itemTargetKey} visible={editVisible} onCancel={() => setEditVisible(false)} />
+    <ApiEdit proxyList={proxyList} onApiDataChange={onApiDataChange} targetKey={itemTargetKey} visible={editVisible} onCancel={() => setEditVisible(false)} />
     <PreviewMockModal targetKey={itemTargetKey} visible={preveiwVisible} onCancel={() => setPreviewVisible(false)} />  
   </>
 }
