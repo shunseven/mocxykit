@@ -1,5 +1,5 @@
 interface ProxyMockOptions {
-  apiRule: string;
+  apiRule: string | [string];
   configPath?: string;
   https?: boolean; // 是否启用 https
   cacheRequestHistoryMaxLen?: number; 

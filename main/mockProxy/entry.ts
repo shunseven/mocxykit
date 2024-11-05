@@ -8,7 +8,8 @@ export default function entry(options: ProxyMockOptions) {
   const proxyServer = createProxyServer(options);
   const mockFun = createMock();
   return (req: Request, res: Response, next: NextFunction): boolean => {
-    if (matchRouter(options.apiRule, req.path)) {
+    const apiRules = Array.isArray(options.apiRule) ? options.apiRule : [options.apiRule];
+    if (apiRules.some(rule => matchRouter(rule, req.path))) {
       const apiData = getApiData();
       const key = parseUrlToKey(req.url);
       const apiConfig = apiData.apiList.find(item => item.key === key || parseUrlToKey(item.url) === key);
