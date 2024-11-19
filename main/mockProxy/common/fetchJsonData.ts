@@ -151,3 +151,20 @@ export function getApiDataHasMockStatus() {
     })
     return apiData
 }
+
+const envDataFilePath = './proxyMockData/env.json';
+
+export function saveEnvData(data: any) {
+  const stat = fs.existsSync('./proxyMockData');
+  if (!stat) {
+    fs.mkdirSync('./proxyMockData');
+  }
+  
+  let envData = [];
+  if (fs.existsSync(envDataFilePath)) {
+    envData = JSON.parse(fs.readFileSync(envDataFilePath).toString());
+  }
+  
+  envData.push(data);
+  fs.writeFileSync(envDataFilePath, JSON.stringify(envData), 'utf-8');
+}

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock } from "../common/fetchJsonData";
+import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock, saveEnvData } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData, matchRouter } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 
@@ -215,6 +215,16 @@ export default function viewRequest(req: Request, res: Response): boolean {
     res.send(successData)
     return true
   }
+
+  // 保存环境变量
+  if (matchRouter('/express-proxy-mock/save-env-variables', req.path)) {
+    getReqBodyData(req).then((data) => {
+      saveEnvData(data);
+      res.send(successData);
+    });
+    return true;
+  }
+
   return false
 }
 

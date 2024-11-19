@@ -70,6 +70,13 @@ export async function batchImportRequestCacheToMock (data) {
   return res
 }
 
+export async function saveEnvVariables(data) {
+  const res = await request('/express-proxy-mock/save-env-variables', {
+    data,
+    method: 'POST'
+  })
+  return res
+}
 
 export async function fetchChangeTargetType (data) {
   const res = await request('/express-proxy-mock/change-target', {
