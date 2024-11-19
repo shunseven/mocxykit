@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { pathToRegexp } from "path-to-regexp";
+import { getEnvData, getApiData } from "./fetchJsonData";
 
 function firstUpperCase(str: string): string {
   return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
@@ -42,4 +43,22 @@ export function matchRouter(path: string, reqPath: string) {
   path = path.replace("*", '*path')
   const regexp = pathToRegexp(path);
   return regexp.regexp.test(reqPath);
+}
+
+export function setupNodeEnvVariables(): void {
+  const apiData = getApiData();
+  const envId = apiData.selectEnvId;
+  
+  if (!envId) return;
+
+  const envData: EnvConfig[] = getEnvData();
+  const currentEnv = envData.find(env => env.id === envId);
+  
+  if (currentEnv?.variables) {
+    currentEnv.variables.forEach(({ key, value }: EnvVariable) => {
+      if (key) {
+        process.env[key] = value;
+      }
+    });
+  }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock, saveEnvData, getEnvData } from "../common/fetchJsonData";
-import { getReqBodyData, hasMockData, matchRouter } from "../common/fun";
+import { getReqBodyData, hasMockData, matchRouter, setupNodeEnvVariables } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 
 const successData = {
@@ -234,8 +234,9 @@ export default function viewRequest(req: Request, res: Response): boolean {
   // 切换环境变量
   if (matchRouter('/express-proxy-mock/change-env-variable', req.path)) {
     const apiData = getApiData();
-    apiData.selectEnvId = Number(req.query.envId);
+    apiData.selectEnvId = Number(req.query.envId) || undefined;
     setApiData(apiData);
+    setupNodeEnvVariables(); // 更新环境变量
     res.send(successData);
     return true;
   }

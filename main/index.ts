@@ -7,6 +7,7 @@ import clientEntry from './clientEntry';
 import entry from './mockProxy/entry';
 import events from 'events';
 import viewRequest from './mockProxy/viewRequest';
+import { setupNodeEnvVariables } from './mockProxy/common/fun';
 
 events.EventEmitter.defaultMaxListeners = 20;
 
@@ -22,6 +23,10 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
   const config = Object.assign({}, defaultConfig, options);
   const entryMiddleware = entry(config);
   const clientMiddleware = clientEntry(config);
+  
+  // 初始化时设置环境变量
+  setupNodeEnvVariables();
+
   return function (req: Request, res: Response, next: NextFunction) {
     let isClient = false;
     if (process.env.PROCY_MOCK_NODE_ENV !== 'development') {

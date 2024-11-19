@@ -154,7 +154,7 @@ export function getApiDataHasMockStatus() {
 
 const envDataFilePath = './proxyMockData/env.json';
 
-export function saveEnvData(data: any) {
+export function saveEnvData(data: EnvConfig) {
   const stat = fs.existsSync('./proxyMockData');
   if (!stat) {
     fs.mkdirSync('./proxyMockData');
@@ -169,7 +169,7 @@ export function saveEnvData(data: any) {
   fs.writeFileSync(envDataFilePath, JSON.stringify(envData), 'utf-8');
 }
 
-export function getEnvData() {
+export function getEnvData(): EnvConfig[] {
   if (!fs.existsSync(envDataFilePath)) {
     return [];
   }

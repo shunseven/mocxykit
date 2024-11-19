@@ -11,7 +11,6 @@ const EnvConfig = ({ value, onChange }) => {
   useEffect(() => {
     fetchEnvVariables();
   }, []);
-
   const fetchEnvVariables = async () => {
     try {
       const data = await getEnvVariables();
@@ -99,10 +98,12 @@ const EnvConfig = ({ value, onChange }) => {
       <Select 
         style={{ width: 200 }} 
         placeholder="选择环境变量"
-        value={value}
+        value={value || ''} // 使用空字符串代替 undefined
         onChange={handleEnvChange}
+        allowClear    // 允许清除选择
       >
-        {envVariables.map(env => (
+        <Select.Option value=''>无</Select.Option>
+        {Array.isArray(envVariables) && envVariables.map(env => (
           <Select.Option key={env.id} value={env.id}>{env.name}</Select.Option>
         ))}
       </Select>

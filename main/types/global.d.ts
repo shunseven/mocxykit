@@ -61,3 +61,14 @@ interface CacheRequestHistoryData {
   data: Record<string, any>;
   time: string;
 }
+
+interface EnvVariable {
+  key: string;
+  value: string;
+}
+
+interface EnvConfig {
+  id: number;
+  name: string;
+  variables: EnvVariable[];
+}
