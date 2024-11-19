@@ -168,3 +168,10 @@ export function saveEnvData(data: any) {
   envData.push(data);
   fs.writeFileSync(envDataFilePath, JSON.stringify(envData), 'utf-8');
 }
+
+export function getEnvData() {
+  if (!fs.existsSync(envDataFilePath)) {
+    return [];
+  }
+  return JSON.parse(fs.readFileSync(envDataFilePath).toString());
+}

@@ -114,3 +114,15 @@ export async function clearCacheRequestHistory () {
   return res
 }
 
+export async function getEnvVariables() {
+  const res = await request('/express-proxy-mock/get-env-variables')
+  return res
+}
+
+export async function changeEnvVariable(envId) {
+  const res = await request('/express-proxy-mock/change-env-variable', {
+    query: { envId }
+  })
+  return res
+}
+

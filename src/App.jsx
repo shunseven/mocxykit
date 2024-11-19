@@ -10,12 +10,14 @@ function App() {
   const [proxyList, setProxyList] = useState([])
   const [selectProxy, setSelectProxy] = useState([])
   const [apiList, setApiList] = useState([])
+  const [selectEnvId, setSelectEnvId] = useState(null)  // 添加 selectEnvId 状态
 
   function fetchProxyData() {
     requestApiData().then(apiData => {
       if (apiData.selectProxy !== undefined) setSelectProxy(apiData.selectProxy)
       if (apiData.proxy) setProxyList(apiData.proxy)
       if(apiData.apiList) setApiList(apiData.apiList)
+      if(apiData.selectEnvId) setSelectEnvId(apiData.selectEnvId) // 设置 selectEnvId
     });
   }
 
@@ -44,7 +46,7 @@ function App() {
             fetchProxyData();
           }}
         />
-        <EnvConfig />
+        <EnvConfig value={selectEnvId} onChange={fetchProxyData} />
       </div>
       <Divider />
       <List 

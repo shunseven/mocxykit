@@ -26,6 +26,7 @@ interface ApiData {
   proxy: ProxyList[];
   selectProxy: string;
   apiList: ApiConfig[];
+  selectEnvId?: number; // 添加当前选中的环境变量ID
 }
 interface MockRequestData {
   name: string;

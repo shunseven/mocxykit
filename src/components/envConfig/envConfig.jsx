@@ -1,11 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select, Button, Modal, Form, Input, Table } from 'antd';
-import { saveEnvVariables } from '../../api/api';
+import { saveEnvVariables, getEnvVariables, changeEnvVariable } from '../../api/api';
 
-const EnvConfig = () => {
+const EnvConfig = ({ value, onChange }) => {
   const [envModalVisible, setEnvModalVisible] = useState(false);
   const [envList, setEnvList] = useState([{ key: '', value: '' }]);
+  const [envVariables, setEnvVariables] = useState([]);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    fetchEnvVariables();
+  }, []);
+
+  const fetchEnvVariables = async () => {
+    try {
+      const data = await getEnvVariables();
+      setEnvVariables(data);
+    } catch (err) {
+      console.error('获取环境变量失败:', err);
+    }
+  };
+
+  const handleTableRowChange = (index, key, value) => {
+    const newEnvList = [...envList];
+    newEnvList[index][key] = value;
+    setEnvList(newEnvList);
+  };
 
   const envColumns = [
     {
@@ -14,7 +34,7 @@ const EnvConfig = () => {
       render: (text, record, index) => (
         <Input 
           value={text} 
-          onChange={e => handleEnvChange(index, 'key', e.target.value)} 
+          onChange={e => handleTableRowChange(index, 'key', e.target.value)} 
         />
       )
     },
@@ -24,7 +44,7 @@ const EnvConfig = () => {
       render: (text, record, index) => (
         <Input 
           value={text} 
-          onChange={e => handleEnvChange(index, 'value', e.target.value)} 
+          onChange={e => handleTableRowChange(index, 'value', e.target.value)} 
         />
       )
     },
@@ -38,12 +58,6 @@ const EnvConfig = () => {
       )
     }
   ];
-
-  const handleEnvChange = (index, key, value) => {
-    const newEnvList = [...envList];
-    newEnvList[index][key] = value;
-    setEnvList(newEnvList);
-  };
 
   const handleAddEnvRow = () => {
     setEnvList([...envList, { key: '', value: '' }]);
@@ -65,16 +79,32 @@ const EnvConfig = () => {
       setEnvModalVisible(false);
       setEnvList([{ key: '', value: '' }]);
       form.resetFields();
+      fetchEnvVariables(); // 保存后刷新数据
     } catch (err) {
       console.error('保存环境变量失败:', err);
     }
   };
 
+  const handleEnvChange = async (envId) => {
+    try {
+      await changeEnvVariable(envId);
+      onChange?.(); // 调用父组件的回调函数
+    } catch (err) {
+      console.error('切换环境变量失败:', err);
+    }
+  };
+
   return (
     <div style={{ display: 'inline-block', marginLeft: 20 }}>
-      <Select style={{ width: 200 }} placeholder="选择环境变量">
-        <Select.Option value="dev">开发环境</Select.Option>
-        <Select.Option value="test">测试环境</Select.Option>
+      <Select 
+        style={{ width: 200 }} 
+        placeholder="选择环境变量"
+        value={value}
+        onChange={handleEnvChange}
+      >
+        {envVariables.map(env => (
+          <Select.Option key={env.id} value={env.id}>{env.name}</Select.Option>
+        ))}
       </Select>
       <Button 
         type="primary" 
