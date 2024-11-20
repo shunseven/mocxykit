@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Select, Space } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
+import { Select, Space, Popconfirm } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
-import { getEnvVariables } from '../../api/api';
+import { getEnvVariables, deleteEnvVariable } from '../../api/api';
 import EnvForm from '../envForm/envForm';
+import { t } from '../../common/fun';
 
-const EnvSelect = ({ value, onChange, style, disabled }) => {
+const EnvSelect = forwardRef(({ value, onChange, style, disabled }, ref) => {
   const [envVariables, setEnvVariables] = useState([]);
   const [editVisible, setEditVisible] = useState(false);
   const [currentEnv, setCurrentEnv] = useState(null);
@@ -23,11 +24,29 @@ const EnvSelect = ({ value, onChange, style, disabled }) => {
     fetchEnvVariables();
   }, []);
 
+  // 暴露方法给父组件
+  useImperativeHandle(ref, () => ({
+    fetchEnvVariables
+  }));
+
   const handleEdit = (e, envId) => {
     e.stopPropagation();
     const env = envVariables.find(env => env.id === envId);
     setCurrentEnv(env);
     setEditVisible(true);
+  };
+
+  const handleDelete = async (e, envId) => {
+    e.stopPropagation();
+    try {
+      await deleteEnvVariable(envId);
+      await fetchEnvVariables();
+      if (value === envId) {
+        onChange?.(undefined);
+      }
+    } catch (err) {
+      console.error('删除环境变量失败:', err);
+    }
   };
 
   const dropdownRender = (menu) => {
@@ -50,10 +69,38 @@ const EnvSelect = ({ value, onChange, style, disabled }) => {
           <Select.Option key={env.id} value={env.id}>
             <Space style={{ justifyContent: 'space-between', width: '100%' }}>
               <span>{env.name}</span>
-              <EditOutlined 
-                onClick={(e) => handleEdit(e, env.id)}
-                style={{ visibility: disabled && env.id !== value ? 'hidden' : 'visible' }}
-              />
+              <Space>
+                <EditOutlined 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleEdit(e, env.id);
+                  }}
+                  style={{ visibility: disabled && env.id !== value ? 'hidden' : 'visible' }}
+                />
+                <Popconfirm
+                  title={t("确认删除")}
+                  description={t("是否确认删除该环境变量?")}
+                  onConfirm={(e) => {
+                    e?.preventDefault();
+                    e?.stopPropagation();
+                    handleDelete(e, env.id);
+                  }}
+                  okText={t("确认")}
+                  cancelText={t("取消")}
+                >
+                  <DeleteOutlined
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    style={{ 
+                      visibility: disabled && env.id !== value ? 'hidden' : 'visible',
+                      color: '#ff4d4f'
+                    }}
+                  />
+                </Popconfirm>
+              </Space>
             </Space>
           </Select.Option>
         ))}
@@ -72,6 +119,6 @@ const EnvSelect = ({ value, onChange, style, disabled }) => {
       />
     </>
   );
-};
+});
 
 export default EnvSelect;

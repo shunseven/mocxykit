@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock, saveEnvData, getEnvData } from "../common/fetchJsonData";
+import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock, saveEnvData, getEnvData, deleteEnvData } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData, matchRouter, setupNodeEnvVariables } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 import { envUpdateEmitter } from "../../index";
@@ -277,6 +277,26 @@ export default function viewRequest(req: Request, res: Response): boolean {
     handleEnvChange(apiData, currentProxy?.bindEnvId || envId);
     
     setApiData(apiData);
+    res.send(successData);
+    return true;
+  }
+
+  // 删除环境变量
+  if (matchRouter('/express-proxy-mock/delete-env-variable', req.path)) {
+    const envId = Number(req.query.envId);
+    
+    // 删除环境变量
+    deleteEnvData(envId);
+    
+    // 如果删除的是当前使用的环境,需要更新 apiData
+    const apiData = getApiData();
+    if (apiData.currentEnvId === envId) {
+      apiData.currentEnvId = undefined;
+      apiData.selectEnvId = undefined;
+      setApiData(apiData);
+      envUpdateEmitter.emit('updateEnvVariables');
+    }
+    
     res.send(successData);
     return true;
   }

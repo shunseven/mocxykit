@@ -180,3 +180,13 @@ export function getEnvData(): EnvConfig[] {
   }
   return JSON.parse(fs.readFileSync(envDataFilePath).toString());
 }
+
+export function deleteEnvData(envId: number) {
+  const envData = getEnvData();
+  const newEnvData = envData.filter(env => env.id !== envId);
+  const stat = fs.existsSync('./proxyMockData');
+  if (!stat) {
+    fs.mkdirSync('./proxyMockData');
+  }
+  fs.writeFileSync(envDataFilePath, JSON.stringify(newEnvData), 'utf-8');
+}
