@@ -11,7 +11,8 @@ function App() {
   const [selectProxy, setSelectProxy] = useState([])
   const [apiList, setApiList] = useState([])
   const [selectEnvId, setSelectEnvId] = useState(null)
-  const [hasEnvPlugin, setHasEnvPlugin] = useState(false)  // 添加新状态
+  const [hasEnvPlugin, setHasEnvPlugin] = useState(false)
+  const [currentEnvId, setCurrentEnvId] = useState(null)  // 添加当前实际使用的环境变量ID状态
 
   function fetchProxyData() {
     requestApiData().then(apiData => {
@@ -19,7 +20,8 @@ function App() {
       if (apiData.proxy) setProxyList(apiData.proxy)
       if(apiData.apiList) setApiList(apiData.apiList)
       if(apiData.selectEnvId) setSelectEnvId(apiData.selectEnvId)
-      if(apiData.hasEnvPlugin !== undefined) setHasEnvPlugin(apiData.hasEnvPlugin)  // 设置插件状态
+      if (apiData.currentEnvId !== undefined) setCurrentEnvId(apiData.currentEnvId)  // 设置当前实际使用的环境变量
+      if(apiData.hasEnvPlugin !== undefined) setHasEnvPlugin(apiData.hasEnvPlugin)
     });
   }
 
@@ -49,7 +51,10 @@ function App() {
             fetchProxyData();
           }}
         />
-        {hasEnvPlugin && <EnvConfig value={selectEnvId} onChange={fetchProxyData} />}
+        {hasEnvPlugin && <EnvConfig 
+          value={currentEnvId || selectEnvId} // 优先显示当前实际使用的环境变量ID
+          onChange={fetchProxyData} 
+        />}
       </div>
       <Divider />
       <List 

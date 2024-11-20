@@ -28,9 +28,9 @@ interface ApiData {
   proxy: ProxyList[];
   selectProxy: string;
   apiList: ApiConfig[];
-  selectEnvId?: number; // 用户手动选择的环境变量ID
-  currentEnvId?: number; // 当前实际使用的环境变量ID（可能来自proxy绑定或手动选择）
-  hasEnvPlugin?: boolean; // 添加新字段
+  selectEnvId?: number;   // 用户手动选择的环境变量ID
+  currentEnvId?: number;  // 当前实际使用的环境��量ID
+  hasEnvPlugin?: boolean; // 是否启用环境变量插件
 }
 
 interface MockRequestData {

@@ -8,10 +8,9 @@ const successData = {
   msg: 'success'
 };
 
-const handleEnvChange = (apiData: ApiData, bindEnvId?: number) => {
-  const newEnvId = bindEnvId || apiData.selectEnvId;
-  if (newEnvId !== apiData.currentEnvId) {
-    apiData.currentEnvId = newEnvId;
+const handleEnvChange = (apiData: ApiData, envId?: number) => {
+  if (envId !== apiData.currentEnvId) {
+    apiData.currentEnvId = envId;
     setApiData(apiData);
     envUpdateEmitter.emit('updateEnvVariables');
   }
@@ -51,7 +50,7 @@ export default function viewRequest(req: Request, res: Response): boolean {
     handleEnvChange(apiData, bindEnvId);
     setApiData(apiData);
     res.send(successData);
-    return true;
+    return true
   }
 
   // 删除代理
@@ -75,8 +74,8 @@ export default function viewRequest(req: Request, res: Response): boolean {
     const selectedProxy = apiData.proxy.find(p => p.proxy === req.query.proxy);
     apiData.selectProxy = req.query.proxy as string;
     
-    // 使用代理绑定的环境变量或回退到用户手动选择的环境变量
-    handleEnvChange(apiData, selectedProxy?.bindEnvId);
+    // 使用代理绑定的环境变量，如果没有则使用手动选择的环境变量
+    handleEnvChange(apiData, selectedProxy?.bindEnvId || apiData.selectEnvId);
     
     setApiData(apiData);
     res.send(successData);
@@ -262,11 +261,9 @@ export default function viewRequest(req: Request, res: Response): boolean {
     const envId = Number(req.query.envId) || undefined;
     apiData.selectEnvId = envId;
     
-    // 如果当前代理没有绑定环境变量，则使用手动选择的环境变量
+    // 检查当前代理是否有绑定环境，如果没有则使用手动选择的环境
     const currentProxy = apiData.proxy.find(p => p.proxy === apiData.selectProxy);
-    if (!currentProxy?.bindEnvId) {
-      handleEnvChange(apiData);
-    }
+    handleEnvChange(apiData, currentProxy?.bindEnvId || envId);
     
     setApiData(apiData);
     res.send(successData);
