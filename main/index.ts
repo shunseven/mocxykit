@@ -5,7 +5,7 @@
 import { NextFunction, Request, Response } from 'express';
 import clientEntry from './clientEntry';
 import entry from './mockProxy/entry';
-import { EventEmitter } from './common/event';
+import { EventEmitter } from './mockProxy/common/event';
 import viewRequest from './mockProxy/viewRequest';
 import { getApiData, getEnvData } from './mockProxy/common/fetchJsonData';
 
@@ -107,7 +107,8 @@ export class WebpackProxyMockPlugin {
 
     if (compiler.options.devServer) {
       const { setupMiddlewares } = compiler.options.devServer;
-
+      console.log('setupMiddlewares:', setupMiddlewares);
+      console.log('devServer:', compiler.options.devServer);
       if (compiler.options.devServer) {
         compiler.options.devServer.setupMiddlewares = (middlewares: any, devServer: any) => {
           this.setupDevServer(devServer.app);
