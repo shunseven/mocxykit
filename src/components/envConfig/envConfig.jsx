@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Select, Button, Modal, Form, Input, Table } from 'antd';
+import { Button, Modal, Form, Input, Table } from 'antd';
 import { saveEnvVariables, getEnvVariables, changeEnvVariable } from '../../api/api';
+import EnvSelect from '../envSelect/envSelect';
 
 const EnvConfig = ({ value, onChange }) => {
   const [envModalVisible, setEnvModalVisible] = useState(false);
@@ -95,18 +96,11 @@ const EnvConfig = ({ value, onChange }) => {
 
   return (
     <div style={{ display: 'inline-block', marginLeft: 20 }}>
-      <Select 
-        style={{ width: 200 }} 
-        placeholder="选择环境变量"
-        value={value || ''} // 使用空字符串代替 undefined
+      <EnvSelect 
+        value={value} 
         onChange={handleEnvChange}
-        allowClear    // 允许清除选择
-      >
-        <Select.Option value=''>无</Select.Option>
-        {Array.isArray(envVariables) && envVariables.map(env => (
-          <Select.Option key={env.id} value={env.id}>{env.name}</Select.Option>
-        ))}
-      </Select>
+        style={{ width: 200 }}
+      />
       <Button 
         type="primary" 
         onClick={() => setEnvModalVisible(true)} 

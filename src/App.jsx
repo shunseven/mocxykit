@@ -10,14 +10,16 @@ function App() {
   const [proxyList, setProxyList] = useState([])
   const [selectProxy, setSelectProxy] = useState([])
   const [apiList, setApiList] = useState([])
-  const [selectEnvId, setSelectEnvId] = useState(null)  // 添加 selectEnvId 状态
+  const [selectEnvId, setSelectEnvId] = useState(null)
+  const [hasEnvPlugin, setHasEnvPlugin] = useState(false)  // 添加新状态
 
   function fetchProxyData() {
     requestApiData().then(apiData => {
       if (apiData.selectProxy !== undefined) setSelectProxy(apiData.selectProxy)
       if (apiData.proxy) setProxyList(apiData.proxy)
       if(apiData.apiList) setApiList(apiData.apiList)
-      if(apiData.selectEnvId) setSelectEnvId(apiData.selectEnvId) // 设置 selectEnvId
+      if(apiData.selectEnvId) setSelectEnvId(apiData.selectEnvId)
+      if(apiData.hasEnvPlugin !== undefined) setHasEnvPlugin(apiData.hasEnvPlugin)  // 设置插件状态
     });
   }
 
@@ -33,6 +35,7 @@ function App() {
           deleteComfirm={true}
           proxyList={proxyList}
           selectProxy={selectProxy}
+          hasEnvPlugin={hasEnvPlugin}
           onProxyChange={async (data) => {
             await fetchChangeProxy(data)
             fetchProxyData();
@@ -46,7 +49,7 @@ function App() {
             fetchProxyData();
           }}
         />
-        <EnvConfig value={selectEnvId} onChange={fetchProxyData} />
+        {hasEnvPlugin && <EnvConfig value={selectEnvId} onChange={fetchProxyData} />}
       </div>
       <Divider />
       <List 

@@ -1,4 +1,5 @@
 import { Select, Space, Tag, Button, Form, Input, Popconfirm } from 'antd';
+import EnvSelect from '../envSelect/envSelect';
 import { useState } from 'react';
 import './proxy.css'
 import { t } from '../../common/fun';
@@ -6,7 +7,7 @@ import { t } from '../../common/fun';
 function GProxy(props) {
   const [isCreate, setIsCreate] = useState(false)
   const [form] = Form.useForm()
-  const {proxyList, selectProxy, onProxyChange, onProxyDelete, onProxyCreate, deleteComfirm, label, color='#f50'} = props
+  const {proxyList, selectProxy, onProxyChange, onProxyDelete, onProxyCreate, deleteComfirm, label, color='#f50', hasEnvPlugin} = props
 
   let hasDelete = false;
 
@@ -87,6 +88,7 @@ function GProxy(props) {
             onProxyCreate({
               proxy: value.proxy,
               name: value.name || 'proxy',
+              bindEnvId: value.bindEnvId,
             })
             setIsCreate(false)
             form.resetFields()
@@ -116,6 +118,11 @@ function GProxy(props) {
           >
             <Input size='middle' style={{width: '300px'}} placeholder="http://127.0.0.1:8800" />
           </Form.Item>
+          {hasEnvPlugin && (
+            <Form.Item name="bindEnvId" label={t('绑定环境')}>
+              <EnvSelect style={{ width: '200px' }} />
+            </Form.Item>
+          )}
           <Form.Item>
             <Button type="primary" size='middle' htmlType="submit">{t('创建')}</Button>
           </Form.Item>

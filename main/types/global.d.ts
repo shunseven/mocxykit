@@ -9,6 +9,7 @@ interface ProxyMockOptions {
 interface ProxyList {
   name: string;
   proxy: string;
+  bindEnvId?: number; // 同时在代理配置中也添加环境变量绑定
 }
 
 interface ApiConfig {
@@ -20,14 +21,18 @@ interface ApiConfig {
   duration: number;
   name: string;
   hasMockData?: boolean;
+  bindEnvId?: number; // 添加绑定环境变量ID字段
 }
 
 interface ApiData {
   proxy: ProxyList[];
   selectProxy: string;
   apiList: ApiConfig[];
-  selectEnvId?: number; // 添加当前选中的环境变量ID
+  selectEnvId?: number; // 用户手动选择的环境变量ID
+  currentEnvId?: number; // 当前实际使用的环境变量ID（可能来自proxy绑定或手动选择）
+  hasEnvPlugin?: boolean; // 添加新字段
 }
+
 interface MockRequestData {
   name: string;
   requestData: object;

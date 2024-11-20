@@ -8,6 +8,15 @@ const successData = {
   msg: 'success'
 };
 
+const handleEnvChange = (apiData: ApiData, bindEnvId?: number) => {
+  const newEnvId = bindEnvId || apiData.selectEnvId;
+  if (newEnvId !== apiData.currentEnvId) {
+    apiData.currentEnvId = newEnvId;
+    setApiData(apiData);
+    envUpdateEmitter.emit('updateEnvVariables');
+  }
+};
+
 export default function viewRequest(req: Request, res: Response): boolean {
   // 获取代理数据
   if (matchRouter('/express-proxy-mock/get-api-list', req.path)) {
@@ -29,15 +38,20 @@ export default function viewRequest(req: Request, res: Response): boolean {
 
   // 添加代理
   if (matchRouter('/express-proxy-mock/create-proxy', req.path)) {
-    const apiData = getApiData()
+    const apiData = getApiData();
+    const bindEnvId = req.query.bindEnvId ? Number(req.query.bindEnvId) : undefined;
+    
     apiData.proxy.push({
       proxy: req.query.proxy as string,
-      name: req.query.name as string
-    })
-    apiData.selectProxy = req.query.proxy as string
-    setApiData(apiData)
-    res.send(successData)
-    return true
+      name: req.query.name as string,
+      bindEnvId
+    });
+    apiData.selectProxy = req.query.proxy as string;
+    
+    handleEnvChange(apiData, bindEnvId);
+    setApiData(apiData);
+    res.send(successData);
+    return true;
   }
 
   // 删除代理
@@ -51,17 +65,22 @@ export default function viewRequest(req: Request, res: Response): boolean {
       apiData.selectProxy = ''
     }
     setApiData(apiData)
-    res.send(successData);
+    res.send(successData)
     return true
   }
 
   // 修改代理
   if (matchRouter('/express-proxy-mock/change-proxy', req.path)) {
-    const apiData = getApiData()
-    apiData.selectProxy = req.query.proxy as string
-    setApiData(apiData)
-    res.send(successData)
-    return true
+    const apiData = getApiData();
+    const selectedProxy = apiData.proxy.find(p => p.proxy === req.query.proxy);
+    apiData.selectProxy = req.query.proxy as string;
+    
+    // 使用代理绑定的环境变量或回退到用户手动选择的环境变量
+    handleEnvChange(apiData, selectedProxy?.bindEnvId);
+    
+    setApiData(apiData);
+    res.send(successData);
+    return true;
   }
 
   // 添加mock
@@ -237,13 +256,19 @@ export default function viewRequest(req: Request, res: Response): boolean {
     return true;
   }
 
-  // 切换环境变量
+  // 切换环境变量（用户手动选择）
   if (matchRouter('/express-proxy-mock/change-env-variable', req.path)) {
     const apiData = getApiData();
-    apiData.selectEnvId = Number(req.query.envId) || undefined;
+    const envId = Number(req.query.envId) || undefined;
+    apiData.selectEnvId = envId;
+    
+    // 如果当前代理没有绑定环境变量，则使用手动选择的环境变量
+    const currentProxy = apiData.proxy.find(p => p.proxy === apiData.selectProxy);
+    if (!currentProxy?.bindEnvId) {
+      handleEnvChange(apiData);
+    }
+    
     setApiData(apiData);
-    // 触发环境变量更新事件
-    envUpdateEmitter.emit('updateEnvVariables');
     res.send(successData);
     return true;
   }
