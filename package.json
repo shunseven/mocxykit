@@ -31,7 +31,8 @@
   "lint": "eslint .",
   "start": "ts-node server.ts",
   "build:view": "vite build",
-  "copy-files": "copyfiles -u 1 'main/**/*.p12' 'serverDist'"
+  "copy-files": "copyfiles -u 1 'main/**/*.p12' 'serverDist'",
+  "test:webpack": "webpack serve --config webpack.test.js"
  },
  "dependencies": {
   "@eslint/js": "^9.11.1",
@@ -58,6 +59,10 @@
   "globals": "^15.9.0",
   "ts-node": "^10.9.2",
   "typescript": "^5.6.3",
-  "vite": "^5.4.8"
+  "vite": "^5.4.8",
+  "webpack": "^5.0.0",
+  "webpack-cli": "^5.0.0",
+  "webpack-dev-server": "^4.0.0",
+  "html-webpack-plugin": "^5.0.0"
  }
 }

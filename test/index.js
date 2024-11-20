@@ -1,0 +1,1 @@
+console.log('这是环境变量内容22', process.env);

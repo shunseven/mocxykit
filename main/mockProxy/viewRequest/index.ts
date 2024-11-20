@@ -219,7 +219,12 @@ export default function viewRequest(req: Request, res: Response): boolean {
   // 保存环境变量
   if (matchRouter('/express-proxy-mock/save-env-variables', req.path)) {
     getReqBodyData(req).then((data) => {
-      saveEnvData(data);
+      const envData: EnvConfig = {
+        id: data.id || Date.now(),
+        name: data.name,
+        variables: data.variables
+      };
+      saveEnvData(envData);
       res.send(successData);
     });
     return true;
@@ -236,7 +241,6 @@ export default function viewRequest(req: Request, res: Response): boolean {
     const apiData = getApiData();
     apiData.selectEnvId = Number(req.query.envId) || undefined;
     setApiData(apiData);
-    setupNodeEnvVariables(); // 更新环境变量
     res.send(successData);
     return true;
   }
