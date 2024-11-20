@@ -14,6 +14,11 @@ function App() {
   const [hasEnvPlugin, setHasEnvPlugin] = useState(false)
   const [currentEnvId, setCurrentEnvId] = useState(null)  // 添加当前实际使用的环境变量ID状态
 
+  // 添加一个计算当前选择的代理是否有绑定环境的逻辑
+  const isEnvSelectDisabled = proxyList.some(proxy => 
+    proxy.proxy === selectProxy && proxy.bindEnvId !== undefined
+  );
+
   function fetchProxyData() {
     requestApiData().then(apiData => {
       if (apiData.selectProxy !== undefined) setSelectProxy(apiData.selectProxy)
@@ -31,7 +36,7 @@ function App() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100vw', paddingRight: '20px' }}>
         <GProxy
           label={`${t('全局代理')}:`}
           deleteComfirm={true}
@@ -54,6 +59,7 @@ function App() {
         {hasEnvPlugin && <EnvConfig 
           value={currentEnvId || selectEnvId} // 优先显示当前实际使用的环境变量ID
           onChange={fetchProxyData} 
+          disabled={isEnvSelectDisabled}
         />}
       </div>
       <Divider />

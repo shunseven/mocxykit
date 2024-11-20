@@ -1,4 +1,5 @@
 import { Select, Space, Tag, Button, Form, Input, Popconfirm } from 'antd';
+import { LinkOutlined } from '@ant-design/icons';
 import EnvSelect from '../envSelect/envSelect';
 import { useState } from 'react';
 import './proxy.css'
@@ -39,13 +40,19 @@ function GProxy(props) {
               value: item.proxy
             }))}
             optionRender={(item) => {
+              const proxyItem = proxyList.find(p => p.proxy === item.value);
+              
               return <div className="proxy-item" style={{
                 display: 'flex',
                 justifyContent: 'space-between'
               }}>
                 <div style={{
                   overflow: 'auto',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
                 }}>
+                  {proxyItem?.bindEnvId && <LinkOutlined style={{ color: '#1890ff' }} />}
                   {item.label}
                 </div>
                 <div>

@@ -235,7 +235,7 @@ export default function viewRequest(req: Request, res: Response): boolean {
     return true
   }
 
-  // 保存环境变量
+  // 修改保存环境变量部分
   if (matchRouter('/express-proxy-mock/save-env-variables', req.path)) {
     getReqBodyData(req).then((data) => {
       const envData: EnvConfig = {
@@ -243,7 +243,18 @@ export default function viewRequest(req: Request, res: Response): boolean {
         name: data.name,
         variables: data.variables
       };
-      saveEnvData(envData);
+      const allEnvData = getEnvData();
+      const index = allEnvData.findIndex(env => env.id === envData.id);
+      
+      if (index !== -1) {
+        // 更新已存在的环境变量
+        allEnvData[index] = envData;
+        saveEnvData(envData);
+      } else {
+        // 添加新的环境变量
+        saveEnvData(envData);
+      }
+      
       res.send(successData);
     });
     return true;

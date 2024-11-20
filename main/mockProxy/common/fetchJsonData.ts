@@ -160,12 +160,17 @@ export function saveEnvData(data: EnvConfig) {
     fs.mkdirSync('./proxyMockData');
   }
   
-  let envData = [];
-  if (fs.existsSync(envDataFilePath)) {
-    envData = JSON.parse(fs.readFileSync(envDataFilePath).toString());
+  let envData = getEnvData();
+  const existingIndex = envData.findIndex(env => env.id === data.id);
+  
+  if (existingIndex !== -1) {
+    // 更新已存在的环境变量
+    envData[existingIndex] = data;
+  } else {
+    // 添加新的环境变量
+    envData.push(data);
   }
   
-  envData.push(data);
   fs.writeFileSync(envDataFilePath, JSON.stringify(envData), 'utf-8');
 }
 
