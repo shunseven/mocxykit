@@ -64,7 +64,7 @@ const EnvSelect = forwardRef(({ value, onChange, style, disabled }, ref) => {
         open={disabled ? false : undefined}
         dropdownRender={dropdownRender}
       >
-        <Select.Option value={undefined}>无</Select.Option>
+        <Select.Option value=''>无</Select.Option>
         {Array.isArray(envVariables) && envVariables.map(env => (
           <Select.Option key={env.id} value={env.id}>
             <Space style={{ justifyContent: 'space-between', width: '100%' }}>

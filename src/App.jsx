@@ -24,8 +24,8 @@ function App() {
       if (apiData.selectProxy !== undefined) setSelectProxy(apiData.selectProxy)
       if (apiData.proxy) setProxyList(apiData.proxy)
       if(apiData.apiList) setApiList(apiData.apiList)
-      if(apiData.selectEnvId) setSelectEnvId(apiData.selectEnvId)
-      if (apiData.currentEnvId !== undefined) setCurrentEnvId(apiData.currentEnvId)  // 设置当前实际使用的环境变量
+      setSelectEnvId(apiData.selectEnvId || '')
+      setCurrentEnvId(apiData.currentEnvId || '')  // 设置当前实际使用的环境变量
       if(apiData.hasEnvPlugin !== undefined) setHasEnvPlugin(apiData.hasEnvPlugin)
     });
   }
@@ -57,7 +57,7 @@ function App() {
           }}
         />
         {hasEnvPlugin && <EnvConfig 
-          value={currentEnvId || selectEnvId} // 优先显示当前实际使用的环境变量ID
+          value={currentEnvId || selectEnvId } // 优先显示当前实际使用的环境变量ID
           onChange={fetchProxyData} 
           disabled={isEnvSelectDisabled}
         />}
