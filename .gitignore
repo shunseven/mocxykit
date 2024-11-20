@@ -28,3 +28,4 @@ proxyMockData
 .vscode
 serverDist
 viewsDist
+proxyMockData/env.json
