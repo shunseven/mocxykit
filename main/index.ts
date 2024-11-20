@@ -3,17 +3,15 @@
  */
 /// <reference path="./types/global.d.ts" />
 import { NextFunction, Request, Response } from 'express';
-import path from 'path';
 import clientEntry from './clientEntry';
 import entry from './mockProxy/entry';
-import events from 'events';
+import { EventEmitter } from './common/event';
 import viewRequest from './mockProxy/viewRequest';
-import { getApiData, getEnvData, setApiData } from './mockProxy/common/fetchJsonData';
-
-events.EventEmitter.defaultMaxListeners = 20;
+import { getApiData, getEnvData } from './mockProxy/common/fetchJsonData';
 
 // 创建事件发射器实例
-export const envUpdateEmitter = new events.EventEmitter();
+export const envUpdateEmitter = new EventEmitter();
+envUpdateEmitter.setMaxListeners(20);
 
 const defaultConfig: ProxyMockOptions = {
   apiRule: '/api/*',
