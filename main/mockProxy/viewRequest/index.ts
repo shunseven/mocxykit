@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock, saveEnvData, getEnvData } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData, matchRouter, setupNodeEnvVariables } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
+import { envUpdateEmitter } from "../../index";
 
 const successData = {
   msg: 'success'
@@ -241,6 +242,8 @@ export default function viewRequest(req: Request, res: Response): boolean {
     const apiData = getApiData();
     apiData.selectEnvId = Number(req.query.envId) || undefined;
     setApiData(apiData);
+    // 触发环境变量更新事件
+    envUpdateEmitter.emit('updateEnvVariables');
     res.send(successData);
     return true;
   }

@@ -17,7 +17,7 @@ module.exports = {
         port: 3000,
     },
     plugins: [
-      new WebpackProxyMockPlugin({}),
+      
         new HtmlWebpackPlugin({
             template: './test/index.html'
         }),
@@ -27,6 +27,6 @@ module.exports = {
                 BASE_URL: 'http://localhost:3000'
             })  // 添加初始化的process.env对象
         }),
-       
+        new WebpackProxyMockPlugin({}),
     ]
 };

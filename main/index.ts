@@ -12,6 +12,9 @@ import { getApiData, getEnvData } from './mockProxy/common/fetchJsonData';
 
 events.EventEmitter.defaultMaxListeners = 20;
 
+// 创建事件发射器实例
+export const envUpdateEmitter = new events.EventEmitter();
+
 const defaultConfig: ProxyMockOptions = {
   apiRule: '/api/*',
   https: true,
@@ -41,6 +44,7 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
 export class WebpackProxyMockPlugin {
   private options: ProxyMockOptions;
   private compiler: any = null;
+  originEnv: Record<string, string> = {};
 
   constructor(options: ProxyMockOptions = defaultConfig) {
     this.options = Object.assign({}, defaultConfig, options);
@@ -50,7 +54,7 @@ export class WebpackProxyMockPlugin {
     app.use(proxyMockMiddleware(this.options));
   }
 
-  setupEnvVariables() {
+  setupEnvVariables(isInitial: boolean) {
     if (!this.compiler) return;
 
     const apiData = getApiData();
@@ -67,19 +71,31 @@ export class WebpackProxyMockPlugin {
       );
 
       if (definePlugin) {
-        // 构建新的环境变量对象
+        // 获取现有的环境变量
+        const existingEnv = definePlugin.definitions['process.env'] 
+          ? JSON.parse(definePlugin.definitions['process.env'])
+          : {};
+        if (isInitial) this.originEnv = existingEnv;
+          
+        // 构建新的环境变量对象，并与现有值合并
         const newEnvVars = currentEnv.variables.reduce((acc, { key, value }) => ({
           ...acc,
           [key]: value + Date.now()
         }), {});
 
-        // 直接修改 definitions 对象的内容
-        Object.keys(definePlugin.definitions).forEach(key => {
-          delete definePlugin.definitions[key];
-        });
-        
-        Object.assign(definePlugin.definitions, {
-          'process.env': JSON.stringify(newEnvVars)
+        // 合并现有值和新值
+        const mergedEnv = {
+          ...this.originEnv,
+          ...newEnvVars
+        };
+
+        // 更新 DefinePlugin 的 definitions
+        definePlugin.definitions['process.env'] = JSON.stringify(mergedEnv);
+
+        console.log('环境变量已更新:', {
+          originEnv: this.originEnv,
+          new: newEnvVars,
+          merged: mergedEnv
         });
 
         // 强制触发重新编译
@@ -105,16 +121,15 @@ export class WebpackProxyMockPlugin {
     }
     
     compiler.hooks.environment.tap('WebpackProxyMockPlugin', () => {
-      console.log('DefinePlugin hook');
-      this.setupEnvVariables();
+      this.setupEnvVariables(true);
     });
 
     compiler.hooks.afterEnvironment.tap('WebpackProxyMockPlugin', () => {
-      setInterval(() => {
-        this.setupEnvVariables();
-        // 增加重新编译的日志
-        console.log('Triggering webpack recompilation...');
-      }, 10000);
+      // 添加环境变量更新事件监听
+      envUpdateEmitter.on('updateEnvVariables', () => {
+        console.log('Received environment update event');
+        this.setupEnvVariables(false);
+      });
     });
   }
 }
