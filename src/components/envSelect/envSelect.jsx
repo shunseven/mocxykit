@@ -83,7 +83,7 @@ const EnvSelect = forwardRef(({ value, onChange, style, disabled }, ref) => {
                 />
                 <Popconfirm
                   title={t("确认删除")}
-                  description={t("是否确认删除该环境变量?")}
+                  description={t("是否确认删除该环境变量")}
                   onConfirm={(e) => {
                     e?.preventDefault();
                     e?.stopPropagation();
