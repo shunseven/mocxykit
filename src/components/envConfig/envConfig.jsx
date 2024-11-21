@@ -26,7 +26,7 @@ const EnvConfig = ({ value, onChange, disabled }) => {
         title: '提示',
         content: '是否清除本页所有缓存数据？',
         onOk: () => {
-          console.log('请除本也所有缓存数据');
+          console.log('请除本地所有缓存数据');
           localStorage.clear();
           sessionStorage.clear();
           document.cookie.split(";").forEach((cookie) => {

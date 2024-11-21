@@ -78,6 +78,9 @@ export class WebpackProxyMockPlugin {
     if (!definePlugin) return;
 
     const envId = apiData.currentEnvId;
+    
+    if (!envId && !this.originEnv) return;
+
     if (!envId) {
       definePlugin.definitions['process.env'] = JSON.stringify(this.originEnv);
       if (this.compiler.watching) {
