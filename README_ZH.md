@@ -22,78 +22,6 @@ express的中间件，主要用于代理请求和 MOCK 数据，可用于所有 
 npm install express-proxy-mock --save-dev
 ```
 
-## 环境变量
-
-代理支持环境变量管理功能，您可以：
-- 创建多个环境配置
-- 将环境变量绑定到特定代理
-- 快速切换不同环境
-- 切换环境时自动清理浏览器缓存
-
-### 开启环境变量功能
-
-要启用环境变量功能，您需要：
-
-1. 使用带有 DefinePlugin 的 webpack
-2. 在 webpack 配置中添加 WebpackProxyMockPlugin
-
-#### webpack 配置示例
-
-### webpack.config.js
-```js
-module.exports = {
-  //...
-  devServer: {
-    ...
-  },
-  plugins: [
-      // 在 wepback 中会在插件里获取 devServer 并注入代理，devServer 不需要再配制
-      new WebpackProxyMockPlugin({
-        apiRule: '/api/*',
-        lang: 'zh'
-      })
-  ]
-};
-```
-
-
-### vue.config.js
-```js
-const proxyMockPlugin = new WebpackProxyMockPlugin({
-        apiRule: '/api/*',
-        lang: 'zh'
-      })
-module.exports = {
-  //...
-  devServer: {
-    setupMiddlewares: (middlewares, devServer) => {
-      // 在vue中，因 vue-cli在webpack 编译完成后,才注入 devServer,插件中获取不到 devServer配制，需要手动注入代理中间件
-      proxyMockPlugin.setupDevServer(devServer.app);
-      return middlewares;
-    }
-  },
-  plugins: [
-      proxyMockPlugin
-  ]
-};
-```
-
-
-
-### 如何使用环境变量
-
-1. 点击环境选择器旁边的"+"按钮创建新环境
-2. 在环境配��中添加键值对
-3. 可以在代理设置中将环境绑定到代理
-4. 切换环境时，系统会提示是否清理浏览器缓存
-
-### 功能特点
-
-- **绑定功能**：代理可以绑定到特定环境
-- **快速切换**：轻松切换不同环境
-- **缓存管理**：切换环境时可选择清理浏览器缓存
-- **可视化管理**：环境变量的可视化管理界面
-
 ### 示例
 
 ## 用法
@@ -225,6 +153,78 @@ async function createServer() {
 
 createServer();
 ```
+
+## 环境变量
+
+代理支持环境变量管理功能，您可以：
+- 创建多个环境配置
+- 将环境变量绑定到特定代理
+- 快速切换不同环境
+- 切换环境时自动清理浏览器缓存
+
+### 开启环境变量功能
+
+要启用环境变量功能，您需要：
+
+1. 使用带有 DefinePlugin 的 webpack
+2. 在 webpack 配置中添加 WebpackProxyMockPlugin
+
+#### webpack 配置示例
+
+### webpack.config.js
+```js
+module.exports = {
+  //...
+  devServer: {
+    ...
+  },
+  plugins: [
+      // 在 wepback 中会在插件里获取 devServer 并注入代理，devServer 不需要再配制
+      new WebpackProxyMockPlugin({
+        apiRule: '/api/*',
+        lang: 'zh'
+      })
+  ]
+};
+```
+
+
+### vue.config.js
+```js
+const proxyMockPlugin = new WebpackProxyMockPlugin({
+        apiRule: '/api/*',
+        lang: 'zh'
+      })
+module.exports = {
+  //...
+  devServer: {
+    setupMiddlewares: (middlewares, devServer) => {
+      // 在vue中，因 vue-cli在webpack 编译完成后,才注入 devServer,插件中获取不到 devServer配制，需要手动注入代理中间件
+      proxyMockPlugin.setupDevServer(devServer.app);
+      return middlewares;
+    }
+  },
+  plugins: [
+      proxyMockPlugin
+  ]
+};
+```
+
+
+
+### 如何使用环境变量
+
+1. 点击环境选择器旁边的"+"按钮创建新环境
+2. 在环境配��中添加键值对
+3. 可以在代理设置中将环境绑定到代理
+4. 切换环境时，系统会提示是否清理浏览器缓存
+
+### 功能特点
+
+- **绑定功能**：代理可以绑定到特定环境
+- **快速切换**：轻松切换不同环境
+- **缓存管理**：切换环境时可选择清理浏览器缓存
+- **可视化管理**：环境变量的可视化管理界面
 
 ## 联系我
 
