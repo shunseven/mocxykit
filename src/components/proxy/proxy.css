@@ -1,6 +1,6 @@
-.ant-select-item-option:hover .proxy-item .proxy-delete {
+.ant-select-item-option:hover .proxy-item .proxy-action {
   display: block;
 } 
-.proxy-item .proxy-delete {
+.proxy-item .proxy-action {
   display: none;
 }

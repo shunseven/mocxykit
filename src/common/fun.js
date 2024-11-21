@@ -114,6 +114,23 @@ const dict = {
   "保存": "Save",
   "代理": "Proxy",
   "新增": "Add",
+  
+  // 来自 envConfig
+  "提示": "Prompt",
+  "是否清除本页所有缓存数据？": "Do you want to clear all cached data on this page?",
+  "环境变量:": "Environment Variables:",
+  
+  // 来自 envForm
+  "编辑环境变量": "Edit Environment Variable",
+  "新增环境变量": "New Environment Variable",
+  "请输入环境变量名称": "Please Enter Environment Variable Name",
+  
+  // 来自 envSelect
+  "选择环境变量": "Select Environment Variable",
+  "确认删除": "Confirm Delete",
+  "是否确认删除该环境变量?": "Are you sure to delete this environment variable?",
+  "确认": "Confirm",
+  "无": "None",
 }
 export function t (key) {
   const config = window.__config__

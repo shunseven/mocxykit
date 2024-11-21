@@ -1,4 +1,4 @@
-import { Select, Space, Tag, Button, Form, Input, Popconfirm } from 'antd';
+import { Select, Space, Tag, Button, Form, Input, Popconfirm, Tooltip } from 'antd';
 import { LinkOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import EnvSelect from '../envSelect/envSelect';
 import { useState } from 'react';
@@ -76,7 +76,11 @@ function GProxy(props) {
                   alignItems: 'center',
                   gap: '4px'
                 }}>
-                  {showBindIcon && proxyItem?.bindEnvId && <LinkOutlined style={{ color: '#1890ff' }} />}
+                  {showBindIcon && proxyItem?.bindEnvId && (
+                    <Tooltip title={t('环境变量') + ': ' + proxyItem.envName}>
+                      <LinkOutlined style={{ color: '#1890ff' }} />
+                    </Tooltip>
+                  )}
                   {item.label}
                 </div>
                 <Space className="action-buttons">
@@ -84,7 +88,7 @@ function GProxy(props) {
                     <Button
                       size='small'
                       type="text"
-                      className='proxy-edit'
+                      className='proxy-action'
                       icon={<EditOutlined />}
                       onClick={(event) => {
                         event.stopPropagation()
@@ -104,7 +108,7 @@ function GProxy(props) {
                       cancelText={t('取消')}
                     >
                       <Button
-                        className='proxy-delete'
+                        className='proxy-action'
                         size='small'
                         type="text"
                         danger

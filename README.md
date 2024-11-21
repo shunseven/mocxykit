@@ -1,4 +1,3 @@
-
 # express-proxy-mock
 
 - [中文](./README_ZH.md)
@@ -60,6 +59,77 @@ app.listen(3000, () => console.log("Example app listening on port 3000!"));
 Open the browser at http://localhost:3000/config to see the configuration interface for proxy and MOCK data.
 
 Refer to [below](#other-servers) for usage examples with vite, webpack, and vueConfig.
+
+## Environment Variables
+
+The proxy supports environment variables management, which allows you to:
+- Create multiple environment configurations
+- Bind environment variables to specific proxies
+- Quick switch between different environments
+- Auto clear browser cache when switching environments
+
+### Enabling Environment Variables
+
+To enable the environment variables feature, you need to:
+
+1. Use webpack with DefinePlugin
+2. Add the WebpackProxyMockPlugin to your webpack configuration
+
+#### Webpack Configuration Example
+### webpack.config.js
+```js
+module.exports = {
+  //...
+  devServer: {
+    ...
+  },
+  plugins: [
+     // In webpack, the plugin will get the devServer and inject the proxy, so no need to configure devServer separately
+      new WebpackProxyMockPlugin({
+        apiRule: '/api/*',
+        lang: 'zh'
+      })
+  ]
+};
+```
+
+
+### vue.config.js
+```js
+const proxyMockPlugin = new WebpackProxyMockPlugin({
+        apiRule: '/api/*',
+        lang: 'zh'
+      })
+module.exports = {
+  //...
+  devServer: {
+    setupMiddlewares: (middlewares, devServer) => {
+      // In vue config, because vue-cli injects devServer after webpack compilation is complete, the plugin cannot get the devServer configuration, so you need to manually inject the proxy middleware
+      proxyMockPlugin.setupDevServer(devServer.app);
+      return middlewares;
+    }
+  },
+  plugins: [
+      proxyMockPlugin
+  ]
+};
+```
+
+### How to use environment variables
+
+1. Click the "+" button next to the environment selector to create a new environment
+2. Add key-value pairs in the environment configuration
+3. You can bind an environment to a proxy in the proxy settings
+4. When switching environments, the system will prompt whether to clear the browser cache
+
+### Features
+
+- **Binding**: A proxy can be bound to a specific environment
+- **Quick Switch**: Easy switching between different environments
+- **Cache Management**: Option to clear browser cache when switching environments
+- **Visual Management**: Visual interface for managing environment variables
+
+### Example
 
 ## Options
 

@@ -2,7 +2,7 @@ import { Divider } from 'antd'
 import List from './components/apiList/apiList'
 import EnvConfig from './components/envConfig/envConfig'
 import { useEffect, useState } from 'react';
-import { fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType, fetchBatchChangeTargetType, fetchSaveProxy } from './api/api';
+import { fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType, fetchBatchChangeTargetType, fetchSaveProxy, getEnvVariables } from './api/api';
 import GProxy from './components/proxy/proxy';
 import { t } from './common/fun';
 
@@ -19,15 +19,34 @@ function App() {
     proxy.proxy === selectProxy && proxy.bindEnvId !== undefined
   );
 
-  function fetchProxyData() {
-    requestApiData().then(apiData => {
-      if (apiData.selectProxy !== undefined) setSelectProxy(apiData.selectProxy)
-      if (apiData.proxy) setProxyList(apiData.proxy)
-      if(apiData.apiList) setApiList(apiData.apiList)
-      setSelectEnvId(apiData.selectEnvId || '')
-      setCurrentEnvId(apiData.currentEnvId || '')  // 设置当前实际使用的环境变量
-      if(apiData.hasEnvPlugin !== undefined) setHasEnvPlugin(apiData.hasEnvPlugin)
-    });
+  async function fetchProxyData() {
+    try {
+      const [apiData, envVariables] = await Promise.all([
+        requestApiData(),
+        getEnvVariables()
+      ]);
+
+      // 为代理列表添加环境变量名称
+      const proxyListWithEnvName = apiData.proxy.map(proxy => {
+        if (proxy.bindEnvId) {
+          const env = envVariables.find(env => env.id === proxy.bindEnvId);
+          return {
+            ...proxy,
+            envName: env?.name
+          };
+        }
+        return proxy;
+      });
+
+      if (apiData.selectProxy !== undefined) setSelectProxy(apiData.selectProxy);
+      if (apiData.proxy) setProxyList(proxyListWithEnvName);
+      if(apiData.apiList) setApiList(apiData.apiList);
+      setSelectEnvId(apiData.selectEnvId || '');
+      setCurrentEnvId(apiData.currentEnvId || '');
+      if(apiData.hasEnvPlugin !== undefined) setHasEnvPlugin(apiData.hasEnvPlugin);
+    } catch (err) {
+      console.error('获取数据失败:', err);
+    }
   }
 
   useEffect(() => {
