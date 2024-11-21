@@ -129,10 +129,12 @@ export default function ApiEdit(props) {
             setSelectCustomProxy('');
           }
         }}
-        onProxyCreate={async (data) => {
+        onSaveProxy={async (data) => {
           setCustomProxy([...customProxy, data]);
           setSelectCustomProxy(data.proxy);
         }}
+        hasEditFeature={false}
+        showBindIcon={false} // 设置为false禁用绑定图标显示
       />
     }
     {

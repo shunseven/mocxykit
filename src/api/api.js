@@ -40,8 +40,9 @@ export async function fetchDeleteProxy (data) {
   return res
 }
 
-export async function fetchCreateProxy (data) {
-  const res = await request('/express-proxy-mock/create-proxy', {
+// 替换原有的 fetchCreateProxy
+export async function fetchSaveProxy (data) {
+  const res = await request('/express-proxy-mock/save-proxy', {
     query: data
   })
   return res

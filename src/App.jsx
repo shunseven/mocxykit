@@ -2,7 +2,7 @@ import { Divider } from 'antd'
 import List from './components/apiList/apiList'
 import EnvConfig from './components/envConfig/envConfig'
 import { useEffect, useState } from 'react';
-import { fetchCreateProxy, fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType, fetchBatchChangeTargetType } from './api/api';
+import { fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType, fetchBatchChangeTargetType, fetchSaveProxy } from './api/api';
 import GProxy from './components/proxy/proxy';
 import { t } from './common/fun';
 
@@ -51,8 +51,8 @@ function App() {
             await fetchDeleteProxy(data)
             fetchProxyData();
           }}
-          onProxyCreate={async (data) => {
-            await fetchCreateProxy(data)
+          onSaveProxy={async (data) => {
+            await fetchSaveProxy(data)
             fetchProxyData();
           }}
         />

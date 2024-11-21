@@ -35,22 +35,29 @@ export default function viewRequest(req: Request, res: Response): boolean {
     return true
   }
 
-  // 添加代理
-  if (matchRouter('/express-proxy-mock/create-proxy', req.path)) {
+  // 替换原来的 create-proxy 路由
+  if (matchRouter('/express-proxy-mock/save-proxy', req.path)) {
     const apiData = getApiData();
+    const proxy = req.query.proxy as string;
+    const name = req.query.name as string;
     const bindEnvId = req.query.bindEnvId ? Number(req.query.bindEnvId) : undefined;
     
-    apiData.proxy.push({
-      proxy: req.query.proxy as string,
-      name: req.query.name as string,
-      bindEnvId
-    });
-    apiData.selectProxy = req.query.proxy as string;
+    // 查找是否存在相同proxy的记录
+    const existingIndex = apiData.proxy.findIndex(p => p.proxy === proxy);
     
+    if (existingIndex !== -1) {
+      // 更新现有代理
+      apiData.proxy[existingIndex] = { proxy, name, bindEnvId };
+    } else {
+      // 创建新代理
+      apiData.proxy.push({ proxy, name, bindEnvId });
+    }
+    
+    apiData.selectProxy = proxy;
     handleEnvChange(apiData, bindEnvId);
     setApiData(apiData);
     res.send(successData);
-    return true
+    return true;
   }
 
   // 删除代理
