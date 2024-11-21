@@ -3,6 +3,7 @@ interface ProxyMockOptions {
   configPath?: string;
   https?: boolean; // 是否启用 https
   cacheRequestHistoryMaxLen?: number; 
+  ifEnvChangeClearStorage?: boolean; // 环境变量改变时是否清空缓存
   lang?: 'en' | 'zh'// 缓存请求历史的最大长度
 }
 

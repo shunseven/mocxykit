@@ -116,7 +116,8 @@ const dict = {
   "新增": "Add",
 }
 export function t (key) {
-  if (window.__lang__ === 'en' && dict[key]) {
+  const config = window.__config__
+  if (config.lang === 'en' && dict[key]) {
     return dict[key]
   }
   return key

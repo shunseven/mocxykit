@@ -7,7 +7,8 @@ import clientEntry from './clientEntry';
 import entry from './mockProxy/entry';
 import { EventEmitter } from './mockProxy/common/event';
 import viewRequest from './mockProxy/viewRequest';
-import { getApiData, getEnvData } from './mockProxy/common/fetchJsonData';
+import { getApiData, getEnvData, setApiData } from './mockProxy/common/fetchJsonData';
+import { logger } from './mockProxy/common/log';
 
 // 创建事件发射器实例
 export const envUpdateEmitter = new EventEmitter();
@@ -19,6 +20,7 @@ const defaultConfig: ProxyMockOptions = {
   cacheRequestHistoryMaxLen: 30,
   configPath: '/config',
   lang: 'zh',
+  ifEnvChangeClearStorage: true
 }
 
 export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
@@ -42,7 +44,7 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
 export class WebpackProxyMockPlugin {
   private options: ProxyMockOptions;
   private compiler: any = null;
-  originEnv: Record<string, string> = {};
+  originEnv: Record<string, string> | null = null;
 
   constructor(options: ProxyMockOptions = defaultConfig) {
     this.options = Object.assign({}, defaultConfig, options);
@@ -52,50 +54,76 @@ export class WebpackProxyMockPlugin {
     app.use(proxyMockMiddleware(this.options));
   }
 
+  // 添加处理环境变量值的辅助方法
+  private cleanEnvValue(envObj: Record<string, any>): Record<string, any> {
+    return Object.keys(envObj).reduce((acc, key) => ({
+      ...acc,
+      [key]: typeof envObj[key] === 'string' ? 
+        envObj[key].replace(/^"(.*)"$/, '$1') : // 移除首尾的双引号
+        envObj[key]
+    }), {});
+  }
+
   setupEnvVariables(isInitial: boolean) {
     if (!this.compiler) return;
     const definePlugin = this.compiler.options.plugins.find(
       (plugin: any) => plugin.constructor.name === 'DefinePlugin'
     );
+   
+    const apiData = getApiData();
+    if (definePlugin && !apiData.hasEnvPlugin) {
+      apiData.hasEnvPlugin = true;
+      setApiData(apiData);
+    }
 
     if (!definePlugin) return;
 
-    const apiData = getApiData();
-    const envId = apiData.currentEnvId; // 使用 currentEnvId 替代 selectEnvId
-
-    if (!envId) return;
+    const envId = apiData.currentEnvId;
+    if (!envId) {
+      definePlugin.definitions['process.env'] = JSON.stringify(this.originEnv);
+      if (this.compiler.watching) {
+        this.compiler.watching.invalidate();
+      }
+      return;
+    };
 
     const envData = getEnvData();
     const currentEnv = envData.find(env => env.id === envId);
 
     if (currentEnv?.variables) {
-      const existingEnv = definePlugin.definitions['process.env']
-        ? JSON.parse(definePlugin.definitions['process.env'])
-        : {};
-      if (isInitial) this.originEnv = existingEnv;
+      // 处理 process.env 可能是对象的情况
+      let existingEnv = {};
+      const processEnv = definePlugin.definitions['process.env'];
+      
+      if (typeof processEnv === 'string') {
+        try {
+          existingEnv = this.cleanEnvValue(JSON.parse(processEnv));
+        } catch (e) {
+          logger({
+            error: 'Failed to parse process.env string',
+            processEnv
+          });
+        }
+      } else if (typeof processEnv === 'object' && processEnv !== null) {
+        existingEnv = this.cleanEnvValue(processEnv);
+      }
 
-      // 构建新的环境变量对象，并与现有值合并
+      if (!this.originEnv) this.originEnv = existingEnv;
+
       const newEnvVars = currentEnv.variables.reduce((acc, { key, value }) => ({
         ...acc,
         [key]: value
       }), {});
 
-      // 合并现有值和新值
       const mergedEnv = {
         ...this.originEnv,
-        ...newEnvVars
+        ...newEnvVars,
+        VUE_APP_BASE_API: '/api'
       };
 
-      // 更新 DefinePlugin 的 definitions
+      // 确保输出的是字符串格式
       definePlugin.definitions['process.env'] = JSON.stringify(mergedEnv);
 
-      console.log('环境变量已更新:', {
-        originEnv: this.originEnv,
-        new: newEnvVars,
-        merged: mergedEnv
-      });
-
-      // 强制触发重新编译
       if (this.compiler.watching) {
         this.compiler.watching.invalidate();
       }

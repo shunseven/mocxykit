@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Button } from 'antd';
 import { changeEnvVariable } from '../../api/api';
 import EnvSelect from '../envSelect/envSelect';
@@ -7,7 +7,6 @@ import { t } from '../../common/fun';
 
 const EnvConfig = ({ value, onChange, disabled }) => {
   const [envModalVisible, setEnvModalVisible] = useState(false);
-  const envSelectRef = useRef();
 
   const handleEnvChange = async (envId) => {
     try {
@@ -21,7 +20,6 @@ const EnvConfig = ({ value, onChange, disabled }) => {
   return (
     <div style={{ display: 'inline-block', marginLeft: 20 }}>
       <EnvSelect 
-        ref={envSelectRef}
         value={value} 
         onChange={handleEnvChange}
         style={{ width: 200 }}
@@ -40,7 +38,6 @@ const EnvConfig = ({ value, onChange, disabled }) => {
         onCancel={() => setEnvModalVisible(false)}
         onSuccess={() => {
           setEnvModalVisible(false);
-          envSelectRef.current?.fetchEnvVariables(); // 调用子组件的刷新方法
           onChange?.(); // 刷新环境变量列表
         }}
       />
