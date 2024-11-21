@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { changeEnvVariable } from '../../api/api';
 import EnvSelect from '../envSelect/envSelect';
 import EnvForm from '../envForm/envForm';
@@ -41,6 +42,7 @@ const EnvConfig = ({ value, onChange, disabled }) => {
 
   return (
     <div style={{ display: 'inline-block', marginLeft: 20 }}>
+      <span style={{ marginRight: 8 }}>环境变量:</span>
       <EnvSelect 
         value={value} 
         onChange={handleEnvChange}
@@ -49,11 +51,10 @@ const EnvConfig = ({ value, onChange, disabled }) => {
       />
       <Button 
         type="primary" 
+        icon={<PlusCircleOutlined />}
         onClick={() => setEnvModalVisible(true)} 
         style={{ marginLeft: 10 }}
-      >
-        {t('新增环境变量')}
-      </Button>
+      />
 
       <EnvForm
         visible={envModalVisible}

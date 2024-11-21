@@ -1,6 +1,6 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import { Select, Space, Popconfirm } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, LinkOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import { getEnvVariables, deleteEnvVariable } from '../../api/api';
 import EnvForm from '../envForm/envForm';
@@ -68,7 +68,10 @@ const EnvSelect = forwardRef(({ value, onChange, style, disabled }, ref) => {
         {Array.isArray(envVariables) && envVariables.map(env => (
           <Select.Option key={env.id} value={env.id}>
             <Space style={{ justifyContent: 'space-between', width: '100%' }}>
-              <span>{env.name}</span>
+              <Space>
+                {disabled && <LinkOutlined style={{ color: '#1890ff' }} />}
+                <span>{env.name}</span>
+              </Space>
               <Space>
                 <EditOutlined 
                   onClick={(e) => {

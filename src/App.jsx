@@ -36,7 +36,7 @@ function App() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100vw', paddingRight: '20px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '98vw', paddingRight: '20px' }}>
         <GProxy
           label={`${t('全局代理')}:`}
           deleteComfirm={true}
