@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Modal } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { changeEnvVariable } from '../../api/api';
@@ -10,6 +10,7 @@ import { t } from '../../common/fun';
 let preEnvId = null; // 上一个环境变量ID
 const EnvConfig = ({ value, onChange, disabled }) => {
   const [envModalVisible, setEnvModalVisible] = useState(false);
+  const selectRef = useRef();
 
   const handleEnvChange = async (envId) => {
     try {
@@ -48,6 +49,7 @@ const EnvConfig = ({ value, onChange, disabled }) => {
         onChange={handleEnvChange}
         style={{ width: 200 }}
         disabled={disabled}
+        ref={selectRef}
       />
       <Button 
         type="primary" 
@@ -61,7 +63,8 @@ const EnvConfig = ({ value, onChange, disabled }) => {
         onCancel={() => setEnvModalVisible(false)}
         onSuccess={() => {
           setEnvModalVisible(false);
-          onChange?.(); // 刷新环境变量列表
+          selectRef.current?.fetchEnvVariables(); // 刷新环境变量列表
+          onChange?.();
         }}
       />
     </div>
