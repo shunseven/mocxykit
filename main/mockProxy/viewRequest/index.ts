@@ -261,6 +261,12 @@ export default function viewRequest(req: Request, res: Response): boolean {
         // 添加新的环境变量
         saveEnvData(envData);
       }
+
+      // 检查是否为当前使用的环境变量
+      const apiData = getApiData();
+      if (apiData.currentEnvId === envData.id) {
+        envUpdateEmitter.emit('updateEnvVariables');
+      }
       
       res.send(successData);
     });
