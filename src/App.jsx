@@ -16,7 +16,7 @@ function App() {
 
   // 添加一个计算当前选择的代理是否有绑定环境的逻辑
   const isEnvSelectDisabled = proxyList.some(proxy => 
-    proxy.proxy === selectProxy && proxy.bindEnvId !== undefined
+    proxy.proxy === selectProxy && proxy.bindEnvId
   );
 
   async function fetchProxyData() {
