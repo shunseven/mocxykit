@@ -308,6 +308,13 @@ export default function viewRequest(req: Request, res: Response): boolean {
     return true;
   }
 
+  // 刷新环境变量
+  if (matchRouter('/express-proxy-mock/refresh-env-variable', req.path)) {
+    envUpdateEmitter.emit('updateEnvVariables');
+    res.send(successData);
+    return true;
+  }
+
   return false
 }
 

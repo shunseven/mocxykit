@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Modal } from 'antd';
-import { PlusCircleOutlined } from '@ant-design/icons';
-import { changeEnvVariable } from '../../api/api';
+import { Button, Modal, message } from 'antd';
+import { PlusCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import { changeEnvVariable, refreshEnvVariable } from '../../api/api';
 import EnvSelect from '../envSelect/envSelect';
 import EnvForm from '../envForm/envForm';
-import { t } from '../../common/fun';
+import { t, clearLocalCache } from '../../common/fun';
 
 
 let preEnvId = null; // 上一个环境变量ID
@@ -21,6 +21,19 @@ const EnvConfig = ({ value, onChange, disabled }) => {
     }
   };
 
+  const handleRefresh = async () => {
+    clearLocalCache();
+    try {
+      await refreshEnvVariable();
+      selectRef.current?.fetchEnvVariables();
+      onChange?.();
+      message.success(t('刷新成功'));
+    } catch (err) {
+      console.error('刷新环境变量失败:', err);
+      message.error(t('刷新失败'));
+    }
+  };
+
   useEffect(() => {
     if (preEnvId !== null) {
       Modal.confirm({
@@ -28,13 +41,7 @@ const EnvConfig = ({ value, onChange, disabled }) => {
         content: t('是否清除本页所有缓存数据'),
         onOk: () => {
           console.log('请除本地所有缓存数据');
-          localStorage.clear();
-          sessionStorage.clear();
-          document.cookie.split(";").forEach((cookie) => {
-            const eqPos = cookie.indexOf("=");
-            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-          });
+          clearLocalCache();
         }
       });
     }
@@ -55,6 +62,11 @@ const EnvConfig = ({ value, onChange, disabled }) => {
         type="primary" 
         icon={<PlusCircleOutlined />}
         onClick={() => setEnvModalVisible(true)} 
+        style={{ marginLeft: 10 }}
+      />
+      <Button 
+        icon={<SyncOutlined />}
+        onClick={handleRefresh} 
         style={{ marginLeft: 10 }}
       />
 

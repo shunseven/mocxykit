@@ -107,7 +107,7 @@ const dict = {
   "是否要删除这个代理": "Do you want to delete this proxy?",
   "请输入代理的名称": "Please Enter Proxy Name",
   "请输入代理地址": "Please Enter Proxy Address",
-  "请输入正确的代理地址": "Please Enter a Valid Proxy Address",
+  "请输入正���的代理地址": "Please Enter a Valid Proxy Address",
   "代理地址已存在": "Proxy Address Already Exists",
   "创建": "Create",
   "编辑": "Edit",
@@ -131,11 +131,24 @@ const dict = {
   "是否确认删除该环境变量": "Are you sure to delete this environment variable?",
   "确认": "Confirm",
   "无": "None",
+  "刷新成功": "Refresh Successful",
+  "刷新失败": "Refresh Failed",
 }
+
 export function t (key) {
   const config = window.__config__
   if (config.lang === 'en' && dict[key]) {
     return dict[key]
   }
   return key
+}
+
+export function clearLocalCache() {
+  localStorage.clear();
+  sessionStorage.clear();
+  document.cookie.split(";").forEach((cookie) => {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  });
 }

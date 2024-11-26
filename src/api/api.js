@@ -134,3 +134,8 @@ export async function deleteEnvVariable(envId) {
   return res
 }
 
+export async function refreshEnvVariable() {
+  const res = await request('/express-proxy-mock/refresh-env-variable')
+  return res
+}
+
