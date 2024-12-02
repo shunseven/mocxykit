@@ -9,10 +9,10 @@ export default function entry(options: ProxyMockOptions) {
   const mockFun = createMock();
   return (req: Request, res: Response, next: NextFunction): boolean => {
     const apiRules = Array.isArray(options.apiRule) ? options.apiRule : [options.apiRule];
-    if (apiRules.some(rule => matchRouter(rule, req.path))) {
-      const apiData = getApiData();
-      const key = parseUrlToKey(req.url);
-      const apiConfig = apiData.apiList.find(item => item.key === key || parseUrlToKey(item.url) === key);
+    const apiData = getApiData();
+    const key = parseUrlToKey(req.url);
+    const apiConfig = apiData.apiList.find(item => item.key === key || parseUrlToKey(item.url) === key);
+    if (apiRules.some(rule => matchRouter(rule, req.path)) || apiConfig) {
       if (apiConfig?.target === 'proxy' || !apiConfig) {
         // 走全局代理
         console.log(`${req.url} 代理 => ${apiData.selectProxy}`);
