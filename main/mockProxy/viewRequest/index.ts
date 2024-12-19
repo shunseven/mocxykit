@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import ngrok from 'ngrok';
 import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock, saveEnvData, getEnvData, deleteEnvData } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData, matchRouter, setupNodeEnvVariables } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
@@ -318,6 +319,32 @@ export default function viewRequest(req: Request, res: Response): boolean {
   if (matchRouter('/express-proxy-mock/refresh-env-variable', req.path)) {
     envUpdateEmitter.emit('updateEnvVariables');
     res.send(successData);
+    return true;
+  }
+
+  // 启用外网访问
+  if (matchRouter('/express-proxy-mock/enable-public-access', req.path)) {
+    const port = req.socket.localPort;
+    
+    ngrok.connect({
+      addr: port,
+      // 如果有 ngrok authtoken，可以在这里添加
+      // authtoken: 'your_ngrok_auth_token'
+    })
+    .then((url) => {
+      res.json({
+        success: true,
+        url
+      });
+    })
+    .catch((error) => {
+      console.error('Ngrok error:', error);
+      res.json({
+        success: false,
+        error: 'Failed to enable public access'
+      });
+    });
+    
     return true;
   }
 

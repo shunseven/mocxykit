@@ -139,3 +139,8 @@ export async function refreshEnvVariable() {
   return res
 }
 
+export async function enablePublicAccess() {
+  const res = await request('/express-proxy-mock/enable-public-access')
+  return res
+}
+

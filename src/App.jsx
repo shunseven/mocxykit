@@ -1,10 +1,12 @@
-import { Divider } from 'antd'
+import { Divider, Button } from 'antd'
+import { SettingOutlined } from '@ant-design/icons';
 import List from './components/apiList/apiList'
 import EnvConfig from './components/envConfig/envConfig'
 import { useEffect, useState } from 'react';
 import { fetchDeleteProxy, requestApiData, fetchChangeProxy, fetchChangeTargetType, fetchBatchChangeTargetType, fetchSaveProxy, getEnvVariables } from './api/api';
 import GProxy from './components/proxy/proxy';
 import { t } from './common/fun';
+import SettingsModal from './components/settingsModal/settingsModal';
 
 function App() {
   const [proxyList, setProxyList] = useState([])
@@ -13,6 +15,7 @@ function App() {
   const [selectEnvId, setSelectEnvId] = useState(null)
   const [hasEnvPlugin, setHasEnvPlugin] = useState(false)
   const [currentEnvId, setCurrentEnvId] = useState(null)  // 添加当前实际使用的环境变量ID状态
+  const [settingsVisible, setSettingsVisible] = useState(false);
 
   // 添加一个计算当前选择的代理是否有绑定环境的逻辑
   const isEnvSelectDisabled = proxyList.some(proxy => 
@@ -75,12 +78,24 @@ function App() {
             fetchProxyData();
           }}
         />
-        {hasEnvPlugin && <EnvConfig 
-          value={currentEnvId || selectEnvId } // 优先显示当前实际使用的环境变量ID
-          onChange={fetchProxyData} 
-          disabled={isEnvSelectDisabled}
-        />}
+        <div className='setting' style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {hasEnvPlugin && <EnvConfig 
+            value={currentEnvId || selectEnvId } // 优先显示当前实际使用的环境变量ID
+            onChange={fetchProxyData} 
+            disabled={isEnvSelectDisabled}
+          />}
+          <Button 
+            type="text" 
+            icon={<SettingOutlined />}
+            onClick={() => setSettingsVisible(true)}
+          />
+        </div>
+        
       </div>
+      <SettingsModal
+        visible={settingsVisible}
+        onClose={() => setSettingsVisible(false)}
+      />
       <Divider />
       <List 
         data={apiList}
