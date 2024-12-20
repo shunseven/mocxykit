@@ -6,6 +6,8 @@ import { enablePublicAccess } from '../../api/api';
 const { Text, Link } = Typography;
 const STORAGE_KEY = 'ngrok_authtoken';
 const URL_STORAGE_KEY = 'ngrok_public_url';
+const URL_TIMESTAMP_KEY = 'ngrok_url_timestamp';
+const URL_EXPIRATION_TIME = 2 * 60 * 60 * 1000; // 2小时，单位毫秒
 
 const SettingsModal = ({ visible, onClose }) => {
   const [loading, setLoading] = useState(false);
@@ -17,14 +19,25 @@ const SettingsModal = ({ visible, onClose }) => {
   useEffect(() => {
     const savedToken = localStorage.getItem(STORAGE_KEY);
     const savedUrl = localStorage.getItem(URL_STORAGE_KEY);
+    const savedTimestamp = localStorage.getItem(URL_TIMESTAMP_KEY);
     
     if (savedToken) {
       setAuthtoken(savedToken);
     }
     
-    if (savedUrl) {
-      setPublicUrl(savedUrl);
-      setShowInputs(false);
+    if (savedUrl && savedTimestamp) {
+      const now = Date.now();
+      const isExpired = now - parseInt(savedTimestamp) > URL_EXPIRATION_TIME;
+      
+      if (!isExpired) {
+        setPublicUrl(savedUrl);
+        setShowInputs(false);
+      } else {
+        // URL已过期，清除相关存储
+        localStorage.removeItem(URL_STORAGE_KEY);
+        localStorage.removeItem(URL_TIMESTAMP_KEY);
+        setShowInputs(true);
+      }
     }
   }, []);
 
@@ -38,9 +51,10 @@ const SettingsModal = ({ visible, onClose }) => {
       setLoading(true);
       const response = await enablePublicAccess({ authtoken });
       if (response.success) {
-        // 保存 token 和 url 到本地
+        // 保存 token、url 和时间戳到本地
         localStorage.setItem(STORAGE_KEY, authtoken);
         localStorage.setItem(URL_STORAGE_KEY, response.url);
+        localStorage.setItem(URL_TIMESTAMP_KEY, Date.now().toString());
         setPublicUrl(response.url);
         setShowInputs(false);
         message.success('已开启公网访问');
@@ -55,6 +69,7 @@ const SettingsModal = ({ visible, onClose }) => {
   const handleReset = () => {
     setShowInputs(true);
     localStorage.removeItem(URL_STORAGE_KEY); // 清除保存的 URL
+    localStorage.removeItem(URL_TIMESTAMP_KEY);
   };
 
   return (
