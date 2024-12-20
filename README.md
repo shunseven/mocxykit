@@ -225,6 +225,36 @@ module.exports = {
 - **Cache Management**: Option to clear browser cache when switching environments
 - **Visual Management**: Visual interface for managing environment variables
 
+## Public Access with Ngrok
+
+This middleware supports public access to your local development server using Ngrok. This feature allows you to:
+
+- Share your local development environment with external users
+- Test your application on different devices
+- Demo your development work to clients
+
+### Setting up Public Access
+
+1. Open the configuration page at `http://localhost:3000/config`
+2. Click the settings icon in the top right corner
+3. Register for a free Ngrok account at https://dashboard.ngrok.com/signup
+4. Copy your Ngrok authtoken from the dashboard
+5. Paste the authtoken in the settings modal
+6. Click "Enable Public Access"
+
+### Features
+
+- Automatic tunnel creation
+- Secure HTTPS endpoints
+- Persistent authtoken storage
+- Easy URL sharing with copy functionality
+- Quick tunnel recreation with reset button
+
+### Notes
+
+- The Ngrok free tier has some limitations
+- Public URLs change each time you create a new tunnel
+- For consistent URLs, consider upgrading to a paid Ngrok plan
 
 ## Contact Me
 

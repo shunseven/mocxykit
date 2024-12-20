@@ -43,10 +43,10 @@ const SettingsModal = ({ visible, onClose }) => {
         localStorage.setItem(URL_STORAGE_KEY, response.url);
         setPublicUrl(response.url);
         setShowInputs(false);
-        message.success('已开启外网访问');
+        message.success('已开启公网访问');
       }
     } catch (error) {
-      message.error('开启外网访问失败');
+      message.error('开启公网访问失败');
     } finally {
       setLoading(false);
     }
@@ -82,13 +82,13 @@ const SettingsModal = ({ visible, onClose }) => {
               onClick={handleEnablePublicAccess}
               loading={loading}
             >
-              开启外网访问
+              开启公网访问
             </Button>
           </Space>
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <Text strong>外网访问地址：</Text>
+              <Text strong>公网访问地址：</Text>
               <Text copyable>{publicUrl}</Text>
             </div>
             <Button 
