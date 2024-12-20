@@ -107,7 +107,7 @@ const dict = {
   "是否要删除这个代理": "Do you want to delete this proxy?",
   "请输入代理的名称": "Please Enter Proxy Name",
   "请输入代理地址": "Please Enter Proxy Address",
-  "请输入正���的代理地址": "Please Enter a Valid Proxy Address",
+  "请输入正确的代理地址": "Please Enter a Valid Proxy Address",
   "代理地址已存在": "Proxy Address Already Exists",
   "创建": "Create",
   "编辑": "Edit",
@@ -133,6 +133,15 @@ const dict = {
   "无": "None",
   "刷新成功": "Refresh Successful",
   "刷新失败": "Refresh Failed",
+
+  // 来自 settingsModal
+  "设置": "Settings",
+  "请输入 Ngrok Authtoken": "Please Enter Ngrok Authtoken",
+  "获取Ngrok authtoken": "Get Ngrok Authtoken",
+  "开启公网访问": "Enable Public Access",
+  "已开启公网访问": "Public Access Enabled",
+  "开启公网访问失败": "Failed to Enable Public Access",
+  "公网访问地址：": "Public Access URL:"
 }
 
 export function t (key) {

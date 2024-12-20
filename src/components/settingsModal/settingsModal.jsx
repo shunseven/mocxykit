@@ -2,6 +2,7 @@ import { Modal, Button, Input, Typography, Space, message } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import { enablePublicAccess } from '../../api/api';
+import { t } from '../../common/fun';
 
 const { Text, Link } = Typography;
 const STORAGE_KEY = 'ngrok_authtoken';
@@ -43,7 +44,7 @@ const SettingsModal = ({ visible, onClose }) => {
 
   const handleEnablePublicAccess = async () => {
     if (!authtoken) {
-      message.error('请输入 Ngrok Authtoken');
+      message.error(t('请输入 Ngrok Authtoken'));
       return;
     }
 
@@ -57,10 +58,10 @@ const SettingsModal = ({ visible, onClose }) => {
         localStorage.setItem(URL_TIMESTAMP_KEY, Date.now().toString());
         setPublicUrl(response.url);
         setShowInputs(false);
-        message.success('已开启公网访问');
+        message.success(t('已开启公网访问'));
       }
     } catch (error) {
-      message.error('开启公网访问失败');
+      message.error(t('开启公网访问失败'));
     } finally {
       setLoading(false);
     }
@@ -74,7 +75,7 @@ const SettingsModal = ({ visible, onClose }) => {
 
   return (
     <Modal
-      title="设置"
+      title={t("设置")}
       open={visible}
       onCancel={onClose}
       footer={null}
@@ -84,26 +85,26 @@ const SettingsModal = ({ visible, onClose }) => {
         {showInputs ? (
           <Space style={{ width: '100%' }}>
             <Input
-              placeholder="请输入 Ngrok Authtoken"
+              placeholder={t("请输入 Ngrok Authtoken")}
               value={authtoken}
               onChange={e => setAuthtoken(e.target.value)}
-              style={{ width: 320 }}
+              style={{ width: 300 }}
             />
             <Link href="https://dashboard.ngrok.com/signup" target="_blank">
-              注册Ngrok账号
+              {t("获取Ngrok authtoken")}
             </Link>
             <Button 
               type="primary" 
               onClick={handleEnablePublicAccess}
               loading={loading}
             >
-              开启公网访问
+              {t("开启公网访问")}
             </Button>
           </Space>
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <Text strong>公网访问地址：</Text>
+              <Text strong>{t("公网访问地址：")}</Text>
               <Text copyable>{publicUrl}</Text>
             </div>
             <Button 
