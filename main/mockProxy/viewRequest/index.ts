@@ -17,6 +17,64 @@ const handleEnvChange = (apiData: ApiData, envId?: number) => {
   }
 };
 
+let tunnelUrl: string | null = null;
+
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000;
+
+async function wait(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function createTunnel(port: number, authtoken: string) {
+  let lastError: any;
+  for (let i = 0; i < MAX_RETRIES; i++) {
+    try {
+      // 清理现有连接
+      if (tunnelUrl) {
+        try {
+          await ngrok.disconnect(tunnelUrl);
+        } catch (e) {
+          console.log('Disconnect error:', e);
+        }
+      }
+
+      try {
+        await ngrok.kill();
+      } catch (e) {
+        console.log('Kill error:', e);
+      }
+
+      // 等待进程完全终止
+      await wait(1000);
+
+      // 设置新的 authtoken
+      await ngrok.authtoken(authtoken);
+
+      // 启动新连接
+      console.log(`Attempting to connect (attempt ${i + 1}/${MAX_RETRIES})...`);
+      const url = await ngrok.connect({
+        addr: port,
+        proto: 'http',
+        onLogEvent: (log) => {
+          console.log('Ngrok log:', log);
+        }
+      });
+      
+      tunnelUrl = url;
+      return url;
+    } catch (error: any) {
+      lastError = error;
+      console.error(`Attempt ${i + 1} failed:`, error);
+      if (i < MAX_RETRIES - 1) {
+        await wait(RETRY_DELAY);
+      }
+    }
+  }
+
+  throw new Error(`Failed after ${MAX_RETRIES} attempts. Last error: ${lastError?.message || 'Unknown error'}`);
+}
+
 export default function viewRequest(req: Request, res: Response): boolean {
   // 获取代理数据
   if (matchRouter('/express-proxy-mock/get-api-list', req.path)) {
@@ -58,7 +116,7 @@ export default function viewRequest(req: Request, res: Response): boolean {
     handleEnvChange(apiData, bindEnvId);
     setApiData(apiData);
     res.send(successData);
-    return true;
+    return true
   }
 
   // 删除代理
@@ -322,26 +380,37 @@ export default function viewRequest(req: Request, res: Response): boolean {
     return true;
   }
 
-  // 启用外网访问
+  // 修改外网访问处理逻辑
   if (matchRouter('/express-proxy-mock/enable-public-access', req.path)) {
-    const port = req.socket.localPort;
-    
-    ngrok.connect({
-      addr: port,
-      // 如果有 ngrok authtoken，可以在这里添加
-      // authtoken: 'your_ngrok_auth_token'
-    })
-    .then((url) => {
-      res.json({
-        success: true,
-        url
-      });
-    })
-    .catch((error) => {
-      console.error('Ngrok error:', error);
+    getReqBodyData(req).then(async (data) => {
+      const { authtoken } = data as { authtoken: string };
+      if (!authtoken) {
+        res.json({
+          success: false,
+          error: '请提供有效的 authtoken'
+        });
+        return;
+      }
+
+      const port = req.socket.localPort || 3000;
+      
+      try {
+        const url = await createTunnel(port, authtoken);
+        res.json({
+          success: true,
+          url
+        });
+      } catch (error: any) {
+        console.error('Tunnel creation failed:', error);
+        res.json({
+          success: false,
+          error: `创建隧道失败: ${error.message || '未知错误'}`
+        });
+      }
+    }).catch(error => {
       res.json({
         success: false,
-        error: 'Failed to enable public access'
+        error: '请求处理失败'
       });
     });
     
@@ -350,4 +419,12 @@ export default function viewRequest(req: Request, res: Response): boolean {
 
   return false
 }
+
+// 修改清理函数
+process.on('SIGTERM', async () => {
+  if (tunnelUrl) {
+    await ngrok.disconnect(tunnelUrl);
+    await ngrok.kill();
+  }
+});
 
