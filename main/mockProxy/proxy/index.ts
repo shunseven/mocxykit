@@ -53,6 +53,16 @@ export default function createProxyServer (options: ProxyMockOptions) {
             .join(';')
       });
     }
+    
+    // 检查是否为 JSON 数据
+    const contentType = proxyRes.headers['content-type'] || '';
+    const isJsonData = contentType.includes('application/json');
+    
+    // 如果不是 JSON 数据，直接返回，不进行缓存
+    if (!isJsonData) {
+      return;
+    }
+
     let body = '';
     proxyRes.on('data', (chunk) => {
       body += chunk;
