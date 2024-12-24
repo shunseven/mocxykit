@@ -45,6 +45,12 @@ export default function createProxyServer (options: ProxyMockOptions) {
   }
   const proxy = httpProxy.createProxyServer(config);
   proxy.on('proxyRes', function (proxyRes, req, res) {
+    const contentType = proxyRes.headers['content-type'] || '';
+    const isJsonData = contentType.includes('application/json');
+    // 如果不是 JSON 数据，直接返回，不进行缓存
+    if (!isJsonData) {
+      return;
+    }
     const sc = proxyRes.headers['set-cookie'];
     if (Array.isArray(sc)) {
       proxyRes.headers['set-cookie'] = sc.map(sc => {
@@ -55,14 +61,6 @@ export default function createProxyServer (options: ProxyMockOptions) {
     }
     
     // 检查是否为 JSON 数据
-    const contentType = proxyRes.headers['content-type'] || '';
-    const isJsonData = contentType.includes('application/json');
-    
-    // 如果不是 JSON 数据，直接返回，不进行缓存
-    if (!isJsonData) {
-      return;
-    }
-
     let body = '';
     proxyRes.on('data', (chunk) => {
       body += chunk;
