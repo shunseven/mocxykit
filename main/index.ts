@@ -158,6 +158,30 @@ export class WebpackProxyMockPlugin {
         this.setupEnvVariables(false);
       });
     });
+
+    // 修改 HTML 注入逻辑
+    compiler.hooks.compilation.tap('WebpackProxyMockPlugin', (compilation: any) => {
+      const HtmlWebpackPlugin = require('html-webpack-plugin');
+      const hooks = HtmlWebpackPlugin.getHooks(compilation);
+
+      hooks.alterAssetTagGroups.tap('WebpackProxyMockPlugin', (data) => {
+        const initScript = {
+          tagName: 'script',
+          innerHTML: `
+            window.__PROXY_MOCK_CONFIG__ = {
+              apiRule: '${this.options.apiRule}',
+              configPath: '${this.options.configPath}',
+              lang: '${this.options.lang}'
+            };
+          `,
+          voidTag: false,
+        };
+
+        // 在头部插入初始化脚本
+        data.headTags.unshift(initScript);
+        return data;
+      });
+    });
   }
 }
 

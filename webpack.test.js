@@ -17,15 +17,20 @@ module.exports = {
         port: 3000,
     },
     plugins: [
-      
         new HtmlWebpackPlugin({
-            template: './test/index.html'
+            template: './test/index.html',
+            inject: 'head'  // 确保脚本注入到 head 中
         }),
         new DefinePlugin({
             'process.env': JSON.stringify({
                 NODE_ENV: 'development',
                 BASE_URL: 'http://localhost:3000'
-            })  // 添加初始化的process.env对象
+            }),
+            '__PROXY_MOCK_CONFIG__': JSON.stringify({
+                apiRule: '/api/*',
+                configPath: '/config',
+                lang: 'en'
+            })
         }),
         new WebpackProxyMockPlugin({
             lang: 'en',
