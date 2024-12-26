@@ -34,7 +34,7 @@ export default function entry(options: ProxyMockOptions) {
       const apiData = getApiData();
       const key = parseUrlToKey(req.url);
       const apiConfig = apiData.apiList.find(
-        (item: ApiConfig) => item.key === key || parseUrlToKey(item.url) === key
+        (item: ApiConfig) => item.key === key || parseUrlToKey(item.url) === key || matchRouter(item.url, req.url)
       );
 
       if (!apiRules.some(rule => matchRouter(rule, req.path)) && !apiConfig) {
