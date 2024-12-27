@@ -161,10 +161,36 @@ export class WebpackProxyMockPlugin {
 
     // 修改 HTML 注入逻辑
     compiler.hooks.compilation.tap('WebpackProxyMockPlugin', (compilation: any) => {
+      // 查找用户配置的 HtmlWebpackPlugin 实例
       const HtmlWebpackPlugin = require('html-webpack-plugin');
+      const htmlPluginInstances = compiler.options.plugins.filter(
+        (plugin: any) => plugin instanceof HtmlWebpackPlugin
+      );
+
+      if (htmlPluginInstances.length === 0) {
+        console.log('No HtmlWebpackPlugin found, skipping script injection');
+        return;
+      }
+
+      console.log(`Found ${htmlPluginInstances.length} HtmlWebpackPlugin instance(s)`);
+
+      // 获取 HtmlWebpackPlugin 钩子
       const hooks = HtmlWebpackPlugin.getHooks(compilation);
 
-      hooks.alterAssetTagGroups.tap('WebpackProxyMockPlugin', (data) => {
+      // 为每个 HTML 文件注入配置
+      hooks.alterAssetTagGroups.tap('WebpackProxyMockPlugin', (data: any) => {
+        // 检查当前处理的 HTML 文件是否来自用户配置的 HtmlWebpackPlugin
+        const isUserConfiguredHtml = htmlPluginInstances.some(
+          (instance: any) => instance.userOptions.filename === data.plugin.options.filename
+        );
+
+        if (!isUserConfiguredHtml) {
+          console.log(`Skipping injection for ${data.plugin.options.filename}`);
+          return data;
+        }
+
+        console.log(`Injecting config into ${data.plugin.options.filename}`);
+
         const initScript = {
           tagName: 'script',
           innerHTML: `
@@ -177,7 +203,6 @@ export class WebpackProxyMockPlugin {
           voidTag: false,
         };
 
-        // 在头部插入初始化脚本
         data.headTags.unshift(initScript);
         return data;
       });
