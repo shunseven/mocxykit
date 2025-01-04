@@ -4,6 +4,7 @@ interface ProxyMockOptions {
   https?: boolean; // 是否启用 https
   cacheRequestHistoryMaxLen?: number;  // 缓存请求历史的最大长度
   lang?: 'en' | 'zh'// 缓存请求历史的最大长度
+  debug?: boolean; // 是否启用调试模式
 }
 
 interface ProxyList {
