@@ -3,7 +3,8 @@ const defaultConfig: ProxyMockOptions = {
   https: true,
   cacheRequestHistoryMaxLen: 30,
   configPath: '/config',
-  lang: 'zh'
+  lang: 'zh',
+  buttonPosition: 'bottom',
 }
 
 export default defaultConfig;

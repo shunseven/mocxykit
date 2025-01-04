@@ -65,10 +65,11 @@ app.listen(3000, () => console.log("Example app listening on port 3000!"));
 |                      名称                       |               类型                |                    默认值                    | 描述                                                                                                          |
 | :---------------------------------------------: | :-------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
 |            **`apiRule`**            |              `string`              |              `/api/*`              | 全局代理的匹配规则,默认为所有 api 开头的请求                                          |
-|            **`https`**            |     `boolean`     |                  `true`               | 是否代理 https 请求。                                                                  |
+|            **`https`**            |     `boolean`     |                  `true`               | 是否代理 https 请求                                                                  |
 |              **`configPath`**              |         `string`         |                 `/config`                  | 打开配制页面的地址，默认为http://localhost:3000/config                     |
 |          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  缓存请求数据的最大条数                                                          |
-|          **`lang`**          |             `number`              |                  `zh`                  |  语言                                                          |
+|          **`lang`**          |             `string`              |                  `zh`                  |  语言                                                          |
+|          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  配置按钮位置（仅在Vite中生效）。可选值：'top'（顶部）、'middle'（中间）、'bottom'（底部）或坐标格式如'100,100'                                                          |
 
 
 ## 其他服务器
@@ -76,23 +77,20 @@ app.listen(3000, () => console.log("Example app listening on port 3000!"));
 这里将展示与其他服务器一起使用的示例。
 
 ### Webpack >= 5.0
-修改 config 文件，如 vue.config.js
-
+修改 webpack.config.js
 ```js
-// vue.config.js 或者其它 webpack config 文件
-const { proxyMockMiddleware } = require('express-proxy-mock')
-
 module.exports = {
   //...
   devServer: {
-    setupMiddlewares(middlewares, devServer) {
-      devServer.app.use(proxyMockMiddleware({
+    ...
+  },
+  plugins: [
+      // 在 wepback 中会在插件里获取 devServer 并注入代理，devServer 不需要再配制
+      new WebpackProxyMockPlugin({
         apiRule: '/api/*',
-        configPath: '/config'
-      }))
-      return middlewares
-   }
-  }
+        lang: 'zh'
+      })
+  ]
 };
 ```
 
@@ -116,78 +114,21 @@ module.exports = {
 ```
 
 ### vite
-
-在根目录中创建 server.js 文件，并把package.json 中的 scripts下 dev 改为值"node server.js" 
-
 ```js
-import express from 'express';
-import { createServer as createViteServer } from 'vite';
-const { proxyMockMiddleware } = require('express-proxy-mock')
+// vite.config.js
+import { defineConfig } from 'vite'
+import { ViteProxyMockPlugin } from 'express-proxy-mock'
 
-async function createServer() {
-  const app = express();
-  
-  // 创建 Vite 服务器
-  const vite = await createViteServer({
-    server: {
-      middlewareMode: 'ssr',
-      hmr: {
-        // 配置 HMR 选项，例如指定 WebSocket 服务器的端口
-        port: 8838
-      }
-    }
-  });
-
-  // 引入我们的的代理工具
-  app.use(proxyMockMiddleware())
-
-  // 使用 Vite 的 Connect 实例作为中间件
-  app.use(vite.middlewares);
-
- 
-
-  app.listen(8800, () => {
-    console.log('Server is running at http://localhost:8800');
-  });
-}
-
-createServer();
-```
-
-## 环境变量
-
-代理支持环境变量管理功能，您可以：
-- 创建多个环境配置
-- 将环境变量绑定到特定代理
-- 快速切换不同环境
-- 切换环境时自动清理浏览器缓存
-
-### 开启环境变量功能
-
-要启用环境变量功能，您需要：
-
-1. 使用带有 DefinePlugin 的 webpack
-2. 在 webpack 配置中添加 WebpackProxyMockPlugin
-
-#### webpack 配置示例
-
-### webpack.config.js
-```js
-module.exports = {
-  //...
-  devServer: {
-    ...
-  },
+export default defineConfig({
   plugins: [
-      // 在 wepback 中会在插件里获取 devServer 并注入代理，devServer 不需要再配制
-      new WebpackProxyMockPlugin({
-        apiRule: '/api/*',
-        lang: 'zh'
-      })
+    ViteProxyMockPlugin({
+      apiRule: '/api/*',
+      lang: 'zh',
+      buttonPosition: 'bottom', // 可选：'top'(顶部)、'middle'(中间)、'bottom'(底部) 或坐标格式如 '100,100'
+    })
   ]
-};
+})
 ```
-
 
 ### vue.config.js
 ```js
@@ -210,6 +151,21 @@ module.exports = {
 };
 ```
 
+
+## 环境变量
+
+代理支持环境变量管理功能，您可以：
+- 创建多个环境配置
+- 将环境变量绑定到特定代理
+- 快速切换不同环境
+- 切换环境时自动清理浏览器缓存
+
+### 开启环境变量功能
+
+要启用环境变量功能，您需要：
+
+1. 使用带有 DefinePlugin 的 webpack
+2. 在 webpack 配置中添加 WebpackProxyMockPlugin
 
 
 ### 如何使用环境变量

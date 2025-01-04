@@ -69,31 +69,28 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 |            **`https`**            |     `boolean`     |                  `true`               | Whether to proxy https requests.                                                                  |
 |              **`configPath`**              |         `string`         |                 `/config`                  | Address to open the configuration page, default is http://localhost:3000/config                     |
 |          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  Maximum number of cached request data                                                          |
-|          **`lang`**          |             `number`              |                  `zh`                  |  lang (en,zh)                                                      |
-
+|          **`lang`**          |             `string`              |                  `zh`                  |  lang (en,zh)                                                          |
+|          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  Position of the configuration button (Only works in Vite). You can use 'top', 'middle', 'bottom' or coordinate string like '100,100'                                                          |
 
 ## Other Servers
 
 Here are examples of usage with other servers.
 
 ### Webpack >= 5.0
-Modify the config file, such as vue.config.js
-
+Modify webpack.config.js
 ```js
-// vue.config.js or other webpack config files
-const { proxyMockMiddleware } = require('express-proxy-mock')
-
 module.exports = {
   //...
   devServer: {
-     setupMiddlewares(middlewares, devServer) {
-        devServer.app.use(proxyMockMiddleware({
-          apiRule: '/api/*',
-          lang: 'en'
-        }))
-        return middlewares
-    }
-  }
+    ...
+  },
+  plugins: [
+     // In webpack, the plugin will get the devServer and inject the proxy, so no need to configure devServer separately
+      new WebpackProxyMockPlugin({
+        apiRule: '/api/*',
+        lang: 'zh'
+      })
+  ]
 };
 ```
 
@@ -118,75 +115,20 @@ module.exports = {
 
 ### vite
 
-Create a server.js file in the root directory, and change the value of dev under scripts in package.json to "node server.js"
-
 ```js
-import express from 'express';
-import { createServer as createViteServer } from 'vite';
-const { proxyMockMiddleware } = require('express-proxy-mock')
+// vite.config.js
+import { defineConfig } from 'vite'
+import { ViteProxyMockPlugin } from 'express-proxy-mock'
 
-async function createServer() {
-  const app = express();
-  
-  // Create Vite server
-  const vite = await createViteServer({
-    server: {
-      middlewareMode: 'ssr',
-      hmr: {
-        // Configure HMR options, such as specifying the WebSocket server port
-        port: 8838
-      }
-    }
-  });
-
-  // Introduce our proxy tool
-  app.use(proxyMockMiddleware({
-    apiRule: '/api/*',
-    lang: 'en'
-  }))
-
-  // Use Vite's Connect instance as middleware
-  app.use(vite.middlewares);
-
-  app.listen(8800, () => {
-    console.log('Server is running at http://localhost:8800');
-  });
-}
-
-createServer();
-```
-
-## Environment Variables
-
-The proxy supports environment variables management, which allows you to:
-- Create multiple environment configurations
-- Bind environment variables to specific proxies
-- Quick switch between different environments
-- Auto clear browser cache when switching environments
-
-### Enabling Environment Variables
-
-To enable the environment variables feature, you need to:
-
-1. Use webpack with DefinePlugin
-2. Add the WebpackProxyMockPlugin to your webpack configuration
-
-#### Webpack Configuration Example
-### webpack.config.js
-```js
-module.exports = {
-  //...
-  devServer: {
-    ...
-  },
+export default defineConfig({
   plugins: [
-     // In webpack, the plugin will get the devServer and inject the proxy, so no need to configure devServer separately
-      new WebpackProxyMockPlugin({
-        apiRule: '/api/*',
-        lang: 'zh'
-      })
+    ViteProxyMockPlugin({
+      apiRule: '/api/*',
+      lang: 'en',
+      buttonPosition: 'bottom', // Optional: 'top', 'middle', 'bottom' or coordinate like '100,100'
+    })
   ]
-};
+})
 ```
 
 
@@ -210,6 +152,21 @@ module.exports = {
   ]
 };
 ```
+
+## Environment Variables
+
+The proxy supports environment variables management, which allows you to:
+- Create multiple environment configurations
+- Bind environment variables to specific proxies
+- Quick switch between different environments
+- Auto clear browser cache when switching environments
+
+### Enabling Environment Variables
+
+To enable the environment variables feature, you need to:
+
+1. Use webpack with DefinePlugin
+2. Add the WebpackProxyMockPlugin to your webpack configuration
 
 ### How to use environment variables
 
