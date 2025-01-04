@@ -76,16 +76,24 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
       });
 
       // 监听环境变量更新事件
-      envUpdateEmitter.on('updateEnvVariables', () => {
+      envUpdateEmitter.on('updateEnvVariables', async () => {
         console.log('更新环境变量');
         const newEnv = setupEnvVariables();
         if (newEnv) {
-          // 更新 Vite 的环境变量
+          // 更新 process.env
           Object.entries(newEnv).forEach(([key, value]) => {
             process.env[key] = value as string;
           });
-          // 触发 Vite 重新构建
-          server.ws.send({ type: 'full-reload' });
+
+          // 重新构建并重启开发服务器
+          try {
+            // 重新构建
+            await server.restart();
+            
+            console.log('服务器已重新启动，环境变量已更新');
+          } catch (error) {
+            console.error('重启服务器时出错:', error);
+          }
         }
       });
     },
