@@ -111,11 +111,7 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
 
         return {
           define: {
-            ...defineEntries,
-            // 确保基础环境变量存在
-            'import.meta.env.MODE': JSON.stringify(process.env.NODE_ENV || 'development'),
-            'import.meta.env.DEV': 'true',
-            'import.meta.env.PROD': 'false',
+            ...defineEntries
           }
         };
       }
