@@ -5,7 +5,7 @@ export default defineConfig({
   root: './test', // 指定测试目录
   plugins: [
     ViteProxyMockPlugin({
-      lang: 'en',
+      lang: 'zh',
       debug: true, // 开启调试模式
     })
   ],

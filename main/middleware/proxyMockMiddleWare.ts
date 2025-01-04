@@ -11,15 +11,11 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
 
   return function (req: Request, res: Response, next: NextFunction) {
     let isClient = false;
-    console.log('proxyMockMiddleware', req.url);
     if (process.env.PROCY_MOCK_NODE_ENV !== 'development') {
       isClient = clientMiddleware(req, res)
     }
     const isProxyMock = entryMiddleware(req, res, next);
     const isViews = viewRequest(req, res);
-    console.log('isClient', isClient);
-    console.log('isProxyMock', isProxyMock);
-    console.log('isViews', isViews);
     if (!isClient && !isViews && !isProxyMock) {
       next();
     }
