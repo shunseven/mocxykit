@@ -74,6 +74,7 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
       if (!isDevelopment || !options.buttonPosition) return html;
 
       const buttonStyles = getButtonStyles(options.buttonPosition);
+      const buttonText = options.lang === 'en' ? 'Proxy & Mock Config' : 'proxy&mock配置';
       const injectCode = `
         <style>
           #proxy-mock-btn {
@@ -111,7 +112,7 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
             z-index: 9999;
           }
         </style>
-        <button id="proxy-mock-btn">proxy&mock配置</button>
+        <button id="proxy-mock-btn">${buttonText}</button>
         <div id="proxy-mock-mask"></div>
         <iframe id="proxy-mock-iframe"></iframe>
         <script>
