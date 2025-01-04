@@ -77,6 +77,7 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
 
       // 监听环境变量更新事件
       envUpdateEmitter.on('updateEnvVariables', () => {
+        console.log('更新环境变量');
         const newEnv = setupEnvVariables();
         if (newEnv) {
           // 更新 Vite 的环境变量
@@ -92,11 +93,22 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
     config(config: any) {
       const envVars = setupEnvVariables();
       if (envVars) {
+        // 为每个环境变量创建单独的 define 条目
+        const defineEntries = Object.entries(envVars).reduce((acc, [key, value]) => ({
+          ...acc,
+          [`import.meta.env.${key}`]: JSON.stringify(value),
+          // 同时保持 process.env 的兼容性
+          [`process.env.${key}`]: JSON.stringify(value)
+        }), {});
+
         return {
-          define: Object.entries(envVars).reduce((acc, [key, value]) => ({
-            ...acc,
-            [`process.env.${key}`]: JSON.stringify(value)
-          }), {})
+          define: {
+            ...defineEntries,
+            // 确保基础环境变量存在
+            'import.meta.env.MODE': JSON.stringify(process.env.NODE_ENV || 'development'),
+            'import.meta.env.DEV': 'true',
+            'import.meta.env.PROD': 'false',
+          }
         };
       }
       return config;

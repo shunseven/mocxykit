@@ -11,14 +11,16 @@ export default defineConfig({
   ],
   server: {
     port: 3200,
-    open: '/index.html', // 自动打开测试页面
+    open: '/vite.html', // 修改为直接指向 vite.html
   },
   define: {
-    'process.env': {
+    // 确保环境变量能被客户端代码访问
+    __ENV__: JSON.stringify({
       NODE_ENV: 'development-vite',
       BASE_URL: 'http://localhost:3200',
-      TEST_MODE: true // 添加测试标识
-    }
+      TEST_MODE: true,
+      VITE_APP_BASE_API: '/api'
+    })
   },
   build: {
     outDir: '../test-dist', // 测试构建输出目录
