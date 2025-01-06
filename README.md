@@ -1,30 +1,32 @@
-# express-proxy-mock
+# mocxykit (旧名为 express-proxy-mock)
 
-- [中文](./README_ZH.md)
-- [English](./README.md)
+![描述](./public/proxymock.png)
+- [中文](./README.md)
+- [English](./README_EN.md)
 
-![Description](./public/proxymock_en.png)
+前端开发服务的中间件，主要用于代理请求和 MOCK 数据，可用于所有 webpack,vite和其它所有前端开发服务启动服务的开发项目,
+此中间件应仅用于**开发**。
 
-Middleware for express, mainly used for proxy requests and MOCK data. It can be used for all development projects that start services with webpack, vite, and other express-based servers. This middleware should only be used for **development**.
+使用此中间件的一些好处包括：
 
-Some benefits of using this middleware include:
+- 代理请求和 MOCK数据
+- 可视化的管理 MOCK 数据及代理功能
+- 代理支持全局代理和某一个 URL 的自定义代理
+- 可随时切换某一个URL进行代理转发或 MOCK 数据
+- 可通过不同的入参，返回不同的MOCK 数据
+- 可以快速把最近的请求返回的数据，存为 MOCK 数据
 
-- Proxy requests and MOCK data
-- Visual management of MOCK data and proxy functions
-- Proxy support for global proxy and custom proxy for a specific URL
-- Switch between proxy forwarding or MOCK data for a specific URL at any time
-- Return different MOCK data based on different parameters
-- Quickly save the data returned by the most recent request as MOCK data
+## 入门
 
-## Getting Started
-
-First, install the module:
+首先，安装模块：
 
 ```console
-npm install express-proxy-mock --save-dev
+npm install mocxykit --save-dev
 ```
 
-## Usage
+### 示例
+
+## 用法
 
 ### webpack.config.js
 ```js
@@ -44,7 +46,7 @@ module.exports = {
 
 ### express
 ```js
-const { proxyMockMiddleware } = require("express-proxy-mock");
+const { proxyMockMiddleware } = require("mocxykit");
 const express = require("express");
 const app = express();
 
@@ -56,28 +58,28 @@ app.use(
 
 app.listen(3000, () => console.log("Example app listening on port 3000!"));
 ```
-Open the browser at http://localhost:3000/config to see the configuration interface for proxy and MOCK data.
+浏览器打开 http://localhost:3000/config 就可以看到代理与 MOCK 数据的配制界面
 
-Refer to [below](#other-servers) for usage examples with vite, webpack, and vueConfig.
+请参阅[下文](#其他服务器)以获取 vite, 与 webpack, 及 vueConfig 使用示例。
 
+## 选项
 
-## Options
-
-|                      Name                       |               Type                |                    Default                    | Description                                                                                                          |
+|                      名称                       |               类型                |                    默认值                    | 描述                                                                                                          |
 | :---------------------------------------------: | :-------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
-|            **`apiRule`**            |              `string`              |              `/api/*`              | Global proxy matching rule, default is all requests starting with api                                          |
-|            **`https`**            |     `boolean`     |                  `true`               | Whether to proxy https requests.                                                                  |
-|              **`configPath`**              |         `string`         |                 `/config`                  | Address to open the configuration page, default is http://localhost:3000/config                     |
-|          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  Maximum number of cached request data                                                          |
-|          **`lang`**          |             `string`              |                  `zh`                  |  lang (en,zh)                                                          |
-|          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  Position of the configuration button (Only works in Vite). You can use 'top', 'middle', 'bottom' or coordinate string like '100,100'                                                          |
+|            **`apiRule`**            |              `string`              |              `/api/*`              | 全局代理的匹配规则,默认为所有 api 开头的请求                                          |
+|            **`https`**            |     `boolean`     |                  `true`               | 是否代理 https 请求                                                                  |
+|              **`configPath`**              |         `string`         |                 `/config`                  | 打开配制页面的地址，默认为http://localhost:3000/config                     |
+|          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  缓存请求数据的最大条数                                                          |
+|          **`lang`**          |             `string`              |                  `zh`                  |  语言                                                          |
+|          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  配置按钮位置（仅在Vite中生效）。可选值：'top'（顶部）、'middle'（中间）、'bottom'（底部）或坐标格式如'100,100'                                                          |
 
-## Other Servers
 
-Here are examples of usage with other servers.
+## 其他服务器
+
+这里将展示与其他服务器一起使用的示例。
 
 ### Webpack >= 5.0
-Modify webpack.config.js
+修改 webpack.config.js
 ```js
 module.exports = {
   //...
@@ -85,7 +87,7 @@ module.exports = {
     ...
   },
   plugins: [
-     // In webpack, the plugin will get the devServer and inject the proxy, so no need to configure devServer separately
+      // 在 wepback 中会在插件里获取 devServer 并注入代理，devServer 不需要再配制
       new WebpackProxyMockPlugin({
         apiRule: '/api/*',
         lang: 'zh'
@@ -97,8 +99,8 @@ module.exports = {
 ### Webpack <= 4+
 
 ```js
-// vue.config.js or other webpack config files 
-const { proxyMockMiddleware } = require('express-proxy-mock')
+// vue.config.js 或者其它 webpack config 文件 
+const { proxyMockMiddleware } = require('mocxykit')
 
 module.exports = {
   //...
@@ -110,27 +112,25 @@ module.exports = {
       }))
     }
    }
-  };
+};
 ```
 
 ### vite
-
 ```js
 // vite.config.js
 import { defineConfig } from 'vite'
-import { ViteProxyMockPlugin } from 'express-proxy-mock'
+import { ViteProxyMockPlugin } from 'mocxykit'
 
 export default defineConfig({
   plugins: [
     ViteProxyMockPlugin({
       apiRule: '/api/*',
-      lang: 'en',
-      buttonPosition: 'bottom', // Optional: 'top', 'middle', 'bottom' or coordinate like '100,100'
+      lang: 'zh',
+      buttonPosition: 'bottom', // 可选：'top'(顶部)、'middle'(中间)、'bottom'(底部) 或坐标格式如 '100,100'
     })
   ]
 })
 ```
-
 
 ### vue.config.js
 ```js
@@ -142,7 +142,7 @@ module.exports = {
   //...
   devServer: {
     setupMiddlewares: (middlewares, devServer) => {
-      // In vue config, because vue-cli injects devServer after webpack compilation is complete, the plugin cannot get the devServer configuration, so you need to manually inject the proxy middleware
+      // 在vue中，因 vue-cli在webpack 编译完成后,才注入 devServer,插件中获取不到 devServer配制，需要手动注入代理中间件
       proxyMockPlugin.setupDevServer(devServer.app);
       return middlewares;
     }
@@ -153,69 +153,70 @@ module.exports = {
 };
 ```
 
-## Environment Variables
 
-The proxy supports environment variables management, which allows you to:
-- Create multiple environment configurations
-- Bind environment variables to specific proxies
-- Quick switch between different environments
-- Auto clear browser cache when switching environments
+## 环境变量
 
-### Enabling Environment Variables
+代理支持环境变量管理功能，您可以：
+- 创建多个环境配置
+- 将环境变量绑定到特定代理
+- 快速切换不同环境
+- 切换环境时自动清理浏览器缓存
 
-To enable the environment variables feature, you need to:
+### 开启环境变量功能
 
-1. Use webpack with DefinePlugin
-2. Add the WebpackProxyMockPlugin to your webpack configuration
+要启用环境变量功能，您需要：
 
-### How to use environment variables
+1. 使用带有 DefinePlugin 的 webpack
+2. 在 webpack 配置中添加 WebpackProxyMockPlugin
 
-1. Click the "+" button next to the environment selector to create a new environment
-2. Add key-value pairs in the environment configuration
-3. You can bind an environment to a proxy in the proxy settings
-4. When switching environments, the system will prompt whether to clear the browser cache
 
-### Features
+### 如何使用环境变量
 
-- **Binding**: A proxy can be bound to a specific environment
-- **Quick Switch**: Easy switching between different environments
-- **Cache Management**: Option to clear browser cache when switching environments
-- **Visual Management**: Visual interface for managing environment variables
+1. 点击环境选择器旁边的"+"按钮创建新环境
+2. 在环境配制中添加键值对
+3. 可以在代理设置中将环境绑定到代理
+4. 切换环境时，系统会提示是否清理浏览器缓存
 
-## Public Access with Ngrok
+### 功能特点
 
-This middleware supports public access to your local development server using Ngrok. This feature allows you to:
+- **绑定功能**：代理可以绑定到特定环境
+- **快速切换**：轻松切换不同环境
+- **缓存管理**：切换环境时可选择清理浏览器缓存
+- **可视化管理**：环境变量的可视化管理界面
 
-- Share your local development environment with external users
-- Test your application on different devices
-- Demo your development work to clients
+## Ngrok 公网访问
 
-### Setting up Public Access
+本中间件支持使用 Ngrok 进行公网访问，让您的本地开发环境可以：
 
-1. Open the configuration page at `http://localhost:3000/config`
-2. Click the settings icon in the top right corner
-3. Register for a free Ngrok account at https://dashboard.ngrok.com/signup
-4. Copy your Ngrok authtoken from the dashboard
-5. Paste the authtoken in the settings modal
-6. Click "Enable Public Access"
+- 与外部用户共享本地开发环境
+- 在不同设备上测试应用
+- 向客户演示开发进度
 
-### Features
+### 设置外网访问
 
-- Automatic tunnel creation
-- Secure HTTPS endpoints
-- Persistent authtoken storage
-- Easy URL sharing with copy functionality
-- Quick tunnel recreation with reset button
+1. 打开配置页面 `http://localhost:3000/config`
+2. 点击右上角的设置图标
+3. 在 https://dashboard.ngrok.com/signup 注册免费的 Ngrok 账号
+4. 从 Ngrok 控制台复制您的 authtoken
+5. 将 authtoken 粘贴到设置弹窗中
+6. 点击"开启外网访问"
+ z
+### 功能特点
 
-### Notes
+- 自动创建隧道连接
+- 安全的 HTTPS 端点
+- 持久化存储 authtoken
+- 便捷的 URL 复制功能
+- 一键重置隧道连接
 
-- The Ngrok free tier has some limitations
-- Public URLs change each time you create a new tunnel
-- For consistent URLs, consider upgrading to a paid Ngrok plan
+### 注意事项
 
-## Contact Me
+- Ngrok 免费版有一些使用限制
+- 每次创建新隧道时，公网 URL 会改变
 
-QQ Group: 930832439
+## 联系我
+
+QQ群：930832439
 
 ## License
 
