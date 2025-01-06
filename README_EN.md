@@ -148,6 +148,7 @@ To enable the environment variables feature, you need to:
 
 1. Use webpack with DefinePlugin
 2. Add the WebpackProxyMockPlugin to your webpack configuration
+3. Or use the vite plugin and add viteProxyMockPlugin directly to vite.config.js
 
 ### How to use environment variables
 

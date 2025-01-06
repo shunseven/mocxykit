@@ -148,6 +148,7 @@ app.listen(3000, () => console.log("Example app listening on port 3000!"));
 
 1. 使用带有 DefinePlugin 的 webpack
 2. 在 webpack 配置中添加 WebpackProxyMockPlugin
+3. 或者用的是 vite 插件，直接在 vite.config.js 中添加 viteProxyMockPlugin
 
 
 ### 如何使用环境变量
