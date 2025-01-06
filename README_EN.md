@@ -134,6 +134,40 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 |          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  Position of the configuration button (Only works in Vite). You can use 'top', 'middle', 'bottom' or coordinate string like '100,100'                                                          |
 
 
+## Key Features
+
+### Proxy Requests and MOCK Data
+- Support configuring multiple proxy servers to handle multiple backend services
+- Support both HTTP and HTTPS protocol forwarding
+- Provide simple interface for proxy configuration and management
+
+### Visual Management Interface
+- Intuitive web interface for managing all proxy and MOCK configurations
+- Real-time preview and edit MOCK data
+- Support JSON format data editing and validation
+- Provide request history viewing functionality
+
+### Flexible Proxy Configuration
+- Support global proxy: unified configuration for all API request forwarding rules
+- Support custom proxy for individual URLs: configure different proxy rules for specific interfaces
+- Switch between global and custom proxies at any time
+- Support regular expression matching for URL paths
+
+### Dynamic Proxy and MOCK Switching
+- Each API interface can independently control the use of proxy or MOCK data
+- Real-time switching without service restart
+- Automatically save current configuration when switching
+
+### Intelligent MOCK Data
+- Support both static and dynamic MOCK data
+- Return different MOCK data based on request parameters
+
+### Quick Data Collection
+- Automatically record proxy request response data
+- One-click save real interface response as MOCK data
+- Support editing and modifying saved MOCK data
+- Provide data import and export functionality
+
 ## Environment Variables
 
 The proxy supports environment variables management, which allows you to:
