@@ -118,11 +118,11 @@ module.exports = {
 ```js
 // vite.config.js
 import { defineConfig } from 'vite'
-import { ViteProxyMockPlugin } from 'mocxykit'
+import { viteProxyMockPlugin } from 'mocxykit'
 
 export default defineConfig({
   plugins: [
-    ViteProxyMockPlugin({
+    viteProxyMockPlugin({
       apiRule: '/api/*',
       lang: 'en',
       buttonPosition: 'bottom', // Optional: 'top', 'middle', 'bottom' or coordinate like '100,100'

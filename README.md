@@ -119,11 +119,11 @@ module.exports = {
 ```js
 // vite.config.js
 import { defineConfig } from 'vite'
-import { ViteProxyMockPlugin } from 'mocxykit'
+import { viteProxyMockPlugin } from 'mocxykit'
 
 export default defineConfig({
   plugins: [
-    ViteProxyMockPlugin({
+    viteProxyMockPlugin({
       apiRule: '/api/*',
       lang: 'zh',
       buttonPosition: 'bottom', // 可选：'top'(顶部)、'middle'(中间)、'bottom'(底部) 或坐标格式如 '100,100'
