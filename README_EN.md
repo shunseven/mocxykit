@@ -26,56 +26,6 @@ npm install mocxykit --save-dev
 
 ## Usage
 
-### webpack.config.js
-```js
-module.exports = {
-  //...
-  devServer: {
-    setupMiddlewares(middlewares, devServer) {
-      devServer.app.use(proxyMockMiddleware({
-        apiRule: '/api/*',
-        lang: 'en'
-      }))
-      return middlewares
-   }
-  },
-};
-```
-
-### express
-```js
-const { proxyMockMiddleware } = require("mocxykit");
-const express = require("express");
-const app = express();
-
-app.use(
-  proxyMockMiddleware({
-    // express-proxy-mock options
-  }),
-);
-
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
-```
-Open the browser at http://localhost:3000/config to see the configuration interface for proxy and MOCK data.
-
-Refer to [below](#other-servers) for usage examples with vite, webpack, and vueConfig.
-
-
-## Options
-
-|                      Name                       |               Type                |                    Default                    | Description                                                                                                          |
-| :---------------------------------------------: | :-------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
-|            **`apiRule`**            |              `string`              |              `/api/*`              | Global proxy matching rule, default is all requests starting with api                                          |
-|            **`https`**            |     `boolean`     |                  `true`               | Whether to proxy https requests.                                                                  |
-|              **`configPath`**              |         `string`         |                 `/config`                  | Address to open the configuration page, default is http://localhost:3000/config                     |
-|          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  Maximum number of cached request data                                                          |
-|          **`lang`**          |             `string`              |                  `zh`                  |  lang (en,zh)                                                          |
-|          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  Position of the configuration button (Only works in Vite). You can use 'top', 'middle', 'bottom' or coordinate string like '100,100'                                                          |
-
-## Other Servers
-
-Here are examples of usage with other servers.
-
 ### Webpack >= 5.0
 Modify webpack.config.js
 ```js
@@ -152,6 +102,37 @@ module.exports = {
   ]
 };
 ```
+
+### express
+```js
+const { proxyMockMiddleware } = require("mocxykit");
+const express = require("express");
+const app = express();
+
+app.use(
+  proxyMockMiddleware({
+    // express-proxy-mock options
+  }),
+);
+
+app.listen(3000, () => console.log("Example app listening on port 3000!"));
+```
+Open the browser at http://localhost:3000/config to see the configuration interface for proxy and MOCK data.
+
+Refer to [below](#other-servers) for usage examples with vite, webpack, and vueConfig.
+
+
+## Options
+
+|                      Name                       |               Type                |                    Default                    | Description                                                                                                          |
+| :---------------------------------------------: | :-------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
+|            **`apiRule`**            |              `string`              |              `/api/*`              | Global proxy matching rule, default is all requests starting with api                                          |
+|            **`https`**            |     `boolean`     |                  `true`               | Whether to proxy https requests.                                                                  |
+|              **`configPath`**              |         `string`         |                 `/config`                  | Address to open the configuration page, default is http://localhost:3000/config                     |
+|          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  Maximum number of cached request data                                                          |
+|          **`lang`**          |             `string`              |                  `zh`                  |  lang (en,zh)                                                          |
+|          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  Position of the configuration button (Only works in Vite). You can use 'top', 'middle', 'bottom' or coordinate string like '100,100'                                                          |
+
 
 ## Environment Variables
 

@@ -28,56 +28,6 @@ npm install mocxykit --save-dev
 
 ## 用法
 
-### webpack.config.js
-```js
-module.exports = {
-  //...
-  devServer: {
-    setupMiddlewares(middlewares, devServer) {
-      devServer.app.use(proxyMockMiddleware({
-        apiRule: '/api/*',
-        lang: 'en'
-      }))
-      return middlewares
-   }
-  },
-};
-```
-
-### express
-```js
-const { proxyMockMiddleware } = require("mocxykit");
-const express = require("express");
-const app = express();
-
-app.use(
-  proxyMockMiddleware({
-    // express-proxy-mock options
-  }),
-);
-
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
-```
-浏览器打开 http://localhost:3000/config 就可以看到代理与 MOCK 数据的配制界面
-
-请参阅[下文](#其他服务器)以获取 vite, 与 webpack, 及 vueConfig 使用示例。
-
-## 选项
-
-|                      名称                       |               类型                |                    默认值                    | 描述                                                                                                          |
-| :---------------------------------------------: | :-------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
-|            **`apiRule`**            |              `string`              |              `/api/*`              | 全局代理的匹配规则,默认为所有 api 开头的请求                                          |
-|            **`https`**            |     `boolean`     |                  `true`               | 是否代理 https 请求                                                                  |
-|              **`configPath`**              |         `string`         |                 `/config`                  | 打开配制页面的地址，默认为http://localhost:3000/config                     |
-|          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  缓存请求数据的最大条数                                                          |
-|          **`lang`**          |             `string`              |                  `zh`                  |  语言                                                          |
-|          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  配置按钮位置（仅在Vite中生效）。可选值：'top'（顶部）、'middle'（中间）、'bottom'（底部）或坐标格式如'100,100'                                                          |
-
-
-## 其他服务器
-
-这里将展示与其他服务器一起使用的示例。
-
 ### Webpack >= 5.0
 修改 webpack.config.js
 ```js
@@ -152,6 +102,36 @@ module.exports = {
   ]
 };
 ```
+
+### express
+```js
+const { proxyMockMiddleware } = require("mocxykit");
+const express = require("express");
+const app = express();
+
+app.use(
+  proxyMockMiddleware({
+    // express-proxy-mock options
+  }),
+);
+
+app.listen(3000, () => console.log("Example app listening on port 3000!"));
+```
+浏览器打开 http://localhost:3000/config 就可以看到代理与 MOCK 数据的配制界面
+
+请参阅[下文](#其他服务器)以获取 vite, 与 webpack, 及 vueConfig 使用示例。
+
+## 选项
+
+|                      名称                       |               类型                |                    默认值                    | 描述                                                                                                          |
+| :---------------------------------------------: | :-------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
+|            **`apiRule`**            |              `string`              |              `/api/*`              | 全局代理的匹配规则,默认为所有 api 开头的请求                                          |
+|            **`https`**            |     `boolean`     |                  `true`               | 是否代理 https 请求                                                                  |
+|              **`configPath`**              |         `string`         |                 `/config`                  | 打开配制页面的地址，默认为http://localhost:3000/config                     |
+|          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  缓存请求数据的最大条数                                                          |
+|          **`lang`**          |             `string`              |                  `zh`                  |  语言                                                          |
+|          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  配置按钮位置（仅在Vite中生效）。可选值：'top'（顶部）、'middle'（中间）、'bottom'（底部）或坐标格式如'100,100'                                                          |
+
 
 
 ## 环境变量
