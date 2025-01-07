@@ -4,13 +4,24 @@ import defaultConfig from './defaultConfig';
 import { envUpdateEmitter } from '../index';
 import createExpressCompatibilityLayer from '../mockProxy/common/createExpressCompatibilityLayer';
 
-// 创建事件发射器实例
+declare global {
+  var originEnv: typeof process.env;
+}
 
 function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
   // 添加环境检查
   const isDevelopment = process.env.NODE_ENV === 'development';
   options = Object.assign({}, defaultConfig, options);
-  let originEnv: Record<string, string> | null = null;
+
+  if (!global.originEnv) {
+    global.originEnv =  Object.entries(process.env).reduce((acc, [key, value]) => ({
+      ...acc,
+      [key]: value || ''
+    }), {} as Record<string, string>);
+  }
+  const originEnv = global.originEnv;
+
+  console.log('originEnv', originEnv)
 
   // 清理环境变量值的辅助方法
   function cleanEnvValue(envObj: Record<string, any>): Record<string, any> {
@@ -32,9 +43,6 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
     }
 
     const envId = apiData.currentEnvId;
-    if (!envId && !originEnv) {
-      return null;
-    }
 
     if (!envId) {
       return originEnv;
@@ -42,15 +50,9 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
 
     const envData = getEnvData();
     const currentEnv = envData.find(env => env.id === envId);
-
+    console.log(1111, currentEnv)
+    console.log(2222, originEnv)
     if (currentEnv?.variables) {
-      if (!originEnv) {
-        originEnv = Object.entries(process.env).reduce((acc, [key, value]) => ({
-          ...acc,
-          [key]: value || ''
-        }), {} as Record<string, string>);
-      }
-
       const newEnvVars = currentEnv.variables.reduce((acc, { key, value }) => ({
         ...acc,
         [key]: value
@@ -58,8 +60,7 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
 
       return {
         ...originEnv,
-        ...newEnvVars,
-        VITE_APP_BASE_API: '/api'
+        ...newEnvVars
       };
     }
 
