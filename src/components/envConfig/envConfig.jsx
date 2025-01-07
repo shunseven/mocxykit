@@ -16,6 +16,7 @@ const EnvConfig = ({ value, onChange, disabled }) => {
     try {
       await changeEnvVariable(envId);
       onChange?.(); // 调用父组件的回调函数
+      clearLocalCache();
     } catch (err) {
       console.error('切换环境变量失败:', err);
     }
@@ -33,20 +34,6 @@ const EnvConfig = ({ value, onChange, disabled }) => {
       message.error(t('刷新失败'));
     }
   };
-
-  useEffect(() => {
-    if (preEnvId !== null) {
-      Modal.confirm({
-        title: t('提示'),
-        content: t('是否清除本页所有缓存数据'),
-        onOk: () => {
-          console.log('请除本地所有缓存数据');
-          clearLocalCache();
-        }
-      });
-    }
-    preEnvId = value; // 记录上一个环境变量ID
-  }, [value]);
 
   return (
     <div style={{ display: 'inline-block', marginLeft: 20 }}>
