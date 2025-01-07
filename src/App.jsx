@@ -83,6 +83,11 @@ function App() {
             value={currentEnvId || selectEnvId } // 优先显示当前实际使用的环境变量ID
             onChange={fetchProxyData} 
             disabled={isEnvSelectDisabled}
+            proxyList={proxyList}
+            onProxyChange={async (data) => {
+              await fetchChangeProxy(data);
+              fetchProxyData();
+            }}
           />}
           <Button 
             type="text" 

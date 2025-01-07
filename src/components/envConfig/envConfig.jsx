@@ -8,13 +8,23 @@ import { t, clearLocalCache } from '../../common/fun';
 
 
 let preEnvId = null; // 上一个环境变量ID
-const EnvConfig = ({ value, onChange, disabled }) => {
+const EnvConfig = ({ value, onChange, disabled, proxyList, onProxyChange }) => {
   const [envModalVisible, setEnvModalVisible] = useState(false);
   const selectRef = useRef();
 
   const handleEnvChange = async (envId) => {
     try {
       await changeEnvVariable(envId);
+      
+      // 检查是否有代理绑定了这个环境变量
+      if (envId) {
+        const boundProxies = proxyList.filter(proxy => proxy.bindEnvId === envId);
+        // 如果只有一个代理绑定了这个环境变量，则自动切换到该代理
+        if (boundProxies.length === 1) {
+          await onProxyChange?.({ proxy: boundProxies[0].proxy });
+        }
+      }
+      
       onChange?.(); // 调用父组件的回调函数
       clearLocalCache();
     } catch (err) {

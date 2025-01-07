@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
-import { ViteProxyMockPlugin } from './main/index'
+import { viteProxyMockPlugin } from './main/index'
 
 export default defineConfig({
   root: './test', // 指定测试目录
   plugins: [
-    ViteProxyMockPlugin({
+    viteProxyMockPlugin({
       lang: 'zh',
       buttonPosition: 'bottom', // 开启调试模式
     })
