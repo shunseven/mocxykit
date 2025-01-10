@@ -1,4 +1,5 @@
 import { Modal, Form, Input, Checkbox, Tooltip } from "antd";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import GProxy from "../proxy/proxy";
 import './editModal.css'
 import MockEditor from "../mockEditor/mockEditor";
@@ -50,7 +51,7 @@ export default function ApiEdit(props) {
             url: data.apiData.url,
             duration: data.apiData.duration,
             hasFaker: data.apiData.hasFaker || false,
-            fakerKey: data.apiData.fakerKey || ''
+            fakerKey: data.apiData.fakerKey || 'data'
           })
           setCustomProxy(data.apiData.customProxy)
           setSelectCustomProxy(data.apiData.selectCustomProxy || '')
@@ -68,6 +69,7 @@ export default function ApiEdit(props) {
     }
   }, [visible])
 
+  const fakerKeyExample = t('随机数据配置示例');
 
   return <Modal
     className="edit-modal"
@@ -110,17 +112,31 @@ export default function ApiEdit(props) {
       <Form.Item className="ant-form-mock-item" style={{ flex: '1' }} name="duration" layout="inline" label={t('延时')}>
         <Input type="number" />
       </Form.Item>
-      <Form.Item className="ant-form-mock-item" style={{ wdith: '200' }} name="hasFaker" layout="inline" valuePropName="checked">
-        <Checkbox>{t('返回随机数据')}</Checkbox>
+      <Form.Item className="ant-form-mock-item"
+        style={{ wdith: '200' }} name="hasFaker" layout="inline" valuePropName="checked">
+        <Checkbox>
+          <Tooltip 
+            placement="left"
+            title={<span dangerouslySetInnerHTML={{ __html: fakerKeyExample }}>
+
+          </span>}>
+            {t('返回随机数据')} <InfoCircleOutlined />
+          </Tooltip>
+        </Checkbox>
       </Form.Item>
       <Form.Item
         noStyle
         shouldUpdate={(prevValues, currentValues) => prevValues.hasFaker !== currentValues.hasFaker}
+       
       >
         {({ getFieldValue }) => 
           getFieldValue('hasFaker') && (
-            <Form.Item className="ant-form-mock-item" style={{ flex: '1' }} name="fakerKey">
-               <Input placeholder={t('请输入字段路径')} />
+            <Form.Item 
+              className="ant-form-mock-item" 
+              style={{ flex: '1' }} 
+              name="fakerKey"
+            >
+              <Input placeholder={t('请输入字段路径')} />
             </Form.Item>
           )
         }

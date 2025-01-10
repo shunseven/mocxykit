@@ -145,13 +145,33 @@ const dict = {
   
   "返回随机数据": "Return Random Data",
   "随机数据配置说明": "Use comma to separate multiple fields. Example: data.list, page.total",
-  "请输入字段路径": "Enter field path, e.g., data.list"
+  "请输入字段路径": "Enter field path, e.g., data.list",
+  
+  // faker相关配置说明
+  "随机数据配置示例": {
+    "zh": `
+根据你配制 Mock数据的转换成随机数据。<br/>    
+配置示例：<br/>
+1. data - 随机化整个data对象数据<br/>
+2. data.list - 只随机化list字段数据<br/>
+3. data.list<100> - 生成100条随机数据<br/>
+4. data,page.total - 多个字段随机化<br/>`,
+    "en": `
+Examples:
+1. data - Randomize entire data object<br/>
+2. data.list - Only randomize list field<br/>
+3. data.list<100> - Generate 100 random items<br/>
+4. data,page.total - Randomize multiple fields<br/>`
+  },
 }
 
 export function t (key) {
   const config = window.__config__
-  if (config?.lang === 'en' && dict[key]) {
-    return dict[key]
+  if (config?.lang === 'en' && typeof dict[key] === 'string') {
+    return typeof dict[key]
+  }
+  if (typeof dict[key] === 'object') {
+    return dict[key][config?.lang] || dict[key]['zh']
   }
   return key
 }

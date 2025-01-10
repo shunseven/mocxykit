@@ -8,6 +8,11 @@ const customFaker = new Faker({
   locale: [zh_CN, en, base], // 优先使用中文，找不到的内容fallback到英文，最后是基础locale
 });
 
+// 创建英文专用的faker实例
+const englishFaker = new Faker({
+  locale: [en] // 只使用英文locale
+});
+
 function firstUpperCase(str: string): string {
   return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
 }
@@ -70,6 +75,9 @@ export function setupNodeEnvVariables(): void {
 }
 
 function inferDataType(value: string): string {
+  // 字母数字混合
+  if (/^[a-zA-Z0-9]+$/.test(value)) return 'alphanumeric';
+  
   // 纯数字字符串
   if (/^\d+$/.test(value)) return 'numberString';
   
@@ -113,7 +121,31 @@ function inferDataType(value: string): string {
   // 纬度
   if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(value)) return 'latitude';
 
+  // 判断纯英文
+  if (/^[a-zA-Z\s]+$/.test(value)) return 'englishText';
+
   return 'unknown';
+}
+
+function generateAlphanumeric(template: string): string {
+  // 分析模板中字母和数字的位置和数量
+  const letterPositions = [...template].map((char, index) => /[a-zA-Z]/.test(char) ? index : -1).filter(pos => pos !== -1);
+  const numberPositions = [...template].map((char, index) => /[0-9]/.test(char) ? index : -1).filter(pos => pos !== -1);
+  
+  // 生成结果数组
+  const result = new Array(template.length).fill('');
+  
+  // 填充字母
+  letterPositions.forEach(pos => {
+    result[pos] = englishFaker.string.alpha(1);
+  });
+  
+  // 填充数字
+  numberPositions.forEach(pos => {
+    result[pos] = englishFaker.number.int({ min: 0, max: 9 }).toString();
+  });
+  
+  return result.join('');
 }
 
 // 添加检测是否包含中文的函数
@@ -124,7 +156,18 @@ function containsChinese(str: string): boolean {
 export function generateFakeData(jsonData: any, fakerKeys: string): any {
   const keys = fakerKeys.split(',').map(k => k.trim());
   
-  function processValue(value: any): any {
+  function parseKeyAndCount(key: string): { key: string; count?: number } {
+    const match = key.match(/^(.*?)<(\d+)>$/);
+    if (match) {
+      return {
+        key: match[1],
+        count: parseInt(match[2], 10)
+      };
+    }
+    return { key };
+  }
+
+  function processValue(value: any, customArrayLength?: number): any {
     switch (typeof value) {
       case 'string':
         
@@ -150,6 +193,20 @@ export function generateFakeData(jsonData: any, fakerKeys: string): any {
         // 如果没有显式标记，则通过值的格式推断类型
         const type = inferDataType(value);
         switch (type) {
+          case 'alphanumeric':
+            // 保持原始字符串的字母数字格式
+            return generateAlphanumeric(value);
+          case 'englishText':
+            // 使用英文专用faker实例生成英文内容
+            if (value.length <= 4) {
+              return englishFaker.word.sample(); // 单个英文词
+            } else if (value.length <= 10) {
+              return englishFaker.word.words(2); // 英文短语
+            } else if (value.length <= 20) {
+              return englishFaker.lorem.sentence(3); // 英文短句
+            } else {
+              return englishFaker.lorem.paragraph(1); // 英文段落
+            }
           case 'numberString':
             const length = value.length;
             const min = Math.pow(10, length - 1);
@@ -205,7 +262,8 @@ export function generateFakeData(jsonData: any, fakerKeys: string): any {
         if (value === null) return null;
         
         if (Array.isArray(value)) {
-          const randomLength = customFaker.number.int({ min: 1, max: 20 });
+          // 使用自定义长度或默认随机长度
+          const randomLength = customArrayLength || customFaker.number.int({ min: 1, max: 20 });
           return Array(randomLength).fill(null).map(() => ({
             ...processValue(value[0])
           }));
@@ -224,7 +282,8 @@ export function generateFakeData(jsonData: any, fakerKeys: string): any {
 
   let result = JSON.parse(JSON.stringify(jsonData));
   
-  keys.forEach(key => {
+  keys.forEach(rawKey => {
+    const { key, count } = parseKeyAndCount(rawKey);
     const path = key.split('.');
     let current = result;
     
@@ -235,7 +294,7 @@ export function generateFakeData(jsonData: any, fakerKeys: string): any {
     
     const lastKey = path[path.length - 1];
     if (current[lastKey] !== undefined) {
-      current[lastKey] = processValue(current[lastKey]);
+      current[lastKey] = processValue(current[lastKey], count);
     }
   });
 

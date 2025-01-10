@@ -162,6 +162,20 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 ### Intelligent MOCK Data
 - Support both static and dynamic MOCK data
 - Return different MOCK data based on request parameters
+- Support faker random data generation
+  - Auto-detect data types (email, phone, URL, etc.) and generate corresponding random data
+  - Smart generation of mixed Chinese and English content
+  - Control array length with special syntax: `data.list<100>` generates 100 random items
+  - Support multiple field randomization: `data.list,page.total`
+  - Auto maintain string formats: preserve digits for number strings, maintain format for alphanumeric strings
+- Configuration:
+  1. Check "Return Random Data" in MOCK data edit page
+  2. Enter the field path to be randomized in the input box
+  3. Supported syntax:
+     - `data` - Randomize entire data object
+     - `data.list` - Only randomize list field
+     - `data.list<100>` - Generate 100 random items
+     - `data,page.total` - Randomize multiple fields
 
 ### Quick Data Collection
 - Automatically record proxy request response data
