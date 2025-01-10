@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { getMock, getSendMockData, getTargetApiData } from "../common/fetchJsonData";
-import { parseUrlToKey, sleep } from "../common/fun";
+import { generateFakeData, parseUrlToKey, sleep } from "../common/fun";
 import url from 'url'
 
 export default function createMock () {
@@ -15,6 +15,12 @@ export default function createMock () {
     }
     if(mes) {
       const msg = await getSendMockData(req, mes.data)
+      console.log('fakerKey',apiData)
+      if (apiData?.hasFaker && apiData?.fakerKey) {
+        const fakedData = generateFakeData(msg, apiData.fakerKey);
+        res.send(fakedData);
+        return;
+      }
       res.send(msg);
       return
     } else {

@@ -5,6 +5,7 @@
 
 .edit-modal .ant-form-item-label {
   width: 80px;
+  min-width: 60px;
 }
 .edit-modal .ant-modal-content {
   height: calc(100vh - 50px);
@@ -50,11 +51,16 @@
   border-inline-end: none !important;
 }
 .edit-modal .ant-form-mock-item {
-  width: 30%;
+  margin-bottom: 16px;
+  margin-right: 0;
 }
 .mock-editor-title{
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.edit-modal .ant-form-inline {
+  gap: 8px;
 }

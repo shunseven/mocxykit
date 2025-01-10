@@ -24,6 +24,8 @@ interface ApiConfig {
   name: string;
   hasMockData?: boolean;
   bindEnvId?: number; // 添加绑定环境变量ID字段
+  fakerKey?: string;
+  hasFaker?: boolean;
 }
 
 interface ApiData {
@@ -56,6 +58,8 @@ interface CustomProxyAndMock{
   mockData: MockData;
   selectCustomProxy: string;
   target?: 'proxy' | 'mock' | 'customProxy';
+  fakerKey?: string;
+  hasFaker?: boolean;
 }
 
 interface AllMockData {

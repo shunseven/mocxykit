@@ -53,13 +53,17 @@ export function setCustomProxyAndMock(data: CustomProxyAndMock) {
       selectCustomProxy: data.selectCustomProxy,
       target: data.target || 'proxy',
       duration: data.duration,
-      name: data.name
+      name: data.name,
+      fakerKey: data.fakerKey || '',
+      hasFaker: data.hasFaker || false,
     })
   } else {
     apiData.apiList[apiIndex].customProxy = data.customProxy;
     apiData.apiList[apiIndex].duration = data.duration;
     apiData.apiList[apiIndex].name = data.name;
     apiData.apiList[apiIndex].selectCustomProxy = data.selectCustomProxy;
+    apiData.apiList[apiIndex].fakerKey = data.fakerKey || '';
+    apiData.apiList[apiIndex].hasFaker = data.hasFaker || false;
   }
   setMockData(key, data.mockData);
   setApiData(apiData);

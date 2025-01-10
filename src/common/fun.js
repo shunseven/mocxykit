@@ -141,7 +141,11 @@ const dict = {
   "开启公网访问": "Enable Public Access",
   "已开启公网访问": "Public Access Enabled",
   "开启公网访问失败": "Failed to Enable Public Access",
-  "公网访问地址：": "Public Access URL:"
+  "公网访问地址：": "Public Access URL:",
+  
+  "返回随机数据": "Return Random Data",
+  "随机数据配置说明": "Use comma to separate multiple fields. Example: data.list, page.total",
+  "请输入字段路径": "Enter field path, e.g., data.list"
 }
 
 export function t (key) {
