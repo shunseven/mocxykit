@@ -75,6 +75,17 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
       paddingRight: '14px'
     }}>
       <Space size={10}>
+      {selectedRowKeys.length > 0 && (
+          <Popconfirm
+            title={t('批量删除确认')}
+            description={t('确定要删除选中的') + ` ${selectedRowKeys.length} ` + t('项吗？')}
+            onConfirm={handleBatchDelete}
+            okText={t('删除')}
+            cancelText={t('取消')}
+          >
+            <Button danger size='small'>{t('批量删除')}</Button>
+          </Popconfirm>
+        )}
         <Button
           size='small'
           style={{
@@ -98,17 +109,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         color="primary" 
         variant="outlined"
         >{t('自定义代理优先')}</Button>
-        {selectedRowKeys.length > 0 && (
-          <Popconfirm
-            title={t('批量删除确认')}
-            description={t('确定要删除选中的') + ` ${selectedRowKeys.length} ` + t('项吗？')}
-            onConfirm={handleBatchDelete}
-            okText={t('删除')}
-            cancelText={t('取消')}
-          >
-            <Button danger size='small'>{t('批量删除')}</Button>
-          </Popconfirm>
-        )}
+        
       </Space>
       <Space size={10} >
         <CacheRequestHistoryData onApiDataChange={onApiDataChange} />
