@@ -86,11 +86,9 @@ export async function fetchChangeTargetType (data) {
   return res
 }
 
-export async function fetchBatchChangeTargetType (data) {
-  const res = await request('/express-proxy-mock/batch-change-target', {
-    query: data
-  })
-  return res
+export const fetchBatchChangeTargetType = ({target, pinnedItems = []}) => {
+  return fetch(`/express-proxy-mock/batch-change-target?target=${target}&pinnedItems=${pinnedItems.join(',')}`)
+    .then(res => res.json())
 }
 
 export async function fetctApiItemDataAndMockData (data) {

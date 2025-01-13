@@ -202,7 +202,14 @@ export default function viewRequest(req: Request, res: Response): boolean {
     const apiData = getApiData()
     const AllMockData = getMock()
     const target = req.query.target as 'proxy' | 'mock' | 'customProxy'
+    const pinnedItems = (req.query.pinnedItems as string || '').split(',').filter(Boolean)
+    
     apiData.apiList.forEach(item => {
+      // 如果是固定项则跳过
+      if (pinnedItems.includes(item.key)) {
+        return;
+      }
+      
       switch (target) {
         case 'proxy':
           item.target = 'proxy'

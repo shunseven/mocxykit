@@ -110,8 +110,8 @@ function App() {
           await fetchChangeTargetType({target, key})
           fetchProxyData();
         }}
-        onBatchChangeTargetType={async (target) => {
-          await fetchBatchChangeTargetType({target})
+        onBatchChangeTargetType={async (target, pinnedItems) => {
+          await fetchBatchChangeTargetType({target, pinnedItems})
           fetchProxyData();
         }}
         onApiDataChange={fetchProxyData}

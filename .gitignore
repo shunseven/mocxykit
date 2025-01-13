@@ -29,3 +29,4 @@ proxyMockData
 serverDist
 viewsDist
 proxyMockData/env.json
+.vite

@@ -1,5 +1,4 @@
-
-import { Space, Table, Tag, Radio, Button, Popconfirm } from 'antd';
+import { Space, Table, Tag, Radio, Button, Popconfirm, Input, Tooltip } from 'antd';
 import { useState } from 'react';
 import ApiEdit from '../mockEditorModal/editModal';
 import { fetchDeleteApiData } from '../../api/api';
@@ -7,6 +6,7 @@ import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
 import { t } from '../../common/fun';
+import { PushpinOutlined } from '@ant-design/icons';
 const { Column } = Table;
 
 const colorMap = {
@@ -19,6 +19,27 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
   const [editVisible, setEditVisible] = useState(false)
   const [preveiwVisible, setPreviewVisible] = useState(false)
   const [itemTargetKey, setItemTargetKey] = useState('');
+  const [searchText, setSearchText] = useState('');
+  const [pinnedItems, setPinnedItems] = useState(() => {
+    return JSON.parse(localStorage.getItem('pinnedItems') || '[]');
+  });
+
+  const handleBatchChange = (type) => {
+    onBatchChangeTargetType(type, pinnedItems);
+  };
+
+  const togglePin = (key) => {
+    const newPinnedItems = pinnedItems.includes(key)
+      ? pinnedItems.filter(item => item !== key)
+      : [...pinnedItems, key];
+    setPinnedItems(newPinnedItems);
+    localStorage.setItem('pinnedItems', JSON.stringify(newPinnedItems));
+  };
+
+  const filteredData = data.filter(item => 
+    item.url.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return <>
     <div style={{
       marginBottom: '15px',
@@ -34,14 +55,23 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
             borderColor: '#f50',
             color: '#f50'
           }} variant="outlined"
-          onClick={() => onBatchChangeTargetType('proxy')}
+          onClick={() => handleBatchChange('proxy')}
         >{t('切换为全局代理')}</Button>
         <Button style={{
           color: '#389e0d',
           borderColor: '#389e0d'
-        }} onClick={() => onBatchChangeTargetType('mock')} size='small' color="primary" variant="outlined" >{t('MOCK数据优先')}</Button>
-        <Button onClick={() => onBatchChangeTargetType('customProxy')} size='small' color="primary" variant="outlined">{t('自定义代理优先')}</Button>
-
+        }} 
+        onClick={() => handleBatchChange('mock')} 
+        size='small' 
+        color="primary" 
+        variant="outlined" 
+        >{t('MOCK数据优先')}</Button>
+        <Button 
+        onClick={() => handleBatchChange('customProxy')} 
+        size='small' 
+        color="primary" 
+        variant="outlined"
+        >{t('自定义代理优先')}</Button>
       </Space>
       <Space size={10} >
         <CacheRequestHistoryData onApiDataChange={onApiDataChange} />
@@ -58,13 +88,41 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
 
     <Table
       pagination={false}
-      dataSource={data}
+      dataSource={filteredData}
       scroll={{
         x: 'max-content',
       }}
     >
+      <Column 
+        width={50} 
+        title="" 
+        key="pin"
+        render={(_, record) => (
+          <Tooltip title={pinnedItems.includes(record.key) ? t('取消固定') : t('固定')}>
+            <PushpinOutlined
+              style={{ 
+                cursor: 'pointer',
+                color: pinnedItems.includes(record.key) ? '#1890ff' : '#d9d9d9'
+              }}
+              onClick={() => togglePin(record.key)}
+            />
+          </Tooltip>
+        )}
+      />
       <Column width={150} title={t('名称')} dataIndex="name" key="name" />
-      <Column title="URL" dataIndex="url" key="ur" />
+      <Column 
+        title="URL" 
+        dataIndex="url" 
+        key="url"
+        filterDropdown={() => (
+          <Input
+            placeholder={t('搜索 URL')}
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+            style={{ width: 200, margin: 8 }}
+          />
+        )}
+      />
       <Column
         title={t('目标')}
         dataIndex="target"
