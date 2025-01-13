@@ -6,7 +6,7 @@ import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
 import { t } from '../../common/fun';
-import { PushpinOutlined, SearchOutlined } from '@ant-design/icons';
+import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 const { Column } = Table;
 
 const colorMap = {
@@ -170,6 +170,44 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         filterIcon={() => (
           <SearchOutlined style={{ color: searchText ? '#1890ff' : undefined }} />
         )}
+      />
+      <Column
+        width={100}
+        title={t('延时')}
+        dataIndex="duration"
+        key="duration"
+        render={(duration) => (
+          <span>{duration ? `${duration}ms` : '-'}</span>
+        )}
+      />
+      <Column
+        width={120}
+        title={
+          <span>
+            {t('随机数据')}
+            <Tooltip 
+              title={
+                <span dangerouslySetInnerHTML={{ 
+                  __html: t('随机数据配置示例')
+                }}>
+                </span>
+              }
+            >
+              <QuestionCircleOutlined style={{ marginLeft: '4px' }} />
+            </Tooltip>
+          </span>
+        }
+        dataIndex="hasFaker"
+        key="hasFaker"
+        render={(hasFaker, record) => {
+          return hasFaker && record.target === 'mock' ? (
+            <Tooltip title={record.fakerKey}>
+              <Tag color='#87d068'>
+                {t('已开启')}
+              </Tag>
+            </Tooltip>
+          ) : '--'
+        }}
       />
       <Column
         title={t('目标')}

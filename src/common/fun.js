@@ -163,6 +163,16 @@ Examples:
 3. data.list<100> - Generate 100 random items<br/>
 4. data,page.total - Randomize multiple fields<br/>`
   },
+
+  // 添加延时相关的翻译
+  "延时": "Delay",
+  "固定": "Pin",
+  "取消固定": "Unpin",
+
+  // 添加随机数据相关翻译
+  "随机数据": "Random Data",
+  "已开启": "Enabled",
+  "未开启": "Disabled",
 }
 
 export function t (key) {
