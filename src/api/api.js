@@ -26,11 +26,8 @@ export async function requestApiData () {
   return res
 }
 
-export async function fetchDeleteApiData (data) {
-  const res = await request('/express-proxy-mock/delete-api-data', {
-    query: data
-  })
-  return res
+export const fetchDeleteApiData = ({ key }) => {
+  return fetch(`/express-proxy-mock/delete-api-data?key=${key}`).then(res => res.json())
 }
 
 export async function fetchDeleteProxy (data) {

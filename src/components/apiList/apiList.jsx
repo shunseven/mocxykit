@@ -1,4 +1,4 @@
-import { Space, Table, Tag, Radio, Button, Popconfirm, Input, Tooltip } from 'antd';
+import { Space, Table, Tag, Radio, Button, Popconfirm, Input, Tooltip, message } from 'antd';
 import { useState } from 'react';
 import ApiEdit from '../mockEditorModal/editModal';
 import { fetchDeleteApiData } from '../../api/api';
@@ -6,7 +6,7 @@ import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
 import { t } from '../../common/fun';
-import { PushpinOutlined } from '@ant-design/icons';
+import { PushpinOutlined, SearchOutlined } from '@ant-design/icons';
 const { Column } = Table;
 
 const colorMap = {
@@ -23,6 +23,14 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
   const [pinnedItems, setPinnedItems] = useState(() => {
     return JSON.parse(localStorage.getItem('pinnedItems') || '[]');
   });
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (newSelectedRowKeys) => {
+      setSelectedRowKeys(newSelectedRowKeys);
+    },
+  };
 
   const handleBatchChange = (type) => {
     onBatchChangeTargetType(type, pinnedItems);
@@ -39,6 +47,24 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
   const filteredData = data.filter(item => 
     item.url.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  const handleBatchDelete = async () => {
+    if (selectedRowKeys.length === 0) {
+      message.warning(t('请选择要删除的项'));
+      return;
+    }
+
+    try {
+      await fetchDeleteApiData({
+        key: selectedRowKeys.join(','),
+      });
+      message.success(t('删除成功'));
+      setSelectedRowKeys([]);
+      onApiDataChange();
+    } catch (error) {
+      message.error(t('删除失败'));
+    }
+  };
 
   return <>
     <div style={{
@@ -72,6 +98,17 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         color="primary" 
         variant="outlined"
         >{t('自定义代理优先')}</Button>
+        {selectedRowKeys.length > 0 && (
+          <Popconfirm
+            title={t('批量删除确认')}
+            description={t('确定要删除选中的') + ` ${selectedRowKeys.length} ` + t('项吗？')}
+            onConfirm={handleBatchDelete}
+            okText={t('删除')}
+            cancelText={t('取消')}
+          >
+            <Button danger size='small'>{t('批量删除')}</Button>
+          </Popconfirm>
+        )}
       </Space>
       <Space size={10} >
         <CacheRequestHistoryData onApiDataChange={onApiDataChange} />
@@ -87,6 +124,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
     </div>
 
     <Table
+      rowSelection={rowSelection}
       pagination={false}
       dataSource={filteredData}
       scroll={{
@@ -115,12 +153,21 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         dataIndex="url" 
         key="url"
         filterDropdown={() => (
-          <Input
-            placeholder={t('搜索 URL')}
-            value={searchText}
-            onChange={e => setSearchText(e.target.value)}
-            style={{ width: 200, margin: 8 }}
-          />
+          <div style={{ padding: '8px' }}>
+            <Input
+              placeholder={t('搜索 URL')}
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+              onPressEnter={() => {}}
+              style={{ width: 200 }}
+              allowClear
+              prefix={<SearchOutlined />}
+              autoFocus
+            />
+          </div>
+        )}
+        filterIcon={() => (
+          <SearchOutlined style={{ color: searchText ? '#1890ff' : undefined }} />
         )}
       />
       <Column

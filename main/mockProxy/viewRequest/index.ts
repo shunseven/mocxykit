@@ -86,10 +86,11 @@ export default function viewRequest(req: Request, res: Response): boolean {
   // 删除代理数据
   if (matchRouter('/express-proxy-mock/delete-api-data', req.path)) {
     const apiData = getApiData()
-    const key = req.query.key as string
-    apiData.apiList = apiData.apiList.filter(item => item.key !== key)
+    const keys = (req.query.key as string).split(',')
+    apiData.apiList = apiData.apiList.filter(item => !keys.includes(item.key))
     setApiData(apiData)
-    deleteMock(key)
+    // 批量删除mock数据
+    keys.forEach(key => deleteMock(key))
     res.send(successData)
     return true
   }
