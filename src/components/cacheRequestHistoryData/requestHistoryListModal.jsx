@@ -57,9 +57,9 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
           />
           <div>
           <Button type="primary" onClick={async () => {
-              await batchImportRequestCacheToMock({keys})
-              onCancel()
-              onApiDataChange()
+              await batchImportRequestCacheToMock({keys});
+              onCancel();
+              onApiDataChange(keys);
             }} >{t('批量导入MOCK数据')}</Button>
             <Button 
                color="danger" 
@@ -102,10 +102,10 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
               }}>{t('查看数据')}</a>
              <a
                 onClick={async () => {
-                  event.stopPropagation()
-                  await batchImportRequestCacheToMock({keys: [record.key]})
-                  getCacheRequestHistory()
-                  onApiDataChange()
+                  event.stopPropagation();
+                  await batchImportRequestCacheToMock({keys: [record.key]});
+                  getCacheRequestHistory();
+                  onApiDataChange([record.key]);
                 }}
                 style={{
                   color: '#389e0d'

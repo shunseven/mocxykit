@@ -20,10 +20,15 @@ export default function CacheRequestHistoryData({onApiDataChange}) {
       clearInterval(timer)
     }
   }, []);
+
+  const handleApiDataChange = (importedKeys) => {
+    onApiDataChange(importedKeys);
+  };
+
   return <div>
     <Badge count={requsetCacheHistoryLength}>
        <Button variant='dashed' onClick={() =>setVisible(true)} color='danger' >{t('转换最近请求为MOCK数据')}</Button>
     </Badge>
-    <RequestHistoryListModal onApiDataChange={onApiDataChange} onCancel={() => setVisible(false)} visible={visible} />
+    <RequestHistoryListModal onApiDataChange={handleApiDataChange} onCancel={() => setVisible(false)} visible={visible} />
   </div>
 }

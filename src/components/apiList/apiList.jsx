@@ -15,6 +15,19 @@ const colorMap = {
   customProxy: '#1677ff'
 }
 
+// 在组件外部定义样式对象
+const styles = {
+  recentlyImported: {
+    backgroundColor: 'rgba(82, 196, 26, 0.1) !important',
+  },
+  recentlyImportedHover: {
+    backgroundColor: 'rgba(82, 196, 26, 0.2) !important',
+  },
+  recentlyImportedSelected: {
+    backgroundColor: 'rgba(82, 196, 26, 0.15) !important',
+  }
+};
+
 function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onApiDataChange, proxyList }) {
   const [editVisible, setEditVisible] = useState(false)
   const [preveiwVisible, setPreviewVisible] = useState(false)
@@ -24,6 +37,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
     return JSON.parse(localStorage.getItem('pinnedItems') || '[]');
   });
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [recentlyImported, setRecentlyImported] = useState([]);
 
   const rowSelection = {
     selectedRowKeys,
@@ -63,6 +77,16 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
       onApiDataChange();
     } catch (error) {
       message.error(t('删除失败'));
+    }
+  };
+
+  const handleImportData = async (importedKeys) => {
+    // 先等待数据更新完成
+    await onApiDataChange();
+    
+    // 设置高亮，不再添加定时器清除
+    if (importedKeys && importedKeys.length) {
+      setRecentlyImported(importedKeys);
     }
   };
 
@@ -112,7 +136,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         
       </Space>
       <Space size={10} >
-        <CacheRequestHistoryData onApiDataChange={onApiDataChange} />
+        <CacheRequestHistoryData onApiDataChange={handleImportData} />
         <Button
           onClick={() => {
             setItemTargetKey('')
@@ -128,6 +152,32 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
       rowSelection={rowSelection}
       pagination={false}
       dataSource={filteredData}
+      onRow={(record) => {
+        const isImported = recentlyImported.includes(record.key);
+        const isSelected = selectedRowKeys.includes(record.key);
+        
+        return {
+          style: {
+            ...(isImported && {
+              backgroundColor: isSelected 
+                ? 'rgba(82, 196, 26, 0.15)'
+                : 'rgba(82, 196, 26, 0.1)',
+            }),
+          },
+          onMouseEnter: (e) => {
+            if (isImported) {
+              e.currentTarget.style.backgroundColor = 'rgba(82, 196, 26, 0.2)';
+            }
+          },
+          onMouseLeave: (e) => {
+            if (isImported) {
+              e.currentTarget.style.backgroundColor = isSelected 
+                ? 'rgba(82, 196, 26, 0.15)'
+                : 'rgba(82, 196, 26, 0.1)';
+            }
+          }
+        };
+      }}
       scroll={{
         x: 'max-content',
       }}
