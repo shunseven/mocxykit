@@ -154,11 +154,11 @@ function MockEditor({
             value={requestData}
             onError={(...argument) => {
               if (!reqDataIsNull) {
-                onStateChange(true)
+                onStateChange?.(true)
               }
             }}
             onChange={function (data) {
-              onStateChange(false)
+              onStateChange?.(false)
               resDataIsNull = data === null
               const value = valueRef.current
               const newData = {
@@ -187,12 +187,12 @@ function MockEditor({
           value={responseData}
           onError={() => {
             if (!resDataIsNull) {
-              onStateChange(true)
+              onStateChange?.(true)
             }
           }}
           jsonEditorRef={resEditorRef}
           onChange={function (data) {
-            onStateChange(false)
+            onStateChange?.(false)
             resDataIsNull = data === null
             const value = valueRef.current
             const newData = {
