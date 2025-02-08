@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import ngrok from 'ngrok';
 import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock, saveEnvData, getEnvData, deleteEnvData } from "../common/fetchJsonData";
 import { getReqBodyData, hasMockData, matchRouter, setupNodeEnvVariables } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
@@ -17,7 +16,25 @@ const handleEnvChange = (apiData: ApiData, envId?: number) => {
   }
 };
 
+let ngrokModule: any = null;
 let tunnelUrl: string | null = null;
+
+// 检查 Node.js 版本并加载 ngrok
+function loadNgrok() {
+  const nodeVersion = process.version.match(/^v(\d+)/);
+  const majorVersion = nodeVersion ? parseInt(nodeVersion[1]) : 0;
+  
+  if (majorVersion >= 20) {
+    try {
+      ngrokModule = require('ngrok');
+      return true;
+    } catch (error) {
+      console.error('Failed to load ngrok:', error);
+      return false;
+    }
+  }
+  return false;
+}
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000;
@@ -27,20 +44,24 @@ async function wait(ms: number) {
 }
 
 async function createTunnel(port: number, authtoken: string) {
+  if (!loadNgrok()) {
+    throw new Error('Ngrok 功能仅支持 Node.js 20 及以上版本');
+  }
+
   let lastError: any;
   for (let i = 0; i < MAX_RETRIES; i++) {
     try {
       // 清理现有连接
       if (tunnelUrl) {
         try {
-          await ngrok.disconnect(tunnelUrl);
+          await ngrokModule.disconnect(tunnelUrl);
         } catch (e) {
           console.log('Disconnect error:', e);
         }
       }
 
       try {
-        await ngrok.kill();
+        await ngrokModule.kill();
       } catch (e) {
         console.log('Kill error:', e);
       }
@@ -49,14 +70,14 @@ async function createTunnel(port: number, authtoken: string) {
       await wait(1000);
 
       // 设置新的 authtoken
-      await ngrok.authtoken(authtoken);
+      await ngrokModule.authtoken(authtoken);
 
       // 启动新连接
       console.log(`Attempting to connect (attempt ${i + 1}/${MAX_RETRIES})...`);
-      const url = await ngrok.connect({
+      const url = await ngrokModule.connect({
         addr: port,
         proto: 'http',
-        onLogEvent: (log) => {
+        onLogEvent: (log: any) => {
           console.log('Ngrok log:', log);
         }
       });
@@ -430,9 +451,9 @@ export default function viewRequest(req: Request, res: Response): boolean {
 
 // 修改清理函数
 process.on('SIGTERM', async () => {
-  if (tunnelUrl) {
-    await ngrok.disconnect(tunnelUrl);
-    await ngrok.kill();
+  if (tunnelUrl && ngrokModule) {
+    await ngrokModule.disconnect(tunnelUrl);
+    await ngrokModule.kill();
   }
 });
 

@@ -126,4 +126,4 @@ export class WebpackProxyMockPlugin {
   }
 }
 
-export default proxyMockMiddleware;
+export default WebpackProxyMockPlugin;

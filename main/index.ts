@@ -12,4 +12,4 @@ envUpdateEmitter.setMaxListeners(20);
 
 export { proxyMockMiddleware, viteProxyMockPlugin, WebpackProxyMockPlugin };
 
-export default proxyMockMiddleware;
+export default WebpackProxyMockPlugin;
