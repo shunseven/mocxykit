@@ -35,6 +35,11 @@ export default function createExpressCompatibilityLayer(req: any, res: ServerRes
     enhancedReq.query = parseQs(parsedUrl.query || '');
   }
 
+  // 确保headers属性存在
+  if (!enhancedReq.headers) {
+    enhancedReq.headers = req.headers || {};
+  }
+
   // 确保事件监听方法存在
   if (!enhancedReq.on) {
     const chunks: Buffer[] = [];
@@ -54,6 +59,43 @@ export default function createExpressCompatibilityLayer(req: any, res: ServerRes
 
   // 扩展 response 对象
   const enhancedRes = res as any;
+
+  // 添加 status 方法
+  if (!enhancedRes.status) {
+    enhancedRes.status = function(code: number) {
+      res.statusCode = code;
+      return enhancedRes;
+    };
+  }
+  
+  // 添加 writeHead 方法 - 用于SSE和其他需要设置状态码和多个头部的场景
+  if (!enhancedRes.writeHead) {
+    enhancedRes.writeHead = function(statusCode: number, headers?: any) {
+      res.statusCode = statusCode;
+      
+      // 处理headers参数，可能是对象或字符串
+      if (headers) {
+        if (typeof headers === 'object') {
+          // 如果是对象，遍历并设置每个头部
+          Object.entries(headers).forEach(([key, value]) => {
+            res.setHeader(key, value as string | string[]);
+          });
+        } else {
+          // 如果是字符串，假设是Content-Type
+          res.setHeader('Content-Type', headers);
+        }
+      }
+      
+      return enhancedRes;
+    };
+  }
+  
+  // 添加 write 方法 - 用于流式响应，如SSE
+  if (!enhancedRes.write) {
+    enhancedRes.write = function(chunk: string | Buffer) {
+      return res.write(chunk);
+    };
+  }
 
   // 添加 send 方法
   if (!enhancedRes.send) {
@@ -106,6 +148,32 @@ export default function createExpressCompatibilityLayer(req: any, res: ServerRes
         res.end('File not found');
       }
     };
+  }
+
+  // 添加 setTimeout 方法 - 用于设置响应超时
+  if (!enhancedRes.setTimeout) {
+    enhancedRes.setTimeout = function(msecs: number) {
+      if (typeof res.setTimeout === 'function') {
+        res.setTimeout(msecs);
+      }
+      return enhancedRes;
+    };
+  }
+
+  // 添加 end 方法 - 确保存在，用于结束响应
+  if (!enhancedRes.end) {
+    enhancedRes.end = function(data?: string | Buffer) {
+      return res.end(data);
+    };
+  }
+
+  // 添加 headersSent 属性 - 用于检查头部是否已发送
+  if (!('headersSent' in enhancedRes)) {
+    Object.defineProperty(enhancedRes, 'headersSent', {
+      get: function() {
+        return res.headersSent;
+      }
+    });
   }
 
   return { enhancedReq, enhancedRes };

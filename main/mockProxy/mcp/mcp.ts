@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { matchRouter, parseUrlToKey } from "../common/fun";
 import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
-import { getApiData, getMock, getTargetApiData } from "../common/fetchJsonData";
+import { getApiData, getMock } from "../common/fetchJsonData";
 import { getCacheRequestHistory } from "../common/cacheRequestHistory";
 
 class MocxykitResourceTemplate extends ResourceTemplate {
@@ -75,13 +75,12 @@ async function getMcpData(hostname: string) {
     };
   }
 }
-
+let servers: McpServer[] = [];
+let transports: Map<string, SSEServerTransport> = new Map();
 export default function createMcpServer () {
-  let servers: McpServer[] = [];
-  let transports: Map<string, SSEServerTransport> = new Map();
-
   return async function (req: Request, res: Response) {
     if (matchRouter('/see', req.path)) {
+      console.log('matchRouter', req.path);
       req.setTimeout(0);
       res.setTimeout(0);
       // 设置必要的 SSE 头部
@@ -112,8 +111,8 @@ export default function createMcpServer () {
       );
 
       servers.push(server);
+      console.log('/sse connection established', transport.sessionId);
       transports.set(transport.sessionId, transport);
-
       server.close = async () => {
         console.log('SSE connection closed');
         servers = servers.filter(s => s !== server);
@@ -132,10 +131,10 @@ export default function createMcpServer () {
 
     if (matchRouter('/mocxykit-mcp-messages', req.path)) {
       const sessionId = req.query.sessionId as string;
-      console.log('messages sessionId', sessionId);
+      console.log('/mocxykit-mcp-messages', sessionId);
       const transport = transports.get(sessionId);
-
       if (!transport) {
+        console.log('Session not found');
         res.status(404).send('Session not found');
         return true;
       }

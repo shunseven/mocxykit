@@ -21,8 +21,6 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
   }
   const originEnv = global.originEnv;
 
-  console.log('originEnv', originEnv)
-
   // 清理环境变量值的辅助方法
   function cleanEnvValue(envObj: Record<string, any>): Record<string, any> {
     return Object.keys(envObj).reduce((acc, key) => ({
@@ -50,8 +48,6 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
 
     const envData = getEnvData();
     const currentEnv = envData.find(env => env.id === envId);
-    console.log(1111, currentEnv)
-    console.log(2222, originEnv)
     if (currentEnv?.variables) {
       const newEnvVars = currentEnv.variables.reduce((acc, { key, value }) => ({
         ...acc,
