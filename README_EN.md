@@ -81,7 +81,6 @@ export default defineConfig({
 })
 ```
 
-
 ### vue.config.js
 ```js
 const proxyMockPlugin = new WebpackProxyMockPlugin({
@@ -122,7 +121,6 @@ vite project will display a button in the bottom right corner of the page. Click
 
 Refer to [below](#other-servers) for usage examples with vite, webpack, and vueConfig.
 
-
 ## Options
 
 |                      Name                       |               Type                |                    Default                    | Description                                                                                                          |
@@ -133,7 +131,6 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 |          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  Maximum number of cached request data                                                          |
 |          **`lang`**          |             `string`              |                  `zh`                  |  lang (en,zh)                                                          |
 |          **`buttonPosition`**          |             `'top' \| 'middle' \| 'bottom' \| string`              |                  `bottom`                  |  Position of the configuration button (Only works in Vite). You can use 'top', 'middle', 'bottom' or coordinate string like '100,100'                                                          |
-
 
 ## Key Features
 
@@ -159,7 +156,7 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 - Real-time switching without service restart
 - Automatically save current configuration when switching
 
-### MCP (Model Context Protocol)
+## MCP (Model Context Protocol)
 
 ### Introduction
 MCP is a real-time data communication protocol implementation based on SSE (Server-Sent Events), which provides the following features:
@@ -191,7 +188,7 @@ This way, AI will actively retrieve the error data, analyze the structure, and d
 - Support multiple client connections simultaneously
 - Connection status monitoring
 
-### Intelligent MOCK Data
+## faker MOCK Data
 - Support both static and dynamic MOCK data
 - Return different MOCK data based on request parameters
 - Support faker random data generation
@@ -208,12 +205,6 @@ This way, AI will actively retrieve the error data, analyze the structure, and d
      - `data.list` - Only randomize list field
      - `data.list<100>` - Generate 100 random items
      - `data,page.total` - Randomize multiple fields
-
-### Quick Data Collection
-- Automatically record proxy request response data
-- One-click save real interface response as MOCK data
-- Support editing and modifying saved MOCK data
-- Provide data import and export functionality
 
 ## Environment Variables
 
