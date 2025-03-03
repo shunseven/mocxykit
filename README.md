@@ -165,40 +165,30 @@ MCP是一个基于SSE（Server-Sent Events）的实时数据通信协议实现�
  
  在 cursor 等，支持 MCP 的 AI 编辑器，通过MCP协议，实现了在 AI 编程的时候，只要告诉 AI 对应的接口路径，AI就可以自动获取到对应的 MOCK 数据或浏览最近请求过的数据，无需人工干预。具体是MOCK 数据或浏览最近请求过的数据，根据你的数据目标设定，如果设定 mock 就会从MOCK 数据中获取，如果是代理就会比浏览器最近请求的数据中获取。如果是没有配制的URL，但符合全局代理也会从浏览器最近请求的数据中获取。
 
+### 配制方法
+
+在 cursor 的 MCP 设置中点击添加 Add MCP Server， type 选择 sse 然后配制http://127.0.0.1:xxxx/sse (这个是你项目的本地访问地址，但不能用localhost，必须用 IP,如果不能通过ip打开项目，可以试下把 host 设置为'0.0.0.0')，然后点击保存即可。
+
 ### 使用方法
+在AI 编程中要让 AI 主动请求数据，需要写关键词 mcpData
+比如我想写一个 todoList： 
+`在@todoList.tsx一个文件中实现一个 todoList 的功能，有展示列表及增加列表的功能，请求 mcpData api/todo-list获取列表数据结构，请求 mcpData api/todo-list/add 增加列表数据。 `
+这样 AI 就会主动请求数据，然后根据数据结构生成代码。
 
-1. 建立SSE连接：
-```javascript
-// 客户端代码
-const eventSource = new EventSource('/sse');
-eventSource.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  // 处理接收到的数据
-};
-```
-
-2. 数据请求格式：
-```
-data://{path}
-```
-其中{path}为需要获取数据的API路径
+比如我在浏览上测试的时候，发现某一个接口的业务错务返加的数据没有覆盖到，我可以在 AI 编程中写：
+`在 @todoList.tsx 文件中，请求 mcpData api/todo-list 获取数据，根据返回的错误数据，弹层显示错误信息。`
+这样 AI 就会主动获取到错误数据，分析结构然后弹层显示错误信息。
 
 ### 主要特性
 
 1. 智能数据源选择
-- 优先从Mock数据中获取
-- 支持从代理缓存获取历史数据
-- 自动降级处理
+- 从Mock数据中获取
+- 支持从代理缓存获取历史数据，即浏览器近访问过的地址
 
 2. 实时连接管理
 - 自动维护SSE连接
 - 支持多客户端同时连接
 - 连接状态监控
-
-3. 错误处理
-- 完整的错误提示
-- 异常状态自动恢复
-- 数据获取失败保护
 
 ### 智能 MOCK 数据
 - 支持静态 MOCK 数据和动态 MOCK 数据
