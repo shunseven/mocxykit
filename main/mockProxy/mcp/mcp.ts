@@ -5,16 +5,6 @@ import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { getApiData, getMock } from "../common/fetchJsonData";
 import { getCacheRequestHistory } from "../common/cacheRequestHistory";
 
-class MocxykitResourceTemplate extends ResourceTemplate {
-  constructor(...args: ConstructorParameters<typeof ResourceTemplate>) {
-    super(...args);
-    (this as any)._uriTemplate.match = (path: string) => {
-      console.log('matchRouter', path);
-      return true
-    }
-  }
-}
-
 const createNewServer = () => new McpServer({
   name: "mock-proxy-server",
   version: "1.0.0"
@@ -99,7 +89,6 @@ export default function createMcpServer () {
           // 在这里处理所有MCP请求
           const hostname = decodeURIComponent(uri.hostname);
           const data = await getMcpData(hostname);
-          console.log('1111333', data);
           return {
             contents: [{
               uri: hostname,
