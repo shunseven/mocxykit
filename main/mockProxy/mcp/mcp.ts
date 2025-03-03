@@ -79,7 +79,7 @@ let servers: McpServer[] = [];
 let transports: Map<string, SSEServerTransport> = new Map();
 export default function createMcpServer () {
   return async function (req: Request, res: Response) {
-    if (matchRouter('/see', req.path)) {
+    if (matchRouter('/sse', req.path)) {
       console.log('matchRouter', req.path);
       req.setTimeout(0);
       res.setTimeout(0);
@@ -91,15 +91,15 @@ export default function createMcpServer () {
       
       // 使用通配符模板 '${path}' 来匹配任何路径
       server.resource(
-        "data",
-        new MocxykitResourceTemplate('data://{path}', {
+        "mcpData",
+        new ResourceTemplate('data://{path}', {
           list: undefined
         }),
         async (uri) => {
           // 在这里处理所有MCP请求
           const hostname = decodeURIComponent(uri.hostname);
           const data = await getMcpData(hostname);
-          
+          console.log('1111333', data);
           return {
             contents: [{
               uri: hostname,
