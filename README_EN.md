@@ -159,6 +159,38 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 - Real-time switching without service restart
 - Automatically save current configuration when switching
 
+### MCP (Model Context Protocol)
+
+### Introduction
+MCP is a real-time data communication protocol implementation based on SSE (Server-Sent Events), which provides the following features:
+
+In AI editors that support MCP (such as Cursor), through the MCP protocol, when doing AI programming, you only need to tell the AI the corresponding API path, and the AI can automatically retrieve the corresponding MOCK data or recently requested data without manual intervention. Whether it's MOCK data or recently requested data depends on your data target settings. If set to mock, it will retrieve from MOCK data; if set to proxy, it will retrieve from the browser's recent request data. If it's an unconfigured URL but matches the global proxy, it will also retrieve from the browser's recent request data.
+
+### Configuration Method
+
+In Cursor's MCP settings, click Add MCP Server, select SSE as the type, then configure http://127.0.0.1:xxxx/sse (this is your project's local access address, but you must use IP instead of localhost. If you cannot access the project via IP, try setting the host to '0.0.0.0'), then click save.
+
+### Usage
+To make AI actively request data in AI programming, you need to write the keyword mcpData.
+For example, if I want to write a todoList:
+`In @todoList.tsx file, implement a todoList function with list display and list addition features, request mcpData api/todo-list to get the list data structure, request mcpData api/todo-list/add to add list data.`
+This way, AI will actively request data and generate code based on the data structure.
+
+For example, when testing in the browser, if I find that an interface's error response data is not covered, I can write in AI programming:
+`In @todoList.tsx file, request mcpData api/todo-list to get data, display error message in a popup based on the returned error data.`
+This way, AI will actively retrieve the error data, analyze the structure, and display the error message in a popup.
+
+### Key Features
+
+1. Smart Data Source Selection
+- Retrieve from Mock data
+- Support retrieving from proxy cache history data (recently accessed addresses in browser)
+
+2. Real-time Connection Management
+- Automatic SSE connection maintenance
+- Support multiple client connections simultaneously
+- Connection status monitoring
+
 ### Intelligent MOCK Data
 - Support both static and dynamic MOCK data
 - Return different MOCK data based on request parameters
