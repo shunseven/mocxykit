@@ -172,11 +172,15 @@ MCP是一个基于SSE（Server-Sent Events）的实时数据通信协议实现�
 ### 使用方法
 在AI 编程中要让 AI 主动请求数据，需要写关键词 mcpData
 比如我想写一个 todoList： 
+
 `在@todoList.tsx一个文件中实现一个 todoList 的功能，有展示列表及增加列表的功能，请求 mcpData api/todo-list获取列表数据结构，请求 mcpData api/todo-list/add 增加列表数据。 `
+
 这样 AI 就会主动请求数据，然后根据数据结构生成代码。
 
 比如我在浏览上测试的时候，发现某一个接口的业务错务返加的数据没有覆盖到，我可以在 AI 编程中写：
+
 `在 @todoList.tsx 文件中，请求 mcpData api/todo-list 获取数据，根据返回的错误数据，弹层显示错误信息。`
+
 这样 AI 就会主动获取到错误数据，分析结构然后弹层显示错误信息。
 
 ### 主要特性
