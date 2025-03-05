@@ -14,6 +14,7 @@ const createNewServer = () => new McpServer({
 function getFullKeyFromRule(rule: string, hostname: string): string {
   const prefix = rule.replace('*', '');
   const fullPath = prefix + hostname;
+  console.log('fullPath', fullPath, parseUrlToKey(fullPath));
   return parseUrlToKey(fullPath);
 }
 
@@ -69,7 +70,7 @@ async function getMcpData(hostname: string, apiRule: string | [string]) {
       switch (apiConfig.target) {
         case 'mock':
           // 获取mock数据
-          const mockData = mockDatas[key];
+          const mockData = mockDatas[apiConfig.key];
           if (mockData && mockData.data && mockData.data.length > 0) {
             return mockData.data[0].responseData || { error: '未找到对应的mock数据' };
           }
@@ -77,7 +78,7 @@ async function getMcpData(hostname: string, apiRule: string | [string]) {
         case 'proxy':
         case 'customProxy':
           // 从缓存历史中获取数据
-          const cacheData = getCacheRequestHistory().find(item => item.key === key);
+          const cacheData = getCacheRequestHistory().find(item => item.key === apiConfig.key);
           if (cacheData) {
             return cacheData.data;
           }
