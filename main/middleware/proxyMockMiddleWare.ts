@@ -9,7 +9,7 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
   const config = Object.assign({}, defaultConfig, options);
   const entryMiddleware = entry(config);
   const clientMiddleware = clientEntry(config);
-  const mcpServer = createMcpServer();
+  const mcpServer = createMcpServer(config);
 
   return async function (req: Request, res: Response, next: NextFunction) {
     let isClient = false;
