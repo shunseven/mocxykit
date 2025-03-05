@@ -15,6 +15,10 @@ Some benefits of using this middleware include:
 - Switch between proxy forwarding or MOCK data for a specific URL at any time
 - Return different MOCK data based on different parameters
 - Quickly save the data returned by the most recent request as MOCK data
+- Support faker random data generation
+- Support multi-environment variable management, switch environments at any time
+- Support Ngrok public network access
+- Support MCP protocol, allowing AI to automatically retrieve MOCK data or recent browser request data during AI programming
 
 ## Getting Started
 
