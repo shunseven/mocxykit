@@ -103,7 +103,7 @@ const McpSettings = () => {
   const getSSEUrl = () => `http://localhost:${port}/sse`;
 
   return (
-    <Card title={t("MCP 设置")} bordered={false} size="small">
+    <Card bordered={false} size="small">
       <Space direction="vertical" style={{ width: '100%' }} size="small">
         <Row align="middle" justify="space-between">
           <Col>

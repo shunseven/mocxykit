@@ -1,7 +1,0 @@
-{
-  "mcpServers": {
-    "sample-project-server": {
-      "url": "http://localhost:8822/sse"
-    }
-  }
-}

@@ -30,3 +30,4 @@ serverDist
 viewsDist
 proxyMockData/env.json
 .vite
+.cursor
