@@ -30,7 +30,7 @@ export default function entry(options: ProxyMockOptions) {
 
   return (req: Request, res: Response, next: NextFunction): boolean => {
     try {
-      const apiRules = Array.isArray(options.apiRule) ? options.apiRule : [options.apiRule];
+      const apiRules = options.apiRule.split(',');
       const apiData = getApiData();
       const key = parseUrlToKey(req.url);
       const apiConfig = apiData.apiList.find(

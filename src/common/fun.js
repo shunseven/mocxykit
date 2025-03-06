@@ -221,7 +221,7 @@ Examples:
 export function t (key) {
   const config = window.__config__
   if (config?.lang === 'en' && typeof dict[key] === 'string') {
-    return typeof dict[key]
+    return dict[key]
   }
   if (typeof dict[key] === 'object') {
     return dict[key][config?.lang] || dict[key]['zh']

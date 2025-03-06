@@ -52,7 +52,7 @@ function findApiConfigByPrefix(key: string, hostname: string, apiRules: string[]
 }
 
 // 获取MCP数据的函数
-async function getMcpData(hostname: string, apiRule: string | [string]) {
+async function getMcpData(hostname: string, apiRules: string[]) {
   try {
     // 将hostname转换为key
     const key = parseUrlToKey(hostname);
@@ -62,7 +62,6 @@ async function getMcpData(hostname: string, apiRule: string | [string]) {
     const mockDatas = getMock();
     
     // 处理apiRule，确保它是一个数组
-    const apiRules = Array.isArray(apiRule) ? apiRule : [apiRule];
     
     // 在ApiList中查找对应的key
     const apiConfig = findApiConfigByPrefix(key, hostname, apiRules, apiData.apiList);
@@ -140,8 +139,9 @@ export default function createMcpServer (config: ProxyMockOptions) {
         { path: z.string() },
         async ({ path }, extra) => {
           // 在这里处理所有MCP请求
+          const apiRules = config.apiRule.split(',');
           const hostname = decodeURIComponent(path);
-          const data = await getMcpData(hostname, ['/api/*']);
+          const data = await getMcpData(hostname, apiRules);
           return {
             content: [{
               type: "text",
