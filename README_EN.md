@@ -169,7 +169,7 @@ In AI editors that support MCP (such as Cursor), through the MCP protocol, when 
 
 ### Configuration Method
 
-In Cursor's MCP settings, click Add MCP Server, select SSE as the type, then configure http://127.0.0.1:xxxx/sse (this is your project's local access address, but you must use IP instead of localhost. If you cannot access the project via IP, try setting the host to '0.0.0.0'), then click save.
+Click the settings icon in the top right corner of the configuration interface, switch to MCP settings, and simply check the corresponding editor to enable the MCP service.
 
 ### Usage
 To make AI actively request data in AI programming, you need to write the keyword mcpData.

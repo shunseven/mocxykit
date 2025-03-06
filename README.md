@@ -171,7 +171,7 @@ MCP是一个基于SSE（Server-Sent Events）的实时数据通信协议实现�
 
 ### 配制方法
 
-在 cursor 的 MCP 设置中点击添加 Add MCP Server， type 选择 sse 然后配制http://127.0.0.1:xxxx/sse (这个是你项目的本地访问地址，但不能用localhost，必须用 IP,如果不能通过ip打开项目，可以试下把 host 设置为'0.0.0.0')，然后点击保存即可。
+  点击配制界面的右上角的设置ICON，切换到 MCP设置，启用 MCP 服务勾选对于的编辑器就可以了
 
 ### 使用方法
 在AI 编程中要让 AI 主动请求数据，需要写关键词 mcpData
