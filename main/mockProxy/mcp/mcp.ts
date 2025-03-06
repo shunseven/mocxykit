@@ -4,6 +4,7 @@ import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mc
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { getApiData, getMock } from "../common/fetchJsonData";
 import { getCacheRequestHistory } from "../common/cacheRequestHistory";
+import { z } from "zod";
 
 const createNewServer = () => new McpServer({
   name: "mock-proxy-server",
@@ -120,19 +121,17 @@ export default function createMcpServer (config: ProxyMockOptions) {
       const transport = new SSEServerTransport("/mocxykit-mcp-messages", res);
       
       // 使用通配符模板 '${path}' 来匹配任何路径
-      server.resource(
-        "mcpData",
-        new ResourceTemplate('data://{path}', {
-          list: undefined
-        }),
-        async (uri) => {
+      server.tool(
+        "getData",
+        "获取数据, 获取mcp数据",
+        { path: z.string() },
+        async ({ path }, extra) => {
           // 在这里处理所有MCP请求
-          const hostname = decodeURIComponent(uri.hostname);
-          const data = await getMcpData(hostname, config.apiRule);
+          const hostname = decodeURIComponent(path);
+          const data = await getMcpData(hostname, ['/api/*']);
           return {
-            contents: [{
-              uri: hostname,
-              type: 'application/json',
+            content: [{
+              type: "text",
               text: JSON.stringify(data)
             }]
           }
