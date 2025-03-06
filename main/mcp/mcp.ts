@@ -112,15 +112,6 @@ export default function createMcpServer (config: ProxyMockOptions) {
   return async function (req: Request, res: Response) {
     // 检查MCP服务是否启用
     const mcpConfig = getMcpConfig();
-    
-    if (!mcpConfig.open) {
-      // 如果MCP服务未启用，直接返回
-      if (matchRouter('/sse', req.path) || matchRouter('/mocxykit-mcp-messages', req.path)) {
-        res.status(403).send({ error: 'MCP服务未启用' });
-        return true;
-      }
-      return false;
-    }
 
     if (matchRouter('/sse', req.path)) {
       console.log('matchRouter', req.path);

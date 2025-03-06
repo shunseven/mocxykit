@@ -3,7 +3,6 @@ import path from 'path';
 
 // MCP配置接口
 export interface McpConfig {
-  open: boolean;
   editors: string[];
 }
 
@@ -15,7 +14,6 @@ export interface EditorConfig {
 
 // 默认MCP配置
 const defaultMcpConfig: McpConfig = {
-  open: false,
   editors: []
 };
 
@@ -68,18 +66,15 @@ export function getMcpConfig(): McpConfig {
       
       // 获取基本配置
       const mcpConfig: McpConfig = {
-        open: config.open,
         editors: []
       };
       
       // 检查每个编辑器的配置文件是否存在并包含特定配置
-      if (config.open) {
-        supportedEditors.forEach(editorConfig => {
-          if (checkEditorConfig(editorConfig.editor)) {
-            mcpConfig.editors.push(editorConfig.editor);
-          }
-        });
-      }
+      supportedEditors.forEach(editorConfig => {
+        if (checkEditorConfig(editorConfig.editor)) {
+          mcpConfig.editors.push(editorConfig.editor);
+        }
+      });
       
       return mcpConfig;
     }
@@ -98,9 +93,8 @@ export function saveMcpConfig(config: McpConfig): void {
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
-    // 只保存open和editors字段
+    // 只保存editors字段
     const saveConfig = {
-      open: config.open,
       editors: config.editors
     };
     fs.writeFileSync(mcpConfigPath, JSON.stringify(saveConfig, null, 2));

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Switch, Checkbox, Space, Typography, Divider, Row, Col, message, Tooltip } from 'antd';
+import { Card, Checkbox, Space, Typography, Divider, Row, Col, message, Tooltip } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import { t } from '../../common/fun';
 import { fetchMcpConfig, updateMcpConfig } from '../../api/api';
@@ -8,8 +8,7 @@ const { Title, Text } = Typography;
 
 const McpSettings = () => {
   const [mcpConfig, setMcpConfig] = useState({
-    open: false,
-    editors: ['cursor']
+    editors: []
   });
   const [port, setPort] = useState(3200);
   const [loading, setLoading] = useState(false);
@@ -41,13 +40,6 @@ const McpSettings = () => {
 
     getMcpConfig();
   }, []);
-
-  // 处理开关变化
-  const handleSwitchChange = async (checked) => {
-    const newConfig = { ...mcpConfig, open: checked };
-    setMcpConfig(newConfig);
-    await updateMcpConfigToServer(newConfig);
-  };
 
   // 处理编辑器选择变化
   const handleEditorChange = async (editor, checked) => {
@@ -102,73 +94,58 @@ const McpSettings = () => {
   // 获取SSE URL
   const getSSEUrl = () => `http://localhost:${port}/sse`;
 
+  // 判断MCP服务是否启用
+  const isMcpEnabled = mcpConfig.editors.length > 0;
+
   return (
     <Card bordered={false} size="small">
-      <Space direction="vertical" style={{ width: '100%' }} size="small">
-        <Row align="middle" justify="space-between">
-          <Col>
-            <Title level={5} style={{ margin: 0 }}>{t("启用 MCP 服务")}</Title>
-          </Col>
-          <Col>
-            <Switch 
-              checked={mcpConfig.open} 
-              onChange={handleSwitchChange}
-              loading={loading}
-            />
-          </Col>
-        </Row>
+      <Space direction="vertical" style={{ width: '100%' }} size="middle">
+        <div>
+          <Title level={5} style={{ margin: 0 }}>{t("编辑器支持")}</Title>
+          <Text type="secondary">{t("勾选编辑器即可启用 MCP 服务")}</Text>
+        </div>
         
-        {mcpConfig.open && (
-          <>
-            <Divider style={{ margin: '12px 0' }} />
-            
-            <Row align="middle" justify="space-between">
-              <Col span={24}>
-                <Title level={5} style={{ marginTop: 0 }}>{t("编辑器支持")}</Title>
-                <Space direction="vertical" size="small">
-                  <Checkbox 
-                    checked={mcpConfig.editors.includes('cursor')}
-                    onChange={(e) => handleEditorChange('cursor', e.target.checked)}
-                    disabled={loading}
-                  >
-                    Cursor
-                  </Checkbox>
-                  <Checkbox 
-                    checked={mcpConfig.editors.includes('windsurf')}
-                    onChange={(e) => handleEditorChange('windsurf', e.target.checked)}
-                    disabled={true} // 暂不支持windsurf
-                  >
-                    Windsurf <Text type="secondary">{t("暂不支持")}</Text>
-                  </Checkbox>
-                </Space>
-              </Col>
-            </Row>
-            
-            <Divider style={{ margin: '12px 0' }} />
-            
-            <Row align="middle">
-              <Col span={24}>
-                <Title level={5} style={{ marginTop: 0 }}>{t("服务地址")}</Title>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Text code style={{ fontSize: '14px' }}>
-                    {getSSEUrl()}
-                  </Text>
-                  <Tooltip title={t("复制服务地址")}>
-                    <CopyOutlined 
-                      onClick={copySSEUrl} 
-                      style={{ 
-                        marginLeft: 8, 
-                        cursor: 'pointer',
-                        fontSize: '16px',
-                        color: '#1890ff'
-                      }} 
-                    />
-                  </Tooltip>
-                </div>
-              </Col>
-            </Row>
-          </>
-        )}
+        <div style={{ paddingLeft: 8 }}>
+          <Checkbox 
+            checked={mcpConfig.editors.includes('cursor')}
+            onChange={(e) => handleEditorChange('cursor', e.target.checked)}
+            disabled={loading}
+          >
+            Cursor
+          </Checkbox>
+        </div>
+        
+        <div style={{ paddingLeft: 8 }}>
+          <Checkbox 
+            checked={mcpConfig.editors.includes('windsurf')}
+            onChange={(e) => handleEditorChange('windsurf', e.target.checked)}
+            disabled={true} // 暂不支持windsurf
+          >
+            Windsurf <Text type="secondary">{t("暂不支持")}</Text>
+          </Checkbox>
+        </div>
+        
+        <Divider style={{ margin: '12px 0' }} />
+        
+        <div>
+          <Title level={5} style={{ margin: 0 }}>{t("服务地址")}</Title>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: 8 }}>
+            <Text code style={{ fontSize: '14px' }}>
+              {getSSEUrl()}
+            </Text>
+            <Tooltip title={t("复制服务地址")}>
+              <CopyOutlined 
+                onClick={copySSEUrl} 
+                style={{ 
+                  marginLeft: 8, 
+                  cursor: 'pointer',
+                  fontSize: '16px',
+                  color: '#1890ff'
+                }} 
+              />
+            </Tooltip>
+          </div>
+        </div>
       </Space>
     </Card>
   );
