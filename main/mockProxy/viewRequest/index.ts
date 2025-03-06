@@ -497,8 +497,7 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
         
         // 保存MCP配置（不包含端口）
         const mcpConfig: McpConfig = {
-          open: requestData.open,
-          editors: requestData.editors
+          editors: requestData.editors || []
         };
         
         const oldConfig = getMcpConfig();
@@ -507,8 +506,11 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
         saveMcpConfig(mcpConfig);
         
         // 处理编辑器配置文件
-        if (mcpConfig.open) {
-          // 如果开启MCP服务，为选中的编辑器创建配置文件
+        // 判断MCP服务是否启用（通过editors数组是否有内容）
+        const isMcpEnabled = mcpConfig.editors.length > 0;
+        
+        if (isMcpEnabled) {
+          // 如果有选中的编辑器（MCP服务启用），为选中的编辑器创建配置文件
           mcpConfig.editors.forEach(editor => {
             createEditorMcpConfig(editor, port);
           });
@@ -520,7 +522,7 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
             }
           });
         } else {
-          // 如果关闭MCP服务，删除所有编辑器配置
+          // 如果没有选中的编辑器（MCP服务未启用），删除所有编辑器配置
           oldConfig.editors.forEach(editor => {
             deleteEditorMcpConfig(editor);
           });
