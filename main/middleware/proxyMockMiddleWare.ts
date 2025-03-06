@@ -4,9 +4,26 @@ import entry from '../mockProxy/entry';
 import viewRequest from '../mockProxy/viewRequest';
 import defaultConfig from './defaultConfig';
 import createMcpServer from '../mcp/mcp';
+import fs from 'fs';
+import path from 'path';
 
 export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
-  const config = Object.assign({}, defaultConfig, options);
+  // 尝试读取mocxykit.config.json文件
+  let fileConfig: Partial<ProxyMockOptions> = {};
+  const configFilePath = path.resolve(process.cwd(), 'mocxykit.config.json');
+  
+  try {
+    if (fs.existsSync(configFilePath)) {
+      const configData = fs.readFileSync(configFilePath, 'utf-8');
+      fileConfig = JSON.parse(configData);
+      console.log('已加载mocxykit.config.json配置文件');
+    }
+  } catch (error) {
+    console.error('读取mocxykit.config.json配置文件失败:', error);
+  }
+  
+  // 合并配置：默认配置 < 文件配置 < 传入的配置
+  const config = Object.assign({}, defaultConfig, fileConfig, options);
   const entryMiddleware = entry(config);
   const clientMiddleware = clientEntry(config);
   const mcpServer = createMcpServer(config);
@@ -17,7 +34,7 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
       isClient = clientMiddleware(req, res)
     }
     const isProxyMock = entryMiddleware(req, res, next);
-    const isViews = viewRequest(req, res);
+    const isViews = viewRequest(req, res, config);
     const isMcp = await mcpServer(req, res);
     if (!isClient && !isViews && !isProxyMock && !isMcp) {
       next();

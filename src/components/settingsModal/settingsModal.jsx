@@ -2,6 +2,7 @@ import { Modal, Tabs } from 'antd';
 import { t } from '../../common/fun';
 import PublicAccessSettings from './PublicAccessSettings';
 import McpSettings from './McpSettings';
+import BaseCodeSettings from './BaseCodeSettings';
 
 const SettingsModal = ({ visible, onClose }) => {
   return (
@@ -13,8 +14,13 @@ const SettingsModal = ({ visible, onClose }) => {
       width={680} // 增加模态框宽度
     >
       <Tabs
-        defaultActiveKey="publicAccess"
+        defaultActiveKey="baseCode"
         items={[
+          {
+            key: 'baseCode',
+            label: t('基本配置'),
+            children: <BaseCodeSettings />
+          },
           {
             key: 'publicAccess',
             label: t('公共访问'),

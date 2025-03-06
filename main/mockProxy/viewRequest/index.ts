@@ -4,6 +4,8 @@ import { getReqBodyData, hasMockData, matchRouter, setupNodeEnvVariables } from 
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 import { envUpdateEmitter } from "../../index";
 import { getMcpConfig, saveMcpConfig, createEditorMcpConfig, deleteEditorMcpConfig, McpConfig } from "../common/mcpConfig";
+import fs from 'fs';
+import path from 'path';
 
 const successData = {
   msg: 'success'
@@ -97,7 +99,34 @@ async function createTunnel(port: number, authtoken: string) {
   throw new Error(`Failed after ${MAX_RETRIES} attempts. Last error: ${lastError?.message || 'Unknown error'}`);
 }
 
-export default function viewRequest(req: Request, res: Response): boolean {
+// 基码配置文件路径
+const baseConfigFilePath = path.resolve(process.cwd(), 'mocxykit.config.json');
+
+// 获取基码配置
+const getBaseConfig = (): ProxyMockOptions => {
+  try {
+    if (fs.existsSync(baseConfigFilePath)) {
+      const configData = fs.readFileSync(baseConfigFilePath, 'utf-8');
+      return JSON.parse(configData);
+    }
+  } catch (error) {
+    console.error('读取基码配置文件失败:', error);
+  }
+  return {} as ProxyMockOptions;
+};
+
+// 保存基码配置
+const saveBaseConfig = (config: ProxyMockOptions): boolean => {
+  try {
+    fs.writeFileSync(baseConfigFilePath, JSON.stringify(config, null, 2), 'utf-8');
+    return true;
+  } catch (error) {
+    console.error('保存基码配置文件失败:', error);
+    return false;
+  }
+};
+
+export default function viewRequest(req: Request, res: Response, config: ProxyMockOptions): boolean {
   // 获取代理数据
   if (matchRouter('/express-proxy-mock/get-api-list', req.path)) {
     const apiData = getApiDataHasMockStatus()
@@ -523,6 +552,29 @@ export default function viewRequest(req: Request, res: Response): boolean {
           error: error instanceof Error ? error.message : '未知错误'
         });
       }
+    });
+    return true;
+  }
+
+  // 获取基码配置
+  if (matchRouter('/express-proxy-mock/get-base-config', req.path)) {
+    const baseConfig = getBaseConfig();
+    res.send({
+      success: true,
+      data: baseConfig
+    });
+    return true;
+  }
+
+  // 设置基码配置
+  if (matchRouter('/express-proxy-mock/set-base-config', req.path)) {
+    getReqBodyData(req).then((data: Record<string, any>) => {
+      const configData = data as ProxyMockOptions;
+      const success = saveBaseConfig(configData);
+      res.send({
+        success,
+        data: success ? configData : null
+      });
     });
     return true;
   }

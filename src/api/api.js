@@ -157,3 +157,16 @@ export async function updateMcpConfig(data) {
   return res
 }
 
+export async function fetchBaseConfig() {
+  const res = await request('/express-proxy-mock/get-base-config')
+  return res
+}
+
+export async function updateBaseConfig(data) {
+  const res = await request('/express-proxy-mock/set-base-config', {
+    method: 'POST',
+    data
+  })
+  return res
+}
+
