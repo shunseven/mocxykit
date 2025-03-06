@@ -6,8 +6,6 @@ import EnvSelect from '../envSelect/envSelect';
 import EnvForm from '../envForm/envForm';
 import { t, clearLocalCache } from '../../common/fun';
 
-const MCP_SERVER_URL = `http://127.0.0.1:${window.location.port || ''}/sse`; // MCP server 地址根据当前端口动态生成
-
 let preEnvId = null; // 上一个环境变量ID
 const EnvConfig = ({ value, onChange, disabled, proxyList, onProxyChange }) => {
   const [envModalVisible, setEnvModalVisible] = useState(false);
@@ -46,29 +44,9 @@ const EnvConfig = ({ value, onChange, disabled, proxyList, onProxyChange }) => {
     }
   };
 
-  const handleCopyMCPUrl = () => {
-    navigator.clipboard.writeText(MCP_SERVER_URL).then(() => {
-      message.success(t('复制成功'));
-    }).catch(() => {
-      message.error(t('复制失败'));
-    });
-  };
 
   return (
-    <div style={{ display: 'inline-flex', marginLeft: 20 }}>
-      <div tyle={{ display: 'inline-flex' }} >
-        
-        <Button
-          type="text"
-          icon={<CopyOutlined />}
-          onClick={handleCopyMCPUrl}
-          style={{ marginRight: 8, marginLeft: 4, color: '#1890ff' }}
-          title={t('复制 MCP Server URL')}
-        >
-          COPY MCP SERVER
-        </Button>
-      </div>
-     
+    <div style={{ display: 'flex', marginLeft: 20 , alignItems: 'center' }}>
       <span style={{ marginRight: 8 }}>{t('环境变量')}:</span>
       <EnvSelect 
         value={value} 
