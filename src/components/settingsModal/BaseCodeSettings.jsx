@@ -69,7 +69,7 @@ const BaseCodeSettings = ({ onClose }) => {
         <Form.Item
           name="apiRule"
           label={t("API规则")}
-          tooltip={t("设置API请求的匹配规则，可以是字符串或字符串数组")}
+          tooltip={t("全局代理的匹配规则，有多个规则用','隔开如'api/*，/test/*'")}
           rules={[{ required: true, message: t('请输入API规则') }]}
         >
           <Input placeholder={t("例如: /api")} />

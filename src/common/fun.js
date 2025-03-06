@@ -188,7 +188,7 @@ Examples:
   // 基本配置相关
   "基本配置": "Basic Settings",
   "API规则": "API Rules",
-  "设置API请求的匹配规则，可以是字符串或字符串数组": "Global proxy matching rule, default is all requests starting with api",
+  "全局代理的匹配规则，有多个规则用','隔开如'api/*，/test/*'": "Global proxy matching rule. Multiple rules can be separated by commas, e.g. 'api/*,/test/*'",
   "请输入API规则": "Please enter API rules",
   "例如: /api": "Example: /api/*",
   "配制页面的地址": "Config Page Path",

@@ -129,7 +129,7 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 
 |                      Name                       |               Type                |                    Default                    | Description                                                                                                          |
 | :---------------------------------------------: | :-------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
-|            **`apiRule`**            |              `string`              |              `/api/*`              | Global proxy matching rule, default is all requests starting with api                                          |
+|            **`apiRule`**            |              `string`              |              `/api/*`              | Global proxy matching rule, default is all requests starting with api. Multiple rules can be separated by commas, e.g. 'api/*,/test/*'                                          |
 |            **`https`**            |     `boolean`     |                  `true`               | Whether to proxy https requests.                                                                  |
 |              **`configPath`**              |         `string`         |                 `/config`                  | Address to open the configuration page, default is http://localhost:3000/config                     |
 |          **`cacheRequestHistoryMaxLen`**          |             `number`              |                  `30`                  |  Maximum number of cached request data                                                          |
