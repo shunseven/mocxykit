@@ -4,6 +4,7 @@ import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mc
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { getApiData, getMock } from "../mockProxy/common/fetchJsonData";
 import { getCacheRequestHistory } from "../mockProxy/common/cacheRequestHistory";
+import { getMcpConfig } from "../mockProxy/common/mcpConfig";
 import { z } from "zod";
 
 const createNewServer = () => new McpServer({
@@ -110,6 +111,18 @@ let servers: McpServer[] = [];
 let transports: Map<string, SSEServerTransport> = new Map();
 export default function createMcpServer (config: ProxyMockOptions) {
   return async function (req: Request, res: Response) {
+    // 检查MCP服务是否启用
+    const mcpConfig = getMcpConfig();
+    
+    if (!mcpConfig.open) {
+      // 如果MCP服务未启用，直接返回
+      if (matchRouter('/sse', req.path) || matchRouter('/mocxykit-mcp-messages', req.path)) {
+        res.status(403).send({ error: 'MCP服务未启用' });
+        return true;
+      }
+      return false;
+    }
+
     if (matchRouter('/sse', req.path)) {
       console.log('matchRouter', req.path);
       req.setTimeout(0);

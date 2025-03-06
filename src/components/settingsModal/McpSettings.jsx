@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Switch, Checkbox, InputNumber, Space, Typography, Divider, Row, Col } from 'antd';
+import { Card, Switch, Checkbox, Space, Typography, Divider, Row, Col, message, Tooltip } from 'antd';
+import { CopyOutlined } from '@ant-design/icons';
 import { t } from '../../common/fun';
 import { fetchMcpConfig, updateMcpConfig } from '../../api/api';
 
@@ -8,16 +9,16 @@ const { Title, Text } = Typography;
 const McpSettings = () => {
   const [mcpConfig, setMcpConfig] = useState({
     open: false,
-    editors: ['cursor'],
-    port: 3200
+    editors: ['cursor']
   });
+  const [port, setPort] = useState(3200);
   const [loading, setLoading] = useState(false);
 
   // 从URL获取端口号
   useEffect(() => {
     const url = new URL(window.location.href);
-    const port = url.port ? parseInt(url.port) : 3200;
-    setMcpConfig(prev => ({ ...prev, port }));
+    const urlPort = url.port ? parseInt(url.port) : 3200;
+    setPort(urlPort);
   }, []);
 
   // 获取MCP配置
@@ -27,7 +28,9 @@ const McpSettings = () => {
       try {
         const res = await fetchMcpConfig();
         if (res && res.data) {
+          // 设置配置，包括编辑器选择状态
           setMcpConfig(res.data);
+          console.log('获取到的MCP配置:', res.data);
         }
       } catch (error) {
         console.error('获取MCP配置失败:', error);
@@ -61,26 +64,43 @@ const McpSettings = () => {
     await updateMcpConfigToServer(newConfig);
   };
 
-  // 处理端口变化
-  const handlePortChange = async (value) => {
-    if (value && value > 0) {
-      const newConfig = { ...mcpConfig, port: value };
-      setMcpConfig(newConfig);
-      await updateMcpConfigToServer(newConfig);
-    }
-  };
-
   // 更新配置到服务器
   const updateMcpConfigToServer = async (config) => {
     setLoading(true);
     try {
-      await updateMcpConfig(config);
+      // 发送请求时包含端口信息
+      const res = await updateMcpConfig({
+        ...config,
+        port: port
+      });
+      
+      // 如果服务器返回了更新后的配置，使用它
+      if (res && res.data) {
+        setMcpConfig(res.data);
+        console.log('更新后的MCP配置:', res.data);
+      }
     } catch (error) {
       console.error('更新MCP配置失败:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  // 复制SSE URL到剪贴板
+  const copySSEUrl = () => {
+    const sseUrl = `http://localhost:${port}/sse`;
+    navigator.clipboard.writeText(sseUrl)
+      .then(() => {
+        message.success(t('服务地址已复制到剪贴板'));
+      })
+      .catch(err => {
+        console.error('复制失败:', err);
+        message.error(t('复制失败'));
+      });
+  };
+
+  // 获取SSE URL
+  const getSSEUrl = () => `http://localhost:${port}/sse`;
 
   return (
     <Card title={t("MCP 设置")} bordered={false} size="small">
@@ -118,7 +138,7 @@ const McpSettings = () => {
                     onChange={(e) => handleEditorChange('windsurf', e.target.checked)}
                     disabled={true} // 暂不支持windsurf
                   >
-                    Windsurf <Text type="secondary">{t("(暂不支持)")}</Text>
+                    Windsurf <Text type="secondary">{t("暂不支持")}</Text>
                   </Checkbox>
                 </Space>
               </Col>
@@ -128,20 +148,23 @@ const McpSettings = () => {
             
             <Row align="middle">
               <Col span={24}>
-                <Title level={5} style={{ marginTop: 0 }}>{t("服务端口")}</Title>
-                <Space align="center">
-                  <InputNumber 
-                    min={1000} 
-                    max={65535} 
-                    value={mcpConfig.port} 
-                    onChange={handlePortChange}
-                    disabled={loading}
-                    style={{ width: '100px' }}
-                  />
-                  <Text type="secondary">
-                    {t("当前服务地址: ")}http://localhost:{mcpConfig.port}/sse
+                <Title level={5} style={{ marginTop: 0 }}>{t("服务地址")}</Title>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Text code style={{ fontSize: '14px' }}>
+                    {getSSEUrl()}
                   </Text>
-                </Space>
+                  <Tooltip title={t("复制服务地址")}>
+                    <CopyOutlined 
+                      onClick={copySSEUrl} 
+                      style={{ 
+                        marginLeft: 8, 
+                        cursor: 'pointer',
+                        fontSize: '16px',
+                        color: '#1890ff'
+                      }} 
+                    />
+                  </Tooltip>
+                </div>
               </Col>
             </Row>
           </>

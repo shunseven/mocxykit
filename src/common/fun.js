@@ -143,6 +143,17 @@ const dict = {
   "开启公网访问失败": "Failed to Enable Public Access",
   "公网访问地址：": "Public Access URL:",
   
+  // MCP设置相关
+  "MCP 设置": "MCP Settings",
+  "启用 MCP 服务": "Enable MCP Service",
+  "编辑器支持": "Editor Support",
+  "暂不支持": "(Not Supported Yet)",
+  "服务地址": "Service URL",
+  "复制服务地址": "Copy Service URL",
+  "服务地址已复制到剪贴板": "Service URL copied to clipboard",
+  "复制失败": "Copy Failed",
+  "公共访问": "Public Access",
+  
   "返回随机数据": "Return Random Data",
   "随机数据配置说明": "Use comma to separate multiple fields. Example: data.list, page.total",
   "请输入字段路径": "Enter field path, e.g., data.list",

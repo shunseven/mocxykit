@@ -5,7 +5,6 @@ import path from 'path';
 export interface McpConfig {
   open: boolean;
   editors: string[];
-  port: number;
 }
 
 // 编辑器配置接口
@@ -17,8 +16,7 @@ export interface EditorConfig {
 // 默认MCP配置
 const defaultMcpConfig: McpConfig = {
   open: false,
-  editors: ['cursor'],
-  port: 3200
+  editors: []
 };
 
 // 支持的编辑器配置
@@ -35,12 +33,55 @@ function getProjectRootPath(): string {
 // MCP配置文件路径
 const mcpConfigPath = path.join(getProjectRootPath(), 'proxyMockData', 'mcpConfig.json');
 
+// 检查编辑器配置文件是否存在并包含特定配置
+export function checkEditorConfig(editor: string): boolean {
+  try {
+    const editorConfig = supportedEditors.find(e => e.editor === editor);
+    if (!editorConfig) return false;
+
+    const projectRoot = getProjectRootPath();
+    const configPath = path.join(projectRoot, editorConfig.path);
+    
+    // 检查文件是否存在
+    if (!fs.existsSync(configPath)) {
+      return false;
+    }
+    
+    // 读取并解析配置文件
+    const fileContent = fs.readFileSync(configPath, 'utf-8');
+    const config = JSON.parse(fileContent);
+    
+    // 检查是否包含特定配置
+    return !!(config.mcpServers && config.mcpServers["sample-project-server"]);
+  } catch (error) {
+    console.error(`检查编辑器配置失败: ${editor}`, error);
+    return false;
+  }
+}
+
 // 获取MCP配置
 export function getMcpConfig(): McpConfig {
   try {
     if (fs.existsSync(mcpConfigPath)) {
       const configData = fs.readFileSync(mcpConfigPath, 'utf-8');
-      return JSON.parse(configData);
+      const config = JSON.parse(configData);
+      
+      // 获取基本配置
+      const mcpConfig: McpConfig = {
+        open: config.open,
+        editors: []
+      };
+      
+      // 检查每个编辑器的配置文件是否存在并包含特定配置
+      if (config.open) {
+        supportedEditors.forEach(editorConfig => {
+          if (checkEditorConfig(editorConfig.editor)) {
+            mcpConfig.editors.push(editorConfig.editor);
+          }
+        });
+      }
+      
+      return mcpConfig;
     }
   } catch (error) {
     console.error('读取MCP配置失败:', error);
@@ -57,7 +98,12 @@ export function saveMcpConfig(config: McpConfig): void {
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
-    fs.writeFileSync(mcpConfigPath, JSON.stringify(config, null, 2));
+    // 只保存open和editors字段
+    const saveConfig = {
+      open: config.open,
+      editors: config.editors
+    };
+    fs.writeFileSync(mcpConfigPath, JSON.stringify(saveConfig, null, 2));
   } catch (error) {
     console.error('保存MCP配置失败:', error);
   }

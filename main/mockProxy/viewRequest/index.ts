@@ -449,11 +449,22 @@ export default function viewRequest(req: Request, res: Response): boolean {
 
   // 获取MCP配置
   if (matchRouter('/express-proxy-mock/get-mcp-config', req.path)) {
-    const mcpConfig = getMcpConfig();
-    res.send({
-      code: 0,
-      data: mcpConfig
-    });
+    try {
+      // 获取MCP配置，此时已经检查了编辑器配置文件
+      const mcpConfig = getMcpConfig();
+      
+      res.send({
+        code: 0,
+        data: mcpConfig
+      });
+    } catch (error) {
+      console.error('获取MCP配置失败:', error);
+      res.status(500).send({
+        code: 1,
+        msg: '获取MCP配置失败',
+        error: error instanceof Error ? error.message : '未知错误'
+      });
+    }
     return true;
   }
 
@@ -461,16 +472,26 @@ export default function viewRequest(req: Request, res: Response): boolean {
   if (matchRouter('/express-proxy-mock/update-mcp-config', req.path)) {
     getReqBodyData(req).then((bodyData) => {
       try {
-        // 保存MCP配置
-        const mcpConfig = bodyData as McpConfig;
+        // 从请求中获取配置和端口
+        const requestData = bodyData as any;
+        const port = requestData.port || 3200; // 从请求中获取端口
+        
+        // 保存MCP配置（不包含端口）
+        const mcpConfig: McpConfig = {
+          open: requestData.open,
+          editors: requestData.editors
+        };
+        
         const oldConfig = getMcpConfig();
+        
+        // 保存基本配置
         saveMcpConfig(mcpConfig);
         
         // 处理编辑器配置文件
         if (mcpConfig.open) {
           // 如果开启MCP服务，为选中的编辑器创建配置文件
           mcpConfig.editors.forEach(editor => {
-            createEditorMcpConfig(editor, mcpConfig.port);
+            createEditorMcpConfig(editor, port);
           });
           
           // 对于之前选中但现在未选中的编辑器，删除其配置
@@ -486,9 +507,13 @@ export default function viewRequest(req: Request, res: Response): boolean {
           });
         }
         
+        // 获取更新后的配置（包括检查编辑器配置文件）
+        const updatedConfig = getMcpConfig();
+        
         res.send({
           code: 0,
-          msg: 'MCP配置更新成功'
+          msg: 'MCP配置更新成功',
+          data: updatedConfig
         });
       } catch (error) {
         console.error('更新MCP配置失败:', error);
