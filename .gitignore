@@ -31,3 +31,4 @@ viewsDist
 proxyMockData/env.json
 .vite
 .cursor
+mocxykit.config.json

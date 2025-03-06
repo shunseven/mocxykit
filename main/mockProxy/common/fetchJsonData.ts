@@ -1,8 +1,28 @@
 import fs from 'fs';
+import path from 'path';
 import { getReqBodyData, hasMockData, parseUrlToKey } from './fun';
 import { Request } from 'express';
 
 const apiDataFilePath = './proxyMockData/api.json'
+
+/**
+ * 读取mocxykit.config.json文件
+ * @returns 配置数据，如果文件不存在则返回空对象
+ */
+export function getMocxykitConfig(): Partial<ProxyMockOptions> {
+  const configFilePath = path.resolve(process.cwd(), 'mocxykit.config.json');
+  try {
+    if (fs.existsSync(configFilePath)) {
+      const configData = fs.readFileSync(configFilePath, 'utf-8');
+      const config = JSON.parse(configData);
+      return config;
+    }
+  } catch (error) {
+    console.error('读取mocxykit.config.json配置文件失败:', error);
+  }
+  return {};
+}
+
 export function getApiData():ApiData {
   const stat=fs.existsSync(apiDataFilePath);
   const config=stat ? JSON.parse(fs.readFileSync(apiDataFilePath).toString()) : {

@@ -103,17 +103,7 @@ async function createTunnel(port: number, authtoken: string) {
 const baseConfigFilePath = path.resolve(process.cwd(), 'mocxykit.config.json');
 
 // 获取基码配置
-const getBaseConfig = (): ProxyMockOptions => {
-  try {
-    if (fs.existsSync(baseConfigFilePath)) {
-      const configData = fs.readFileSync(baseConfigFilePath, 'utf-8');
-      return JSON.parse(configData);
-    }
-  } catch (error) {
-    console.error('读取基码配置文件失败:', error);
-  }
-  return {} as ProxyMockOptions;
-};
+
 
 // 保存基码配置
 const saveBaseConfig = (config: ProxyMockOptions): boolean => {
@@ -538,12 +528,12 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
         
         // 获取更新后的配置（包括检查编辑器配置文件）
         const updatedConfig = getMcpConfig();
-        
         res.send({
           code: 0,
           msg: 'MCP配置更新成功',
           data: updatedConfig
         });
+       
       } catch (error) {
         console.error('更新MCP配置失败:', error);
         res.status(500).send({
@@ -558,10 +548,10 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
 
   // 获取基码配置
   if (matchRouter('/express-proxy-mock/get-base-config', req.path)) {
-    const baseConfig = getBaseConfig();
+ ;
     res.send({
       success: true,
-      data: baseConfig
+      data: config
     });
     return true;
   }
@@ -571,6 +561,7 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
     getReqBodyData(req).then((data: Record<string, any>) => {
       const configData = data as ProxyMockOptions;
       const success = saveBaseConfig(configData);
+      envUpdateEmitter.emit('serverRestart');
       res.send({
         success,
         data: success ? configData : null

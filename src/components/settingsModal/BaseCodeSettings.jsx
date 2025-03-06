@@ -52,7 +52,7 @@ const BaseCodeSettings = () => {
         form={form}
         layout="vertical"
         initialValues={{
-          apiRule: '/api',
+          apiRule: '',
           configPath: '',
           https: false,
           cacheRequestHistoryMaxLen: 100,
@@ -72,8 +72,8 @@ const BaseCodeSettings = () => {
 
         <Form.Item
           name="configPath"
-          label={t("配置路径")}
-          tooltip={t("配置文件的路径")}
+          label={t("配制页面的地址")}
+          tooltip={t("打开配制页面的地址，默认为http://localhost:xxxx/config")}
         >
           <Input placeholder={t("例如: ./config")} />
         </Form.Item>
@@ -89,8 +89,8 @@ const BaseCodeSettings = () => {
 
         <Form.Item
           name="cacheRequestHistoryMaxLen"
-          label={t("缓存请求历史最大长度")}
-          tooltip={t("缓存请求历史的最大长度")}
+          label={t("缓存请求历史最大个数")}
+          tooltip={t("缓存请求历史的最大个数")}
         >
           <InputNumber min={1} style={{ width: '100%' }} />
         </Form.Item>
@@ -104,15 +104,6 @@ const BaseCodeSettings = () => {
             <Option value="zh">{t("中文")}</Option>
             <Option value="en">{t("英文")}</Option>
           </Select>
-        </Form.Item>
-
-        <Form.Item
-          name="debug"
-          label={t("调试模式")}
-          valuePropName="checked"
-          tooltip={t("是否启用调试模式")}
-        >
-          <Switch />
         </Form.Item>
 
         <Form.Item

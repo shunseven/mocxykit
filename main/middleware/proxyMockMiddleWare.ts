@@ -4,26 +4,14 @@ import entry from '../mockProxy/entry';
 import viewRequest from '../mockProxy/viewRequest';
 import defaultConfig from './defaultConfig';
 import createMcpServer from '../mcp/mcp';
-import fs from 'fs';
-import path from 'path';
+import { getMocxykitConfig } from '../mockProxy/common/fetchJsonData';
 
 export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
-  // 尝试读取mocxykit.config.json文件
-  let fileConfig: Partial<ProxyMockOptions> = {};
-  const configFilePath = path.resolve(process.cwd(), 'mocxykit.config.json');
-  
-  try {
-    if (fs.existsSync(configFilePath)) {
-      const configData = fs.readFileSync(configFilePath, 'utf-8');
-      fileConfig = JSON.parse(configData);
-      console.log('已加载mocxykit.config.json配置文件');
-    }
-  } catch (error) {
-    console.error('读取mocxykit.config.json配置文件失败:', error);
-  }
+  // 获取mocxykit.config.json文件配置
+  const fileConfig = getMocxykitConfig();
   
   // 合并配置：默认配置 < 文件配置 < 传入的配置
-  const config = Object.assign({}, defaultConfig, fileConfig, options);
+  const config = Object.assign({}, defaultConfig, options, fileConfig);
   const entryMiddleware = entry(config);
   const clientMiddleware = clientEntry(config);
   const mcpServer = createMcpServer(config);

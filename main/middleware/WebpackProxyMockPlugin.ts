@@ -1,4 +1,4 @@
-import { getApiData, getEnvData, setApiData } from '../mockProxy/common/fetchJsonData';
+import { getApiData, getEnvData, setApiData, getMocxykitConfig } from '../mockProxy/common/fetchJsonData';
 import { logger } from '../mockProxy/common/log';
 import proxyMockMiddleware from './proxyMockMiddleWare';
 import defaultConfig from './defaultConfig';
@@ -11,7 +11,11 @@ export class WebpackProxyMockPlugin {
   originEnv: Record<string, string> | null = null;
 
   constructor(options: ProxyMockOptions = defaultConfig) {
-    this.options = Object.assign({}, defaultConfig, options);
+    // 获取mocxykit.config.json文件配置
+    const fileConfig = getMocxykitConfig();
+    
+    // 合并配置：默认配置 < 文件配置 < 传入的配置
+    this.options = Object.assign({}, defaultConfig, options, fileConfig);
   }
 
   setupDevServer(app: any) {
@@ -56,6 +60,12 @@ export class WebpackProxyMockPlugin {
 
     const envData = getEnvData();
     const currentEnv = envData.find(env => env.id === envId);
+
+    envUpdateEmitter.on('serverRestart', () => {
+      if (this.compiler.watching) {
+        this.compiler.watching.invalidate();
+      }
+    })
 
     if (currentEnv?.variables) {
       // 处理 process.env 可能是对象的情况

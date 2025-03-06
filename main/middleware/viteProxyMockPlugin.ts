@@ -1,4 +1,4 @@
-import { getApiData, getEnvData, setApiData } from '../mockProxy/common/fetchJsonData';
+import { getApiData, getEnvData, setApiData, getMocxykitConfig } from '../mockProxy/common/fetchJsonData';
 import proxyMockMiddleware from './proxyMockMiddleWare';
 import defaultConfig from './defaultConfig';
 import { envUpdateEmitter } from '../index';
@@ -11,7 +11,12 @@ declare global {
 function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
   // 添加环境检查
   const isDevelopment = process.env.NODE_ENV === 'development';
-  options = Object.assign({}, defaultConfig, options);
+  
+  // 获取mocxykit.config.json文件配置
+  const fileConfig = getMocxykitConfig();
+  
+  // 合并配置：默认配置 < 文件配置 < 传入的配置
+  options = Object.assign({}, defaultConfig, options, fileConfig);
 
   if (!global.originEnv) {
     global.originEnv =  Object.entries(process.env).reduce((acc, [key, value]) => ({
@@ -146,6 +151,11 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
         // @ts-ignore
         return proxyMockMiddleware(options)(enhancedReq, enhancedRes, next);
       });
+
+      envUpdateEmitter.on('serverRestart', () => {
+        console.log('服务器已重新启动');
+         server.restart();
+      })
 
       // 监听环境变量更新事件
       envUpdateEmitter.on('updateEnvVariables', async () => {
