@@ -1,0 +1,12 @@
+{
+  "open": true,
+  "editors": [
+    "cursor",
+    "windsurf"
+  ],
+  "mcpServers": {
+    "sample-project-server": {
+      "url": "http://localhost:3200/sse"
+    }
+  }
+}

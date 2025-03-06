@@ -142,3 +142,18 @@ export async function enablePublicAccess(data) {
   return res
 }
 
+// 获取MCP配置
+export async function fetchMcpConfig() {
+  const res = await request('/express-proxy-mock/get-mcp-config')
+  return res
+}
+
+// 更新MCP配置
+export async function updateMcpConfig(data) {
+  const res = await request('/express-proxy-mock/update-mcp-config', {
+    method: 'POST',
+    data
+  })
+  return res
+}
+

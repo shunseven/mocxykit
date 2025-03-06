@@ -10,7 +10,6 @@ export default defineConfig({
     })
   ],
   server: {
-    host: '0.0.0.0',
     port: 3200,
     open: '/vite.html', // 修改为直接指向 vite.html
   },

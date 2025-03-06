@@ -3,7 +3,7 @@ import clientEntry from '../clientEntry';
 import entry from '../mockProxy/entry';
 import viewRequest from '../mockProxy/viewRequest';
 import defaultConfig from './defaultConfig';
-import createMcpServer from '../mockProxy/mcp/mcp';
+import createMcpServer from '../mcp/mcp';
 
 export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
   const config = Object.assign({}, defaultConfig, options);

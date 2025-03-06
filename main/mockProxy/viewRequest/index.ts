@@ -3,6 +3,7 @@ import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiD
 import { getReqBodyData, hasMockData, matchRouter, setupNodeEnvVariables } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 import { envUpdateEmitter } from "../../index";
+import { getMcpConfig, saveMcpConfig, createEditorMcpConfig, deleteEditorMcpConfig, McpConfig } from "../common/mcpConfig";
 
 const successData = {
   msg: 'success'
@@ -443,6 +444,61 @@ export default function viewRequest(req: Request, res: Response): boolean {
       });
     });
     
+    return true;
+  }
+
+  // 获取MCP配置
+  if (matchRouter('/express-proxy-mock/get-mcp-config', req.path)) {
+    const mcpConfig = getMcpConfig();
+    res.send({
+      code: 0,
+      data: mcpConfig
+    });
+    return true;
+  }
+
+  // 更新MCP配置
+  if (matchRouter('/express-proxy-mock/update-mcp-config', req.path)) {
+    getReqBodyData(req).then((bodyData) => {
+      try {
+        // 保存MCP配置
+        const mcpConfig = bodyData as McpConfig;
+        const oldConfig = getMcpConfig();
+        saveMcpConfig(mcpConfig);
+        
+        // 处理编辑器配置文件
+        if (mcpConfig.open) {
+          // 如果开启MCP服务，为选中的编辑器创建配置文件
+          mcpConfig.editors.forEach(editor => {
+            createEditorMcpConfig(editor, mcpConfig.port);
+          });
+          
+          // 对于之前选中但现在未选中的编辑器，删除其配置
+          oldConfig.editors.forEach(editor => {
+            if (!mcpConfig.editors.includes(editor)) {
+              deleteEditorMcpConfig(editor);
+            }
+          });
+        } else {
+          // 如果关闭MCP服务，删除所有编辑器配置
+          oldConfig.editors.forEach(editor => {
+            deleteEditorMcpConfig(editor);
+          });
+        }
+        
+        res.send({
+          code: 0,
+          msg: 'MCP配置更新成功'
+        });
+      } catch (error) {
+        console.error('更新MCP配置失败:', error);
+        res.status(500).send({
+          code: 1,
+          msg: '更新MCP配置失败',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
+    });
     return true;
   }
 

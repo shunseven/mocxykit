@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { matchRouter, parseUrlToKey } from "../common/fun";
+import { matchRouter, parseUrlToKey } from "../mockProxy/common/fun";
 import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
-import { getApiData, getMock } from "../common/fetchJsonData";
-import { getCacheRequestHistory } from "../common/cacheRequestHistory";
+import { getApiData, getMock } from "../mockProxy/common/fetchJsonData";
+import { getCacheRequestHistory } from "../mockProxy/common/cacheRequestHistory";
 import { z } from "zod";
 
 const createNewServer = () => new McpServer({
