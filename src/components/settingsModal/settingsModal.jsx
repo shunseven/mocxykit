@@ -19,7 +19,7 @@ const SettingsModal = ({ visible, onClose }) => {
           {
             key: 'baseCode',
             label: t('基本配置'),
-            children: <BaseCodeSettings />
+            children: <BaseCodeSettings onClose={onClose} />
           },
           {
             key: 'publicAccess',
