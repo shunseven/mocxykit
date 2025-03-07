@@ -23,7 +23,7 @@ const SettingsModal = ({ visible, onClose }) => {
           },
           {
             key: 'publicAccess',
-            label: t('公共访问'),
+            label: t('公网访问'),
             children: <PublicAccessSettings />
           },
           {
