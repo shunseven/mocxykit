@@ -28,6 +28,8 @@ function getProjectRootPath(): string {
   return process.cwd();
 }
 
+const MCP_PROJECT_NAME = 'get-mcp-data'; // MCP项目名称
+
 // MCP配置文件路径
 const mcpConfigPath = path.join(getProjectRootPath(), 'proxyMockData', 'mcpConfig.json');
 
@@ -50,7 +52,7 @@ export function checkEditorConfig(editor: string): boolean {
     const config = JSON.parse(fileContent);
     
     // 检查是否包含特定配置
-    return !!(config.mcpServers && config.mcpServers["sample-project-server"]);
+    return !!(config.mcpServers && config.mcpServers[MCP_PROJECT_NAME]);
   } catch (error) {
     console.error(`检查编辑器配置失败: ${editor}`, error);
     return false;
@@ -134,7 +136,7 @@ export function createEditorMcpConfig(editor: string, port: number): void {
       existingConfig.mcpServers = {};
     }
     
-    existingConfig.mcpServers["sample-project-server"] = {
+    existingConfig.mcpServers["MCP_PROJECT_NAME"] = {
       url: `http://localhost:${port}/sse`
     };
     
@@ -161,9 +163,9 @@ export function deleteEditorMcpConfig(editor: string): void {
         const config = JSON.parse(fileContent);
         
         // 如果存在mcpServers配置
-        if (config.mcpServers && config.mcpServers["sample-project-server"]) {
+        if (config.mcpServers && config.mcpServers["MCP_PROJECT_NAME"]) {
           // 删除特定的服务器配置
-          delete config.mcpServers["sample-project-server"];
+          delete config.mcpServers["MCP_PROJECT_NAME"];
           
           // 如果mcpServers为空对象，则删除整个mcpServers属性
           if (Object.keys(config.mcpServers).length === 0) {
