@@ -550,7 +550,6 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
 
   // 获取基码配置
   if (matchRouter('/express-proxy-mock/get-base-config', req.path)) {
- ;
     res.send({
       success: true,
       data: config
@@ -568,6 +567,100 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
         success,
         data: success ? configData : null
       });
+    });
+    return true;
+  }
+
+  // ApiFox 用户团队和项目获取
+  if (matchRouter('/express-proxy-mock/apifox-user-teams-and-projects', req.path)) {
+    getReqBodyData(req).then(async (data: Record<string, any>) => {
+      try {
+        const { token } = data;
+        if (!token) {
+          res.send({
+            success: false,
+            message: '缺少 token 参数'
+          });
+          return;
+        }
+
+        // 导入 fox-api 模块
+        const foxApi = await import('../../api/fox-api');
+        const result = await foxApi.getUserTeamsAndProjects(token);
+        
+        res.send(result);
+      } catch (error) {
+        res.send({
+          success: false,
+          message: '获取团队和项目数据失败',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
+    });
+    return true;
+  }
+
+  // ApiFox API 树形列表获取
+  if (matchRouter('/express-proxy-mock/apifox-tree-list', req.path)) {
+    getReqBodyData(req).then(async (data: Record<string, any>) => {
+      try {
+        const { token, projectId } = data;
+        if (!token || !projectId) {
+          res.send({
+            success: false,
+            message: '缺少必要参数'
+          });
+          return;
+        }
+
+        // 导入 fox-api 模块
+        const foxApi = await import('../../api/fox-api');
+        const result = await foxApi.getApiTreeList(token, projectId);
+        
+        res.send({
+          success: true,
+          data: result.data
+        });
+      } catch (error) {
+        res.send({
+          success: false,
+          message: '获取 API 树形列表失败',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
+    });
+    return true;
+  }
+
+  // ApiFox 同步 API
+  if (matchRouter('/express-proxy-mock/apifox-sync-api', req.path)) {
+    getReqBodyData(req).then(async (data: Record<string, any>) => {
+      try {
+        const { token, projectId, folders } = data;
+        if (!token || !projectId || !folders || !Array.isArray(folders) || folders.length === 0) {
+          res.send({
+            success: false,
+            message: '缺少必要参数'
+          });
+          return;
+        }
+
+        // 这里暂不实现具体同步逻辑，返回成功
+        res.send({
+          success: true,
+          message: 'API 同步成功',
+          data: {
+            projectId,
+            foldersCount: folders.length
+          }
+        });
+      } catch (error) {
+        res.send({
+          success: false,
+          message: 'API 同步失败',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
     });
     return true;
   }

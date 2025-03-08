@@ -6,7 +6,8 @@ import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
 import { t } from '../../common/fun';
-import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import ApiFox from '../apiMangeTool/apifox'; 
 const { Column } = Table;
 
 const colorMap = {
@@ -136,6 +137,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         
       </Space>
       <Space size={10} >
+        <ApiFox onApiDataChange={handleImportData} />
         <CacheRequestHistoryData onApiDataChange={handleImportData} />
         <Button
           onClick={() => {
