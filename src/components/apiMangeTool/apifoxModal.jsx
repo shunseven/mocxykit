@@ -15,14 +15,37 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   const [apiTreeData, setApiTreeData] = useState([]);
   const [checkedFolders, setCheckedFolders] = useState([]);
 
-  // 初始化时检查本地存储中是否有 token
+  // 初始化时检查本地存储中是否有 token 和 projectId
   useEffect(() => {
     if (visible) {
       const savedToken = localStorage.getItem('apiFoxToken');
+      const savedProjectId = localStorage.getItem('apiFoxProjectId');
+      
       if (savedToken) {
         setToken(savedToken);
-        setCurrentStep(1);
-        fetchTeamsAndProjects(savedToken);
+        
+        if (savedProjectId) {
+          // 如果已有项目ID，直接跳到第三步
+          const projectId = Number(savedProjectId);
+          setSelectedProject(projectId);
+          setCurrentStep(2);
+          fetchApiTreeList(projectId, savedToken);
+          
+          // 恢复勾选状态
+          const savedCheckedFolders = localStorage.getItem(`apiFoxCheckedFolders_${projectId}`);
+          if (savedCheckedFolders) {
+            try {
+              const parsedCheckedFolders = JSON.parse(savedCheckedFolders);
+              setCheckedFolders(parsedCheckedFolders);
+            } catch (error) {
+              console.error('解析保存的勾选项出错:', error);
+            }
+          }
+        } else {
+          // 只有token，跳到第二步
+          setCurrentStep(1);
+          fetchTeamsAndProjects(savedToken);
+        }
       }
     }
   }, [visible]);
@@ -57,7 +80,7 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   };
 
   // 获取 API 树形结构
-  const fetchApiTreeList = async (projectId) => {
+  const fetchApiTreeList = async (projectId, tokenValue = token) => {
     setLoading(true);
     try {
       const response = await fetch('/express-proxy-mock/apifox-tree-list', {
@@ -66,7 +89,7 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          token: token,
+          token: tokenValue,
           projectId: projectId 
         }),
       });
@@ -75,6 +98,18 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
       
       if (result.success) {
         setApiTreeData(result.data || []);
+        
+        // 获取API树后，尝试恢复勾选状态
+        const savedCheckedFolders = localStorage.getItem(`apiFoxCheckedFolders_${projectId}`);
+        if (savedCheckedFolders) {
+          try {
+            const parsedCheckedFolders = JSON.parse(savedCheckedFolders);
+            setCheckedFolders(parsedCheckedFolders);
+          } catch (error) {
+            console.error('解析保存的勾选项出错:', error);
+          }
+        }
+        
         setLoading(false);
       } else {
         message.error('获取 API 列表失败');
@@ -93,6 +128,9 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
       message.warning('请至少选择一个 API 分组');
       return;
     }
+
+    // 保存勾选的文件夹到本地存储
+    localStorage.setItem(`apiFoxCheckedFolders_${selectedProject}`, JSON.stringify(checkedFolders));
 
     setLoading(true);
     try {
@@ -143,7 +181,13 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   const handleProjectSelect = (projectId) => {
     setSelectedProject(projectId);
     localStorage.setItem('apiFoxProjectId', projectId);
+    
+    // 清空当前勾选状态
+    setCheckedFolders([]);
+    
+    // 获取该项目的 API 树形结构
     fetchApiTreeList(projectId);
+    
     setCurrentStep(2);
   };
 
@@ -154,9 +198,9 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
 
   // 处理关闭弹窗
   const handleClose = () => {
+    // 不重置勾选状态，只重置步骤和API树数据
     setCurrentStep(0);
     setApiTreeData([]);
-    setCheckedFolders([]);
     if (!localStorage.getItem('apiFoxToken')) {
       setToken('');
     }
@@ -166,6 +210,11 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   // 处理返回上一步
   const handlePrevStep = () => {
     setCurrentStep(currentStep - 1);
+  };
+
+  // 处理切换项目
+  const handleSwitchProject = () => {
+    setCurrentStep(1);
   };
 
   // 渲染步骤内容
@@ -231,21 +280,36 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
           </div>
         );
       case 2:
+        // 查找当前项目名称
+        const currentProject = projectsData.find(p => p.id === selectedProject);
+        const projectName = currentProject ? currentProject.name : `项目 ID: ${selectedProject}`;
+        
         return (
           <div style={{ marginTop: 24 }}>
+            <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Text strong>当前项目: {projectName}</Text>
+              <Button size="small" onClick={handleSwitchProject}>切换项目</Button>
+            </div>
+            
             <Spin spinning={loading}>
               {apiTreeData.length > 0 ? (
                 <div style={{ maxHeight: 400, overflow: 'auto' }}>
                   <Tree
                     checkable
                     onCheck={onCheck}
+                    checkedKeys={checkedFolders}
+                    defaultCheckedKeys={checkedFolders}
                     treeData={apiTreeData.map(folder => ({
                       title: folder.name,
                       key: folder.key,
                       children: folder.children.map(api => ({
+                        style: {
+                          backgroundColor: '#fafafa',
+                          width: '100%',
+                        },
                         title: `${api.name} [${api.api?.method?.toUpperCase() || ''}] ${api.api?.path || ''}`,
                         key: api.key,
-                        disabled: true, // 禁用 API 项，只能选择文件夹
+                        checkable: false, // API 项不显示选择框
                       })),
                     }))}
                   />
