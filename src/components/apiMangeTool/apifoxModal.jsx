@@ -209,12 +209,31 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
 
   // 处理返回上一步
   const handlePrevStep = () => {
-    setCurrentStep(currentStep - 1);
+    const prevStep = currentStep - 1;
+    setCurrentStep(prevStep);
+    
+    // 如果从第三步返回到第二步，重新请求团队和项目数据
+    if (currentStep === 2 && prevStep === 1) {
+      fetchTeamsAndProjects(token);
+    }
   };
 
   // 处理切换项目
   const handleSwitchProject = () => {
-    setCurrentStep(1);
+    // 检查是否有保存的项目ID
+    const savedProjectId = localStorage.getItem('apiFoxProjectId');
+    
+    if (savedProjectId) {
+      // 如果有保存的项目ID，直接跳到第三步
+      const projectId = Number(savedProjectId);
+      setSelectedProject(projectId);
+      setCurrentStep(2);
+      fetchApiTreeList(projectId, token);
+    } else {
+      // 如果没有保存的项目ID，跳到第二步
+      setCurrentStep(1);
+      fetchTeamsAndProjects(token);
+    }
   };
 
   // 渲染步骤内容
