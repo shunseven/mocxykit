@@ -26,6 +26,8 @@ interface ApiConfig {
   bindEnvId?: number; // 添加绑定环境变量ID字段
   fakerKey?: string;
   hasFaker?: boolean;
+  requestSchema?: Record<string, any>;
+  responsesSchema?: Record<string, any>;
 }
 
 interface ApiData {

@@ -670,7 +670,10 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
             folders,
             dataSchemas,
             autoCompleteUrl === true,
-            selectedApiRule || ''
+            selectedApiRule || '',
+            token,
+            projectId,
+            foxApi.getApiDetail
           );
           
           // 4. 返回同步结果
