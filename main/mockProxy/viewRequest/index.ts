@@ -636,7 +636,7 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
   if (matchRouter('/express-proxy-mock/apifox-sync-api', req.path)) {
     getReqBodyData(req).then(async (data: Record<string, any>) => {
       try {
-        const { token, projectId, folders } = data;
+        const { token, projectId, folders, autoCompleteUrl, autoSync, selectedApiRule } = data;
         if (!token || !projectId || !folders || !Array.isArray(folders) || folders.length === 0) {
           res.send({
             success: false,
@@ -645,19 +645,49 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
           return;
         }
 
-        // 这里暂不实现具体同步逻辑，返回成功
-        res.send({
-          success: true,
-          message: 'API 同步成功',
-          data: {
-            projectId,
-            foldersCount: folders.length
+        // 导入必要的模块
+        const foxApi = await import('../../api/fox-api');
+        const apiManageTool = await import('../common/apiManageTool');
+        
+        try {
+          // 1. 获取API树形结构
+          const apiTreeResult = await foxApi.getApiTreeList(token, projectId);
+          if (!apiTreeResult.success) {
+            res.send({
+              success: false,
+              message: '获取API树形结构失败'
+            });
+            return;
           }
-        });
+          
+          // 2. 获取数据模型Schema
+          const dataSchemasResult = await foxApi.getProjectDataSchemas(token, projectId);
+          const dataSchemas = dataSchemasResult.success ? dataSchemasResult.data : [];
+          
+          // 3. 同步API数据
+          const syncResult = await apiManageTool.syncApiFoxApi(
+            apiTreeResult.data,
+            folders,
+            dataSchemas,
+            autoCompleteUrl === true,
+            selectedApiRule || ''
+          );
+          
+          // 4. 返回同步结果
+          res.send(syncResult);
+        } catch (error) {
+          console.error('同步API数据出错:', error);
+          res.send({
+            success: false,
+            message: '同步API数据出错',
+            error: error instanceof Error ? error.message : '未知错误'
+          });
+        }
       } catch (error) {
+        console.error('处理同步API请求出错:', error);
         res.send({
           success: false,
-          message: 'API 同步失败',
+          message: '处理同步API请求出错',
           error: error instanceof Error ? error.message : '未知错误'
         });
       }

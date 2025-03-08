@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Steps, Input, Button, message, Tree, Spin, Typography, Checkbox, Space } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Modal, Steps, Input, Button, message, Tree, Spin, Typography, Checkbox, Space, Radio, Tooltip } from 'antd';
+import { ExclamationCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { fetchApiFoxTeamsAndProjects, fetchApiFoxTreeList, syncApiFoxApi } from '../../api/api';
 
 const { Step } = Steps;
 const { Text, Link } = Typography;
@@ -14,12 +15,38 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [apiTreeData, setApiTreeData] = useState([]);
   const [checkedFolders, setCheckedFolders] = useState([]);
+  
+  // 新增状态
+  const [autoCompleteUrl, setAutoCompleteUrl] = useState(true); // 自动补全URL开关，默认开启
+  const [autoSync, setAutoSync] = useState(true); // 自动同步开关，默认开启
+  const [apiRuleOptions, setApiRuleOptions] = useState([]); // API规则选项
+  const [selectedApiRule, setSelectedApiRule] = useState(''); // 选中的API规则
 
-  // 初始化时检查本地存储中是否有 token 和 projectId
+  // 初始化时检查本地存储中是否有 token 和 projectId，以及新增的设置项
   useEffect(() => {
     if (visible) {
       const savedToken = localStorage.getItem('apiFoxToken');
       const savedProjectId = localStorage.getItem('apiFoxProjectId');
+      
+      // 加载保存的设置
+      const savedAutoCompleteUrl = localStorage.getItem('apiFoxAutoCompleteUrl');
+      const savedAutoSync = localStorage.getItem('apiFoxAutoSync');
+      const savedSelectedApiRule = localStorage.getItem('apiFoxSelectedApiRule');
+      
+      if (savedAutoCompleteUrl !== null) {
+        setAutoCompleteUrl(savedAutoCompleteUrl === 'true');
+      }
+      
+      if (savedAutoSync !== null) {
+        setAutoSync(savedAutoSync === 'true');
+      }
+      
+      if (savedSelectedApiRule) {
+        setSelectedApiRule(savedSelectedApiRule);
+      }
+      
+      // 加载API规则
+      loadApiRules();
       
       if (savedToken) {
         setToken(savedToken);
@@ -50,19 +77,29 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
     }
   }, [visible]);
 
+  // 加载API规则
+  const loadApiRules = () => {
+    if (window.__config__ && window.__config__.apiRule) {
+      const rules = window.__config__.apiRule.split(',');
+      setApiRuleOptions(rules);
+      
+      // 如果只有一个规则，直接选中
+      if (rules.length === 1) {
+        setSelectedApiRule(rules[0]);
+        localStorage.setItem('apiFoxSelectedApiRule', rules[0]);
+      } else if (rules.length > 1 && !localStorage.getItem('apiFoxSelectedApiRule')) {
+        // 如果有多个规则但没有选中，默认选中第一个
+        setSelectedApiRule(rules[0]);
+        localStorage.setItem('apiFoxSelectedApiRule', rules[0]);
+      }
+    }
+  };
+
   // 获取团队和项目数据
   const fetchTeamsAndProjects = async (tokenValue) => {
     setLoading(true);
     try {
-      const response = await fetch('/express-proxy-mock/apifox-user-teams-and-projects', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: tokenValue }),
-      });
-      
-      const result = await response.json();
+      const result = await fetchApiFoxTeamsAndProjects({ token: tokenValue });
       
       if (result.success) {
         setTeamsData(result.data.teams || []);
@@ -83,18 +120,10 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   const fetchApiTreeList = async (projectId, tokenValue = token) => {
     setLoading(true);
     try {
-      const response = await fetch('/express-proxy-mock/apifox-tree-list', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          token: tokenValue,
-          projectId: projectId 
-        }),
+      const result = await fetchApiFoxTreeList({ 
+        token: tokenValue,
+        projectId: projectId 
       });
-      
-      const result = await response.json();
       
       if (result.success) {
         setApiTreeData(result.data || []);
@@ -131,22 +160,24 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
 
     // 保存勾选的文件夹到本地存储
     localStorage.setItem(`apiFoxCheckedFolders_${selectedProject}`, JSON.stringify(checkedFolders));
+    
+    // 保存设置
+    localStorage.setItem('apiFoxAutoCompleteUrl', autoCompleteUrl.toString());
+    localStorage.setItem('apiFoxAutoSync', autoSync.toString());
+    if (selectedApiRule) {
+      localStorage.setItem('apiFoxSelectedApiRule', selectedApiRule);
+    }
 
     setLoading(true);
     try {
-      const response = await fetch('/express-proxy-mock/apifox-sync-api', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          token: token,
-          projectId: selectedProject,
-          folders: checkedFolders
-        }),
+      const result = await syncApiFoxApi({ 
+        token: token,
+        projectId: selectedProject,
+        folders: checkedFolders,
+        autoCompleteUrl: autoCompleteUrl,
+        autoSync: autoSync,
+        selectedApiRule: selectedApiRule
       });
-      
-      const result = await response.json();
       
       if (result.success) {
         message.success('API 同步成功');
@@ -236,6 +267,24 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
     }
   };
 
+  // 处理自动补全URL开关变化
+  const handleAutoCompleteUrlChange = (e) => {
+    setAutoCompleteUrl(e.target.checked);
+    localStorage.setItem('apiFoxAutoCompleteUrl', e.target.checked.toString());
+  };
+
+  // 处理自动同步开关变化
+  const handleAutoSyncChange = (e) => {
+    setAutoSync(e.target.checked);
+    localStorage.setItem('apiFoxAutoSync', e.target.checked.toString());
+  };
+
+  // 处理API规则选择变化
+  const handleApiRuleChange = (e) => {
+    setSelectedApiRule(e.target.value);
+    localStorage.setItem('apiFoxSelectedApiRule', e.target.value);
+  };
+
   // 渲染步骤内容
   const renderStepContent = () => {
     switch (currentStep) {
@@ -308,6 +357,42 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
             <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Text strong>当前项目: {projectName}</Text>
               <Button size="small" onClick={handleSwitchProject}>切换项目</Button>
+            </div>
+            
+            {/* 新增设置选项 */}
+            <div style={{ marginBottom: 16, padding: 12, backgroundColor: '#f5f5f5', borderRadius: 4 }}>
+              <div style={{ marginBottom: 8, display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                <Checkbox 
+                  checked={autoCompleteUrl} 
+                  onChange={handleAutoCompleteUrlChange}
+                  style={{ marginRight: 16 }}
+                >
+                  自动补全URL
+                  <Tooltip title="开启后，将在同步数据时自动为API路径添加前缀">
+                    <QuestionCircleOutlined style={{ marginLeft: 4 }} />
+                  </Tooltip>
+                </Checkbox>
+                
+                {autoCompleteUrl && apiRuleOptions.length > 1 && (
+                  <Radio.Group 
+                    value={selectedApiRule} 
+                    onChange={handleApiRuleChange}
+                    options={apiRuleOptions.map(rule => ({ label: rule, value: rule }))}
+                  />
+                )}
+              </div>
+              
+              <div>
+                <Checkbox 
+                  checked={autoSync} 
+                  onChange={handleAutoSyncChange}
+                >
+                  自动同步
+                  <Tooltip title="开启后，将自动每次打开页面时同步ApiFox数据">
+                    <QuestionCircleOutlined style={{ marginLeft: 4 }} />
+                  </Tooltip>
+                </Checkbox>
+              </div>
             </div>
             
             <Spin spinning={loading}>
