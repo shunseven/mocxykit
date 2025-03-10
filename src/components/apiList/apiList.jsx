@@ -323,7 +323,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
               style={{
                 marginRight: '10px'
               }}>{t('设置')}</a>
-            {(record.requestSchema || record.responsesSchema) && (
+            {(record.requestSchema || record.responseSchema) && (
               <a
                 onClick={() => {
                   setCurrentApiData(record)

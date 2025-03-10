@@ -9,7 +9,7 @@ const { TabPane } = Tabs;
  * API文档弹层组件
  * @param {boolean} visible - 是否显示弹层
  * @param {function} onClose - 关闭弹层的回调函数
- * @param {object} apiData - API数据，包含requestSchema和responsesSchema
+ * @param {object} apiData - API数据，包含requestSchema和responseSchema
  */
 const ApiDocModal = ({ visible, onClose, apiData }) => {
   const [activeTab, setActiveTab] = useState('request');
@@ -184,8 +184,8 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
           )}
         </TabPane>
         <TabPane tab={t('响应参数')} key="response">
-          {apiData?.responsesSchema ? (
-            renderSchemaDoc(apiData.responsesSchema)
+          {apiData?.responseSchema ? (
+            renderSchemaDoc(apiData.responseSchema)
           ) : (
             <Text type="secondary">{t('无响应参数文档')}</Text>
           )}

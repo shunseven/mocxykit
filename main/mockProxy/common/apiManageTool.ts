@@ -116,7 +116,7 @@ export async function syncApiFoxApi(
             
             // 处理请求和响应Schema
             let requestSchema = {};
-            let responsesSchema = {};
+            let responseSchema = {};
             
             // 处理请求Schema
             if (apiDetail.data.requestBody && apiDetail.data.requestBody.jsonSchema) {
@@ -127,7 +127,7 @@ export async function syncApiFoxApi(
             if (apiDetail.data.responses && apiDetail.data.responses.length > 0) {
               const firstResponse = apiDetail.data.responses[0];
               if (firstResponse.jsonSchema) {
-                responsesSchema = resolveSchemaRefs(firstResponse.jsonSchema, dataSchemas);
+                responseSchema = resolveSchemaRefs(firstResponse.jsonSchema, dataSchemas);
               }
             }
             
@@ -138,14 +138,14 @@ export async function syncApiFoxApi(
               method: apiItem.api.method.toUpperCase(),
               name: `${apiItem.api.name || apiItem.name}(apiFox)`,
               requestSchema,
-              responsesSchema
+              responseSchema
             };
             
             // 如果API已存在，更新它
             if (existingApiIndex !== -1) {
-              // 只更新requestSchema和responsesSchema
+              // 只更新requestSchema和responseSchema
               apiData.apiList[existingApiIndex].requestSchema = apiConfig.requestSchema;
-              apiData.apiList[existingApiIndex].responsesSchema = apiConfig.responsesSchema;
+              apiData.apiList[existingApiIndex].responseSchema = apiConfig.responseSchema;
             } else {
               // 添加新API
               apiConfig.target = 'proxy';
