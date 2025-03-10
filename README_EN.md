@@ -160,6 +160,44 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 - Real-time switching without service restart
 - Automatically save current configuration when switching
 
+## Synchronize ApiFox Data
+
+mocxykit supports integration with the ApiFox platform, allowing you to easily synchronize API data from ApiFox to your local development environment, including MOCK data and documentation.
+
+### Features
+
+- **One-click Synchronization**: Synchronize API data from ApiFox to your local development environment with one click
+- **Selective Synchronization**: Choose specific API groups for synchronization
+- **Automatic URL Completion**: Automatically add prefixes to API paths
+- **Automatic Synchronization**: Support automatic synchronization of ApiFox data each time the page is opened
+
+### How to Use
+
+1. Click the "Synchronize ApiFox Data" button in the configuration interface
+2. Enter your ApiFox Access Token
+   - Log in to the ApiFox website (https://app.apifox.com/user/login)
+   - After logging in, copy the value of the common.accessToken field from your browser's localStorage
+3. Select the project you want to synchronize
+4. Select the API groups you want to synchronize
+5. Configure synchronization options:
+   - Automatic URL Completion: When enabled, prefixes will be automatically added to API paths during synchronization
+   - Automatic Synchronization: When enabled, ApiFox data will be automatically synchronized each time the page is opened
+   - API Rule: Select the applicable API rule (if multiple rules are configured)
+
+### Automatic Synchronization Feature
+
+When the automatic synchronization feature is enabled, mocxykit will automatically retrieve the latest API data from ApiFox each time the page loads, ensuring that your local development environment always uses the most up-to-date API definitions.
+
+### API Documentation Viewing
+
+After synchronizing ApiFox data, you can view detailed API documentation in the mocxykit interface, including:
+
+- Request parameter documentation
+- Response parameter documentation
+- Parameter types and descriptions
+- Required field indicators
+- Array and object structure display
+
 ## MCP (Model Context Protocol)
 
 ### Introduction

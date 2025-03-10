@@ -216,6 +216,52 @@ Examples:
   "获取基本配置失败": "Failed to get basic configuration",
   "获取基本配置失败:": "Failed to get basic configuration:",
   "保存基本配置失败:": "Failed to save basic configuration:",
+  
+  // 来自 apifoxModal.jsx
+  "请输入 ApiFox Access Token": "Please Enter ApiFox Access Token",
+  "获取 Token": "Get Token",
+  "点击登录 ApiFox": "Click to Login ApiFox",
+  "注：不用使用官方设置后台生成的API 访问令牌。": "Note: Do not use the API access token generated from the official settings.",
+  "下一步": "Next",
+  "未获取到团队和项目数据": "No team and project data retrieved",
+  "上一步": "Previous",
+  "当前项目": "Current Project",
+  "切换项目": "Switch Project",
+  "自动补全URL": "Auto Complete URL",
+  "开启后，将在同步数据时自动为API路径添加前缀": "When enabled, prefix will be automatically added to API paths during synchronization",
+  "自动同步": "Auto Sync",
+  "开启后，将自动每次打开页面时同步ApiFox数据": "When enabled, ApiFox data will be automatically synchronized each time the page is opened",
+  "未获取到 API 数据": "No API data retrieved",
+  "同步": "Sync",
+  "同步 ApiFox 数据": "Sync ApiFox Data",
+  "输入 Token": "Enter Token",
+  "选择项目": "Select Project",
+  "选择 API": "Select API",
+  "获取团队和项目数据失败": "Failed to get team and project data",
+  "获取团队和项目数据出错": "Error getting team and project data",
+  "获取 API 列表失败": "Failed to get API list",
+  "获取 API 列表出错": "Error getting API list",
+  "请至少选择一个 API 分组": "Please select at least one API group",
+  "API 同步成功": "API sync successful",
+  "API 同步失败": "API sync failed",
+  "API 同步出错": "Error syncing API",
+  
+  // 来自 apifox.jsx
+  "同步ApiFox数据": "Sync ApiFox Data",
+  "ApiFox 数据自动同步成功": "ApiFox data auto sync successful",
+  "ApiFox 数据自动同步失败": "ApiFox data auto sync failed",
+  "ApiFox 数据自动同步出错": "Error auto syncing ApiFox data",
+  
+  // 来自 apiDocModal.jsx
+  "API文档": "API Documentation",
+  "无数据": "No Data",
+  "请求参数": "Request Parameters",
+  "响应参数": "Response Parameters",
+  "无请求参数文档": "No request parameter documentation",
+  "无响应参数文档": "No response parameter documentation",
+  "必填": "Required",
+  "数组项": "Array Item",
+  "可选值": "Optional Values"
 }
 
 export function t (key) {
