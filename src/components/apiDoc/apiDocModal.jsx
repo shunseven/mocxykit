@@ -13,6 +13,7 @@ const { TabPane } = Tabs;
  */
 const ApiDocModal = ({ visible, onClose, apiData }) => {
   const [activeTab, setActiveTab] = useState('request');
+  const [expandedKeys, setExpandedKeys] = useState([]);
 
   // 将JSON Schema转换为Tree数据结构
   const convertSchemaToTreeData = (schema, parentKey = '0') => {
@@ -111,11 +112,33 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
     });
   };
 
+  // 收集所有树节点的key，用于默认展开
+  const collectAllKeys = (treeData) => {
+    let keys = [];
+    const traverse = (nodes) => {
+      if (!nodes) return;
+      nodes.forEach(node => {
+        keys.push(node.key);
+        if (node.children) {
+          traverse(node.children);
+        }
+      });
+    };
+    traverse(treeData);
+    return keys;
+  };
+
   // 渲染Schema文档
   const renderSchemaDoc = (schema) => {
     if (!schema) return <Text type="secondary">{t('无数据')}</Text>;
     
     const treeData = convertSchemaToTreeData(schema);
+    
+    // 设置所有节点的key用于默认展开
+    if (expandedKeys.length === 0 && treeData.length > 0) {
+      const allKeys = collectAllKeys(treeData);
+      setExpandedKeys(allKeys);
+    }
     
     return (
       <Card>
@@ -128,7 +151,9 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
         
         <Tree
           showLine
-          defaultExpandAll
+          defaultExpandAll={true}
+          expandedKeys={expandedKeys}
+          onExpand={setExpandedKeys}
           treeData={treeData}
         />
       </Card>
