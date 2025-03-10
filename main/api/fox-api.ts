@@ -7,7 +7,7 @@ const apiFoxRequest = async <T>(url: string, token: string, method: 'GET' | 'POS
       method,
       url,
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `${token}`,
         'Content-Type': 'application/json',
       },
       data: method === 'POST' ? data : undefined,

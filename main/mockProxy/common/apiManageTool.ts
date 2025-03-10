@@ -78,22 +78,30 @@ export async function syncApiFoxApi(
             
             // 如果需要自动补全URL
             if (autoCompleteUrl && selectedApiRule) {
-              // 检查是否需要补全
-              // 根据selectedApiRule判断是否需要补全
-              const rulePrefix = selectedApiRule.replace('/*', '');
-              const needsPrefix = !apiPath.startsWith(rulePrefix);
+              // 使用正则表达式处理不同格式的规则
+              // 将规则转换为正则表达式模式
+              const rulePattern = selectedApiRule
+                .replace(/\*/g, '') // 移除所有星号
+                .replace(/\/+$/, ''); // 移除末尾的斜杠
+              
+              // 标准化apiPath，确保以/开头
+              if (!apiPath.startsWith('/')) {
+                apiPath = '/' + apiPath;
+              }
+              
+              // 使用正则表达式检查是否需要补全前缀
+              const regexPattern = new RegExp(`^${rulePattern}`);
+              const needsPrefix = !regexPattern.test(apiPath);
               
               if (needsPrefix) {
-                // 移除通配符
-                const prefix = selectedApiRule.replace('*', '');
+                // 构建前缀，由于已经移除了末尾斜杠，直接添加斜杠
+                const prefix = rulePattern + '/';
                 
-                // 确保路径以/开头
-                if (!apiPath.startsWith('/')) {
-                  apiPath = '/' + apiPath;
-                }
+                // 确保apiPath不以斜杠开头（因为前缀已经有了）
+                const pathWithoutLeadingSlash = apiPath.replace(/^\//, '');
                 
                 // 补全URL
-                apiPath = prefix + apiPath;
+                apiPath = prefix + pathWithoutLeadingSlash;
               }
             }
             
