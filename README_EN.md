@@ -198,6 +198,8 @@ After synchronizing ApiFox data, you can view detailed API documentation in the 
 - Required field indicators
 - Array and object structure display
 
+![Documentation](./public/doc_en.png)
+
 ## MCP (Model Context Protocol)
 
 ### Introduction

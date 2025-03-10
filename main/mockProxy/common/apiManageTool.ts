@@ -136,9 +136,10 @@ export async function syncApiFoxApi(
               url: apiPath,
               key: apiKey,
               method: apiItem.api.method.toUpperCase(),
-              name: `${apiItem.api.name || apiItem.name}(apiFox)`,
+              name: `${apiItem.api.name || apiItem.name}(ApiFox)`,
               requestSchema,
-              responseSchema
+              responseSchema,
+              parameters: apiDetail.data.parameters
             };
             
             // 如果API已存在，更新它
@@ -146,6 +147,7 @@ export async function syncApiFoxApi(
               // 只更新requestSchema和responseSchema
               apiData.apiList[existingApiIndex].requestSchema = apiConfig.requestSchema;
               apiData.apiList[existingApiIndex].responseSchema = apiConfig.responseSchema;
+              apiData.apiList[existingApiIndex].parameters = apiConfig.parameters;
             } else {
               // 添加新API
               apiConfig.target = 'proxy';

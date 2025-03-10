@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Tabs, Card, Tree, Tag, Typography, Space, Divider } from 'antd';
+import { Modal, Tabs, Card, Tree, Tag, Typography, Space, Divider, Table } from 'antd';
 import { t } from '../../common/fun';
 
 const { Title, Text, Paragraph } = Typography;
@@ -160,6 +160,71 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
     );
   };
 
+  // 渲染参数文档（Path参数和Query参数）
+  const renderParametersDoc = (parameters) => {
+    if (!parameters || (!parameters.path?.length && !parameters.query?.length)) {
+      return null;
+    }
+
+    const columns = [
+      {
+        title: t('参数名'),
+        dataIndex: 'name',
+        key: 'name',
+        width: '20%',
+      },
+      {
+        title: t('类型'),
+        dataIndex: 'type',
+        key: 'type',
+        width: '15%',
+        render: (text) => <Tag color="blue">{text || 'string'}</Tag>,
+      },
+      {
+        title: t('必填'),
+        dataIndex: 'required',
+        key: 'required',
+        width: '10%',
+        render: (required) => required ? <Tag color="red">{t('是')}</Tag> : <Tag>{t('否')}</Tag>,
+      },
+      {
+        title: t('描述'),
+        dataIndex: 'description',
+        key: 'description',
+      },
+    ];
+
+    return (
+      <>
+        {parameters.path && parameters.path.length > 0 && (
+          <div style={{ marginBottom: 16 }}>
+            <Title level={5}>{t('Path 参数')}</Title>
+            <Table
+              columns={columns}
+              dataSource={parameters.path.map((item, index) => ({ ...item, key: `path-${index}` }))}
+              pagination={false}
+              size="small"
+              bordered
+            />
+          </div>
+        )}
+        
+        {parameters.query && parameters.query.length > 0 && (
+          <div style={{ marginBottom: 16 }}>
+            <Title level={5}>{t('Query 参数')}</Title>
+            <Table
+              columns={columns}
+              dataSource={parameters.query.map((item, index) => ({ ...item, key: `query-${index}` }))}
+              pagination={false}
+              size="small"
+              bordered
+            />
+          </div>
+        )}
+      </>
+    );
+  };
+
   return (
     <Modal
       title={
@@ -177,10 +242,16 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
     >
       <Tabs activeKey={activeTab} onChange={setActiveTab}>
         <TabPane tab={t('请求参数')} key="request">
-          {apiData?.requestSchema ? (
+          {apiData?.parameters && renderParametersDoc(apiData.parameters)}
+          
+          {apiData?.requestSchema && Object.keys(apiData.requestSchema).length > 0 && (
+            <Title level={5}>{t('Body 参数')}</Title>
+          )}
+          
+          {apiData?.requestSchema && Object.keys(apiData.requestSchema).length > 0 ? (
             renderSchemaDoc(apiData.requestSchema)
           ) : (
-            <Text type="secondary">{t('无请求参数文档')}</Text>
+            !apiData?.parameters && <Text type="secondary">{t('无请求参数文档')}</Text>
           )}
         </TabPane>
         <TabPane tab={t('响应参数')} key="response">

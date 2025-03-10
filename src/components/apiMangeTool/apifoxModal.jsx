@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Steps, Input, Button, message, Tree, Spin, Typography, Checkbox, Space, Radio, Tooltip } from 'antd';
 import { ExclamationCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { fetchApiFoxTeamsAndProjects, fetchApiFoxTreeList, syncApiFoxApi } from '../../api/api';
+import { t } from '../../common/fun';
 
 const { Step } = Steps;
 const { Text, Link } = Typography;
@@ -106,12 +107,12 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
         setProjectsData(result.data.projects || []);
         setLoading(false);
       } else {
-        message.error('获取团队和项目数据失败');
+        message.error(t('获取团队和项目数据失败'));
         setLoading(false);
       }
     } catch (error) {
-      console.error('获取团队和项目数据出错:', error);
-      message.error('获取团队和项目数据出错');
+      console.error(t('获取团队和项目数据出错:'), error);
+      message.error(t('获取团队和项目数据出错'));
       setLoading(false);
     }
   };
@@ -135,18 +136,18 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
             const parsedCheckedFolders = JSON.parse(savedCheckedFolders);
             setCheckedFolders(parsedCheckedFolders);
           } catch (error) {
-            console.error('解析保存的勾选项出错:', error);
+            console.error(t('解析保存的勾选项出错:'), error);
           }
         }
         
         setLoading(false);
       } else {
-        message.error('获取 API 列表失败');
+        message.error(t('获取 API 列表失败'));
         setLoading(false);
       }
     } catch (error) {
-      console.error('获取 API 列表出错:', error);
-      message.error('获取 API 列表出错');
+      console.error(t('获取 API 列表出错:'), error);
+      message.error(t('获取 API 列表出错'));
       setLoading(false);
     }
   };
@@ -154,7 +155,7 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   // 同步 API 数据
   const syncApiData = async () => {
     if (checkedFolders.length === 0) {
-      message.warning('请至少选择一个 API 分组');
+      message.warning(t('请至少选择一个 API 分组'));
       return;
     }
 
@@ -180,17 +181,17 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
       });
       
       if (result.success) {
-        message.success('API 同步成功');
+        message.success(t('API 同步成功'));
         if (onApiDataSync) {
           onApiDataSync(result.data);
         }
         handleClose();
       } else {
-        message.error('API 同步失败');
+        message.error(t('API 同步失败'));
       }
     } catch (error) {
-      console.error('API 同步出错:', error);
-      message.error('API 同步出错');
+      console.error(t('API 同步出错:'), error);
+      message.error(t('API 同步出错'));
     } finally {
       setLoading(false);
     }
@@ -199,7 +200,7 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   // 处理 Token 保存
   const handleTokenSave = () => {
     if (!token.trim()) {
-      message.warning('请输入 ApiFox Access Token');
+      message.warning(t('请输入 ApiFox Access Token'));
       return;
     }
 
@@ -281,25 +282,25 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
         return (
           <div style={{ marginTop: 24 }}>
             <Input
-              placeholder="请输入 ApiFox Access Token"
+              placeholder={t("请输入 ApiFox Access Token")}
               value={token}
               onChange={(e) => setToken(e.target.value.replaceAll("\"", ""))}
               style={{ marginBottom: 16 }}
             />
             <div style={{ marginBottom: 16 }}>
               <Text>
-                获取 Token：
+                {t('获取 Token')}：
                 <Link href="https://app.apifox.com/user/login" target="_blank">
-                  点击登录 ApiFox
+                  {t('点击登录 ApiFox')}
                 </Link>
-                ，登录完成后，复制 localStorage 的common.accessToken字段值
+                {t('，登录完成后，复制 localStorage 的common.accessToken字段值')}
               </Text>
             </div>
             <div style={{ marginBottom: 16 }}>
-              <Text type="warning">注：不用使用官方设置后台生成的API 访问令牌。</Text>
+              <Text type="warning">{t('注：不用使用官方设置后台生成的API 访问令牌。')}</Text>
             </div>
             <Button type="primary" onClick={handleTokenSave}>
-              下一步
+              {t('下一步')}
             </Button>
           </div>
         );
@@ -331,25 +332,25 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
               ) : (
                 <div>
                   <ExclamationCircleOutlined style={{ marginRight: 8 }} />
-                  未获取到团队和项目数据
+                  {t('未获取到团队和项目数据')}
                 </div>
               )}
             </Spin>
             <div style={{ marginTop: 16 }}>
-              <Button onClick={handlePrevStep}>上一步</Button>
+              <Button onClick={handlePrevStep}>{t('上一步')}</Button>
             </div>
           </div>
         );
       case 2:
         // 查找当前项目名称
         const currentProject = projectsData.find(p => p.id === selectedProject);
-        const projectName = currentProject ? currentProject.name : `项目 ID: ${selectedProject}`;
+        const projectName = currentProject ? currentProject.name : `${t('项目 ID')}: ${selectedProject}`;
         
         return (
           <div style={{ marginTop: 24 }}>
             <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Text strong>当前项目: {projectName}</Text>
-              <Button size="small" onClick={handleSwitchProject}>切换项目</Button>
+              <Text strong>{t('当前项目')}: {projectName}</Text>
+              <Button size="small" onClick={handleSwitchProject}>{t('切换项目')}</Button>
             </div>
             
             {/* 新增设置选项 */}
@@ -360,8 +361,8 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
                   onChange={handleAutoCompleteUrlChange}
                   style={{ marginRight: 16 }}
                 >
-                  自动补全URL
-                  <Tooltip title="开启后，将在同步数据时自动为API路径添加前缀">
+                  {t('自动补全URL')}
+                  <Tooltip title={t('开启后，将在同步数据时自动为API路径添加前缀')}>
                     <QuestionCircleOutlined style={{ marginLeft: 4 }} />
                   </Tooltip>
                 </Checkbox>
@@ -380,8 +381,8 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
                   checked={autoSync} 
                   onChange={handleAutoSyncChange}
                 >
-                  自动同步
-                  <Tooltip title="开启后，将自动每次打开页面时同步ApiFox数据">
+                  {t('自动同步')}
+                  <Tooltip title={t('开启后，将自动每次打开页面时同步ApiFox数据')}>
                     <QuestionCircleOutlined style={{ marginLeft: 4 }} />
                   </Tooltip>
                 </Checkbox>
@@ -414,15 +415,15 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
               ) : (
                 <div>
                   <ExclamationCircleOutlined style={{ marginRight: 8 }} />
-                  未获取到 API 数据
+                  {t('未获取到 API 数据')}
                 </div>
               )}
             </Spin>
             <div style={{ marginTop: 16 }}>
               <Space>
-                <Button onClick={handlePrevStep}>上一步</Button>
+                <Button onClick={handlePrevStep}>{t('上一步')}</Button>
                 <Button type="primary" onClick={syncApiData} disabled={checkedFolders.length === 0}>
-                  同步
+                  {t('同步')}
                 </Button>
               </Space>
             </div>
@@ -435,16 +436,16 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
 
   return (
     <Modal
-      title="同步 ApiFox 数据"
+      title={t("同步 ApiFox 数据")}
       open={visible}
       onCancel={handleClose}
       footer={null}
       width={700}
     >
       <Steps current={currentStep}>
-        <Step title="输入 Token" />
-        <Step title="选择项目" />
-        <Step title="选择 API" />
+        <Step title={t("输入 Token")} />
+        <Step title={t("选择项目")} />
+        <Step title={t("选择 API")} />
       </Steps>
       {renderStepContent()}
     </Modal>

@@ -200,6 +200,8 @@ mocxykit 支持与 ApiFox 平台集成，让您可以轻松同步 ApiFox 中的 
 - 必填字段标识
 - 数组和对象结构展示
 
+![文档](./public/doc.png)
+
 ## MCP (Model Context Protocol)
 
 ### 功能介绍

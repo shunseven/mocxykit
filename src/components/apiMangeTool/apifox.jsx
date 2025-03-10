@@ -3,6 +3,7 @@ import { Button, message } from 'antd';
 import ApiFoxIcon from '../../assets/api-foxi-con.svg'; 
 import ApiFoxModal from './apifoxModal';
 import { syncApiFoxApi } from '../../api/api';
+import { t } from '../../common/fun';
 
 export default function ApiFox({ onApiDataChange }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -49,16 +50,16 @@ export default function ApiFox({ onApiDataChange }) {
       });
       
       if (result.success) {
-        message.success('ApiFox 数据自动同步成功');
+        message.success(t('ApiFox 数据自动同步成功'));
         if (onApiDataChange) {
           onApiDataChange(result.data);
         }
       } else {
-        message.error('ApiFox 数据自动同步失败');
+        message.error(t('ApiFox 数据自动同步失败'));
       }
     } catch (error) {
-      console.error('ApiFox 数据自动同步出错:', error);
-      message.error('ApiFox 数据自动同步出错');
+      console.error(t('ApiFox 数据自动同步出错:'), error);
+      message.error(t('ApiFox 数据自动同步出错'));
     } finally {
       setIsAutoSyncing(false);
     }
@@ -91,7 +92,7 @@ export default function ApiFox({ onApiDataChange }) {
     >
       <img src={ApiFoxIcon} style={{ marginRight: '-5px', width: '16px', height: '16px' }
       } />
-      同步ApiFox数据
+      {t('同步ApiFox数据')}
     </Button>
     <ApiFoxModal 
       visible={isModalVisible} 

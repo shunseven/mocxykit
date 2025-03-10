@@ -333,7 +333,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
                   marginRight: '10px'
                 }}>
                 <Tooltip title={t('查看文档')}>
-                  文档
+                  {t('文档')}
                 </Tooltip>
               </a>
             )}

@@ -28,6 +28,7 @@ interface ApiConfig {
   hasFaker?: boolean;
   requestSchema?: Record<string, any>;
   responseSchema?: Record<string, any>;
+  parameters?: Record<string, any>;
 }
 
 interface ApiData {
