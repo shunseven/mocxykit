@@ -186,6 +186,8 @@ mocxykit 支持与 ApiFox 平台集成，让您可以轻松同步 ApiFox 中的 
    - 自动同步：开启后，将在每次打开页面时自动同步 ApiFox 数据
    - API 规则：选择适用的 API 规则（如果配置了多个规则）
 
+![mock_proxy](./public/mock_proxy.png)
+
 ### 自动同步功能
 
 启用自动同步功能后，mocxykit 将在每次页面加载时自动从 ApiFox 获取最新的 API 数据，确保您的本地开发环境始终使用最新的 API 定义。
@@ -228,6 +230,9 @@ MCP是一个基于SSE（Server-Sent Events）的实时数据通信协议实现�
 `在 @todoList.tsx 文件中，请求 mcpData api/todo-list 获取数据，根据返回的错误数据，弹层显示错误信息。`
 
 这样 AI 就会主动获取到错误数据，分析结构然后弹层显示错误信息。
+
+![mcp](./public/mcp.png)
+![mcp2](./public/mcp2.png)
 
 ## faker MOCK 数据
 - 支持静态 MOCK 数据和动态 MOCK 数据
@@ -294,7 +299,7 @@ MCP是一个基于SSE（Server-Sent Events）的实时数据通信协议实现�
 4. 从 Ngrok 控制台复制您的 authtoken
 5. 将 authtoken 粘贴到设置弹窗中
 6. 点击"开启外网访问"
- z
+ 
 ### 功能特点
 
 - 自动创建隧道连接
@@ -307,6 +312,8 @@ MCP是一个基于SSE（Server-Sent Events）的实时数据通信协议实现�
 
 - Ngrok 免费版有一些使用限制
 - 每次创建新隧道时，公网 URL 会改变
+
+![public_net](./public/public_net.png)
 
 ## 联系我
 

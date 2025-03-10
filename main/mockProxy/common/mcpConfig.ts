@@ -136,7 +136,7 @@ export function createEditorMcpConfig(editor: string, port: number): void {
       existingConfig.mcpServers = {};
     }
     
-    existingConfig.mcpServers["MCP_PROJECT_NAME"] = {
+    existingConfig.mcpServers[MCP_PROJECT_NAME] = {
       url: `http://localhost:${port}/sse`
     };
     
@@ -163,9 +163,9 @@ export function deleteEditorMcpConfig(editor: string): void {
         const config = JSON.parse(fileContent);
         
         // 如果存在mcpServers配置
-        if (config.mcpServers && config.mcpServers["MCP_PROJECT_NAME"]) {
+        if (config.mcpServers && config.mcpServers[MCP_PROJECT_NAME]) {
           // 删除特定的服务器配置
-          delete config.mcpServers["MCP_PROJECT_NAME"];
+          delete config.mcpServers[MCP_PROJECT_NAME];
           
           // 如果mcpServers为空对象，则删除整个mcpServers属性
           if (Object.keys(config.mcpServers).length === 0) {

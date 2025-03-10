@@ -160,6 +160,8 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 - Real-time switching without service restart
 - Automatically save current configuration when switching
 
+![mock_proxy](./public/mock_proxy_en.png)
+
 ## Synchronize ApiFox Data
 
 mocxykit supports integration with the ApiFox platform, allowing you to easily synchronize API data from ApiFox to your local development environment, including MOCK data and documentation.
@@ -220,6 +222,8 @@ This way, AI will actively request data and generate code based on the data stru
 For example, when testing in the browser, if I find that an interface's error response data is not covered, I can write in AI programming:
 `In @todoList.tsx file, request mcpData api/todo-list to get data, display error message in a popup based on the returned error data.`
 This way, AI will actively retrieve the error data, analyze the structure, and display the error message in a popup.
+
+![mcp_en](./public/mcp.png)
 
 ### Key Features
 
@@ -288,6 +292,8 @@ This middleware supports public access to your local development server using Ng
 - Test your application on different devices
 - Demo your development work to clients
 
+![public_net](./public/public_net_en.png)
+
 ### Setting up Public Access
 
 1. Open the configuration page at `http://localhost:3000/config`
@@ -310,6 +316,7 @@ This middleware supports public access to your local development server using Ng
 - The Ngrok free tier has some limitations
 - Public URLs change each time you create a new tunnel
 - For consistent URLs, consider upgrading to a paid Ngrok plan
+
 
 ## Contact Me
 
