@@ -251,20 +251,9 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
 
   // 处理切换项目
   const handleSwitchProject = () => {
-    // 检查是否有保存的项目ID
-    const savedProjectId = localStorage.getItem('apiFoxProjectId');
-    
-    if (savedProjectId) {
-      // 如果有保存的项目ID，直接跳到第三步
-      const projectId = Number(savedProjectId);
-      setSelectedProject(projectId);
-      setCurrentStep(2);
-      fetchApiTreeList(projectId, token);
-    } else {
-      // 如果没有保存的项目ID，跳到第二步
-      setCurrentStep(1);
-      fetchTeamsAndProjects(token);
-    }
+    // 直接跳到第一步
+    setCurrentStep(1);
+    fetchTeamsAndProjects(token);
   };
 
   // 处理自动补全URL开关变化
@@ -294,16 +283,20 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
             <Input
               placeholder="请输入 ApiFox Access Token"
               value={token}
-              onChange={(e) => setToken(e.target.value)}
+              onChange={(e) => setToken(e.target.value.replaceAll("\"", ""))}
               style={{ marginBottom: 16 }}
             />
             <div style={{ marginBottom: 16 }}>
               <Text>
-                获取 Token 请访问：
-                <Link href="https://apifox-openapi.apifox.cn/doc-4296599" target="_blank">
-                  ApiFox OpenAPI 文档
+                获取 Token：
+                <Link href="https://app.apifox.com/user/login" target="_blank">
+                  点击登录 ApiFox
                 </Link>
+                ，登录完成后，复制 localStorage 的common.accessToken字段值
               </Text>
+            </div>
+            <div style={{ marginBottom: 16 }}>
+              <Text type="warning">注：不用使用官方设置后台生成的API 访问令牌。</Text>
             </div>
             <Button type="primary" onClick={handleTokenSave}>
               下一步
