@@ -78,9 +78,8 @@ export async function syncApiFoxApi(
             
             // 如果需要自动补全URL
             if (autoCompleteUrl && selectedApiRule) {
-              // 使用正则表达式处理不同格式的规则
-              // 将规则转换为正则表达式模式
-              const rulePattern = selectedApiRule
+              // 提取规则的基本部分（移除通配符和末尾斜杠）
+              const ruleBase = selectedApiRule
                 .replace(/\*/g, '') // 移除所有星号
                 .replace(/\/+$/, ''); // 移除末尾的斜杠
               
@@ -89,13 +88,15 @@ export async function syncApiFoxApi(
                 apiPath = '/' + apiPath;
               }
               
-              // 使用正则表达式检查是否需要补全前缀
-              const regexPattern = new RegExp(`^${rulePattern}`);
-              const needsPrefix = !regexPattern.test(apiPath);
+              // 检查路径是否已经以规则基本部分开头
+              // 对于像 /api-server/ec/api/process 这样的路径，我们需要检查它是否已经包含了规则
+              // 例如，如果规则是 /api，那么 /api-server 不应该被认为是匹配的
+              const needsPrefix = !apiPath.startsWith(ruleBase + '/') && 
+                                 !(ruleBase === '/' && apiPath.startsWith('/'));
               
               if (needsPrefix) {
-                // 构建前缀，由于已经移除了末尾斜杠，直接添加斜杠
-                const prefix = rulePattern + '/';
+                // 构建前缀，确保以斜杠结尾
+                const prefix = ruleBase + '/';
                 
                 // 确保apiPath不以斜杠开头（因为前缀已经有了）
                 const pathWithoutLeadingSlash = apiPath.replace(/^\//, '');
