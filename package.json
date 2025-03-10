@@ -1,6 +1,6 @@
 {
  "name": "mocxykit",
- "version": "2.5.5",
+ "version": "2.6.0",
  "description": "This is an express middleware that can be used with webpack and vite. Its main function is to visualize the configuration, manage proxies, and mock data.",
  "main": "serverDist/index.js",
  "author": "shunseven",
@@ -33,7 +33,7 @@
   "build:view": "vite build",
   "copy-files": "copyfiles -u 1 'main/**/*.p12' 'serverDist'",
   "test:webpack": "webpack serve --config webpack.test.js",
-  "test:vite": "vite --config vite.test.js"
+  "test:vite": "npm run build:view & vite --config vite.test.js"
  },
  "dependencies": {
   "@eslint/js": "^9.11.1",
@@ -43,6 +43,7 @@
   "@types/react": "^18.3.10",
   "@types/react-dom": "^18.3.0",
   "antd": "^5.21.3",
+  "axios": "^1.8.2",
   "http-proxy": "^1.18.1",
   "jsoneditor": "^10.1.0",
   "ngrok": "^5.0.0-beta.2",

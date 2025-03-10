@@ -6,6 +6,7 @@ import { getApiData, getMock } from "../mockProxy/common/fetchJsonData";
 import { getCacheRequestHistory } from "../mockProxy/common/cacheRequestHistory";
 import { getMcpConfig } from "../mockProxy/common/mcpConfig";
 import { z } from "zod";
+import { RequestSchema } from "@modelcontextprotocol/sdk/types";
 
 const createNewServer = () => new McpServer({
   name: "mock-proxy-server",
@@ -65,6 +66,7 @@ async function getMcpData(hostname: string, apiRules: string[]) {
     
     // 在ApiList中查找对应的key
     const apiConfig = findApiConfigByPrefix(key, hostname, apiRules, apiData.apiList);
+    let targeMockData = null;
     
     if (apiConfig) {
       // 根据请求方式获取数据
@@ -73,7 +75,7 @@ async function getMcpData(hostname: string, apiRules: string[]) {
           // 获取mock数据
           const mockData = mockDatas[apiConfig.key];
           if (mockData && mockData.data && mockData.data.length > 0) {
-            return mockData.data[0].responseData || { error: '未找到对应的mock数据' };
+            targeMockData = mockData.data[0].responseData || { error: '未找到对应的mock数据' };
           }
           break;
         case 'proxy':
@@ -81,16 +83,23 @@ async function getMcpData(hostname: string, apiRules: string[]) {
           // 从缓存历史中获取数据
           const cacheData = getCacheRequestHistory().find(item => item.key === apiConfig.key);
           if (cacheData) {
-            return cacheData.data;
+            targeMockData = cacheData.data;
           }
           break;
+      }
+      return {
+        responseExample: targeMockData,
+        requestSchema: apiConfig.requestSchema,
+        responseSchema: apiConfig.responseSchema,
       }
     }
 
     // 如果没有找到API配置或没有对应的数据，尝试通过前缀匹配查找数据
     const prefixMatchData = findDataByPrefixMatch(key, hostname, apiRules);
     if (prefixMatchData) {
-      return prefixMatchData;
+      return {
+        responseExample: prefixMatchData,
+      };
     }
     
     // 如果未获取到数据，返回错误信息

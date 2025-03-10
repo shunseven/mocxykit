@@ -170,3 +170,28 @@ export async function updateBaseConfig(data) {
   return res
 }
 
+// ApiFox相关API
+export async function fetchApiFoxTeamsAndProjects(data) {
+  const res = await request('/express-proxy-mock/apifox-user-teams-and-projects', {
+    method: 'POST',
+    data
+  })
+  return res
+}
+
+export async function fetchApiFoxTreeList(data) {
+  const res = await request('/express-proxy-mock/apifox-tree-list', {
+    method: 'POST',
+    data
+  })
+  return res
+}
+
+export async function syncApiFoxApi(data) {
+  const res = await request('/express-proxy-mock/apifox-sync-api', {
+    method: 'POST',
+    data
+  })
+  return res
+}
+

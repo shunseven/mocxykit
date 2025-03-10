@@ -6,7 +6,9 @@ import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
 import { t } from '../../common/fun';
-import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined, FileTextOutlined } from '@ant-design/icons';
+import ApiFox from '../apiMangeTool/apifox'; 
+import ApiDocModal from '../apiDoc/apiDocModal';
 const { Column } = Table;
 
 const colorMap = {
@@ -38,6 +40,8 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
   });
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [recentlyImported, setRecentlyImported] = useState([]);
+  const [docVisible, setDocVisible] = useState(false);
+  const [currentApiData, setCurrentApiData] = useState(null);
 
   const rowSelection = {
     selectedRowKeys,
@@ -136,6 +140,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         
       </Space>
       <Space size={10} >
+        <ApiFox onApiDataChange={handleImportData} />
         <CacheRequestHistoryData onApiDataChange={handleImportData} />
         <Button
           onClick={() => {
@@ -307,7 +312,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         title={t('操作')}
         key="action"
         fixed="right"
-        width={120}
+        width={180}
         render={(_, record) => (
           <Space size="middle">
             <a
@@ -318,6 +323,20 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
               style={{
                 marginRight: '10px'
               }}>{t('设置')}</a>
+            {(record.requestSchema || record.responseSchema) && (
+              <a
+                onClick={() => {
+                  setCurrentApiData(record)
+                  setDocVisible(true)
+                }}
+                style={{
+                  marginRight: '10px'
+                }}>
+                <Tooltip title={t('查看文档')}>
+                  文档
+                </Tooltip>
+              </a>
+            )}
             <Popconfirm
               title={t('请确认')}
               description={t('是否要删除这个代理')}
@@ -346,6 +365,11 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
     </Table>
     <ApiEdit proxyList={proxyList} onApiDataChange={onApiDataChange} targetKey={itemTargetKey} visible={editVisible} onCancel={() => setEditVisible(false)} />
     <PreviewMockModal targetKey={itemTargetKey} visible={preveiwVisible} onCancel={() => setPreviewVisible(false)} />  
+    <ApiDocModal 
+      visible={docVisible} 
+      onClose={() => setDocVisible(false)} 
+      apiData={currentApiData} 
+    />
   </>
 }
 

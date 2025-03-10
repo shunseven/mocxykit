@@ -550,7 +550,6 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
 
   // 获取基码配置
   if (matchRouter('/express-proxy-mock/get-base-config', req.path)) {
- ;
     res.send({
       success: true,
       data: config
@@ -568,6 +567,133 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
         success,
         data: success ? configData : null
       });
+    });
+    return true;
+  }
+
+  // ApiFox 用户团队和项目获取
+  if (matchRouter('/express-proxy-mock/apifox-user-teams-and-projects', req.path)) {
+    getReqBodyData(req).then(async (data: Record<string, any>) => {
+      try {
+        const { token } = data;
+        if (!token) {
+          res.send({
+            success: false,
+            message: '缺少 token 参数'
+          });
+          return;
+        }
+
+        // 导入 fox-api 模块
+        const foxApi = await import('../../api/fox-api');
+        const result = await foxApi.getUserTeamsAndProjects(token);
+        
+        res.send(result);
+      } catch (error) {
+        res.send({
+          success: false,
+          message: '获取团队和项目数据失败',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
+    });
+    return true;
+  }
+
+  // ApiFox API 树形列表获取
+  if (matchRouter('/express-proxy-mock/apifox-tree-list', req.path)) {
+    getReqBodyData(req).then(async (data: Record<string, any>) => {
+      try {
+        const { token, projectId } = data;
+        if (!token || !projectId) {
+          res.send({
+            success: false,
+            message: '缺少必要参数'
+          });
+          return;
+        }
+
+        // 导入 fox-api 模块
+        const foxApi = await import('../../api/fox-api');
+        const result = await foxApi.getApiTreeList(token, projectId);
+        
+        res.send({
+          success: true,
+          data: result.data
+        });
+      } catch (error) {
+        res.send({
+          success: false,
+          message: '获取 API 树形列表失败',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
+    });
+    return true;
+  }
+
+  // ApiFox 同步 API
+  if (matchRouter('/express-proxy-mock/apifox-sync-api', req.path)) {
+    getReqBodyData(req).then(async (data: Record<string, any>) => {
+      try {
+        const { token, projectId, folders, autoCompleteUrl, autoSync, selectedApiRule } = data;
+        if (!token || !projectId || !folders || !Array.isArray(folders) || folders.length === 0) {
+          res.send({
+            success: false,
+            message: '缺少必要参数'
+          });
+          return;
+        }
+
+        // 导入必要的模块
+        const foxApi = await import('../../api/fox-api');
+        const apiManageTool = await import('../common/apiManageTool');
+        
+        try {
+          // 1. 获取API树形结构
+          const apiTreeResult = await foxApi.getApiTreeList(token, projectId);
+          if (!apiTreeResult.success) {
+            res.send({
+              success: false,
+              message: '获取API树形结构失败'
+            });
+            return;
+          }
+          
+          // 2. 获取数据模型Schema
+          const dataSchemasResult = await foxApi.getProjectDataSchemas(token, projectId);
+          const dataSchemas = dataSchemasResult.success ? dataSchemasResult.data : [];
+          
+          // 3. 同步API数据
+          const syncResult = await apiManageTool.syncApiFoxApi(
+            apiTreeResult.data,
+            folders,
+            dataSchemas,
+            autoCompleteUrl === true,
+            selectedApiRule || '',
+            token,
+            projectId,
+            foxApi.getApiDetail
+          );
+          
+          // 4. 返回同步结果
+          res.send(syncResult);
+        } catch (error) {
+          console.error('同步API数据出错:', error);
+          res.send({
+            success: false,
+            message: '同步API数据出错',
+            error: error instanceof Error ? error.message : '未知错误'
+          });
+        }
+      } catch (error) {
+        console.error('处理同步API请求出错:', error);
+        res.send({
+          success: false,
+          message: '处理同步API请求出错',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
     });
     return true;
   }
