@@ -33,7 +33,7 @@
   "build:view": "vite build",
   "copy-files": "copyfiles -u 1 'main/**/*.p12' 'serverDist'",
   "test:webpack": "webpack serve --config webpack.test.js",
-  "test:vite": "vite --config vite.test.js"
+  "test:vite": "npm run build:view & vite --config vite.test.js"
  },
  "dependencies": {
   "@eslint/js": "^9.11.1",

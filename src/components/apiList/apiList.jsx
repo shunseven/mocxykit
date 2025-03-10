@@ -6,7 +6,7 @@ import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
 import { t } from '../../common/fun';
-import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined, SyncOutlined, FileTextOutlined } from '@ant-design/icons';
+import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined, FileTextOutlined } from '@ant-design/icons';
 import ApiFox from '../apiMangeTool/apifox'; 
 import ApiDocModal from '../apiDoc/apiDocModal';
 const { Column } = Table;
@@ -312,7 +312,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         title={t('操作')}
         key="action"
         fixed="right"
-        width={160}
+        width={180}
         render={(_, record) => (
           <Space size="middle">
             <a
@@ -333,7 +333,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
                   marginRight: '10px'
                 }}>
                 <Tooltip title={t('查看文档')}>
-                  <FileTextOutlined />
+                  文档
                 </Tooltip>
               </a>
             )}
