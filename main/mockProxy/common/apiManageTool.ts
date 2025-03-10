@@ -247,8 +247,14 @@ export function resolveSchemaRefs(schema: any, dataSchemas: ApiFoxDataSchema[]):
           // 在dataSchemas中查找对应的schema
           const referencedSchema = dataSchemas.find(s => s.id === schemaId);
           if (referencedSchema) {
+            // 获取引用的schema
+            let resolvedSchema = referencedSchema.jsonSchema;
+            
+            // 递归处理引用的schema中可能存在的$ref
+            resolvedSchema = processObject(resolvedSchema);
+            
             // 替换引用为实际schema
-            return referencedSchema.jsonSchema;
+            return resolvedSchema;
           }
         }
       } else {
