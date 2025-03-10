@@ -161,6 +161,7 @@ vite 项目会在页面右下角显示一个按钮，点击按钮即可打开配
 - 每个 API 接口都可以独立控制使用代理或 MOCK 数据
 - 实时切换无需重启服务
 - 切换时自动保存当前配置
+![mock_proxy](./public/mock_proxy.png)
 
 ## 同步ApiFox数据
 
@@ -185,8 +186,6 @@ mocxykit 支持与 ApiFox 平台集成，让您可以轻松同步 ApiFox 中的 
    - 自动补全 URL：开启后，将在同步数据时自动为 API 路径添加前缀
    - 自动同步：开启后，将在每次打开页面时自动同步 ApiFox 数据
    - API 规则：选择适用的 API 规则（如果配置了多个规则）
-
-![mock_proxy](./public/mock_proxy.png)
 
 ### 自动同步功能
 
