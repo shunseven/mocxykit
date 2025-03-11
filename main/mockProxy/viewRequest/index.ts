@@ -698,6 +698,94 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
     return true;
   }
 
+  // 获取 ApiFox 配置
+  if (matchRouter('/express-proxy-mock/get-apifox-config', req.path)) {
+    try {
+      // 获取 ApiFox 配置
+      const configPath = path.resolve(process.cwd(), 'proxyMockData', 'manageTool.json');
+      let config: Record<string, any> = {};
+      
+      // 检查文件是否存在
+      if (fs.existsSync(configPath)) {
+        const configData = fs.readFileSync(configPath, 'utf-8');
+        config = JSON.parse(configData);
+      }
+      
+      res.send({
+        success: true,
+        data: config.ApiFox || {}
+      });
+    } catch (error) {
+      console.error('获取 ApiFox 配置失败:', error);
+      res.send({
+        success: false,
+        message: '获取 ApiFox 配置失败',
+        error: error instanceof Error ? error.message : '未知错误'
+      });
+    }
+    return true;
+  }
+
+  // 保存 ApiFox 配置
+  if (matchRouter('/express-proxy-mock/save-apifox-config', req.path)) {
+    getReqBodyData(req).then(async (data: Record<string, any>) => {
+      try {
+        const configPath = path.resolve(process.cwd(), 'proxyMockData', 'manageTool.json');
+        const dirPath = path.resolve(process.cwd(), 'proxyMockData');
+        
+        // 确保目录存在
+        if (!fs.existsSync(dirPath)) {
+          fs.mkdirSync(dirPath, { recursive: true });
+        }
+        
+        // 读取现有配置或创建新配置
+        let config: Record<string, any> = {};
+        if (fs.existsSync(configPath)) {
+          const configData = fs.readFileSync(configPath, 'utf-8');
+          try {
+            config = JSON.parse(configData);
+          } catch (e) {
+            config = {};
+          }
+        }
+        
+        // 更新 ApiFox 配置
+        config.ApiFox = data;
+        
+        // 保存配置
+        fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf-8');
+        
+        // 检查并更新 .gitignore 文件
+        const gitignorePath = path.resolve(process.cwd(), '.gitignore');
+        if (fs.existsSync(gitignorePath)) {
+          let gitignoreContent = fs.readFileSync(gitignorePath, 'utf-8');
+          const ignoreEntry = 'proxyMockData/manageTool.json';
+          
+          // 检查是否已经包含了该条目
+          if (!gitignoreContent.includes(ignoreEntry)) {
+            // 添加到 .gitignore 文件
+            gitignoreContent += `\n${ignoreEntry}`;
+            fs.writeFileSync(gitignorePath, gitignoreContent, 'utf-8');
+            console.log('已将 proxyMockData/manageTool.json 添加到 .gitignore 文件');
+          }
+        }
+        
+        res.send({
+          success: true,
+          message: '保存 ApiFox 配置成功'
+        });
+      } catch (error) {
+        console.error('保存 ApiFox 配置失败:', error);
+        res.send({
+          success: false,
+          message: '保存 ApiFox 配置失败',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
+    });
+    return true;
+  }
+
   return false
 }
 

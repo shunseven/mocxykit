@@ -7,7 +7,7 @@ import { t } from '../../common/fun';
 const { Step } = Steps;
 const { Text, Link } = Typography;
 
-const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
+const ApiFoxModal = ({ visible, onClose, onApiDataSync, config = {}, onConfigUpdate }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,60 +23,50 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   const [apiRuleOptions, setApiRuleOptions] = useState([]); // API规则选项
   const [selectedApiRule, setSelectedApiRule] = useState(''); // 选中的API规则
 
-  // 初始化时检查本地存储中是否有 token 和 projectId，以及新增的设置项
+  // 初始化时从配置中加载数据
   useEffect(() => {
     if (visible) {
-      const savedToken = localStorage.getItem('apiFoxToken');
-      const savedProjectId = localStorage.getItem('apiFoxProjectId');
-      
-      // 加载保存的设置
-      const savedAutoCompleteUrl = localStorage.getItem('apiFoxAutoCompleteUrl');
-      const savedAutoSync = localStorage.getItem('apiFoxAutoSync');
-      const savedSelectedApiRule = localStorage.getItem('apiFoxSelectedApiRule');
-      
-      if (savedAutoCompleteUrl !== null) {
-        setAutoCompleteUrl(savedAutoCompleteUrl === 'true');
-      }
-      
-      if (savedAutoSync !== null) {
-        setAutoSync(savedAutoSync === 'true');
-      }
-      
-      if (savedSelectedApiRule) {
-        setSelectedApiRule(savedSelectedApiRule);
-      }
-      
       // 加载API规则
       loadApiRules();
       
-      if (savedToken) {
-        setToken(savedToken);
+      // 从配置中加载数据
+      if (config) {
+        // 加载保存的设置
+        if (config.autoCompleteUrl !== undefined) {
+          setAutoCompleteUrl(config.autoCompleteUrl);
+        }
         
-        if (savedProjectId) {
-          // 如果已有项目ID，直接跳到第三步
-          const projectId = Number(savedProjectId);
-          setSelectedProject(projectId);
-          setCurrentStep(2);
-          fetchApiTreeList(projectId, savedToken);
+        if (config.autoSync !== undefined) {
+          setAutoSync(config.autoSync);
+        }
+        
+        if (config.selectedApiRule) {
+          setSelectedApiRule(config.selectedApiRule);
+        }
+        
+        if (config.token) {
+          setToken(config.token);
           
-          // 恢复勾选状态
-          const savedCheckedFolders = localStorage.getItem(`apiFoxCheckedFolders_${projectId}`);
-          if (savedCheckedFolders) {
-            try {
-              const parsedCheckedFolders = JSON.parse(savedCheckedFolders);
-              setCheckedFolders(parsedCheckedFolders);
-            } catch (error) {
-              console.error('解析保存的勾选项出错:', error);
+          if (config.projectId) {
+            // 如果已有项目ID，直接跳到第三步
+            const projectId = Number(config.projectId);
+            setSelectedProject(projectId);
+            setCurrentStep(2);
+            fetchApiTreeList(projectId, config.token);
+            
+            // 恢复勾选状态
+            if (config.checkedFolders && Array.isArray(config.checkedFolders)) {
+              setCheckedFolders(config.checkedFolders);
             }
+          } else {
+            // 只有token，跳到第二步
+            setCurrentStep(1);
+            fetchTeamsAndProjects(config.token);
           }
-        } else {
-          // 只有token，跳到第二步
-          setCurrentStep(1);
-          fetchTeamsAndProjects(savedToken);
         }
       }
     }
-  }, [visible]);
+  }, [visible, config]);
 
   // 加载API规则
   const loadApiRules = () => {
@@ -85,69 +75,63 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
       setApiRuleOptions(rules);
       
       // 如果只有一个规则，直接选中
-      if (rules.length === 1) {
+      if (rules.length === 1 && !selectedApiRule) {
         setSelectedApiRule(rules[0]);
-        localStorage.setItem('apiFoxSelectedApiRule', rules[0]);
-      } else if (rules.length > 1 && !localStorage.getItem('apiFoxSelectedApiRule')) {
+        updateConfig({ selectedApiRule: rules[0] });
+      } else if (rules.length > 1 && !selectedApiRule && !config.selectedApiRule) {
         // 如果有多个规则但没有选中，默认选中第一个
         setSelectedApiRule(rules[0]);
-        localStorage.setItem('apiFoxSelectedApiRule', rules[0]);
+        updateConfig({ selectedApiRule: rules[0] });
       }
     }
+  };
+
+  // 更新配置
+  const updateConfig = async (newConfig) => {
+    if (onConfigUpdate) {
+      return await onConfigUpdate(newConfig);
+    }
+    return false;
   };
 
   // 获取团队和项目数据
   const fetchTeamsAndProjects = async (tokenValue) => {
+    if (!tokenValue) return;
+    
     setLoading(true);
     try {
       const result = await fetchApiFoxTeamsAndProjects({ token: tokenValue });
-      
       if (result.success) {
-        setTeamsData(result.data.teams || []);
-        setProjectsData(result.data.projects || []);
-        setLoading(false);
+        const { teams, projects } = result.data;
+        setTeamsData(teams || []);
+        setProjectsData(projects || []);
       } else {
         message.error(t('获取团队和项目数据失败'));
-        setLoading(false);
       }
     } catch (error) {
       console.error(t('获取团队和项目数据出错:'), error);
       message.error(t('获取团队和项目数据出错'));
+    } finally {
       setLoading(false);
     }
   };
 
-  // 获取 API 树形结构
+  // 获取API树形列表
   const fetchApiTreeList = async (projectId, tokenValue = token) => {
+    if (!projectId || !tokenValue) return;
+    
     setLoading(true);
     try {
-      const result = await fetchApiFoxTreeList({ 
-        token: tokenValue,
-        projectId: projectId 
-      });
-      
+      const result = await fetchApiFoxTreeList({ token: tokenValue, projectId });
       if (result.success) {
         setApiTreeData(result.data || []);
-        
-        // 获取API树后，尝试恢复勾选状态
-        const savedCheckedFolders = localStorage.getItem(`apiFoxCheckedFolders_${projectId}`);
-        if (savedCheckedFolders) {
-          try {
-            const parsedCheckedFolders = JSON.parse(savedCheckedFolders);
-            setCheckedFolders(parsedCheckedFolders);
-          } catch (error) {
-            console.error(t('解析保存的勾选项出错:'), error);
-          }
-        }
-        
-        setLoading(false);
       } else {
         message.error(t('获取 API 列表失败'));
-        setLoading(false);
       }
     } catch (error) {
       console.error(t('获取 API 列表出错:'), error);
       message.error(t('获取 API 列表出错'));
+    } finally {
       setLoading(false);
     }
   };
@@ -159,15 +143,15 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
       return;
     }
 
-    // 保存勾选的文件夹到本地存储
-    localStorage.setItem(`apiFoxCheckedFolders_${selectedProject}`, JSON.stringify(checkedFolders));
-    
-    // 保存设置
-    localStorage.setItem('apiFoxAutoCompleteUrl', autoCompleteUrl.toString());
-    localStorage.setItem('apiFoxAutoSync', autoSync.toString());
-    if (selectedApiRule) {
-      localStorage.setItem('apiFoxSelectedApiRule', selectedApiRule);
-    }
+    // 保存配置
+    await updateConfig({
+      token,
+      projectId: selectedProject,
+      checkedFolders,
+      autoCompleteUrl,
+      autoSync,
+      selectedApiRule
+    });
 
     setLoading(true);
     try {
@@ -199,47 +183,49 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
 
   // 处理 Token 保存
   const handleTokenSave = () => {
-    if (!token.trim()) {
-      message.warning(t('请输入 ApiFox Access Token'));
+    if (!token) {
+      message.warning(t('请输入 Token'));
       return;
     }
-
-    localStorage.setItem('apiFoxToken', token);
+    
+    // 保存 token 到配置
+    updateConfig({ token });
+    
+    // 获取团队和项目数据
     fetchTeamsAndProjects(token);
+    
+    // 进入下一步
     setCurrentStep(1);
   };
 
   // 处理项目选择
   const handleProjectSelect = (projectId) => {
     setSelectedProject(projectId);
-    localStorage.setItem('apiFoxProjectId', projectId);
     
-    // 清空当前勾选状态
-    setCheckedFolders([]);
+    // 保存项目ID到配置
+    updateConfig({ projectId });
     
-    // 获取该项目的 API 树形结构
+    // 获取API树形列表
     fetchApiTreeList(projectId);
     
+    // 进入下一步
     setCurrentStep(2);
   };
 
-  // 处理文件夹选择
+  // 处理树形结构勾选
   const onCheck = (checkedKeys) => {
     setCheckedFolders(checkedKeys);
+    
+    // 不再立即保存配置，只在本地更新状态
+    // 只有点击同步按钮时才会保存配置并触发同步操作
   };
 
-  // 处理关闭弹窗
+  // 处理关闭
   const handleClose = () => {
-    // 不重置勾选状态，只重置步骤和API树数据
-    setCurrentStep(0);
-    setApiTreeData([]);
-    if (!localStorage.getItem('apiFoxToken')) {
-      setToken('');
-    }
     onClose();
   };
 
-  // 处理返回上一步
+  // 处理上一步
   const handlePrevStep = () => {
     const prevStep = currentStep - 1;
     setCurrentStep(prevStep);
@@ -260,19 +246,19 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync }) => {
   // 处理自动补全URL开关变化
   const handleAutoCompleteUrlChange = (e) => {
     setAutoCompleteUrl(e.target.checked);
-    localStorage.setItem('apiFoxAutoCompleteUrl', e.target.checked.toString());
+    updateConfig({ autoCompleteUrl: e.target.checked });
   };
 
   // 处理自动同步开关变化
   const handleAutoSyncChange = (e) => {
     setAutoSync(e.target.checked);
-    localStorage.setItem('apiFoxAutoSync', e.target.checked.toString());
+    updateConfig({ autoSync: e.target.checked });
   };
 
   // 处理API规则选择变化
   const handleApiRuleChange = (e) => {
     setSelectedApiRule(e.target.value);
-    localStorage.setItem('apiFoxSelectedApiRule', e.target.value);
+    updateConfig({ selectedApiRule: e.target.value });
   };
 
   // 渲染步骤内容

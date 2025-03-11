@@ -195,3 +195,18 @@ export async function syncApiFoxApi(data) {
   return res
 }
 
+// 获取 ApiFox 配置
+export async function getApiFoxConfig() {
+  const res = await request('/express-proxy-mock/get-apifox-config')
+  return res
+}
+
+// 保存 ApiFox 配置
+export async function saveApiFoxConfig(data) {
+  const res = await request('/express-proxy-mock/save-apifox-config', {
+    method: 'POST',
+    data
+  })
+  return res
+}
+
