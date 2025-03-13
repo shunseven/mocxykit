@@ -4,12 +4,13 @@ import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mc
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { getApiData, getMock } from "../mockProxy/common/fetchJsonData";
 import { getCacheRequestHistory } from "../mockProxy/common/cacheRequestHistory";
-import { getMcpConfig } from "../mockProxy/common/mcpConfig";
 import { z } from "zod";
 import { RequestSchema } from "@modelcontextprotocol/sdk/types";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { logger } from "../mockProxy/common/log";
 
 const createNewServer = () => new McpServer({
-  name: "mock-proxy-server",
+  name: "mocxykit-mcp-server",
   version: "1.0.0"
 });
 
@@ -120,7 +121,6 @@ let transports: Map<string, SSEServerTransport> = new Map();
 export default function createMcpServer (config: ProxyMockOptions) {
   return async function (req: Request, res: Response) {
     // 检查MCP服务是否启用
-    const mcpConfig = getMcpConfig();
 
     if (matchRouter('/sse', req.path)) {
       console.log('matchRouter', req.path);
@@ -187,4 +187,33 @@ export default function createMcpServer (config: ProxyMockOptions) {
 
     return false;
   }
+}
+
+export async function createMcpServerWithStdio() {
+  // Create an MCP server
+  const server = new McpServer({
+    name: "mocxykit-mcp-server",
+    version: "1.0.0"
+  });
+  
+  server.tool(
+    "getData",
+    "获取数据, 获取mcp数据",
+    { path: z.string() },
+    async ({ path }, extra) => {
+      // 在这里处理所有MCP请求
+      const hostname = decodeURIComponent(path);
+      const data = await getMcpData(hostname, []);
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify(data)
+        }]
+      }
+    }
+  );
+  // Start receiving messages on stdin and sending messages on stdout
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  logger('MCP server started');
 }
