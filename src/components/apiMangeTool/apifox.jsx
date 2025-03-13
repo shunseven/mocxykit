@@ -14,7 +14,6 @@ export default function ApiFox({ onApiDataChange }) {
   // 组件初始化时获取 ApiFox 配置
   useEffect(() => {
     fetchApiFoxConfig();
-    debugger
   }, []);
 
   // 获取 ApiFox 配置
