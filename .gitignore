@@ -33,3 +33,4 @@ proxyMockData/env.json
 .cursor
 mocxykit.config.json
 proxyMockData/manageTool.json
+proxyMockData/CacheRequestHistoryData.json

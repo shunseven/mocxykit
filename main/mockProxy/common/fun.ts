@@ -2,6 +2,8 @@ import { Request } from "express";
 import { pathToRegexp } from "path-to-regexp";
 import { getEnvData, getApiData } from "./fetchJsonData";
 import { Faker, zh_CN, en, base } from '@faker-js/faker';
+import path from "path";
+import fs from "fs";
 
 // 创建自定义的 faker 实例，设置 locale 优先级
 const customFaker = new Faker({
@@ -299,4 +301,24 @@ export function generateFakeData(jsonData: any, fakerKeys: string): any {
   });
 
   return result;
+}
+
+
+export function updateGitignore(ignorePattern: string): void {
+  const gitIgnorePath = path.join(process.cwd(), '.gitignore');
+  try {
+    let gitignoreContent = '';
+    if (fs.existsSync(gitIgnorePath)) {
+      gitignoreContent = fs.readFileSync(gitIgnorePath, 'utf8');
+    }
+    
+    if (!gitignoreContent.includes(ignorePattern)) {
+      const newContent = gitignoreContent.endsWith('\n') || gitignoreContent === ''
+        ? `${gitignoreContent}${ignorePattern}\n`
+        : `${gitignoreContent}\n${ignorePattern}\n`;
+      fs.writeFileSync(gitIgnorePath, newContent, 'utf8');
+    }
+  } catch (error) {
+    console.error('Error updating .gitignore:', error);
+  }
 }

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { getReqBodyData, hasMockData, parseUrlToKey } from './fun';
+import { getReqBodyData, hasMockData, parseUrlToKey, updateGitignore } from './fun';
 import { Request } from 'express';
 
 const apiDataFilePath = './proxyMockData/api.json'
@@ -178,22 +178,6 @@ export function getApiDataHasMockStatus() {
 
 const envDataFilePath = './proxyMockData/env.json';
 
-function ensureGitIgnore(filePath: string) {
-  const gitIgnorePath = './.gitignore';
-  let content = '';
-  
-  if (fs.existsSync(gitIgnorePath)) {
-    content = fs.readFileSync(gitIgnorePath, 'utf-8');
-  }
-
-  // 检查文件是否已经在.gitignore中
-  if (!content.split('\n').some(line => line.trim() === filePath)) {
-    // 添加新行（如果文件末尾没有换行符，先添加换行符）
-    const newLine = content.endsWith('\n') ? filePath : '\n' + filePath;
-    fs.appendFileSync(gitIgnorePath, newLine + '\n');
-  }
-}
-
 export function saveEnvData(data: EnvConfig) {
   const stat = fs.existsSync('./proxyMockData');
   if (!stat) {
@@ -201,7 +185,7 @@ export function saveEnvData(data: EnvConfig) {
   }
   
   // 确保env.json被添加到.gitignore
-  ensureGitIgnore('proxyMockData/env.json');
+  updateGitignore('proxyMockData/env.json');
   
   let envData = getEnvData();
   const existingIndex = envData.findIndex(env => env.id === data.id);
