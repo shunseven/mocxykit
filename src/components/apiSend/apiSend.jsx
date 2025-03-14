@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Input, Button, Tabs, Table, Select, message, Space, Tag } from 'antd';
-import { SendOutlined, ImportOutlined, SaveOutlined } from '@ant-design/icons';
+import { SendOutlined, ImportOutlined } from '@ant-design/icons';
 import { getCacheRequestHistory } from '../../api/api';
 import { t } from '../../common/fun';
 import axios from 'axios';
@@ -57,10 +57,23 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
   const [historyData, setHistoryData] = useState([]);
   const [selectedHistoryItem, setSelectedHistoryItem] = useState(null);
   const [jsonEditorError, setJsonEditorError] = useState(false);
+  
+  // 使用 ref 来跟踪组件是否已经初始化
+  const initializedRef = useRef(false);
+  // 使用 ref 来保存初始化的 apiData
+  const initialApiDataRef = useRef(null);
+  // 使用 ref 来保存最新的数据，避免被外部更新影响
+  const paramsDataRef = useRef(paramsData);
+  const headersDataRef = useRef(headersData);
+  const cookiesDataRef = useRef(cookiesData);
+  const bodyDataRef = useRef(bodyData);
 
   // 初始化数据
   useEffect(() => {
-    if (visible && apiData) {
+    if (visible && apiData && !initializedRef.current) {
+      // 保存初始的 apiData
+      initialApiDataRef.current = JSON.parse(JSON.stringify(apiData));
+      
       // 设置 URL 和方法
       setUrl(apiData.url || '');
       
@@ -150,8 +163,23 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       
       // 重置响应数据
       setResponseData(null);
+      
+      // 标记为已初始化
+      initializedRef.current = true;
     }
-  }, [visible, apiData]);
+    
+    // 当组件关闭时，重置初始化标志
+    if (!visible) {
+      initializedRef.current = false;
+      initialApiDataRef.current = null;
+    }
+    
+    // 更新 ref 中的数据
+    paramsDataRef.current = paramsData;
+    headersDataRef.current = headersData;
+    cookiesDataRef.current = cookiesData;
+    bodyDataRef.current = bodyData;
+  }, [visible, apiData, paramsData, headersData, cookiesData, bodyData]);
 
   // 获取 localStorage 键
   useEffect(() => {
@@ -162,7 +190,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
 
   // 处理参数变化
   const handleParamChange = (index, field, value) => {
-    const newData = [...paramsData];
+    const newData = [...paramsDataRef.current];
     newData[index][field] = value;
     
     // 如果是最后一行且有值，添加新行
@@ -175,7 +203,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
 
   // 处理头信息变化
   const handleHeaderChange = (index, field, value) => {
-    const newData = [...headersData];
+    const newData = [...headersDataRef.current];
     newData[index][field] = value;
     
     // 如果是最后一行且有值，添加新行
@@ -188,7 +216,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
 
   // 处理 Cookie 变化
   const handleCookieChange = (index, field, value) => {
-    const newData = [...cookiesData];
+    const newData = [...cookiesDataRef.current];
     newData[index][field] = value;
     
     // 如果是最后一行且有值，添加新行
@@ -202,7 +230,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
   // 删除行
   const handleDeleteRow = (index, dataType) => {
     if (dataType === 'params') {
-      const newData = [...paramsData];
+      const newData = [...paramsDataRef.current];
       if (index === newData.length - 1) {
         // 如果是最后一行，清空值
         newData[index] = { key: '', value: '', type: 'string' };
@@ -212,7 +240,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       }
       setParamsData(newData);
     } else if (dataType === 'headers') {
-      const newData = [...headersData];
+      const newData = [...headersDataRef.current];
       if (index === newData.length - 1) {
         newData[index] = { key: '', value: '' };
       } else {
@@ -220,7 +248,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       }
       setHeadersData(newData);
     } else if (dataType === 'cookies') {
-      const newData = [...cookiesData];
+      const newData = [...cookiesDataRef.current];
       if (index === newData.length - 1) {
         newData[index] = { key: '', value: '' };
       } else {
@@ -242,7 +270,8 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
     });
     
     if (activeTab === 'headers') {
-      const newHeaders = [...headersData.filter(item => item.key && item.value)];
+      // 使用 ref 中的数据
+      const newHeaders = [...headersDataRef.current.filter(item => item.key && item.value)];
       Object.entries(importData).forEach(([key, value]) => {
         const existingIndex = newHeaders.findIndex(item => item.key === key);
         if (existingIndex >= 0) {
@@ -254,7 +283,8 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       newHeaders.push({ key: '', value: '' });
       setHeadersData(newHeaders);
     } else if (activeTab === 'cookies') {
-      const newCookies = [...cookiesData.filter(item => item.key && item.value)];
+      // 使用 ref 中的数据
+      const newCookies = [...cookiesDataRef.current.filter(item => item.key && item.value)];
       Object.entries(importData).forEach(([key, value]) => {
         const existingIndex = newCookies.findIndex(item => item.key === key);
         if (existingIndex >= 0) {
@@ -276,7 +306,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
     try {
       const data = await getCacheRequestHistory();
       // 过滤出与当前 URL 匹配的历史记录
-      const filteredData = data.filter(item => item.url === apiData.url);
+      const filteredData = data.filter(item => item.url === url);
       setHistoryData(filteredData);
       setShowHistoryModal(true);
     } catch (error) {
@@ -303,6 +333,8 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         type: typeof value === 'boolean' ? 'boolean' : typeof value === 'number' ? 'number' : 'string'
       }));
       setParamsData([...params, { key: '', value: '', type: 'string' }]);
+      // 更新 ref
+      paramsDataRef.current = [...params, { key: '', value: '', type: 'string' }];
     }
     
     // 设置请求头
@@ -312,6 +344,8 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         value: String(value)
       }));
       setHeadersData([...headers, { key: '', value: '' }]);
+      // 更新 ref
+      headersDataRef.current = [...headers, { key: '', value: '' }];
     }
     
     // 设置 Cookie
@@ -321,11 +355,15 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         value: String(value)
       }));
       setCookiesData([...cookies, { key: '', value: '' }]);
+      // 更新 ref
+      cookiesDataRef.current = [...cookies, { key: '', value: '' }];
     }
     
     // 设置请求体
     if (selectedHistoryItem.reqBody) {
       setBodyData(selectedHistoryItem.reqBody);
+      // 更新 ref
+      bodyDataRef.current = selectedHistoryItem.reqBody;
     }
     
     setShowHistoryModal(false);
@@ -349,7 +387,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
     try {
       // 构建查询参数
       const queryParams = new URLSearchParams();
-      paramsData.forEach(param => {
+      paramsDataRef.current.forEach(param => {
         if (param.key && param.value) {
           let value = param.value;
           if (param.type === 'number') {
@@ -363,7 +401,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       
       // 构建请求头
       const headers = {};
-      headersData.forEach(header => {
+      headersDataRef.current.forEach(header => {
         if (header.key && header.value) {
           headers[header.key] = header.value;
         }
@@ -375,7 +413,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       }
       
       // 构建 Cookie
-      const cookieStr = cookiesData
+      const cookieStr = cookiesDataRef.current
         .filter(cookie => cookie.key && cookie.value)
         .map(cookie => `${cookie.key}=${cookie.value}`)
         .join('; ');
@@ -391,7 +429,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       const response = await fetch(fullUrl, {
         method,
         headers,
-        body: method !== 'GET' && method !== 'HEAD' ? JSON.stringify(bodyData) : undefined,
+        body: method !== 'GET' && method !== 'HEAD' ? JSON.stringify(bodyDataRef.current) : undefined,
         credentials: 'include'
       });
       
@@ -419,6 +457,11 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       });
       
       message.success(t('请求发送成功'));
+      
+      // 如果不是从历史记录中发送的请求，自动保存到 API 列表
+      if (!fromHistory) {
+        saveRequestData();
+      }
     } catch (error) {
       console.error('请求发送失败', error);
       setResponseData({
@@ -434,12 +477,10 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
   // 保存请求数据到 ApiList
   const saveRequestData = async () => {
     if (!url) {
-      message.warning(t('请输入 URL'));
       return;
     }
     
     if (jsonEditorError && activeTab === 'body') {
-      message.warning(t('请求体 JSON 格式错误，请修正后再发送'));
       return;
     }
     
@@ -450,18 +491,18 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         headers: {},
         params: {},
         cookie: {},
-        body: bodyData
+        body: bodyDataRef.current
       };
       
       // 添加请求头
-      headersData.forEach(header => {
+      headersDataRef.current.forEach(header => {
         if (header.key && header.value) {
           requestDataObj.headers[header.key] = header.value;
         }
       });
       
       // 添加参数
-      paramsData.forEach(param => {
+      paramsDataRef.current.forEach(param => {
         if (param.key && param.value) {
           let value = param.value;
           if (param.type === 'number') {
@@ -474,26 +515,22 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       });
       
       // 添加 Cookie
-      cookiesData.forEach(cookie => {
+      cookiesDataRef.current.forEach(cookie => {
         if (cookie.key && cookie.value) {
           requestDataObj.cookie[cookie.key] = cookie.value;
         }
       });
       
       // 发送请求保存数据
-      const response = await axios.post('/express-proxy-mock/save-request-data', {
+      await axios.post('/express-proxy-mock/save-request-data', {
         url,
         requestData: requestDataObj
       });
       
-      if (response.data.success) {
-        message.success(t('保存请求数据成功'));
-      } else {
-        message.error(t('保存请求数据失败') + ': ' + response.data.message);
-      }
+      // 不再显示成功消息，因为已经在发送请求成功后显示了
     } catch (error) {
       console.error('保存请求数据失败', error);
-      message.error(t('保存请求数据失败') + ': ' + error.message);
+      // 只在控制台记录错误，不向用户显示
     }
   };
 
@@ -592,15 +629,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
                 onClick={loadHistoryData}
               >
                 {t('导入最近请求数据')}
-              </Button>
-            )}
-            {!fromHistory && (
-              <Button
-                style={{ marginLeft: 8 }}
-                icon={<SaveOutlined />}
-                onClick={saveRequestData}
-              >
-                {t('保存到 API 列表')}
               </Button>
             )}
           </div>

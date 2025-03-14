@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Tabs, Table, Button, Input, Select, Checkbox, Modal, message } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { Tabs, Table, Button, Input, Select, Checkbox, Modal } from 'antd';
 import { ImportOutlined, DeleteOutlined } from '@ant-design/icons';
 import MockEditor from '../mockEditor/mockEditor';
 import { t } from '../../common/fun';
@@ -45,6 +45,20 @@ const ApiSendTabs = ({
   const [localStorageKeys, setLocalStorageKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [showLocalStorageModal, setShowLocalStorageModal] = useState(false);
+  
+  // 使用 ref 来保存最新的数据，避免被外部更新影响
+  const paramsDataRef = useRef(paramsData);
+  const headersDataRef = useRef(headersData);
+  const cookiesDataRef = useRef(cookiesData);
+  const bodyDataRef = useRef(bodyData);
+  
+  // 更新 ref 中的数据
+  useEffect(() => {
+    paramsDataRef.current = paramsData;
+    headersDataRef.current = headersData;
+    cookiesDataRef.current = cookiesData;
+    bodyDataRef.current = bodyData;
+  }, [paramsData, headersData, cookiesData, bodyData]);
 
   // 获取 localStorage 键
   useEffect(() => {
@@ -55,7 +69,7 @@ const ApiSendTabs = ({
 
   // 处理参数变化
   const handleParamChange = (index, field, value) => {
-    const newData = [...paramsData];
+    const newData = [...paramsDataRef.current];
     newData[index][field] = value;
     
     // 如果是最后一行且有值，添加新行
@@ -68,7 +82,7 @@ const ApiSendTabs = ({
 
   // 处理头信息变化
   const handleHeaderChange = (index, field, value) => {
-    const newData = [...headersData];
+    const newData = [...headersDataRef.current];
     newData[index][field] = value;
     
     // 如果是最后一行且有值，添加新行
@@ -81,7 +95,7 @@ const ApiSendTabs = ({
 
   // 处理 Cookie 变化
   const handleCookieChange = (index, field, value) => {
-    const newData = [...cookiesData];
+    const newData = [...cookiesDataRef.current];
     newData[index][field] = value;
     
     // 如果是最后一行且有值，添加新行
@@ -95,7 +109,7 @@ const ApiSendTabs = ({
   // 删除行
   const handleDeleteRow = (index, dataType) => {
     if (dataType === 'params') {
-      const newData = [...paramsData];
+      const newData = [...paramsDataRef.current];
       if (index === newData.length - 1) {
         // 如果是最后一行，清空值
         newData[index] = { key: '', value: '', type: 'string' };
@@ -105,7 +119,7 @@ const ApiSendTabs = ({
       }
       setParamsData(newData);
     } else if (dataType === 'headers') {
-      const newData = [...headersData];
+      const newData = [...headersDataRef.current];
       if (index === newData.length - 1) {
         newData[index] = { key: '', value: '' };
       } else {
@@ -113,7 +127,7 @@ const ApiSendTabs = ({
       }
       setHeadersData(newData);
     } else if (dataType === 'cookies') {
-      const newData = [...cookiesData];
+      const newData = [...cookiesDataRef.current];
       if (index === newData.length - 1) {
         newData[index] = { key: '', value: '' };
       } else {
@@ -135,7 +149,7 @@ const ApiSendTabs = ({
     });
     
     if (activeTab === 'headers') {
-      const newHeaders = [...headersData.filter(item => item.key && item.value)];
+      const newHeaders = [...headersDataRef.current.filter(item => item.key && item.value)];
       Object.entries(importData).forEach(([key, value]) => {
         const existingIndex = newHeaders.findIndex(item => item.key === key);
         if (existingIndex >= 0) {
@@ -147,7 +161,7 @@ const ApiSendTabs = ({
       newHeaders.push({ key: '', value: '' });
       setHeadersData(newHeaders);
     } else if (activeTab === 'cookies') {
-      const newCookies = [...cookiesData.filter(item => item.key && item.value)];
+      const newCookies = [...cookiesDataRef.current.filter(item => item.key && item.value)];
       Object.entries(importData).forEach(([key, value]) => {
         const existingIndex = newCookies.findIndex(item => item.key === key);
         if (existingIndex >= 0) {
@@ -414,4 +428,4 @@ const ApiSendTabs = ({
   );
 };
 
-export default ApiSendTabs; 
+export default ApiSendTabs;

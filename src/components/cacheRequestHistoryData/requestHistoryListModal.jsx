@@ -1,5 +1,5 @@
 import { Button, Modal, Table, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { batchImportRequestCacheToMock, clearCacheRequestHistory, getCacheRequestHistory } from "../../api/api";
 import HistoryDataPreviewModal from "./historyDataPreviewModal";
 import ApiSend from "../apiSend/apiSend";
@@ -14,31 +14,57 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
   const [searchValue, setSearchValue] = useState('')
   const [apiSendVisible, setApiSendVisible] = useState(false)
   const [currentHistoryItem, setCurrentHistoryItem] = useState(null)
+  const timerRef = useRef(null);
   
   const getRequestCache = () => {
     getCacheRequestHistory().then((data) => {
       setRequestCacheHistory(data)
     })
   }
+  
   useEffect(() => {
-    let timer;
     if (visible) {
       getRequestCache()
-      timer = setInterval(() => {
-        getRequestCache()
-      }, 1000)
+      startTimer();
     } else {
       setSearchValue('')
+      stopTimer();
     }
     return () => {
-      clearInterval(timer)
+      stopTimer();
     }
   }, [visible]);
+  
+  // 启动定时器
+  const startTimer = () => {
+    if (!timerRef.current) {
+      timerRef.current = setInterval(() => {
+        if (!apiSendVisible) {  // 只有在 ApiSend 不可见时才获取数据
+          getRequestCache();
+        }
+      }, 1000);
+    }
+  };
+  
+  // 停止定时器
+  const stopTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  };
   
   // 打开发送请求弹窗
   const handleOpenApiSend = (record) => {
     setCurrentHistoryItem(record);
     setApiSendVisible(true);
+  };
+  
+  // 关闭发送请求弹窗
+  const handleCloseApiSend = () => {
+    setApiSendVisible(false);
+    // 重新启动定时器
+    startTimer();
   };
   
   return <>
@@ -146,7 +172,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
     {currentHistoryItem && (
       <ApiSend
         visible={apiSendVisible}
-        onClose={() => setApiSendVisible(false)}
+        onClose={handleCloseApiSend}
         apiData={{
           url: currentHistoryItem.url,
           requestData: {
