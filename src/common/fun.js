@@ -298,3 +298,94 @@ export function clearLocalCache() {
     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
   });
 }
+
+// Cookie 相关操作方法
+/**
+ * 解析 cookie 字符串，返回键值对对象
+ * @returns {Object} cookie 键值对对象
+ */
+export function parseCookies() {
+  const cookies = {};
+  document.cookie.split(';').forEach(cookie => {
+    const [key, value] = cookie.trim().split('=');
+    if (key && value) cookies[key] = value;
+  });
+  return cookies;
+}
+
+/**
+ * 获取所有 cookie 键
+ * @returns {Array} cookie 键数组
+ */
+export function getCookieKeys() {
+  const cookies = document.cookie.split(';');
+  return cookies.map(cookie => {
+    const [key] = cookie.trim().split('=');
+    return key;
+  }).filter(key => key);
+}
+
+/**
+ * 获取指定 cookie 的值
+ * @param {string} key - cookie 键
+ * @returns {string|null} cookie 值，如果不存在则返回 null
+ */
+export function getCookieValue(key) {
+  try {
+    const cookieValue = document.cookie
+      .split('; ')
+      .find(row => row.startsWith(`${key}=`))
+      ?.split('=')[1];
+    
+    return cookieValue ? decodeURIComponent(cookieValue) : null;
+  } catch (e) {
+    console.error(`无法获取 cookie 键 ${key}:`, e);
+    return null;
+  }
+}
+
+/**
+ * 从 cookie 中导入数据
+ * @param {Array} selectedKeys - 选中的 cookie 键数组
+ * @returns {Object} 导入的数据对象
+ */
+export function importDataFromCookie(selectedKeys) {
+  const importData = {};
+  selectedKeys.forEach(key => {
+    const value = getCookieValue(key);
+    if (value) {
+      importData[key] = value;
+    }
+  });
+  return importData;
+}
+
+// localStorage 相关操作方法
+/**
+ * 获取所有 localStorage 键
+ * @returns {Array} localStorage 键数组
+ */
+export function getLocalStorageKeys() {
+  const keys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    keys.push(localStorage.key(i));
+  }
+  return keys;
+}
+
+/**
+ * 从 localStorage 中导入数据
+ * @param {Array} selectedKeys - 选中的 localStorage 键数组
+ * @returns {Object} 导入的数据对象
+ */
+export function importDataFromLocalStorage(selectedKeys) {
+  const importData = {};
+  selectedKeys.forEach(key => {
+    try {
+      importData[key] = localStorage.getItem(key);
+    } catch (e) {
+      console.error(`无法获取 localStorage 键 ${key}:`, e);
+    }
+  });
+  return importData;
+}

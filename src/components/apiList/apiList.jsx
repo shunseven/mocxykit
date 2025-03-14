@@ -314,7 +314,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         title={t('操作')}
         key="action"
         fixed="right"
-        width={180}
+        width={260}
         render={(_, record) => (
           <Space size="middle">
             <a

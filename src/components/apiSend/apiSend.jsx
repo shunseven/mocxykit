@@ -2,30 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Input, Button, Tabs, Table, Select, message, Space, Tag } from 'antd';
 import { SendOutlined, ImportOutlined } from '@ant-design/icons';
 import { getCacheRequestHistory } from '../../api/api';
-import { t } from '../../common/fun';
+import { t, parseCookies, getLocalStorageKeys, importDataFromLocalStorage } from '../../common/fun';
 import axios from 'axios';
 import ApiSendTabs from './apiSendTabs';
 
 const { Option } = Select;
-
-// 解析 cookie 字符串
-const parseCookies = () => {
-  const cookies = {};
-  document.cookie.split(';').forEach(cookie => {
-    const [key, value] = cookie.trim().split('=');
-    if (key && value) cookies[key] = value;
-  });
-  return cookies;
-};
-
-// 从 localStorage 获取所有键
-const getLocalStorageKeys = () => {
-  const keys = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    keys.push(localStorage.key(i));
-  }
-  return keys;
-};
 
 const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
   const [url, setUrl] = useState('');
@@ -43,7 +24,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [historyData, setHistoryData] = useState([]);
   const [selectedHistoryItem, setSelectedHistoryItem] = useState(null);
-  const [jsonEditorError, setJsonEditorError] = useState(false);
   
   // 使用 ref 来跟踪组件是否已经初始化
   const initializedRef = useRef(false);
@@ -202,14 +182,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
 
   // 从 localStorage 导入
   const handleImportFromLocalStorage = () => {
-    const importData = {};
-    selectedKeys.forEach(key => {
-      try {
-        importData[key] = localStorage.getItem(key);
-      } catch (e) {
-        console.error(`无法获取 localStorage 键 ${key}:`, e);
-      }
-    });
+    const importData = importDataFromLocalStorage(selectedKeys);
     
     if (activeTab === 'headers') {
       // 使用 ref 中的数据
@@ -318,11 +291,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       return;
     }
     
-    if (jsonEditorError && activeTab === 'body') {
-      message.warning(t('请求体 JSON 格式错误，请修正后再发送'));
-      return;
-    }
-    
     setLoading(true);
     setResponseData(null);
     
@@ -419,10 +387,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
   // 保存请求数据到 ApiList
   const saveRequestData = async () => {
     if (!url) {
-      return;
-    }
-    
-    if (jsonEditorError && activeTab === 'body') {
       return;
     }
     
@@ -586,7 +550,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
             setCookiesData={setCookiesData}
             bodyData={bodyData}
             setBodyData={setBodyData}
-            setJsonEditorError={setJsonEditorError}
           />
         </div>
 

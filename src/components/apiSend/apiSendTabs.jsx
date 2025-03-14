@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Table, Button, Input, Select, Checkbox, Modal } from 'antd';
 import { ImportOutlined, DeleteOutlined } from '@ant-design/icons';
 import Editor from '../mockEditor/jsonEditor';
-import { t } from '../../common/fun';
+import { t, getCookieKeys, getLocalStorageKeys, importDataFromCookie, importDataFromLocalStorage } from '../../common/fun';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -20,15 +20,6 @@ const booleanOptions = [
   { label: t('否'), value: 'false' }
 ];
 
-// 从 localStorage 获取所有键
-const getLocalStorageKeys = () => {
-  const keys = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    keys.push(localStorage.key(i));
-  }
-  return keys;
-};
-
 const ApiSendTabs = ({ 
   activeTab, 
   setActiveTab, 
@@ -45,6 +36,9 @@ const ApiSendTabs = ({
   const [localStorageKeys, setLocalStorageKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [showLocalStorageModal, setShowLocalStorageModal] = useState(false);
+  const [cookieKeys, setCookieKeys] = useState([]);
+  const [selectedCookieKeys, setSelectedCookieKeys] = useState([]);
+  const [showCookieModal, setShowCookieModal] = useState(false);
   
   // 使用 ref 来保存最新的数据，避免被外部更新影响
   const paramsDataRef = useRef(paramsData);
@@ -67,6 +61,13 @@ const ApiSendTabs = ({
       setLocalStorageKeys(getLocalStorageKeys());
     }
   }, [showLocalStorageModal]);
+
+  // 获取 cookie 键
+  useEffect(() => {
+    if (showCookieModal) {
+      setCookieKeys(getCookieKeys());
+    }
+  }, [showCookieModal]);
 
   // 处理参数变化
   const handleParamChange = (index, field, value) => {
@@ -140,14 +141,7 @@ const ApiSendTabs = ({
 
   // 从 localStorage 导入
   const handleImportFromLocalStorage = () => {
-    const importData = {};
-    selectedKeys.forEach(key => {
-      try {
-        importData[key] = localStorage.getItem(key);
-      } catch (e) {
-        console.error(`无法获取 localStorage 键 ${key}:`, e);
-      }
-    });
+    const importData = importDataFromLocalStorage(selectedKeys);
     
     if (activeTab === 'headers') {
       const newHeaders = [...headersDataRef.current.filter(item => item.key && item.value)];
@@ -177,6 +171,26 @@ const ApiSendTabs = ({
     
     setShowLocalStorageModal(false);
     setSelectedKeys([]);
+  };
+
+  // 从 cookie 导入
+  const handleImportFromCookie = () => {
+    const importData = importDataFromCookie(selectedCookieKeys);
+    
+    const newCookies = [...cookiesDataRef.current.filter(item => item.key && item.value)];
+    Object.entries(importData).forEach(([key, value]) => {
+      const existingIndex = newCookies.findIndex(item => item.key === key);
+      if (existingIndex >= 0) {
+        newCookies[existingIndex].value = value;
+      } else {
+        newCookies.push({ key, value });
+      }
+    });
+    newCookies.push({ key: '', value: '' });
+    setCookiesData(newCookies);
+    
+    setShowCookieModal(false);
+    setSelectedCookieKeys([]);
   };
 
   // 参数表格列
@@ -384,8 +398,16 @@ const ApiSendTabs = ({
               onClick={() => setShowLocalStorageModal(true)}
               icon={<ImportOutlined />}
               size="small"
+              style={{ marginRight: 8 }}
             >
               {t('从 localStorage 导入')}
+            </Button>
+            <Button
+              onClick={() => setShowCookieModal(true)}
+              icon={<ImportOutlined />}
+              size="small"
+            >
+              {t('从 cookie 中导入')}
             </Button>
           </div>
           <Table
@@ -417,6 +439,35 @@ const ApiSendTabs = ({
                     setSelectedKeys([...selectedKeys, key]);
                   } else {
                     setSelectedKeys(selectedKeys.filter(k => k !== key));
+                  }
+                }}
+              >
+                {key}
+              </Checkbox>
+            </div>
+          ))}
+        </div>
+      </Modal>
+
+      {/* cookie 选择模态框 */}
+      <Modal
+        title={t('从 cookie 中导入')}
+        open={showCookieModal}
+        onCancel={() => setShowCookieModal(false)}
+        onOk={handleImportFromCookie}
+        okText={t('导入')}
+        cancelText={t('取消')}
+      >
+        <div style={{ maxHeight: 400, overflow: 'auto' }}>
+          {cookieKeys.map(key => (
+            <div key={key} style={{ marginBottom: 8 }}>
+              <Checkbox
+                checked={selectedCookieKeys.includes(key)}
+                onChange={e => {
+                  if (e.target.checked) {
+                    setSelectedCookieKeys([...selectedCookieKeys, key]);
+                  } else {
+                    setSelectedCookieKeys(selectedCookieKeys.filter(k => k !== key));
                   }
                 }}
               >
