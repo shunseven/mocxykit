@@ -14,6 +14,14 @@ interface ProxyList {
   bindEnvId?: number; // 同时在代理配置中也添加环境变量绑定
 }
 
+interface RequestData {
+  url: string;
+  method: string;
+  headers: Record<string, any>;
+  body: Record<string, any>;
+  cookie: Record<string, any>;
+}
+
 interface ApiConfig {
   url: string;
   key: string;
@@ -29,6 +37,7 @@ interface ApiConfig {
   requestSchema?: Record<string, any>;
   responseSchema?: Record<string, any>;
   parameters?: Record<string, any>;
+  requestData?: RequestData;
 }
 
 interface ApiData {

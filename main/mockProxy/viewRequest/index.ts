@@ -786,6 +786,70 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
     return true;
   }
 
+  // 保存请求数据到 ApiList
+  if (matchRouter('/express-proxy-mock/save-request-data', req.path)) {
+    getReqBodyData(req).then(async (data: Record<string, any>) => {
+      try {
+        const { url, requestData } = data;
+        if (!url || !requestData) {
+          res.send({
+            success: false,
+            message: '缺少必要参数'
+          });
+          return;
+        }
+
+        // 获取当前 API 数据
+        const apiData = getApiData();
+        
+        // 查找是否已存在相同 URL 的 API
+        const existingApiIndex = apiData.apiList.findIndex(api => api.url === url);
+        
+        if (existingApiIndex !== -1) {
+          // 更新现有 API 的 requestData
+          apiData.apiList[existingApiIndex].requestData = requestData;
+        } else {
+          // 创建新的 API 配置
+          const urlParts = url.split('/');
+          const apiKey = urlParts.map((part: string) => {
+            if (part) {
+              return part.charAt(0).toUpperCase() + part.slice(1);
+            }
+            return '';
+          }).join('');
+          
+          // 添加新的 API
+          apiData.apiList.push({
+            url,
+            key: apiKey,
+            customProxy: [],
+            selectCustomProxy: '',
+            target: 'proxy',
+            duration: 0,
+            name: url,
+            requestData
+          });
+        }
+        
+        // 保存 API 数据
+        setApiData(apiData);
+        
+        res.send({
+          success: true,
+          message: '保存请求数据成功'
+        });
+      } catch (error) {
+        console.error('保存请求数据失败:', error);
+        res.send({
+          success: false,
+          message: '保存请求数据失败',
+          error: error instanceof Error ? error.message : '未知错误'
+        });
+      }
+    });
+    return true;
+  }
+
   return false
 }
 

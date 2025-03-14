@@ -9,6 +9,7 @@ import { t } from '../../common/fun';
 import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined, FileTextOutlined } from '@ant-design/icons';
 import ApiFox from '../apiMangeTool/apifox'; 
 import ApiDocModal from '../apiDoc/apiDocModal';
+import ApiSend from '../apiSend/apiSend';
 const { Column } = Table;
 
 const colorMap = {
@@ -42,6 +43,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
   const [recentlyImported, setRecentlyImported] = useState([]);
   const [docVisible, setDocVisible] = useState(false);
   const [currentApiData, setCurrentApiData] = useState(null);
+  const [apiSendVisible, setApiSendVisible] = useState(false);
 
   const rowSelection = {
     selectedRowKeys,
@@ -337,6 +339,18 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
                 </Tooltip>
               </a>
             )}
+            <a
+              onClick={() => {
+                setCurrentApiData(record)
+                setApiSendVisible(true)
+              }}
+              style={{
+                marginRight: '10px'
+              }}>
+              <Tooltip title={t('发送请求')}>
+                {t('发送')}
+              </Tooltip>
+            </a>
             <Popconfirm
               title={t('请确认')}
               description={t('是否要删除这个代理')}
@@ -368,6 +382,11 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
     <ApiDocModal 
       visible={docVisible} 
       onClose={() => setDocVisible(false)} 
+      apiData={currentApiData} 
+    />
+    <ApiSend 
+      visible={apiSendVisible} 
+      onClose={() => setApiSendVisible(false)} 
       apiData={currentApiData} 
     />
   </>
