@@ -17,6 +17,12 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
   const mcpServer = createMcpServer(config);
 
   return async function (req: Request, res: Response, next: NextFunction) {
+
+    if (req.headers['mocxykit-cookie']) {
+      req.headers.cookie = req.headers['mocxykit-cookie'] as string;
+      delete req.headers['mocxykit-cookie'];
+    }
+
     let isClient = false;
     if (process.env.PROCY_MOCK_NODE_ENV !== 'development') {
       isClient = clientMiddleware(req, res)

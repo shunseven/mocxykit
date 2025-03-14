@@ -8,19 +8,6 @@ import ApiSendTabs from './apiSendTabs';
 
 const { Option } = Select;
 
-// 参数类型映射
-const paramTypeOptions = [
-  { label: 'String', value: 'string' },
-  { label: 'Number', value: 'number' },
-  { label: 'Boolean', value: 'boolean' }
-];
-
-// 布尔值选项
-const booleanOptions = [
-  { label: t('是'), value: 'true' },
-  { label: t('否'), value: 'false' }
-];
-
 // 解析 cookie 字符串
 const parseCookies = () => {
   const cookies = {};
@@ -153,10 +140,35 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       
       // 初始化 cookie 数据
       const browserCookies = parseCookies();
-      if (Object.keys(browserCookies).length > 0 && !apiData.requestData?.cookie) {
-        const cookies = Object.entries(browserCookies).map(([key, value]) => ({
+      if (Object.keys(browserCookies).length > 0) {
+        // 创建一个映射来存储所有 cookie
+        const cookieMap = {};
+        
+        // 先添加浏览器中的 cookie
+        Object.entries(browserCookies).forEach(([key, value]) => {
+          cookieMap[key] = value;
+        });
+        
+        // 如果有传入的 cookie，添加到映射中并覆盖同名的浏览器 cookie
+        if (apiData.requestData?.cookie) {
+          Object.entries(apiData.requestData.cookie).forEach(([key, value]) => {
+            cookieMap[key] = String(value);
+          });
+        }
+        
+        // 转换为数组格式
+        const cookies = Object.entries(cookieMap).map(([key, value]) => ({
           key,
           value
+        }));
+        
+        // 设置 cookie 数据
+        setCookiesData([...cookies, { key: '', value: '' }]);
+      } else if (apiData.requestData?.cookie) {
+        // 如果没有浏览器 cookie 但有传入的 cookie
+        const cookies = Object.entries(apiData.requestData.cookie).map(([key, value]) => ({
+          key,
+          value: String(value)
         }));
         setCookiesData([...cookies, { key: '', value: '' }]);
       }
@@ -187,76 +199,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
       setLocalStorageKeys(getLocalStorageKeys());
     }
   }, [showLocalStorageModal]);
-
-  // 处理参数变化
-  const handleParamChange = (index, field, value) => {
-    const newData = [...paramsDataRef.current];
-    newData[index][field] = value;
-    
-    // 如果是最后一行且有值，添加新行
-    if (index === newData.length - 1 && (newData[index].key || newData[index].value)) {
-      newData.push({ key: '', value: '', type: 'string' });
-    }
-    
-    setParamsData(newData);
-  };
-
-  // 处理头信息变化
-  const handleHeaderChange = (index, field, value) => {
-    const newData = [...headersDataRef.current];
-    newData[index][field] = value;
-    
-    // 如果是最后一行且有值，添加新行
-    if (index === newData.length - 1 && (newData[index].key || newData[index].value)) {
-      newData.push({ key: '', value: '' });
-    }
-    
-    setHeadersData(newData);
-  };
-
-  // 处理 Cookie 变化
-  const handleCookieChange = (index, field, value) => {
-    const newData = [...cookiesDataRef.current];
-    newData[index][field] = value;
-    
-    // 如果是最后一行且有值，添加新行
-    if (index === newData.length - 1 && (newData[index].key || newData[index].value)) {
-      newData.push({ key: '', value: '' });
-    }
-    
-    setCookiesData(newData);
-  };
-
-  // 删除行
-  const handleDeleteRow = (index, dataType) => {
-    if (dataType === 'params') {
-      const newData = [...paramsDataRef.current];
-      if (index === newData.length - 1) {
-        // 如果是最后一行，清空值
-        newData[index] = { key: '', value: '', type: 'string' };
-      } else {
-        // 否则删除行
-        newData.splice(index, 1);
-      }
-      setParamsData(newData);
-    } else if (dataType === 'headers') {
-      const newData = [...headersDataRef.current];
-      if (index === newData.length - 1) {
-        newData[index] = { key: '', value: '' };
-      } else {
-        newData.splice(index, 1);
-      }
-      setHeadersData(newData);
-    } else if (dataType === 'cookies') {
-      const newData = [...cookiesDataRef.current];
-      if (index === newData.length - 1) {
-        newData[index] = { key: '', value: '' };
-      } else {
-        newData.splice(index, 1);
-      }
-      setCookiesData(newData);
-    }
-  };
 
   // 从 localStorage 导入
   const handleImportFromLocalStorage = () => {
@@ -419,7 +361,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         .join('; ');
       
       if (cookieStr) {
-        headers['Cookie'] = cookieStr;
+        headers['Mocxykit-Cookie'] = cookieStr;
       }
       
       // 构建完整 URL
@@ -430,7 +372,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         method,
         headers,
         body: method !== 'GET' && method !== 'HEAD' ? JSON.stringify(bodyDataRef.current) : undefined,
-        credentials: 'include'
+        credentials: 'omit'
       });
       
       // 解析响应

@@ -111,12 +111,36 @@ export default function createProxyServer (options: ProxyMockOptions) {
         const queryParams = Object.fromEntries(urlObj.searchParams.entries());
         const requestKey = req.url as string;
         
+        // 需要过滤的请求头字段
+        const headersToFilter = [
+          'host',
+          'connection',
+          'sec-ch-ua-platform',
+          'accept-language',
+          'accept',
+          'sec-ch-ua',
+          'user-agent',
+          'sec-ch-ua-mobile',
+          'sec-fetch-site',
+          'sec-fetch-mode',
+          'sec-fetch-dest',
+          'referer',
+          'accept-encoding'
+        ];
+        
+        // 过滤请求头
+        const filteredReqHeaders = { ...req.headers };
+        headersToFilter.forEach(header => {
+          delete filteredReqHeaders[header];
+        });
+        console.log('cookie', req.headers);
+        
         setCacheRequestHistory({
           url: (req.url as string).split('?')[0],
           key: parseUrlToKey(req.url as string),
           data: JSON.parse(body.toString()),
           time: new Date().toLocaleString(),
-          reqHeaders: req.headers as Record<string, any>,
+          reqHeaders: filteredReqHeaders as Record<string, any>,
           resHeaders: proxyRes.headers as Record<string, any>,
           params: queryParams,
           cookie: req.headers.cookie ? parseCookies(req.headers.cookie as string) : {},

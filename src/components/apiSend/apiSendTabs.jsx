@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Table, Button, Input, Select, Checkbox, Modal } from 'antd';
 import { ImportOutlined, DeleteOutlined } from '@ant-design/icons';
-import MockEditor from '../mockEditor/mockEditor';
+import Editor from '../mockEditor/jsonEditor';
 import { t } from '../../common/fun';
 
 const { TabPane } = Tabs;
@@ -51,6 +51,7 @@ const ApiSendTabs = ({
   const headersDataRef = useRef(headersData);
   const cookiesDataRef = useRef(cookiesData);
   const bodyDataRef = useRef(bodyData);
+  const jsonEditorRef = useRef(null);
   
   // 更新 ref 中的数据
   useEffect(() => {
@@ -350,11 +351,12 @@ const ApiSendTabs = ({
         </TabPane>
         <TabPane tab={t('Body')} key="body">
           <div style={{ height: 300 }}>
-            <MockEditor
-              value={{ data: [{ responseData: bodyData }] }}
-              onChange={(value) => setBodyData(value.data[0].responseData)}
-              onStateChange={setJsonEditorError}
+            <Editor
+              value={bodyData}
+              onChange={(value) => setBodyData(value)}
+              onError={setJsonEditorError}
               mode="code"
+              jsonEditorRef={jsonEditorRef}
             />
           </div>
         </TabPane>

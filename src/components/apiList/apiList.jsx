@@ -348,7 +348,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
                 marginRight: '10px'
               }}>
               <Tooltip title={t('发送请求')}>
-                {t('发送')}
+                {t('发送请求')}
               </Tooltip>
             </a>
             <Popconfirm
