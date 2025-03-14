@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Input, Button, Tabs, Table, Select, Tooltip, Checkbox, message, Space, Tag } from 'antd';
-import { SendOutlined, ImportOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons';
-import MockEditor from '../mockEditor/mockEditor';
+import { Modal, Input, Button, Tabs, Table, Select, message, Space, Tag } from 'antd';
+import { SendOutlined, ImportOutlined, SaveOutlined } from '@ant-design/icons';
 import { getCacheRequestHistory } from '../../api/api';
 import { t } from '../../common/fun';
 import axios from 'axios';
+import ApiSendTabs from './apiSendTabs';
 
-const { TabPane } = Tabs;
 const { Option } = Select;
 
 // 参数类型映射
@@ -498,164 +497,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
     }
   };
 
-  // 参数表格列
-  const paramsColumns = [
-    {
-      title: t('参数名'),
-      dataIndex: 'key',
-      key: 'key',
-      width: '30%',
-      render: (text, record, index) => (
-        <Input
-          value={text}
-          onChange={e => handleParamChange(index, 'key', e.target.value)}
-          placeholder={t('参数名')}
-        />
-      )
-    },
-    {
-      title: t('类型'),
-      dataIndex: 'type',
-      key: 'type',
-      width: '20%',
-      render: (text, record, index) => (
-        <Select
-          value={text}
-          onChange={value => handleParamChange(index, 'type', value)}
-          style={{ width: '100%' }}
-        >
-          {paramTypeOptions.map(option => (
-            <Option key={option.value} value={option.value}>{option.label}</Option>
-          ))}
-        </Select>
-      )
-    },
-    {
-      title: t('参数值'),
-      dataIndex: 'value',
-      key: 'value',
-      width: '40%',
-      render: (text, record, index) => (
-        record.type === 'boolean' ? (
-          <Select
-            value={text}
-            onChange={value => handleParamChange(index, 'value', value)}
-            style={{ width: '100%' }}
-          >
-            {booleanOptions.map(option => (
-              <Option key={option.value} value={option.value}>{option.label}</Option>
-            ))}
-          </Select>
-        ) : (
-          <Input
-            value={text}
-            onChange={e => handleParamChange(index, 'value', e.target.value)}
-            placeholder={t('参数值')}
-          />
-        )
-      )
-    },
-    {
-      title: t('操作'),
-      key: 'action',
-      width: '10%',
-      render: (_, record, index) => (
-        <Button
-          type="text"
-          icon={<DeleteOutlined />}
-          onClick={() => handleDeleteRow(index, 'params')}
-          danger
-        />
-      )
-    }
-  ];
-
-  // 头信息表格列
-  const headersColumns = [
-    {
-      title: t('参数名'),
-      dataIndex: 'key',
-      key: 'key',
-      width: '40%',
-      render: (text, record, index) => (
-        <Input
-          value={text}
-          onChange={e => handleHeaderChange(index, 'key', e.target.value)}
-          placeholder={t('参数名')}
-        />
-      )
-    },
-    {
-      title: t('参数值'),
-      dataIndex: 'value',
-      key: 'value',
-      width: '50%',
-      render: (text, record, index) => (
-        <Input
-          value={text}
-          onChange={e => handleHeaderChange(index, 'value', e.target.value)}
-          placeholder={t('参数值')}
-        />
-      )
-    },
-    {
-      title: t('操作'),
-      key: 'action',
-      width: '10%',
-      render: (_, record, index) => (
-        <Button
-          type="text"
-          icon={<DeleteOutlined />}
-          onClick={() => handleDeleteRow(index, 'headers')}
-          danger
-        />
-      )
-    }
-  ];
-
-  // Cookie 表格列
-  const cookiesColumns = [
-    {
-      title: t('参数名'),
-      dataIndex: 'key',
-      key: 'key',
-      width: '40%',
-      render: (text, record, index) => (
-        <Input
-          value={text}
-          onChange={e => handleCookieChange(index, 'key', e.target.value)}
-          placeholder={t('参数名')}
-        />
-      )
-    },
-    {
-      title: t('参数值'),
-      dataIndex: 'value',
-      key: 'value',
-      width: '50%',
-      render: (text, record, index) => (
-        <Input
-          value={text}
-          onChange={e => handleCookieChange(index, 'value', e.target.value)}
-          placeholder={t('参数值')}
-        />
-      )
-    },
-    {
-      title: t('操作'),
-      key: 'action',
-      width: '10%',
-      render: (_, record, index) => (
-        <Button
-          type="text"
-          icon={<DeleteOutlined />}
-          onClick={() => handleDeleteRow(index, 'cookies')}
-          danger
-        />
-      )
-    }
-  ];
-
   // 历史记录表格列
   const historyColumns = [
     {
@@ -764,63 +605,19 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
             )}
           </div>
 
-          <Tabs activeKey={activeTab} onChange={setActiveTab}>
-            <TabPane tab={t('Params')} key="params">
-              <Table
-                dataSource={paramsData}
-                columns={paramsColumns}
-                pagination={false}
-                rowKey={(record, index) => index}
-                size="small"
-              />
-            </TabPane>
-            <TabPane tab={t('Body')} key="body">
-              <div style={{ height: 300 }}>
-                <MockEditor
-                  value={{ data: [{ responseData: bodyData }] }}
-                  onChange={(value) => setBodyData(value.data[0].responseData)}
-                  onStateChange={setJsonEditorError}
-                  mode="code"
-                />
-              </div>
-            </TabPane>
-            <TabPane tab={t('Headers')} key="headers">
-              <div style={{ marginBottom: 8 }}>
-                <Button
-                  onClick={() => setShowLocalStorageModal(true)}
-                  icon={<ImportOutlined />}
-                  size="small"
-                >
-                  {t('从 localStorage 导入')}
-                </Button>
-              </div>
-              <Table
-                dataSource={headersData}
-                columns={headersColumns}
-                pagination={false}
-                rowKey={(record, index) => index}
-                size="small"
-              />
-            </TabPane>
-            <TabPane tab={t('Cookies')} key="cookies">
-              <div style={{ marginBottom: 8 }}>
-                <Button
-                  onClick={() => setShowLocalStorageModal(true)}
-                  icon={<ImportOutlined />}
-                  size="small"
-                >
-                  {t('从 localStorage 导入')}
-                </Button>
-              </div>
-              <Table
-                dataSource={cookiesData}
-                columns={cookiesColumns}
-                pagination={false}
-                rowKey={(record, index) => index}
-                size="small"
-              />
-            </TabPane>
-          </Tabs>
+          <ApiSendTabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            paramsData={paramsData}
+            setParamsData={setParamsData}
+            headersData={headersData}
+            setHeadersData={setHeadersData}
+            cookiesData={cookiesData}
+            setCookiesData={setCookiesData}
+            bodyData={bodyData}
+            setBodyData={setBodyData}
+            setJsonEditorError={setJsonEditorError}
+          />
         </div>
 
         {responseData && (
@@ -839,7 +636,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
               </h3>
             </div>
             <Tabs defaultActiveKey="response">
-              <TabPane tab={t('响应数据')} key="response">
+              <Tabs.TabPane tab={t('响应数据')} key="response">
                 <div style={{ maxHeight: 300, overflow: 'auto' }}>
                   <pre style={{ margin: 0 }}>
                     {responseData.error 
@@ -849,8 +646,8 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
                         : responseData.body}
                   </pre>
                 </div>
-              </TabPane>
-              <TabPane tab={t('响应头')} key="headers">
+              </Tabs.TabPane>
+              <Tabs.TabPane tab={t('响应头')} key="headers">
                 <div style={{ maxHeight: 300, overflow: 'auto' }}>
                   {responseData.headers && Object.entries(responseData.headers).map(([key, value]) => (
                     <div key={key} style={{ marginBottom: 4 }}>
@@ -858,7 +655,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
                     </div>
                   ))}
                 </div>
-              </TabPane>
+              </Tabs.TabPane>
             </Tabs>
           </div>
         )}
