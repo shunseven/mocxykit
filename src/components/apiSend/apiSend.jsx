@@ -8,7 +8,7 @@ import ApiSendTabs from './apiSendTabs';
 
 const { Option } = Select;
 
-const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
+const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) => {
   const [url, setUrl] = useState('');
   const [method, setMethod] = useState('GET');
   const [activeTab, setActiveTab] = useState('params');
@@ -433,6 +433,11 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         requestData: requestDataObj
       });
       
+      // 调用 onApiDataChange 更新 API 列表
+      if (onApiDataChange) {
+        onApiDataChange();
+      }
+      
       // 不再显示成功消息，因为已经在发送请求成功后显示了
     } catch (error) {
       console.error('保存请求数据失败', error);
@@ -498,6 +503,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         width={1000}
         footer={null}
         destroyOnClose
+        zIndex={1000}
       >
         <div style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', marginBottom: 16 }}>
@@ -602,6 +608,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         onOk={handleImportFromLocalStorage}
         okText={t('导入')}
         cancelText={t('取消')}
+        zIndex={1100}
       >
         <div style={{ maxHeight: 400, overflow: 'auto' }}>
           {localStorageKeys.map(key => (
@@ -632,6 +639,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory }) => {
         okText={t('导入')}
         cancelText={t('取消')}
         width={800}
+        zIndex={1100}
       >
         <Table
           dataSource={historyData}

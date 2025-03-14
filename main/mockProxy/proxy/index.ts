@@ -125,7 +125,24 @@ export default function createProxyServer (options: ProxyMockOptions) {
           'sec-fetch-mode',
           'sec-fetch-dest',
           'referer',
-          'accept-encoding'
+          'accept-encoding',
+          'content-length',
+          'content-type',
+          'transfer-encoding',
+          'connection',
+          'keep-alive',
+          'proxy-connection', 
+          'expect',
+          'if-modified-since',
+          'if-none-match',
+          'if-unmodified-since',
+          'if-match',
+          'if-range',
+          'cache-control',
+          'pragma',
+          'expires',
+          'date',
+          'cookie'
         ];
         
         // 过滤请求头

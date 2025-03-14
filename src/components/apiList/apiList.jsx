@@ -388,6 +388,7 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
       visible={apiSendVisible} 
       onClose={() => setApiSendVisible(false)} 
       apiData={currentApiData} 
+      onApiDataChange={onApiDataChange}
     />
   </>
 }
