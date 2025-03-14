@@ -1,38 +1,7 @@
 // 导入必要的模块
-import fs from 'fs';
-import path from 'path';
 import { ApiFoxApiTreeItem, ApiFoxDataSchema, ApiFoxApiDetailResponse } from '../../api/fox-api';
 import { getApiData, setApiData, getMock, setMockData } from './fetchJsonData';
 import { parseUrlToKey } from './fun';
-
-// 定义必要的类型
-interface CacheRequestHistoryData {
-  key: string;
-  [key: string]: any;
-}
-
-// 缓存请求历史
-let cacheRequestHistory: CacheRequestHistoryData[] = [];
-
-export function setCacheRequestHistory(data: CacheRequestHistoryData, max = 20) {
-  cacheRequestHistory = cacheRequestHistory.filter(item => item.key !== data.key);
-  cacheRequestHistory.unshift(data);
-  if (cacheRequestHistory.length > max) {
-    cacheRequestHistory.pop();
-  }
-}
-
-export function getCacheRequestHistory(): CacheRequestHistoryData[] {
-  return cacheRequestHistory;
-}
-
-export function clearCacheRequestHistory() {
-  cacheRequestHistory = [];
-}
-
-export function deleteCacheRequestHistory(key: string) {
-  cacheRequestHistory = cacheRequestHistory.filter(item => item.key !== key);
-}
 
 // 处理ApiFox API同步
 export async function syncApiFoxApi(

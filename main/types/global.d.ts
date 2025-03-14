@@ -74,6 +74,12 @@ interface CacheRequestHistoryData {
   key: string;
   data: Record<string, any>;
   time: string;
+  reqHeaders?: Record<string, any>;
+  resHeaders?: Record<string, any>;
+  params?: Record<string, any>;
+  cookie?: Record<string, any>;
+  reqBody?: Record<string, any>;
+  method?: string;
 }
 
 interface EnvVariable {

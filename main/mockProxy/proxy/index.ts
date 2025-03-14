@@ -6,6 +6,19 @@ import { parseUrlToKey, sleep } from "../common/fun";
 import { getTargetApiData } from "../common/fetchJsonData";
 import { setCacheRequestHistory } from "../common/cacheRequestHistory";
 
+// 解析 cookie 字符串为对象
+function parseCookies(cookieString: string): Record<string, any> {
+  return cookieString.split(';')
+    .map(cookie => cookie.trim().split('='))
+    .reduce((acc, [key, value]) => {
+      if (key && value) acc[key] = value;
+      return acc;
+    }, {} as Record<string, any>);
+}
+
+// 存储请求体数据
+const requestBodies = new Map<string, any>();
+
 interface ProxyConfig {
   proxyUrl: string;
   ignorePath: boolean;
@@ -44,6 +57,31 @@ export default function createProxyServer (options: ProxyMockOptions) {
     }
   }
   const proxy = httpProxy.createProxyServer(config);
+  
+  // 捕获请求体数据
+  proxy.on('proxyReq', function(proxyReq, req, res, options) {
+    const requestKey = req.url as string;
+    if (requestBodies.has(requestKey)) {
+      requestBodies.delete(requestKey);
+    }
+    
+    if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
+      let bodyData = '';
+      req.on('data', (chunk) => {
+        bodyData += chunk.toString();
+      });
+      
+      req.on('end', () => {
+        try {
+          const jsonBody = bodyData ? JSON.parse(bodyData) : {};
+          requestBodies.set(requestKey, jsonBody);
+        } catch (e) {
+          requestBodies.set(requestKey, {});
+        }
+      });
+    }
+  });
+  
   proxy.on('proxyRes', function (proxyRes, req, res) {
     const contentType = proxyRes.headers['content-type'] || '';
     const isJsonData = contentType.includes('application/json');
@@ -69,12 +107,27 @@ export default function createProxyServer (options: ProxyMockOptions) {
     proxyRes.on('end', () => {
       // 缓存响应数据
       try{
+        const urlObj = new URL(req.url as string, `http://${req.headers.host || 'localhost'}`);
+        const queryParams = Object.fromEntries(urlObj.searchParams.entries());
+        const requestKey = req.url as string;
+        
         setCacheRequestHistory({
           url: (req.url as string).split('?')[0],
           key: parseUrlToKey(req.url as string),
           data: JSON.parse(body.toString()),
-          time: new Date().toLocaleString()
+          time: new Date().toLocaleString(),
+          reqHeaders: req.headers as Record<string, any>,
+          resHeaders: proxyRes.headers as Record<string, any>,
+          params: queryParams,
+          cookie: req.headers.cookie ? parseCookies(req.headers.cookie as string) : {},
+          reqBody: requestBodies.get(requestKey) || {},
+          method: req.method
         }, options.cacheRequestHistoryMaxLen);
+        
+        // 清理请求体数据
+        if (requestBodies.has(requestKey)) {
+          requestBodies.delete(requestKey);
+        }
       } catch(e) {
         console.log('缓存响应数据失败', body.toString());
       }
