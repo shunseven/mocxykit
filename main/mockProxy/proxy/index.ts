@@ -2,9 +2,10 @@ import { Request, Response, NextFunction, Application } from "express";
 import httpProxy from "http-proxy";
 import fs from "fs";
 import path from "path";
-import { parseUrlToKey, sleep } from "../common/fun";
+import { parseUrlToKey, sleep, RequestBodyManager } from "../common/fun";
 import { getTargetApiData } from "../common/fetchJsonData";
 import { setCacheRequestHistory } from "../common/cacheRequestHistory";
+import { Readable } from "stream";
 
 // 解析 cookie 字符串为对象
 function parseCookies(cookieString: string): Record<string, any> {
@@ -16,8 +17,8 @@ function parseCookies(cookieString: string): Record<string, any> {
     }, {} as Record<string, any>);
 }
 
-// 存储请求体数据
-const requestBodies = new Map<string, any>();
+// 创建请求体管理器实例
+const requestBodyManager = new RequestBodyManager(50);
 
 interface ProxyConfig {
   proxyUrl: string;
@@ -38,7 +39,36 @@ interface proxyOption {
   autoRewrite?: boolean;
   secure?: boolean;
   cookieDomainRewrite?: string;
+  buffer?: any;
   [s: string]: any;
+}
+
+// 获取请求体数据的函数
+async function getRequestBody(req: Request): Promise<any> {
+  return new Promise((resolve) => {
+    let bodyData = '';
+    
+    req.on('data', (chunk) => {
+      bodyData += chunk.toString();
+    });
+    
+    req.on('end', () => {
+      try {
+        const jsonBody = bodyData ? JSON.parse(bodyData) : {};
+        resolve(jsonBody);
+      } catch (e) {
+        resolve({});
+      }
+    });
+  });
+}
+
+// 创建一个可读流
+function createReadableStream(data: any): Readable {
+  const stream = new Readable();
+  stream.push(typeof data === 'string' ? data : JSON.stringify(data));
+  stream.push(null); // 表示流结束
+  return stream;
 }
 
 export default function createProxyServer (options: ProxyMockOptions) {
@@ -57,30 +87,6 @@ export default function createProxyServer (options: ProxyMockOptions) {
     }
   }
   const proxy = httpProxy.createProxyServer(config);
-  
-  // 捕获请求体数据
-  proxy.on('proxyReq', function(proxyReq, req, res, options) {
-    const requestKey = req.url as string;
-    if (requestBodies.has(requestKey)) {
-      requestBodies.delete(requestKey);
-    }
-    
-    if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
-      let bodyData = '';
-      req.on('data', (chunk) => {
-        bodyData += chunk.toString();
-      });
-      
-      req.on('end', () => {
-        try {
-          const jsonBody = bodyData ? JSON.parse(bodyData) : {};
-          requestBodies.set(requestKey, jsonBody);
-        } catch (e) {
-          requestBodies.set(requestKey, {});
-        }
-      });
-    }
-  });
   
   proxy.on('proxyRes', function (proxyRes, req, res) {
     const contentType = proxyRes.headers['content-type'] || '';
@@ -142,7 +148,8 @@ export default function createProxyServer (options: ProxyMockOptions) {
           'pragma',
           'expires',
           'date',
-          'cookie'
+          'cookie',
+          'origin'
         ];
         
         // 过滤请求头
@@ -150,7 +157,8 @@ export default function createProxyServer (options: ProxyMockOptions) {
         headersToFilter.forEach(header => {
           delete filteredReqHeaders[header];
         });
-        console.log('cookie', req.headers);
+       
+        console.log(requestKey, requestBodyManager.get(requestKey));
         
         setCacheRequestHistory({
           url: (req.url as string).split('?')[0],
@@ -161,14 +169,13 @@ export default function createProxyServer (options: ProxyMockOptions) {
           resHeaders: proxyRes.headers as Record<string, any>,
           params: queryParams,
           cookie: req.headers.cookie ? parseCookies(req.headers.cookie as string) : {},
-          reqBody: requestBodies.get(requestKey) || {},
+          reqBody: requestBodyManager.get(requestKey) || {},
           method: req.method
         }, options.cacheRequestHistoryMaxLen);
         
         // 清理请求体数据
-        if (requestBodies.has(requestKey)) {
-          requestBodies.delete(requestKey);
-        }
+        requestBodyManager.remove(requestKey);
+        
       } catch(e) {
         console.log('缓存响应数据失败', body.toString());
       }
@@ -184,19 +191,32 @@ export default function createProxyServer (options: ProxyMockOptions) {
     }
 
     const pathKey = parseUrlToKey(req.url);
-    const apiData = getTargetApiData(pathKey)
-    let proxyOption: proxyOption = {
+    const apiData = getTargetApiData(pathKey);
+    
+    // 构建基本代理选项
+    const proxyOption: proxyOption = {
       target: proxyConfig.proxyUrl,
       changeOrigin: true,
       autoRewrite: true,
       secure: true,
       cookieDomainRewrite: "",
+    };
+    
+    // 对于 POST、PUT、PATCH 请求，处理请求体数据
+    if (['POST', 'PUT', 'PATCH'].includes(req.method || '')) {
+      const bodyData = await getRequestBody(req);
+      requestBodyManager.add(req.url, bodyData);
+      
+      // 创建一个可读流来传递请求体数据
+      proxyOption.buffer = createReadableStream(bodyData);
     }
-    if (apiData && apiData.duration) {
-      await sleep(apiData.duration)
+    
+    // 处理 API 延迟
+    if (apiData?.duration) {
+      await sleep(apiData.duration);
     }
-   
+    
+    // 执行代理请求
     proxy.web(req, res, proxyOption);
-     // 去除一些浏览器的限制
   }
 }

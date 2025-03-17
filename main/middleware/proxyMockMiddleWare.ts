@@ -5,6 +5,7 @@ import viewRequest from '../mockProxy/viewRequest';
 import defaultConfig from './defaultConfig';
 import createMcpServer from '../mcp/mcp';
 import { getMocxykitConfig } from '../mockProxy/common/fetchJsonData';
+import { getReqBodyData } from '../mockProxy/common/fun';
 
 export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
   // 获取mocxykit.config.json文件配置

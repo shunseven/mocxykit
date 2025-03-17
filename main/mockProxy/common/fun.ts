@@ -31,6 +31,9 @@ export function sleep(ms: number): Promise<void> {
 export function getReqBodyData(req: Request): Promise<Record<string, any>> {
   let body = ''
   return new Promise(resolve => {
+    if (req.body) {
+      return resolve(req.body)
+    }
     req.on('data', function (data) {
       body += data
     })
@@ -303,6 +306,65 @@ export function generateFakeData(jsonData: any, fakerKeys: string): any {
   return result;
 }
 
+// 请求体管理器类
+export class RequestBodyManager {
+  private requestBodies: Array<{
+    key: string;
+    data: any;
+    timestamp: number;
+  }> = [];
+  private maxSize: number;
+
+  constructor(maxSize: number = 50) {
+    this.maxSize = maxSize;
+  }
+
+  // 添加请求体数据
+  add(key: string | undefined, data: any): void {
+    if (!key) return;
+    
+    // 添加新项，带时间戳
+    this.requestBodies.push({
+      key,
+      data,
+      timestamp: Date.now()
+    });
+    
+    // 如果超出最大容量，删除最早添加的项
+    if (this.requestBodies.length > this.maxSize) {
+      this.requestBodies.sort((a, b) => a.timestamp - b.timestamp);
+      this.requestBodies.shift();
+    }
+  }
+
+  // 获取请求体数据
+  get(key: string | undefined): any {
+    if (!key) return {};
+    
+    const item = this.requestBodies.find(item => item.key === key);
+    return item ? item.data : {};
+  }
+
+  // 删除请求体数据
+  remove(key: string | undefined): void {
+    if (!key) return;
+    
+    const index = this.requestBodies.findIndex(item => item.key === key);
+    if (index !== -1) {
+      this.requestBodies.splice(index, 1);
+    }
+  }
+
+  // 获取当前存储的请求体数量
+  get size(): number {
+    return this.requestBodies.length;
+  }
+
+  // 清空所有请求体数据
+  clear(): void {
+    this.requestBodies = [];
+  }
+}
 
 export function updateGitignore(ignorePattern: string): void {
   const gitIgnorePath = path.join(process.cwd(), '.gitignore');
