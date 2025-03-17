@@ -85,7 +85,7 @@ const dict = {
   "是否要删除这个代理": "Do you want to delete this proxy?",
   "删除": "Delete",
   "取消": "Cancel",
-  "转换最近请求为MOCK数据": "Convert Recent Request to MOCK Data",
+  "最近请求数据": "Recent Request Data",
   "查看数据": "View Data",
   "请求地址": "Request URL",
   "请求时间": "Request Time",
@@ -275,7 +275,39 @@ Examples:
   "API 同步成功": "API sync successful",
   "API 同步失败": "API sync failed",
   "API 同步出错": "Error syncing API",
-  "API 同步出错:": "Error syncing API:"
+  "API 同步出错:": "Error syncing API:",
+  "发送请求": "Send Request",
+  "发送": "Send",
+  
+  // 来自 apiResponse.jsx
+  "导入Mock数据成功": "Import Mock data successful",
+  "导入Mock数据失败": "Failed to import Mock data",
+  "响应": "Response",
+  "导入Mock数据": "Import Mock Data",
+  "响应数据": "Response Data",
+  "响应头": "Response Headers",
+  
+  // 来自 apiSend.jsx
+  "获取历史请求数据失败": "Failed to get historical request data",
+  "请选择一条历史记录": "Please select a historical record",
+  "请输入 URL": "Please enter URL",
+  "请求发送成功": "Request sent successfully",
+  "请求发送失败": "Request sending failed",
+  "参数": "Parameters",
+  "请求体": "Request Body",
+  "错误": "Error",
+  "成功": "Success",
+  "请输入请求 URL": "Please enter request URL",
+  "从 localStorage 导入": "Import from localStorage",
+  "导入": "Import",
+  "导入最近请求数据": "Import recent request data",
+  
+  // 来自 apiSendTabs.jsx
+  "Params": "Params",
+  "Body": "Body",
+  "Headers": "Headers",
+  "Cookies": "Cookies",
+  "从 cookie 中导入": "Import from cookie"
 }
 
 export function t (key) {

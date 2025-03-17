@@ -537,7 +537,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
             >
               {t('发送')}
             </Button>
-            {!fromHistory && !selectedHistoryItem && (
+            {!fromHistory && (
               <Button
                 style={{ marginLeft: 8 }}
                 icon={<ImportOutlined />}

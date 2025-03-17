@@ -19,6 +19,7 @@ Some benefits of using this middleware include:
 - Support multi-environment variable management, switch environments at any time
 - Support Ngrok public network access
 - Support MCP protocol, allowing AI to automatically retrieve MOCK data or recent browser request data during AI programming
+- Built-in API request tool for directly sending and testing API requests
 
 ## Getting Started
 
@@ -161,6 +162,45 @@ Refer to [below](#other-servers) for usage examples with vite, webpack, and vueC
 - Automatically save current configuration when switching
 
 ![mock_proxy](./public/mock_proxy_en.png)
+
+## API Request Tool
+
+mocxykit includes a powerful API request tool that allows you to test and debug API interfaces directly in the configuration interface, without switching to other tools.
+
+### Features
+
+- **Multiple Request Methods**: Support for common HTTP methods including GET, POST, PUT, DELETE, PATCH, etc.
+- **Parameter Configuration**: Configure query parameters, headers, cookies, and request body
+- **Parameter Type Settings**: Support for string, number, and boolean parameter types
+- **JSON Editor**: Built-in JSON editor for easy editing of request body and viewing response data
+- **Request History**: View and resend requests from recent history
+- **Import Functionality**: Support importing data from localStorage and cookies
+- **Response Viewing**: Clear display of response status, headers, and data
+- **One-click Mock Import**: Import response data as Mock data with one click
+
+### How to Use
+
+1. Click the "Send Request" button in the API list or recent requests
+2. Configure the request method and URL
+3. Set parameters, request body, headers, and cookies in different tabs
+4. Click the "Send" button to send the request
+5. View the response data
+6. Optionally import the response data as Mock data
+
+### Data Import Features
+
+- **Import from localStorage**: Import data from localStorage as request headers or cookies
+- **Import from cookies**: Import browser cookies as request cookies
+- **Import from history**: Import configurations from previously sent requests
+
+### Response Data Handling
+
+- Automatic recognition and formatting of JSON responses
+- Display of response status code and status text
+- Complete response header information
+- Support for one-click import of response data as Mock data
+
+![send_api_en](./public/send_api_en.png)
 
 ## Synchronize ApiFox Data
 
