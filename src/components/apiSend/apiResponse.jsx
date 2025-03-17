@@ -46,20 +46,12 @@ const ApiResponse = ({ responseData, jsonEditorRef, url, method, paramsData, hea
       });
       
       // 构建 mockData 对象
-      const mockData = {
-        data: [{
-          name: '导入数据',
-          requestData: {},
-          responseData: responseData.body
-        }],
-        url: url
-      };
       
       // 发送请求保存数据
       await saveRequestData({
         url,
         requestData: requestDataObj,
-        mockData: mockData
+        mockData: responseData.body
       });
       
       // 调用 onApiDataChange 更新 API 列表

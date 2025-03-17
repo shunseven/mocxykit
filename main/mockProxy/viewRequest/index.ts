@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { deleteMock, getApiData, getApiDataHasMockStatus, getMock, getTargetApiData, setApiData, setCustomProxyAndMock, saveEnvData, getEnvData, deleteEnvData, updateMockData } from "../common/fetchJsonData";
-import { getReqBodyData, hasMockData, matchRouter, setupNodeEnvVariables } from "../common/fun";
+import { getReqBodyData, hasMockData, matchRouter, parseUrlToKey, setupNodeEnvVariables } from "../common/fun";
 import { clearCacheRequestHistory, deleteCacheRequestHistory, getCacheRequestHistory } from "../common/cacheRequestHistory";
 import { envUpdateEmitter } from "../../index";
 import { getMcpConfig, saveMcpConfig, createEditorMcpConfig, deleteEditorMcpConfig, McpConfig } from "../common/mcpConfig";
@@ -803,18 +803,11 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
           apiKey = apiData.apiList[existingApiIndex].key;
         } else {
           // 创建新的 API 配置
-          const urlParts = url.split('/');
-          apiKey = urlParts.map((part: string) => {
-            if (part) {
-              return part.charAt(0).toUpperCase() + part.slice(1);
-            }
-            return '';
-          }).join('');
           
           // 添加新的 API
           apiData.apiList.push({
             url,
-            key: apiKey,
+            key: parseUrlToKey(url),
             customProxy: [],
             selectCustomProxy: '',
             target: 'proxy',
@@ -829,27 +822,16 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
         
         // 如果有 mockData，保存 mock 数据
         if (mockData) {
-          // 确保 mockData 有 key
-          mockData.key = apiKey;
-          
           // 使用updateMockData方法更新或添加mock数据
-          const updatedMockData = updateMockData(
-            {}, // 空的requestData，表示匹配所有请求
-            mockData.data[0]?.responseData || {}, // 响应数据
+          updateMockData({
+            requestData: {},
+            responseData: mockData,
             url,
-            apiKey,
-            mockData.data[0]?.name || '导入数据' // 数据名称
-          );
+            key: apiKey,
+            name: '导入数据'
+          });
           
           // 更新API配置
-          setCustomProxyAndMock({
-            mockData: updatedMockData,
-            name: mockData.data[0]?.name || '导入数据',
-            url,
-            duration: 0,
-            customProxy: [],
-            selectCustomProxy: '',
-          });
         }
         
         res.send({

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { getReqBodyData, hasMockData, parseUrlToKey, updateGitignore } from './fun';
 import { Request } from 'express';
+import { get } from 'http';
 
 const apiDataFilePath = './proxyMockData/api.json'
 
@@ -217,6 +218,44 @@ export function deleteEnvData(envId: number) {
 }
 
 /**
+ * 深度比较两个对象是否相等
+ * @param obj1 第一个对象
+ * @param obj2 第二个对象
+ * @returns 是否相等
+ */
+export function deepEqual(obj1: any, obj2: any): boolean {
+  // 如果两个值完全相等，直接返回true
+  if (obj1 === obj2) {
+    return true;
+  }
+  
+  // 如果其中一个是null或不是对象，则不相等
+  if (obj1 === null || obj2 === null || typeof obj1 !== 'object' || typeof obj2 !== 'object') {
+    return false;
+  }
+  
+  // 获取两个对象的所有键
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+  
+  // 如果键的数量不同，则不相等
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  
+  // 检查所有键值对是否相等
+  for (const key of keys1) {
+    // 如果obj2中不存在该键，或者递归比较值不相等，则不相等
+    if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
+      return false;
+    }
+  }
+  
+  // 所有检查都通过，两个对象相等
+  return true;
+}
+
+/**
  * 更新Mock数据
  * @param requestData 请求数据
  * @param responseData 响应数据
@@ -225,14 +264,15 @@ export function deleteEnvData(envId: number) {
  * @param name 数据名称，默认为"导入数据"
  * @returns 更新后的MockData对象
  */
-export function updateMockData(
+export function updateMockData(data: {
   requestData: Record<string, any>,
   responseData: Record<string, any>,
   url: string,
   key: string,
-  name: string = '导入数据'
-): MockData {
+  name: string
+}) {
   // 确保目录存在
+  const { requestData, responseData, url, key, name } = data;
   const stat = fs.existsSync(mockPath);
   if (!stat) {
     fs.mkdirSync(mockPath, { recursive: true });
@@ -244,12 +284,11 @@ export function updateMockData(
   // 检查是否已存在该key的mock数据
   if (fs.existsSync(mockFilePath)) {
     // 读取现有的mock数据
-    mockData = JSON.parse(fs.readFileSync(mockFilePath, 'utf-8'));
-    
+    mockData = getMock()[key];
     // 查找是否有匹配的requestData
     const matchIndex = mockData.data.findIndex(item => {
-      // 简单比较requestData是否相等
-      return JSON.stringify(item.requestData) === JSON.stringify(requestData);
+      // 使用深比对方法比较requestData是否相等
+      return deepEqual(item.requestData, requestData);
     });
     
     if (matchIndex !== -1) {
@@ -279,6 +318,4 @@ export function updateMockData(
   
   // 保存更新后的mock数据
   setMockData(key, mockData);
-  
-  return mockData;
 }
