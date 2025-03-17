@@ -175,6 +175,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
         onClose={handleCloseApiSend}
         apiData={{
           url: currentHistoryItem.url,
+          key: currentHistoryItem.key,
           requestData: {
             method: currentHistoryItem.method,
             headers: currentHistoryItem.reqHeaders,
@@ -184,6 +185,7 @@ export default function RequestHistoryListModal({ visible, onCancel, onApiDataCh
           }
         }}
         fromHistory={true}
+        onApiDataChange={onApiDataChange}
       />
     )}
   </>

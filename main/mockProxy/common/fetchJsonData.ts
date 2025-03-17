@@ -110,7 +110,11 @@ export function getMock(): AllMockData {
 }
 
 export function deleteMock(key: string) {
-  fs.unlinkSync(`${mockPath}/${key}.json`)
+  try {
+    fs.unlinkSync(`${mockPath}/${key}.json`)
+  } catch (error) {
+    console.error('删除mock数据失败:', error);
+  }
 }
 
 export function formatMockData(data: Record<string, any>, targetData: Record<string, any> = {}, parentPath = '') {

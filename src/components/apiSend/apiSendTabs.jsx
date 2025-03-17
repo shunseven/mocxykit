@@ -364,7 +364,7 @@ const ApiSendTabs = ({
           />
         </TabPane>
         <TabPane tab={t('Body')} key="body">
-          <div style={{ height: 300 }}>
+          <div style={{ maxHeight: 300 , overflow: 'auto'}}>
             <Editor
               value={bodyData}
               onChange={(value) => setBodyData(value)}

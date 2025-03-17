@@ -5,7 +5,7 @@ import JsonEditor from '../mockEditor/jsonEditor';
 import { t } from '../../common/fun';
 import { saveRequestData } from '../../api/api';
 
-const ApiResponse = ({ responseData, jsonEditorRef, url, method, paramsData, headersData, cookiesData, bodyData, onApiDataChange }) => {
+const ApiResponse = ({ responseData, jsonEditorRef, url, method, paramsData, headersData, cookiesData, bodyData, onApiDataChange, key }) => {
   // 导入到Mock数据
   const handleImportToMock = async () => {
     try {
@@ -94,7 +94,7 @@ const ApiResponse = ({ responseData, jsonEditorRef, url, method, paramsData, hea
       </div>
       <Tabs defaultActiveKey="response">
         <Tabs.TabPane tab={t('响应数据')} key="response">
-          <div style={{ height: 300 }}>
+          <div>
             {responseData.error ? (
               <pre style={{ margin: 0 }}>{responseData.message}</pre>
             ) : (
