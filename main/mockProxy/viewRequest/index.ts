@@ -302,22 +302,35 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
     getReqBodyData(req).then(result => {
       const { keys } = result as { keys: string[] }
       const cacheRequestHistory = getCacheRequestHistory()
-      
+      const AllMockData = getMock()
       keys.forEach(key => {
         const data = cacheRequestHistory.find(item => item.key === key)
         if (data) {
           // 使用updateMockData方法更新或添加mock数据
-          const updatedMockData = updateMockData(
-            {}, // 空的requestData，表示匹配所有请求
-            data.data, // 响应数据
-            data.url,
+          const mockData = AllMockData[key] || {
+            data: [],
             key,
-            '导入数据' // 数据名称
-          );
+            url: data.url,
+          }
+
+          const mockDataIndex = mockData.data.findIndex(item => Object.keys(item.requestData).length === 0)
+          if (mockDataIndex !== -1) {
+            mockData.data[mockDataIndex] = {
+              name: '导入数据',
+              requestData: {},
+              responseData: data.data
+            }
+          } else {
+            mockData.data.unshift({
+              name: '导入数据',
+              requestData: {},
+              responseData: data.data
+            })
+          }
           
           // 更新API配置
           setCustomProxyAndMock({
-            mockData: updatedMockData,
+            mockData,
             name: '导入数据',
             url: data.url,
             duration: 0,
