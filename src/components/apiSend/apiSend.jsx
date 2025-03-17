@@ -5,6 +5,7 @@ import { getCacheRequestHistory } from '../../api/api';
 import { t, parseCookies, getLocalStorageKeys, importDataFromLocalStorage } from '../../common/fun';
 import axios from 'axios';
 import ApiSendTabs from './apiSendTabs';
+import JsonEditor from '../mockEditor/jsonEditor';
 
 const { Option } = Select;
 
@@ -34,6 +35,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
   const headersDataRef = useRef(headersData);
   const cookiesDataRef = useRef(cookiesData);
   const bodyDataRef = useRef(bodyData);
+  const jsonEditorRef = useRef(null);
 
   // 初始化数据
   useEffect(() => {
@@ -576,14 +578,16 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
             </div>
             <Tabs defaultActiveKey="response">
               <Tabs.TabPane tab={t('响应数据')} key="response">
-                <div style={{ maxHeight: 300, overflow: 'auto' }}>
-                  <pre style={{ margin: 0 }}>
-                    {responseData.error 
-                      ? responseData.message 
-                      : typeof responseData.body === 'object' 
-                        ? JSON.stringify(responseData.body, null, 2) 
-                        : responseData.body}
-                  </pre>
+                <div style={{ height: 300 }}>
+                  {responseData.error ? (
+                    <pre style={{ margin: 0 }}>{responseData.message}</pre>
+                  ) : (
+                    <JsonEditor
+                      value={typeof responseData.body === 'object' ? responseData.body : responseData.body}
+                      mode="view"
+                      jsonEditorRef={jsonEditorRef}
+                    />
+                  )}
                 </div>
               </Tabs.TabPane>
               <Tabs.TabPane tab={t('响应头')} key="headers">
