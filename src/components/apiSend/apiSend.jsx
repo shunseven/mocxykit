@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal, Input, Button, Tabs, Table, Select, message, Space, Tag } from 'antd';
+import { Modal, Input, Button, Tabs, Table, Select, message, Space, Tag, Checkbox } from 'antd';
 import { SendOutlined, ImportOutlined } from '@ant-design/icons';
 import { getCacheRequestHistory } from '../../api/api';
 import { t, parseCookies, getLocalStorageKeys, importDataFromLocalStorage } from '../../common/fun';
 import axios from 'axios';
 import ApiSendTabs from './apiSendTabs';
 import JsonEditor from '../mockEditor/jsonEditor';
+import ApiResponse from './apiResponse';
 
 const { Option } = Select;
 
@@ -561,47 +562,17 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
           />
         </div>
 
-        {responseData && (
-          <div style={{ marginTop: 16 }}>
-            <div style={{ marginBottom: 8 }}>
-              <h3>
-                {t('响应')}
-                {responseData.status && (
-                  <Tag 
-                    color={responseData.status >= 200 && responseData.status < 300 ? 'green' : 'red'}
-                    style={{ marginLeft: 8 }}
-                  >
-                    {responseData.status} {responseData.statusText}
-                  </Tag>
-                )}
-              </h3>
-            </div>
-            <Tabs defaultActiveKey="response">
-              <Tabs.TabPane tab={t('响应数据')} key="response">
-                <div style={{ height: 300 }}>
-                  {responseData.error ? (
-                    <pre style={{ margin: 0 }}>{responseData.message}</pre>
-                  ) : (
-                    <JsonEditor
-                      value={typeof responseData.body === 'object' ? responseData.body : responseData.body}
-                      mode="view"
-                      jsonEditorRef={jsonEditorRef}
-                    />
-                  )}
-                </div>
-              </Tabs.TabPane>
-              <Tabs.TabPane tab={t('响应头')} key="headers">
-                <div style={{ maxHeight: 300, overflow: 'auto' }}>
-                  {responseData.headers && Object.entries(responseData.headers).map(([key, value]) => (
-                    <div key={key} style={{ marginBottom: 4 }}>
-                      <strong>{key}:</strong> {value}
-                    </div>
-                  ))}
-                </div>
-              </Tabs.TabPane>
-            </Tabs>
-          </div>
-        )}
+        <ApiResponse 
+          responseData={responseData}
+          jsonEditorRef={jsonEditorRef}
+          url={url}
+          method={method}
+          paramsData={paramsDataRef.current}
+          headersData={headersDataRef.current}
+          cookiesData={cookiesDataRef.current}
+          bodyData={bodyDataRef.current}
+          onApiDataChange={onApiDataChange}
+        />
       </Modal>
 
       {/* localStorage 选择模态框 */}

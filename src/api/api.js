@@ -210,3 +210,11 @@ export async function saveApiFoxConfig(data) {
   return res
 }
 
+export async function saveRequestData(data) {
+  const res = await request('/express-proxy-mock/save-request-data', {
+    method: 'POST',
+    data
+  })
+  return res
+}
+

@@ -215,3 +215,70 @@ export function deleteEnvData(envId: number) {
   }
   fs.writeFileSync(envDataFilePath, JSON.stringify(newEnvData), 'utf-8');
 }
+
+/**
+ * 更新Mock数据
+ * @param requestData 请求数据
+ * @param responseData 响应数据
+ * @param url API的URL
+ * @param key API的唯一标识
+ * @param name 数据名称，默认为"导入数据"
+ * @returns 更新后的MockData对象
+ */
+export function updateMockData(
+  requestData: Record<string, any>,
+  responseData: Record<string, any>,
+  url: string,
+  key: string,
+  name: string = '导入数据'
+): MockData {
+  // 确保目录存在
+  const stat = fs.existsSync(mockPath);
+  if (!stat) {
+    fs.mkdirSync(mockPath, { recursive: true });
+  }
+  
+  let mockData: MockData;
+  const mockFilePath = `${mockPath}/${key}.json`;
+  
+  // 检查是否已存在该key的mock数据
+  if (fs.existsSync(mockFilePath)) {
+    // 读取现有的mock数据
+    mockData = JSON.parse(fs.readFileSync(mockFilePath, 'utf-8'));
+    
+    // 查找是否有匹配的requestData
+    const matchIndex = mockData.data.findIndex(item => {
+      // 简单比较requestData是否相等
+      return JSON.stringify(item.requestData) === JSON.stringify(requestData);
+    });
+    
+    if (matchIndex !== -1) {
+      // 如果找到匹配的requestData，更新responseData
+      mockData.data[matchIndex].responseData = responseData;
+    } else {
+      // 如果没有匹配的requestData，添加新的数据项
+      mockData.data.push({
+        name,
+        requestData,
+        responseData
+      });
+    }
+  } else {
+    // 创建新的mock数据
+    mockData = {
+      key,
+      url,
+      data: [{
+        name,
+        requestData,
+        responseData
+      }],
+      name: url // 添加name属性，默认使用url作为名称
+    };
+  }
+  
+  // 保存更新后的mock数据
+  setMockData(key, mockData);
+  
+  return mockData;
+}
