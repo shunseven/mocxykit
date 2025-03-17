@@ -46,6 +46,12 @@ const ApiSendTabs = ({
   const cookiesDataRef = useRef(cookiesData);
   const bodyDataRef = useRef(bodyData);
   const jsonEditorRef = useRef(null);
+
+  useEffect(() => {
+    if (jsonEditorRef.current) {
+      jsonEditorRef.current.set(bodyData);
+    }
+  }, [bodyData]); 
   
   // 更新 ref 中的数据
   useEffect(() => {

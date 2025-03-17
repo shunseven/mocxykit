@@ -225,66 +225,63 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
       const data = await getCacheRequestHistory();
       // 过滤出与当前 URL 匹配的历史记录
       const filteredData = data.filter(item => item.url === url);
-      setHistoryData(filteredData);
-      setShowHistoryModal(true);
+      
+      // 如果有匹配的数据，直接使用第一条
+      if (filteredData.length > 0) {
+        const historyItem = filteredData[0];
+        
+        // 设置方法
+        setMethod(historyItem.method || 'GET');
+        
+        // 设置参数
+        if (historyItem.params) {
+          const params = Object.entries(historyItem.params).map(([key, value]) => ({
+            key,
+            value: String(value),
+            type: typeof value === 'boolean' ? 'boolean' : typeof value === 'number' ? 'number' : 'string'
+          }));
+          setParamsData([...params, { key: '', value: '', type: 'string' }]);
+          // 更新 ref
+          paramsDataRef.current = [...params, { key: '', value: '', type: 'string' }];
+        }
+        
+        // 设置请求头
+        if (historyItem.reqHeaders) {
+          const headers = Object.entries(historyItem.reqHeaders).map(([key, value]) => ({
+            key,
+            value: String(value)
+          }));
+          setHeadersData([...headers, { key: '', value: '' }]);
+          // 更新 ref
+          headersDataRef.current = [...headers, { key: '', value: '' }];
+        }
+        
+        // 设置 Cookie
+        if (historyItem.cookie) {
+          const cookies = Object.entries(historyItem.cookie).map(([key, value]) => ({
+            key,
+            value: String(value)
+          }));
+          setCookiesData([...cookies, { key: '', value: '' }]);
+          // 更新 ref
+          cookiesDataRef.current = [...cookies, { key: '', value: '' }];
+        }
+        
+        // 设置请求体
+        if (historyItem.reqBody) {
+          setBodyData(historyItem.reqBody);
+          // 更新 ref
+          bodyDataRef.current = historyItem.reqBody;
+        }
+        
+        message.success(t('已导入最近请求数据'));
+      } else {
+        message.info(t('没有找到匹配的历史请求数据'));
+      }
     } catch (error) {
       console.error('获取历史请求数据失败', error);
       message.error(t('获取历史请求数据失败'));
     }
-  };
-
-  // 导入历史请求数据
-  const importHistoryData = () => {
-    if (!selectedHistoryItem) {
-      message.warning(t('请选择一条历史记录'));
-      return;
-    }
-    
-    // 设置方法
-    setMethod(selectedHistoryItem.method || 'GET');
-    
-    // 设置参数
-    if (selectedHistoryItem.params) {
-      const params = Object.entries(selectedHistoryItem.params).map(([key, value]) => ({
-        key,
-        value: String(value),
-        type: typeof value === 'boolean' ? 'boolean' : typeof value === 'number' ? 'number' : 'string'
-      }));
-      setParamsData([...params, { key: '', value: '', type: 'string' }]);
-      // 更新 ref
-      paramsDataRef.current = [...params, { key: '', value: '', type: 'string' }];
-    }
-    
-    // 设置请求头
-    if (selectedHistoryItem.reqHeaders) {
-      const headers = Object.entries(selectedHistoryItem.reqHeaders).map(([key, value]) => ({
-        key,
-        value: String(value)
-      }));
-      setHeadersData([...headers, { key: '', value: '' }]);
-      // 更新 ref
-      headersDataRef.current = [...headers, { key: '', value: '' }];
-    }
-    
-    // 设置 Cookie
-    if (selectedHistoryItem.cookie) {
-      const cookies = Object.entries(selectedHistoryItem.cookie).map(([key, value]) => ({
-        key,
-        value: String(value)
-      }));
-      setCookiesData([...cookies, { key: '', value: '' }]);
-      // 更新 ref
-      cookiesDataRef.current = [...cookies, { key: '', value: '' }];
-    }
-    
-    // 设置请求体
-    if (selectedHistoryItem.reqBody) {
-      setBodyData(selectedHistoryItem.reqBody);
-      // 更新 ref
-      bodyDataRef.current = selectedHistoryItem.reqBody;
-    }
-    
-    setShowHistoryModal(false);
   };
 
   // 发送请求
@@ -605,8 +602,8 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
         </div>
       </Modal>
 
-      {/* 历史记录模态框 */}
-      <Modal
+      {/* 历史记录模态框 - 不再需要 */}
+      {/* <Modal
         title={t('导入最近请求数据')}
         open={showHistoryModal}
         onCancel={() => setShowHistoryModal(false)}
@@ -628,7 +625,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
             }
           }}
         />
-      </Modal>
+      </Modal> */}
     </>
   );
 };
