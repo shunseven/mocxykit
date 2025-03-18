@@ -35,6 +35,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
   const cookiesDataRef = useRef(cookiesData);
   const bodyDataRef = useRef(bodyData);
   const jsonEditorRef = useRef(null);
+  const jsonBodyEditorRef = useRef(null);
   const loadHistoryData = async (historyData, showSuccessMessage = true) => {
     try {
       // 使用第一条历史记录
@@ -83,6 +84,9 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
         setBodyData(historyItem.reqBody);
         // 更新 ref
         bodyDataRef.current = historyItem.reqBody;
+        if (jsonBodyEditorRef?.current) {
+          jsonBodyEditorRef.current.set(historyItem.reqBody);
+        }
       }
       
       if(showSuccessMessage) message.success(t('已导入最近请求数据'));
@@ -142,6 +146,9 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
         // 设置请求体
         if (apiData.requestData.body) {
           setBodyData(apiData.requestData.body);
+          if (jsonBodyEditorRef?.current) {
+            jsonBodyEditorRef.current.set(apiData.requestData.body);
+          }
         }
       } else if (apiData.parameters || apiData.requestSchema) {
         // 如果有 docInfo，使用它初始化
@@ -577,6 +584,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
             setCookiesData={setCookiesData}
             bodyData={bodyData}
             setBodyData={setBodyData}
+            jsonBodyEditorRef={jsonBodyEditorRef}
           />
         </div>
 

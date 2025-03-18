@@ -31,7 +31,8 @@ const ApiSendTabs = ({
   setCookiesData, 
   bodyData, 
   setBodyData,
-  setJsonEditorError
+  setJsonEditorError,
+  jsonBodyEditorRef
 }) => {
   const [localStorageKeys, setLocalStorageKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
@@ -45,13 +46,6 @@ const ApiSendTabs = ({
   const headersDataRef = useRef(headersData);
   const cookiesDataRef = useRef(cookiesData);
   const bodyDataRef = useRef(bodyData);
-  const jsonEditorRef = useRef(null);
-
-  useEffect(() => {
-    if (jsonEditorRef.current) {
-      jsonEditorRef.current.set(bodyData);
-    }
-  }, [bodyData]); 
   
   // 更新 ref 中的数据
   useEffect(() => {
@@ -376,7 +370,7 @@ const ApiSendTabs = ({
               onChange={(value) => setBodyData(value)}
               onError={setJsonEditorError}
               mode="code"
-              jsonEditorRef={jsonEditorRef}
+              jsonEditorRef={jsonBodyEditorRef}
             />
           </div>
         </TabPane>
