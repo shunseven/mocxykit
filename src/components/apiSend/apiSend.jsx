@@ -23,10 +23,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
   const [localStorageKeys, setLocalStorageKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [showLocalStorageModal, setShowLocalStorageModal] = useState(false);
-  const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const [historyData, setHistoryData] = useState([]);
-  const [selectedHistoryItem, setSelectedHistoryItem] = useState(null);
-  const [hasHistoryData, setHasHistoryData] = useState(false);
+  const [historyData, setHistoryData] = useState({});
   
   // 使用 ref 来跟踪组件是否已经初始化
   const initializedRef = useRef(false);
@@ -38,22 +35,84 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
   const cookiesDataRef = useRef(cookiesData);
   const bodyDataRef = useRef(bodyData);
   const jsonEditorRef = useRef(null);
+  const loadHistoryData = async (historyData, showSuccessMessage = true) => {
+    try {
+      // 使用第一条历史记录
+      const historyItem = historyData.data;
+      const hasMatchData = historyData.hasMatchData;
+      
+      // 设置方法
+      setMethod(historyItem.method || 'GET');
+      
+      // 设置参数
+      if (historyItem.params && hasMatchData) {
+        const params = Object.entries(historyItem.params).map(([key, value]) => ({
+          key,
+          value: String(value),
+          type: typeof value === 'boolean' ? 'boolean' : typeof value === 'number' ? 'number' : 'string'
+        }));
+        setParamsData([...params, { key: '', value: '', type: 'string' }]);
+        // 更新 ref
+        paramsDataRef.current = [...params, { key: '', value: '', type: 'string' }];
+      }
+      
+      // 设置请求头
+      if (historyItem.reqHeaders) {
+        const headers = Object.entries(historyItem.reqHeaders).map(([key, value]) => ({
+          key,
+          value: String(value)
+        }));
+        setHeadersData([...headers, { key: '', value: '' }]);
+        // 更新 ref
+        headersDataRef.current = [...headers, { key: '', value: '' }];
+      }
+      
+      // 设置 Cookie
+      if (historyItem.cookie) {
+        const cookies = Object.entries(historyItem.cookie).map(([key, value]) => ({
+          key,
+          value: String(value)
+        }));
+        setCookiesData([...cookies, { key: '', value: '' }]);
+        // 更新 ref
+        cookiesDataRef.current = [...cookies, { key: '', value: '' }];
+      }
+      
+      // 设置请求体
+      if (historyItem.reqBody && hasMatchData) {
+        setBodyData(historyItem.reqBody);
+        // 更新 ref
+        bodyDataRef.current = historyItem.reqBody;
+      }
+      
+      if(showSuccessMessage) message.success(t('已导入最近请求数据'));
+    } catch (error) {
+      console.error('导入历史请求数据失败', error);
+      message.error(t('导入历史请求数据失败'));
+    }
+  };
 
-  // 初始化数据
-  useEffect(() => {
+  const initializeData = async () => {
     if (visible && apiData && !initializedRef.current) {
+      setUrl(apiData.url || '');
       // 保存初始的 apiData
       initialApiDataRef.current = JSON.parse(JSON.stringify(apiData));
+      let historyData = {};
+      if (visible && apiData.url && !fromHistory) {
+        historyData = await fetchHistoryData();
+        setHistoryData(historyData);
+        loadHistoryData(historyData, false);
+      }
       
       // 设置 URL 和方法
-      setUrl(apiData.url || '');
+     
       
       // 如果有 requestData，优先使用它
       if (apiData.requestData) {
         setMethod(apiData.requestData.method || 'GET');
         
         // 设置参数
-        if (apiData.requestData.params) {
+        if (apiData.requestData.params && apiData.requestData.params.length > 0) {
           const params = Object.entries(apiData.requestData.params).map(([key, value]) => ({
             key,
             value: String(value),
@@ -168,7 +227,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
     if (!visible) {
       initializedRef.current = false;
       initialApiDataRef.current = null;
-      setHasHistoryData(false);
     }
     
     // 更新 ref 中的数据
@@ -176,26 +234,26 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
     headersDataRef.current = headersData;
     cookiesDataRef.current = cookiesData;
     bodyDataRef.current = bodyData;
-  }, [visible, apiData, paramsData, headersData, cookiesData, bodyData]);
+  };
 
-  // 在组件可见且URL变更时获取历史数据
+  // 初始化数据
   useEffect(() => {
-    if (visible && url && !fromHistory) {
-      fetchHistoryData();
-    }
-  }, [visible, url, fromHistory]);
+    initializeData();
+  }, [visible, apiData, paramsData, headersData, cookiesData, bodyData, fromHistory]);
 
   // 获取历史数据
   const fetchHistoryData = async () => {
     try {
       const data = await getCacheRequestHistory();
       // 过滤出与当前 URL 匹配的历史记录
-      const filteredData = data.filter(item => item.url === url);
-      setHistoryData(filteredData);
-      setHasHistoryData(filteredData.length > 0);
+      const filteredData = data.filter(item => item.url === apiData.url);
+      const hasMatchData = filteredData && filteredData.length > 0
+      return {
+        hasMatchData,
+        data: hasMatchData ? filteredData[0] : data?.[data.length - 1]
+      }
     } catch (error) {
       console.error('获取历史请求数据失败', error);
-      setHasHistoryData(false);
     }
   };
 
@@ -243,66 +301,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
   };
 
   // 加载历史请求数据
-  const loadHistoryData = async () => {
-    if (!historyData || historyData.length === 0) {
-      message.info(t('没有找到匹配的历史请求数据'));
-      return;
-    }
-    
-    try {
-      // 使用第一条历史记录
-      const historyItem = historyData[0];
-      
-      // 设置方法
-      setMethod(historyItem.method || 'GET');
-      
-      // 设置参数
-      if (historyItem.params) {
-        const params = Object.entries(historyItem.params).map(([key, value]) => ({
-          key,
-          value: String(value),
-          type: typeof value === 'boolean' ? 'boolean' : typeof value === 'number' ? 'number' : 'string'
-        }));
-        setParamsData([...params, { key: '', value: '', type: 'string' }]);
-        // 更新 ref
-        paramsDataRef.current = [...params, { key: '', value: '', type: 'string' }];
-      }
-      
-      // 设置请求头
-      if (historyItem.reqHeaders) {
-        const headers = Object.entries(historyItem.reqHeaders).map(([key, value]) => ({
-          key,
-          value: String(value)
-        }));
-        setHeadersData([...headers, { key: '', value: '' }]);
-        // 更新 ref
-        headersDataRef.current = [...headers, { key: '', value: '' }];
-      }
-      
-      // 设置 Cookie
-      if (historyItem.cookie) {
-        const cookies = Object.entries(historyItem.cookie).map(([key, value]) => ({
-          key,
-          value: String(value)
-        }));
-        setCookiesData([...cookies, { key: '', value: '' }]);
-        // 更新 ref
-        cookiesDataRef.current = [...cookies, { key: '', value: '' }];
-      }
-      
-      // 设置请求体
-      if (historyItem.reqBody) {
-        setBodyData(historyItem.reqBody);
-        // 更新 ref
-        bodyDataRef.current = historyItem.reqBody;
-      }
-      
-      message.success(t('已导入最近请求数据'));
-    } catch (error) {
-      console.error('导入历史请求数据失败', error);
-      message.error(t('导入历史请求数据失败'));
-    }
-  };
 
   // 发送请求
   const sendRequest = async () => {
@@ -356,6 +354,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
       const fullUrl = `${url}${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
       
       // 发送请求
+      headers['IS-Mocxykit-Fetch'] = true;
       const response = await fetch(fullUrl, {
         method,
         headers,
@@ -544,10 +543,6 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
               value={url}
               onChange={e => {
                 setUrl(e.target.value);
-                // 当URL变更时，重新获取历史数据
-                if (e.target.value && e.target.value !== url) {
-                  setHasHistoryData(false);
-                }
               }}
               placeholder={t('请输入请求 URL')}
               style={{ flex: 1, marginLeft: 8, marginRight: 8 }}
@@ -560,11 +555,11 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
             >
               {t('发送')}
             </Button>
-            {!fromHistory && hasHistoryData && (
+            {!fromHistory && historyData.data && (
               <Button
                 style={{ marginLeft: 8 }}
                 icon={<ImportOutlined />}
-                onClick={loadHistoryData}
+                onClick={() => loadHistoryData(historyData)}
               >
                 {t('导入最近请求数据')}
               </Button>

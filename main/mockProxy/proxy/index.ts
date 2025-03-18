@@ -116,6 +116,7 @@ export default function createProxyServer (options: ProxyMockOptions) {
         const urlObj = new URL(req.url as string, `http://${req.headers.host || 'localhost'}`);
         const queryParams = Object.fromEntries(urlObj.searchParams.entries());
         const requestKey = req.url as string;
+        const isMocxykitFetch = req.headers['is-mocxykit-fetch']
         
         // 需要过滤的请求头字段
         const headersToFilter = [
@@ -149,7 +150,8 @@ export default function createProxyServer (options: ProxyMockOptions) {
           'expires',
           'date',
           'cookie',
-          'origin'
+          'origin',
+          'is-mocxykit-fetch'
         ];
         
         // 过滤请求头
@@ -159,20 +161,20 @@ export default function createProxyServer (options: ProxyMockOptions) {
         });
        
         console.log(requestKey, requestBodyManager.get(requestKey));
-        
-        setCacheRequestHistory({
-          url: (req.url as string).split('?')[0],
-          key: parseUrlToKey(req.url as string),
-          data: JSON.parse(body.toString()),
-          time: new Date().toLocaleString(),
-          reqHeaders: filteredReqHeaders as Record<string, any>,
-          resHeaders: proxyRes.headers as Record<string, any>,
-          params: queryParams,
-          cookie: req.headers.cookie ? parseCookies(req.headers.cookie as string) : {},
-          reqBody: requestBodyManager.get(requestKey) || {},
-          method: req.method
-        }, options.cacheRequestHistoryMaxLen);
-        
+        if(!isMocxykitFetch) {
+          setCacheRequestHistory({
+            url: (req.url as string).split('?')[0],
+            key: parseUrlToKey(req.url as string),
+            data: JSON.parse(body.toString()),
+            time: new Date().toLocaleString(),
+            reqHeaders: filteredReqHeaders as Record<string, any>,
+            resHeaders: proxyRes.headers as Record<string, any>,
+            params: queryParams,
+            cookie: req.headers.cookie ? parseCookies(req.headers.cookie as string) : {},
+            reqBody: requestBodyManager.get(requestKey) || {},
+            method: req.method
+          }, options.cacheRequestHistoryMaxLen);
+        }
         // 清理请求体数据
         requestBodyManager.remove(requestKey);
         
