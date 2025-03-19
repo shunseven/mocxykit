@@ -18,6 +18,7 @@ Some benefits of using this middleware include:
 - Support faker random data generation
 - Support multi-environment variable management, switch environments at any time
 - Support Ngrok public network access
+- Support automatic synchronization of ApiFox documentation and generated mock data
 - Support MCP protocol, allowing AI to automatically retrieve MOCK data or recent browser request data during AI programming
 - Built-in API request tool for directly sending and testing API requests
 
@@ -171,6 +172,7 @@ mocxykit includes a powerful API request tool that allows you to test and debug 
 
 - **Multiple Request Methods**: Support for common HTTP methods including GET, POST, PUT, DELETE, PATCH, etc.
 - **Parameter Configuration**: Configure query parameters, headers, cookies, and request body
+- **Auto-fill Configuration**: Headers and cookies are automatically imported from the most recent request by default
 - **Parameter Type Settings**: Support for string, number, and boolean parameter types
 - **JSON Editor**: Built-in JSON editor for easy editing of request body and viewing response data
 - **Request History**: View and resend requests from recent history
@@ -251,15 +253,16 @@ In AI editors that support MCP (such as Cursor), through the MCP protocol, when 
 
 ### Configuration Method
 
-Click the settings icon in the top right corner of the configuration interface, switch to MCP settings, and simply check the corresponding editor to enable the MCP service.
+Click the settings icon in the top right corner of the mocxykit configuration interface, switch to MCP settings, and simply check the corresponding editor to enable the MCP service. Finally, you need to check the MCP settings in Cursor's settings to see if it shows "disabled" (disabled by default). If so, click to enable this service.
 
 ### Usage
 To make AI actively request data in AI programming, you need to write the keyword mcpData.
-For example, if I want to write a todoList:
+
+1. For example, if I want to write a todoList:
 `In @todoList.tsx file, implement a todoList function with list display and list addition features, request mcpData api/todo-list to get the list data structure, request mcpData api/todo-list/add to add list data.`
 This way, AI will actively request data and generate code based on the data structure.
 
-For example, when testing in the browser, if I find that an interface's error response data is not covered, I can write in AI programming:
+2. For example, when testing in the browser, if I find that an interface's business logic returns data that isn't covered, I can write in AI programming:
 `In @todoList.tsx file, request mcpData api/todo-list to get data, display error message in a popup based on the returned error data.`
 This way, AI will actively retrieve the error data, analyze the structure, and display the error message in a popup.
 
