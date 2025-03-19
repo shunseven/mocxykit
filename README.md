@@ -1,4 +1,4 @@
-# mocxykit (旧名为 express-proxy-mock)
+# mocxykit
 
 ![描述](./public/proxymock.png)
 - [中文](./README.md)
