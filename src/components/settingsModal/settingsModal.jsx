@@ -5,6 +5,9 @@ import McpSettings from './McpSettings';
 import BaseCodeSettings from './BaseCodeSettings';
 
 const SettingsModal = ({ visible, onClose }) => {
+  const nodeVersionMatch = window.__config__.nodeVersion?.match(/^v(\d+)\./);
+  const nodeVersionMajor = nodeVersionMatch ? parseInt(nodeVersionMatch[1], 10) : 0;
+  const maxNodeVersion = 18;
   return (
     <Modal
       title={t("设置")}
@@ -29,7 +32,7 @@ const SettingsModal = ({ visible, onClose }) => {
           {
             key: 'mcp',
             label: t('MCP 设置'),
-            children: <McpSettings />
+            children: nodeVersionMajor >= maxNodeVersion ? <McpSettings /> : <div>{t(`MCP 服务需要 Node.js ${maxNodeVersion} 或更高版本`)}</div>
           }
         ]}
       />

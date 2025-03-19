@@ -94,9 +94,6 @@ const McpSettings = () => {
   // 获取SSE URL
   const getSSEUrl = () => `http://localhost:${port}/sse`;
 
-  // 判断MCP服务是否启用
-  const isMcpEnabled = mcpConfig.editors.length > 0;
-
   return (
     <Card bordered={false} size="small">
       <Space direction="vertical" style={{ width: '100%' }} size="middle">

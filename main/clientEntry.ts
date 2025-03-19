@@ -8,7 +8,10 @@ export default function (options: ProxyMockOptions) {
   return function (req: Request, res: Response): boolean {
     if (matchRouter(options.configPath as string, req.path)){
       const file = fs.readFileSync(rootPath + '/index.html')
-      const fileStr = file.toString().replace('<!--config-->', `<script>window.__config__ = ${JSON.stringify(options)}</script>`)
+      const fileStr = file.toString().replace('<!--config-->', `<script>window.__config__ = ${JSON.stringify({
+        ...options,
+        nodeVersion: process.version
+      })}</script>`)
 
       res.send(fileStr);
       return true;
