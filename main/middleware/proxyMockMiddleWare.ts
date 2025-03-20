@@ -3,7 +3,23 @@ import clientEntry from '../clientEntry';
 import entry from '../mockProxy/entry';
 import viewRequest from '../mockProxy/viewRequest';
 import defaultConfig from './defaultConfig';
-import createMcpServer from '../mcp/mcp';
+// 根据Node.js版本有条件地导入MCP模块
+let createMcpServer: ((config: ProxyMockOptions) => (req: Request, res: Response) => Promise<boolean>) | null = null;
+try {
+  // 检查Node.js版本是否大于等于18
+  const nodeVersionMatch = process.version.match(/^v(\d+)\./);
+  const nodeVersionMajor = nodeVersionMatch ? parseInt(nodeVersionMatch[1], 10) : 0;
+  
+  if (nodeVersionMajor >= 18) {
+    // 只在Node.js 18+版本导入MCP模块
+    createMcpServer = require('../mcp/mcp').default;
+  } else {
+    console.warn('MCP功能需要Node.js 18或更高版本，当前版本:', process.version);
+  }
+} catch (error) {
+  console.warn('无法加载MCP功能:', error);
+}
+
 import { getMocxykitConfig } from '../mockProxy/common/fetchJsonData';
 
 export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
@@ -14,7 +30,8 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
   const config = Object.assign({}, defaultConfig, options, fileConfig);
   const entryMiddleware = entry(config);
   const clientMiddleware = clientEntry(config);
-  const mcpServer = createMcpServer(config);
+  // 根据Node.js版本是否支持初始化MCP服务
+  const mcpServer = createMcpServer ? createMcpServer(config) : null;
 
   return async function (req: Request, res: Response, next: NextFunction) {
 
@@ -29,7 +46,8 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
     }
     const isProxyMock = entryMiddleware(req, res, next);
     const isViews = viewRequest(req, res, config);
-    const isMcp = await mcpServer(req, res);
+    // 只有在MCP服务可用时才调用
+    const isMcp = mcpServer ? await mcpServer(req, res) : false;
     if (!isClient && !isViews && !isProxyMock && !isMcp) {
       next();
     }
