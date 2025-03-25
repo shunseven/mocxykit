@@ -37,6 +37,7 @@ npm install mocxykit --save-dev
 ### Webpack >= 5.0
 修改 webpack.config.js
 ```js
+const { WebpackProxyMockPlugin } = require('mocxykit')
 module.exports = {
   //...
   devServer: {
