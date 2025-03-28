@@ -188,7 +188,7 @@ Examples:
   // 基本配置相关
   "基本配置": "Basic Settings",
   "API规则": "API Rules",
-  "全局代理的匹配规则，有多个规则用','隔开如'api/*，/test/*'": "Global proxy matching rule. Multiple rules can be separated by commas, e.g. 'api/*,/test/*'",
+  "全局代理的匹配规则，有多个规则用','隔开如'api/*，/test/*'，当空值时代理所有的 Accept 头是否包含 application/json 或 text/xml 及 Ajax 请求": "Global proxy matching rule. Multiple rules can be separated by commas, e.g. 'api/*,/test/*'. When empty, proxy all requests with Accept header containing application/json or text/xml, and Ajax requests",
   "请输入API规则": "Please enter API rules",
   "例如: /api": "Example: /api/*",
   "配制页面的地址": "Config Page Path",

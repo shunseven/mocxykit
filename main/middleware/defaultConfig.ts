@@ -1,5 +1,5 @@
 const defaultConfig: ProxyMockOptions = {
-  apiRule: '/api/*',
+  apiRule: '',
   https: true,
   cacheRequestHistoryMaxLen: 30,
   configPath: '/config',

@@ -44,10 +44,10 @@ export function proxyMockMiddleware(options: ProxyMockOptions = defaultConfig) {
     if (process.env.PROCY_MOCK_NODE_ENV !== 'development') {
       isClient = clientMiddleware(req, res)
     }
-    const isProxyMock = entryMiddleware(req, res, next);
     const isViews = viewRequest(req, res, config);
     // 只有在MCP服务可用时才调用
     const isMcp = mcpServer ? await mcpServer(req, res) : false;
+    const isProxyMock = !isMcp && !isViews && entryMiddleware(req, res, next);
     if (!isClient && !isViews && !isProxyMock && !isMcp) {
       next();
     }

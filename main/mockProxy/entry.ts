@@ -24,6 +24,34 @@ function handleProxyRequest(
   });
 }
 
+// 判断是否是 AJAX 或 Fetch 请求
+function isAjaxOrFetchRequest(req: Request): boolean {
+  // 检查请求头
+  const headers = req.headers;
+  
+  // 检查是否是 AJAX 请求
+  if (headers['x-requested-with'] === 'XMLHttpRequest') {
+    return true;
+  }
+  
+  // 检查是否是 Fetch 请求
+  if (headers['is-mocxykit-fetch'] === 'true') {
+    return true;
+  }
+  
+  // 检查 Content-Type
+  const contentType = headers['content-type'];
+  if (contentType && (
+    contentType.includes('application/json') ||
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data')
+  )) {
+    return true;
+  }
+  
+  return false;
+}
+
 export default function entry(options: ProxyMockOptions) {
   const proxyServer = createProxyServer(options);
   const mockFun = createMock();
@@ -37,7 +65,18 @@ export default function entry(options: ProxyMockOptions) {
         (item: ApiConfig) => item.key === key || parseUrlToKey(item.url) === key || matchRouter(item.url, req.url)
       );
 
-      if (!apiRules.some(rule => matchRouter(rule, req.path)) && !apiConfig) {
+      // 检查 apiRule 是否为空字符串、不存在、为/或为/*
+      const isEmptyApiRule = !options.apiRule || 
+                            options.apiRule === '' || 
+                            options.apiRule === '/' || 
+                            options.apiRule === '/*';
+
+      // 判断是否需要代理
+      const shouldProxy = isEmptyApiRule 
+        ? isAjaxOrFetchRequest(req) || !!apiConfig  // 空规则时，检查是否是 AJAX/Fetch 请求或存在 API 配置
+        : apiRules.some(rule => matchRouter(rule, req.path)) || !!apiConfig;  // 有规则时，检查路径匹配或存在 API 配置
+
+      if (!shouldProxy) {
         return false;
       }
 

@@ -69,8 +69,8 @@ const BaseCodeSettings = ({ onClose }) => {
         <Form.Item
           name="apiRule"
           label={t("API规则")}
-          tooltip={t("全局代理的匹配规则，有多个规则用','隔开如'api/*，/test/*'")}
-          rules={[{ required: true, message: t('请输入API规则') }]}
+          tooltip={t("全局代理的匹配规则，有多个规则用','隔开如'api/*，/test/*'，当空值时代理所有的 Accept 头是否包含 application/json 或 text/xml 及 Ajax 请求")}
+          rules={[]}
         >
           <Input placeholder={t("例如: /api")} />
         </Form.Item>
