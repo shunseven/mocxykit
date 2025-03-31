@@ -44,24 +44,6 @@ function isAjaxOrFetchRequest(req: Request): boolean {
   if (hasSecFetchHeaders) {
     return true;
   }
-
-  // 检查 accept 请求头（数据请求特征）
-  const accept = headers['accept'];
-  if (accept && (
-    accept.includes('application/json')
-  )) {
-    return true;
-  }
-  
-  // 检查 Content-Type
-  const contentType = headers['content-type'];
-  if (contentType && (
-    contentType.includes('application/json') ||
-    contentType.includes('application/x-www-form-urlencoded') ||
-    contentType.includes('multipart/form-data')
-  )) {
-    return true;
-  }
   
   return false;
 }
