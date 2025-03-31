@@ -48,9 +48,7 @@ function isAjaxOrFetchRequest(req: Request): boolean {
   // 检查 accept 请求头（数据请求特征）
   const accept = headers['accept'];
   if (accept && (
-    accept.includes('application/json') ||
-    accept.includes('text/plain') ||
-    accept.includes('*/*')
+    accept.includes('application/json')
   )) {
     return true;
   }
