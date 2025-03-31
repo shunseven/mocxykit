@@ -38,6 +38,22 @@ function isAjaxOrFetchRequest(req: Request): boolean {
   if (headers['is-mocxykit-fetch'] === 'true') {
     return true;
   }
+
+  // 检查是否包含 sec-fetch-* 请求头（现代浏览器的 fetch 请求特征）
+  const hasSecFetchHeaders = Object.keys(headers).some(key => key.startsWith('sec-fetch-'));
+  if (hasSecFetchHeaders) {
+    return true;
+  }
+
+  // 检查 accept 请求头（数据请求特征）
+  const accept = headers['accept'];
+  if (accept && (
+    accept.includes('application/json') ||
+    accept.includes('text/plain') ||
+    accept.includes('*/*')
+  )) {
+    return true;
+  }
   
   // 检查 Content-Type
   const contentType = headers['content-type'];
@@ -75,10 +91,11 @@ export default function entry(options: ProxyMockOptions) {
       const shouldProxy = isEmptyApiRule 
         ? isAjaxOrFetchRequest(req) || !!apiConfig  // 空规则时，检查是否是 AJAX/Fetch 请求或存在 API 配置
         : apiRules.some(rule => matchRouter(rule, req.path)) || !!apiConfig;  // 有规则时，检查路径匹配或存在 API 配置
-
+        
       if (!shouldProxy) {
         return false;
       }
+     
 
       switch (apiConfig?.target) {
         case TARGET_TYPES.MOCK:
