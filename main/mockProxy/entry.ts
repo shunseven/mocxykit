@@ -39,9 +39,23 @@ function isAjaxOrFetchRequest(req: Request): boolean {
     return true;
   }
 
-  // 检查是否包含 sec-fetch-* 请求头（现代浏览器的 fetch 请求特征）
-  const hasSecFetchHeaders = Object.keys(headers).some(key => key.startsWith('sec-fetch-'));
-  if (hasSecFetchHeaders) {
+  // 检查是否是 WebSocket 请求
+  if (headers['upgrade']?.toLowerCase() === 'websocket') {
+    return true;
+  }
+
+  // 检查 accept 和 content-type 请求头（数据请求特征）
+  const accept = headers['accept'];
+  const contentType = headers['content-type'];
+  if ((accept && (
+    accept.includes('application/json') ||
+    accept.includes('text/event-stream')  // SSE 请求
+  )) || (contentType && (
+    contentType.includes('application/json') ||
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data') ||
+    contentType.includes('text/event-stream')  // SSE 响应
+  ))) {
     return true;
   }
   
