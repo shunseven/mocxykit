@@ -136,11 +136,11 @@ export default function createMcpServer (config: ProxyMockOptions) {
       server.tool(
         "getData",
         "获取数据, 获取mcp数据",
-        { path: z.string() },
-        async ({ path }, extra) => {
+        { apiUrl: z.string() },
+        async ({ apiUrl }, extra) => {
           // 在这里处理所有MCP请求
           const apiRules = config.apiRule.split(',');
-          const hostname = decodeURIComponent(path);
+          const hostname = decodeURIComponent(apiUrl);
           const data = await getMcpData(hostname, apiRules);
           return {
             content: [{
