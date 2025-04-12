@@ -43,6 +43,8 @@ export default function ApiEdit(props) {
       }).then(data => {
         if (data.mockData) {
           setMockData(data.mockData)
+        } else {
+          setMockData(initMockData)
         }
         if (data.apiData) {
           console.log(data.apiData)

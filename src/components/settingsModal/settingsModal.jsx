@@ -5,7 +5,8 @@ import McpSettings from './McpSettings';
 import BaseCodeSettings from './BaseCodeSettings';
 
 const SettingsModal = ({ visible, onClose }) => {
-  const nodeVersionMatch = window.__config__.nodeVersion?.match(/^v(\d+)\./);
+  const config = window.__config__ || {};
+  const nodeVersionMatch = config.nodeVersion?.match(/^v(\d+)\./);
   const nodeVersionMajor = nodeVersionMatch ? parseInt(nodeVersionMatch[1], 10) : 0;
   const maxNodeVersion = 18;
   return (
