@@ -38,6 +38,7 @@ interface ApiConfig {
   responseSchema?: Record<string, any>;
   parameters?: Record<string, any>;
   requestData?: RequestData;
+  method?: string;
 }
 
 interface ApiData {

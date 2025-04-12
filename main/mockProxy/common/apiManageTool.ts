@@ -101,14 +101,18 @@ export async function syncApiFoxApi(
             }
             
             // 构建API配置
-            const apiConfig: any = {
+            const apiConfig: ApiConfig = {
               url: apiPath,
               key: apiKey,
               method: apiItem.api.method.toUpperCase(),
               name: `${apiItem.api.name || apiItem.name}(ApiFox)`,
               requestSchema,
               responseSchema,
-              parameters: apiDetail.data.parameters
+              parameters: apiDetail.data.parameters,
+              customProxy: [],
+              selectCustomProxy: '',
+              target: 'proxy',
+              duration: 0,
             };
             
             // 如果API已存在，更新它
@@ -117,13 +121,10 @@ export async function syncApiFoxApi(
               apiData.apiList[existingApiIndex].requestSchema = apiConfig.requestSchema;
               apiData.apiList[existingApiIndex].responseSchema = apiConfig.responseSchema;
               apiData.apiList[existingApiIndex].parameters = apiConfig.parameters;
+              apiData.apiList[existingApiIndex].method = apiConfig.method;
             } else {
               // 添加新API
-              apiConfig.target = 'proxy';
-              apiConfig.duration = 0;
-              apiConfig.customProxy = [];
-              apiConfig.selectCustomProxy = '';
-              apiData.apiList.push(apiConfig as any);
+              apiData.apiList.push(apiConfig);
             }
             
             // 检查是否已有Mock数据

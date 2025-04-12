@@ -91,6 +91,8 @@ async function getMcpData(hostname: string, apiRules: string[]) {
         responseExample: targeMockData,
         requestSchema: apiConfig.requestSchema,
         responseSchema: apiConfig.responseSchema,
+        method: apiConfig.method,
+        params: apiConfig.parameters,
       }
     }
 
