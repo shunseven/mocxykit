@@ -17,6 +17,7 @@ export async function syncApiFoxApi(
   try {
     // 获取当前API数据
     const apiData = getApiData();
+    const apiList = apiData.apiList || [];
     // 获取所有Mock数据
     const allMockData = getMock();
     
@@ -79,7 +80,7 @@ export async function syncApiFoxApi(
             const apiKey = parseUrlToKey(apiPath);
             
             // 查找是否已存在该API
-            const existingApiIndex = apiData.apiList.findIndex(item => 
+            const existingApiIndex = apiList.findIndex(item => 
               item.key === apiKey || parseUrlToKey(item.url) === apiKey
             );
             
@@ -118,13 +119,13 @@ export async function syncApiFoxApi(
             // 如果API已存在，更新它
             if (existingApiIndex !== -1) {
               // 只更新requestSchema和responseSchema
-              apiData.apiList[existingApiIndex].requestSchema = apiConfig.requestSchema;
-              apiData.apiList[existingApiIndex].responseSchema = apiConfig.responseSchema;
-              apiData.apiList[existingApiIndex].parameters = apiConfig.parameters;
-              apiData.apiList[existingApiIndex].method = apiConfig.method;
+              apiList[existingApiIndex].requestSchema = apiConfig.requestSchema;
+              apiList[existingApiIndex].responseSchema = apiConfig.responseSchema;
+              apiList[existingApiIndex].parameters = apiConfig.parameters;
+              apiList[existingApiIndex].method = apiConfig.method;
             } else {
               // 添加新API
-              apiData.apiList.push(apiConfig);
+              apiList.push(apiConfig);
             }
             
             // 检查是否已有Mock数据
@@ -171,15 +172,17 @@ export async function syncApiFoxApi(
         }
       }
     }
-    
+      
     // 保存更新后的API数据
-    setApiData(apiData);
+    const saveApiData = getApiData();
+    saveApiData.apiList = apiList;
+    setApiData(saveApiData);
     
     return { 
       success: true, 
       message: '同步成功', 
       data: {
-        apiCount: apiData.apiList.length
+        apiCount: apiList.length
       }
     };
   } catch (error) {
