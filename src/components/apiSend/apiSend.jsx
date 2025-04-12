@@ -5,7 +5,6 @@ import { getCacheRequestHistory } from '../../api/api';
 import { t, parseCookies, getLocalStorageKeys, importDataFromLocalStorage } from '../../common/fun';
 import axios from 'axios';
 import ApiSendTabs from './apiSendTabs';
-import JsonEditor from '../mockEditor/jsonEditor';
 import ApiResponse from './apiResponse';
 
 const { Option } = Select;
@@ -44,7 +43,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
       
       // 设置方法
       setMethod(historyItem.method || 'GET');
-      
+      console.log(1111, historyItem.params);
       // 设置参数
       if (historyItem.params && hasMatchData) {
         const params = Object.entries(historyItem.params).map(([key, value]) => ({
@@ -102,7 +101,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
       // 保存初始的 apiData
       initialApiDataRef.current = JSON.parse(JSON.stringify(apiData));
       let historyData = {};
-      if (visible && apiData.url && !fromHistory) {
+      if (visible && apiData.url) {
         historyData = await fetchHistoryData();
         setHistoryData(historyData);
         loadHistoryData(historyData, false);
@@ -246,7 +245,7 @@ const ApiSend = ({ visible, onClose, apiData, fromHistory, onApiDataChange }) =>
   // 初始化数据
   useEffect(() => {
     initializeData();
-  }, [visible, apiData, paramsData, headersData, cookiesData, bodyData, fromHistory]);
+  }, [visible, apiData, paramsData, headersData, cookiesData, bodyData]);
 
   // 获取历史数据
   const fetchHistoryData = async () => {
