@@ -39,6 +39,8 @@ interface ApiConfig {
   parameters?: Record<string, any>;
   requestData?: RequestData;
   method?: string;
+  forderId?: number;
+  forderName?: string;
 }
 
 interface ApiData {
