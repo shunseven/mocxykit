@@ -96,7 +96,7 @@ export async function processSelectedFolders(
             requestSchema,
             responseSchema,
             parameters: apiDetail.data.parameters,
-            forderId: folderInfo?.editorId, // 使用当前文件夹的ID
+            forderId: folderInfo?.id, // 使用当前文件夹的ID
             forderName: currentFolderName // 使用构建的文件夹名称路径
           };
           
@@ -238,6 +238,8 @@ export async function syncApiFoxApi(
         apiList[existingApiIndex].responseSchema = apiConfig.responseSchema;
         apiList[existingApiIndex].parameters = apiConfig.parameters;
         apiList[existingApiIndex].method = apiConfig.method;
+        apiList[existingApiIndex].forderId = apiConfig.forderId;
+        apiList[existingApiIndex].forderName = apiConfig.forderName;
       } else {
         // 添加新API
         apiList.push(completeApiConfig);

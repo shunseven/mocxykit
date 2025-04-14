@@ -6,11 +6,11 @@ import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
 import { t } from '../../common/fun';
-import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined, FileTextOutlined } from '@ant-design/icons';
+import { PushpinOutlined, SearchOutlined, InfoCircleOutlined, QuestionCircleOutlined, FileTextOutlined, AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import ApiFox from '../apiMangeTool/apifox'; 
 import ApiDocModal from '../apiDoc/apiDocModal';
 import ApiSend from '../apiSend/apiSend';
-const { Column } = Table;
+const { Column, ColumnGroup } = Table;
 
 const colorMap = {
   proxy: '#f50',
@@ -44,6 +44,10 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
   const [docVisible, setDocVisible] = useState(false);
   const [currentApiData, setCurrentApiData] = useState(null);
   const [apiSendVisible, setApiSendVisible] = useState(false);
+  // 视图模式：flat (平铺) 或 grouped (分组)，从本地存储中加载
+  const [viewMode, setViewMode] = useState(() => {
+    return localStorage.getItem('viewMode') || 'flat';
+  });
 
   const rowSelection = {
     selectedRowKeys,
@@ -64,9 +68,40 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
     localStorage.setItem('pinnedItems', JSON.stringify(newPinnedItems));
   };
 
+  // 切换视图模式
+  const toggleViewMode = (newMode) => {
+    setViewMode(newMode);
+    localStorage.setItem('viewMode', newMode);
+  };
+
+  // 根据搜索文本过滤数据
   const filteredData = data.filter(item => 
     item.url.toLowerCase().includes(searchText.toLowerCase())
   );
+  
+  // 生成分组数据
+  const groupedData = () => {
+    // 先创建分组映射
+    const groups = {};
+    
+    filteredData.forEach(item => {
+      const folderId = item.forderId || 'ungrouped';
+      const folderName = item.forderName || t('未分组');
+      
+      if (!groups[folderId]) {
+        groups[folderId] = {
+          key: folderId,
+          name: folderName,
+          items: []
+        };
+      }
+      
+      groups[folderId].items.push(item);
+    });
+    
+    // 转换为数组格式
+    return Object.values(groups);
+  };
 
   const handleBatchDelete = async () => {
     if (selectedRowKeys.length === 0) {
@@ -84,6 +119,196 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
     } catch (error) {
       message.error(t('删除失败'));
     }
+  };
+
+  // 在分组模式下对表格进行自定义渲染
+  const expandedRowRender = (group) => {
+    return (
+      <Table
+        rowSelection={{
+          selectedRowKeys,
+          onChange: (keys) => setSelectedRowKeys(keys),
+        }}
+        dataSource={group.items}
+        pagination={false}
+        onRow={(record) => {
+          const isImported = recentlyImported.includes(record.key);
+          const isSelected = selectedRowKeys.includes(record.key);
+          
+          return {
+            style: {
+              ...(isImported && {
+                backgroundColor: isSelected 
+                  ? 'rgba(82, 196, 26, 0.15)'
+                  : 'rgba(82, 196, 26, 0.1)',
+              }),
+            },
+            onMouseEnter: (e) => {
+              if (isImported) {
+                e.currentTarget.style.backgroundColor = 'rgba(82, 196, 26, 0.2)';
+              }
+            },
+            onMouseLeave: (e) => {
+              if (isImported) {
+                e.currentTarget.style.backgroundColor = isSelected 
+                  ? 'rgba(82, 196, 26, 0.15)'
+                  : 'rgba(82, 196, 26, 0.1)';
+              }
+            }
+          };
+        }}
+      >
+        <Column 
+          width={50} 
+          title="" 
+          key="pin"
+          render={(_, record) => (
+            <Tooltip title={pinnedItems.includes(record.key) ? t('取消固定') : t('固定')}>
+              <PushpinOutlined
+                style={{ 
+                  cursor: 'pointer',
+                  color: pinnedItems.includes(record.key) ? '#1890ff' : '#d9d9d9'
+                }}
+                onClick={() => togglePin(record.key)}
+              />
+            </Tooltip>
+          )}
+        />
+        <Column width={150} title={t('名称')} dataIndex="name" key="name" />
+        <Column title="URL" dataIndex="url" key="url" />
+        <Column
+          width={100}
+          title={t('延时')}
+          dataIndex="duration"
+          key="duration"
+          render={(duration) => (
+            <span>{duration ? `${duration}ms` : '-'}</span>
+          )}
+        />
+        <Column
+          width={120}
+          title={t('随机数据')}
+          dataIndex="hasFaker"
+          key="hasFaker"
+          render={(hasFaker, record) => {
+            return hasFaker && record.target === 'mock' ? (
+              <Tooltip title={record.fakerKey}>
+                <Tag color='#87d068'>
+                  {t('已开启')}
+                </Tag>
+              </Tooltip>
+            ) : '--'
+          }}
+        />
+        <Column
+          title={t('目标')}
+          dataIndex="target"
+          key="target"
+          render={(target, itemData) => (
+            <>
+              {
+                target && <Tag 
+                  style={{
+                    cursor: target === 'mock' ? 'pointer' : 'default'
+                  }}
+                  onClick={() => {
+                    if (target === 'mock') {
+                      setItemTargetKey(itemData.key)
+                      setPreviewVisible(true)
+                    }
+                }} color={colorMap[target]} key={target}>
+                {target === 'proxy' && globalProxy}
+                {target === 'mock' && t('查看MOCK数据')}
+                {target === 'customProxy' && itemData.selectCustomProxy}
+              </Tag>
+              }
+            </>
+          )}
+        />
+        <Column
+          title={t('启用')}
+          width={380}
+          render={(_, itemData) => (
+            <Radio.Group name="radiogroup" onChange={(event) => {
+              onTargetChange({
+                key: itemData.key,
+                target: event.target.value
+              })
+            }} value={itemData.target}>
+              <Space >
+                <Radio value={'proxy'}>{t('全局代理')}</Radio>
+                <Radio disabled={!itemData.hasMockData} value={'mock'}>{t('MOCK数据')}</Radio>
+                <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>{t('自定义代理')}</Radio>
+              </Space>
+            </Radio.Group>
+          )} 
+        />
+        <Column
+          title={t('操作')}
+          key="action"
+          width={260}
+          render={(_, record) => (
+            <Space size="middle">
+              <a
+                onClick={() => {
+                  setItemTargetKey(record.key)
+                  setEditVisible(true)
+                }}
+                style={{
+                  marginRight: '10px'
+                }}>{t('设置')}</a>
+              {(record.requestSchema || record.responseSchema) && (
+                <a
+                  onClick={() => {
+                    setCurrentApiData(record)
+                    setDocVisible(true)
+                  }}
+                  style={{
+                    marginRight: '10px'
+                  }}>
+                  <Tooltip title={t('查看文档')}>
+                    {t('文档')}
+                  </Tooltip>
+                </a>
+              )}
+              <a
+                onClick={() => {
+                  setCurrentApiData(record)
+                  setApiSendVisible(true)
+                }}
+                style={{
+                  marginRight: '10px'
+                }}>
+                <Tooltip title={t('发送请求')}>
+                  {t('发送请求')}
+                </Tooltip>
+              </a>
+              <Popconfirm
+                title={t('请确认')}
+                description={t('是否要删除这个代理')}
+                onConfirm={() => {
+                  fetchDeleteApiData({
+                    key: record.key,
+                  })
+                  onApiDataChange()
+                }}
+                okText={t('删除')}
+                cancelText={t('取消')}
+              >
+                <a
+                  onClick={() => {
+                    event.stopPropagation()
+                  }}
+                  style={{
+                    color: 'red'
+                  }}
+                >{t('删除')}</a>
+              </Popconfirm>
+            </Space>
+          )}
+        />
+      </Table>
+    );
   };
 
   const handleImportData = async (importedKeys) => {
@@ -140,6 +365,17 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         variant="outlined"
         >{t('自定义代理优先')}</Button>
         
+        <Radio.Group 
+          value={viewMode} 
+          onChange={(e) => toggleViewMode(e.target.value)}
+          optionType="button" 
+          buttonStyle="solid"
+          size="small"
+          style={{ marginLeft: '20px' }}
+        >
+          <Radio.Button value="flat"><BarsOutlined /> {t('平铺视图')}</Radio.Button>
+          <Radio.Button value="grouped"><AppstoreOutlined /> {t('分组视图')}</Radio.Button>
+        </Radio.Group>
       </Space>
       <Space size={10} >
         <ApiFox onApiDataChange={handleImportData} />
@@ -155,228 +391,247 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
       </Space>
     </div>
 
-    <Table
-      rowSelection={rowSelection}
-      pagination={false}
-      dataSource={filteredData}
-      onRow={(record) => {
-        const isImported = recentlyImported.includes(record.key);
-        const isSelected = selectedRowKeys.includes(record.key);
-        
-        return {
-          style: {
-            ...(isImported && {
-              backgroundColor: isSelected 
-                ? 'rgba(82, 196, 26, 0.15)'
-                : 'rgba(82, 196, 26, 0.1)',
-            }),
-          },
-          onMouseEnter: (e) => {
-            if (isImported) {
-              e.currentTarget.style.backgroundColor = 'rgba(82, 196, 26, 0.2)';
-            }
-          },
-          onMouseLeave: (e) => {
-            if (isImported) {
-              e.currentTarget.style.backgroundColor = isSelected 
-                ? 'rgba(82, 196, 26, 0.15)'
-                : 'rgba(82, 196, 26, 0.1)';
-            }
-          }
-        };
-      }}
-      scroll={{
-        x: 'max-content',
-      }}
-    >
-      <Column 
-        width={50} 
-        title="" 
-        key="pin"
-        render={(_, record) => (
-          <Tooltip title={pinnedItems.includes(record.key) ? t('取消固定') : t('固定')}>
-            <PushpinOutlined
-              style={{ 
-                cursor: 'pointer',
-                color: pinnedItems.includes(record.key) ? '#1890ff' : '#d9d9d9'
-              }}
-              onClick={() => togglePin(record.key)}
-            />
-          </Tooltip>
-        )}
-      />
-      <Column width={150} title={t('名称')} dataIndex="name" key="name" />
-      <Column 
-        title="URL" 
-        dataIndex="url" 
-        key="url"
-        filterDropdown={() => (
-          <div style={{ padding: '8px' }}>
-            <Input
-              placeholder={t('搜索 URL')}
-              value={searchText}
-              onChange={e => setSearchText(e.target.value)}
-              onPressEnter={() => {}}
-              style={{ width: 200 }}
-              allowClear
-              prefix={<SearchOutlined />}
-              autoFocus
-            />
-          </div>
-        )}
-        filterIcon={() => (
-          <SearchOutlined style={{ color: searchText ? '#1890ff' : undefined }} />
-        )}
-      />
-      <Column
-        width={100}
-        title={t('延时')}
-        dataIndex="duration"
-        key="duration"
-        render={(duration) => (
-          <span>{duration ? `${duration}ms` : '-'}</span>
-        )}
-      />
-      <Column
-        width={120}
-        title={
-          <span>
-            {t('随机数据')}
-            <Tooltip 
-              title={
-                <span dangerouslySetInnerHTML={{ 
-                  __html: t('随机数据配置示例')
-                }}>
-                </span>
+    {viewMode === 'flat' ? (
+      // 平铺视图
+      <Table
+        rowSelection={rowSelection}
+        pagination={false}
+        dataSource={filteredData}
+        onRow={(record) => {
+          const isImported = recentlyImported.includes(record.key);
+          const isSelected = selectedRowKeys.includes(record.key);
+          
+          return {
+            style: {
+              ...(isImported && {
+                backgroundColor: isSelected 
+                  ? 'rgba(82, 196, 26, 0.15)'
+                  : 'rgba(82, 196, 26, 0.1)',
+              }),
+            },
+            onMouseEnter: (e) => {
+              if (isImported) {
+                e.currentTarget.style.backgroundColor = 'rgba(82, 196, 26, 0.2)';
               }
-            >
-              <QuestionCircleOutlined style={{ marginLeft: '4px' }} />
-            </Tooltip>
-          </span>
-        }
-        dataIndex="hasFaker"
-        key="hasFaker"
-        render={(hasFaker, record) => {
-          return hasFaker && record.target === 'mock' ? (
-            <Tooltip title={record.fakerKey}>
-              <Tag color='#87d068'>
-                {t('已开启')}
-              </Tag>
-            </Tooltip>
-          ) : '--'
-        }}
-      />
-      <Column
-        title={t('目标')}
-        dataIndex="target"
-        key="target"
-        render={(target, itemData) => (
-          <>
-            {
-              target && <Tag 
-                style={{
-                  cursor: target === 'mock' ? 'pointer' : 'default'
-                }}
-                onClick={() => {
-                  if (target === 'mock') {
-                    setItemTargetKey(itemData.key)
-                    setPreviewVisible(true)
-                  }
-              }} color={colorMap[target]} key={target}>
-              {target === 'proxy' && globalProxy}
-              {target === 'mock' && t('查看MOCK数据')}
-              {target === 'customProxy' && itemData.selectCustomProxy}
-            </Tag>
+            },
+            onMouseLeave: (e) => {
+              if (isImported) {
+                e.currentTarget.style.backgroundColor = isSelected 
+                  ? 'rgba(82, 196, 26, 0.15)'
+                  : 'rgba(82, 196, 26, 0.1)';
+              }
             }
-          </>
-        )}
-      />
-      <Column
-        title={t('启用')}
-        fixed="right"
-        width={380}
-        render={(_, itemData) => (
-          <Radio.Group name="radiogroup" onChange={(event) => {
-            onTargetChange({
-              key: itemData.key,
-              target: event.target.value
-            })
-          }} value={itemData.target}>
-            <Space >
-              <Radio value={'proxy'}>{t('全局代理')}</Radio>
-              <Radio disabled={!itemData.hasMockData} value={'mock'}>{t('MOCK数据')}</Radio>
-              <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>{t('自定义代理')}</Radio>
-            </Space>
-          </Radio.Group>
-        )} key="address" />
+          };
+        }}
+        scroll={{
+          x: 'max-content',
+        }}
+      >
+        <Column 
+          width={50} 
+          title="" 
+          key="pin"
+          render={(_, record) => (
+            <Tooltip title={pinnedItems.includes(record.key) ? t('取消固定') : t('固定')}>
+              <PushpinOutlined
+                style={{ 
+                  cursor: 'pointer',
+                  color: pinnedItems.includes(record.key) ? '#1890ff' : '#d9d9d9'
+                }}
+                onClick={() => togglePin(record.key)}
+              />
+            </Tooltip>
+          )}
+        />
+        <Column width={150} title={t('名称')} dataIndex="name" key="name" />
+        <Column 
+          title="URL" 
+          dataIndex="url" 
+          key="url"
+          filterDropdown={() => (
+            <div style={{ padding: '8px' }}>
+              <Input
+                placeholder={t('搜索 URL')}
+                value={searchText}
+                onChange={e => setSearchText(e.target.value)}
+                onPressEnter={() => {}}
+                style={{ width: 200 }}
+                allowClear
+                prefix={<SearchOutlined />}
+                autoFocus
+              />
+            </div>
+          )}
+          filterIcon={() => (
+            <SearchOutlined style={{ color: searchText ? '#1890ff' : undefined }} />
+          )}
+        />
+        <Column
+          width={100}
+          title={t('延时')}
+          dataIndex="duration"
+          key="duration"
+          render={(duration) => (
+            <span>{duration ? `${duration}ms` : '-'}</span>
+          )}
+        />
+        <Column
+          width={120}
+          title={
+            <span>
+              {t('随机数据')}
+              <Tooltip 
+                title={
+                  <span dangerouslySetInnerHTML={{ 
+                    __html: t('随机数据配置示例')
+                  }}>
+                  </span>
+                }
+              >
+                <QuestionCircleOutlined style={{ marginLeft: '4px' }} />
+              </Tooltip>
+            </span>
+          }
+          dataIndex="hasFaker"
+          key="hasFaker"
+          render={(hasFaker, record) => {
+            return hasFaker && record.target === 'mock' ? (
+              <Tooltip title={record.fakerKey}>
+                <Tag color='#87d068'>
+                  {t('已开启')}
+                </Tag>
+              </Tooltip>
+            ) : '--'
+          }}
+        />
+        <Column
+          title={t('目标')}
+          dataIndex="target"
+          key="target"
+          render={(target, itemData) => (
+            <>
+              {
+                target && <Tag 
+                  style={{
+                    cursor: target === 'mock' ? 'pointer' : 'default'
+                  }}
+                  onClick={() => {
+                    if (target === 'mock') {
+                      setItemTargetKey(itemData.key)
+                      setPreviewVisible(true)
+                    }
+                }} color={colorMap[target]} key={target}>
+                {target === 'proxy' && globalProxy}
+                {target === 'mock' && t('查看MOCK数据')}
+                {target === 'customProxy' && itemData.selectCustomProxy}
+              </Tag>
+              }
+            </>
+          )}
+        />
+        <Column
+          title={t('启用')}
+          fixed="right"
+          width={380}
+          render={(_, itemData) => (
+            <Radio.Group name="radiogroup" onChange={(event) => {
+              onTargetChange({
+                key: itemData.key,
+                target: event.target.value
+              })
+            }} value={itemData.target}>
+              <Space >
+                <Radio value={'proxy'}>{t('全局代理')}</Radio>
+                <Radio disabled={!itemData.hasMockData} value={'mock'}>{t('MOCK数据')}</Radio>
+                <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>{t('自定义代理')}</Radio>
+              </Space>
+            </Radio.Group>
+          )} key="address" />
 
-      <Column
-        title={t('操作')}
-        key="action"
-        fixed="right"
-        width={260}
-        render={(_, record) => (
-          <Space size="middle">
-            <a
-              onClick={() => {
-                setItemTargetKey(record.key)
-                setEditVisible(true)
-              }}
-              style={{
-                marginRight: '10px'
-              }}>{t('设置')}</a>
-            {(record.requestSchema || record.responseSchema) && (
+        <Column
+          title={t('操作')}
+          key="action"
+          fixed="right"
+          width={260}
+          render={(_, record) => (
+            <Space size="middle">
+              <a
+                onClick={() => {
+                  setItemTargetKey(record.key)
+                  setEditVisible(true)
+                }}
+                style={{
+                  marginRight: '10px'
+                }}>{t('设置')}</a>
+              {(record.requestSchema || record.responseSchema) && (
+                <a
+                  onClick={() => {
+                    setCurrentApiData(record)
+                    setDocVisible(true)
+                  }}
+                  style={{
+                    marginRight: '10px'
+                  }}>
+                  <Tooltip title={t('查看文档')}>
+                    {t('文档')}
+                  </Tooltip>
+                </a>
+              )}
               <a
                 onClick={() => {
                   setCurrentApiData(record)
-                  setDocVisible(true)
+                  setApiSendVisible(true)
                 }}
                 style={{
                   marginRight: '10px'
                 }}>
-                <Tooltip title={t('查看文档')}>
-                  {t('文档')}
+                <Tooltip title={t('发送请求')}>
+                  {t('发送请求')}
                 </Tooltip>
               </a>
-            )}
-            <a
-              onClick={() => {
-                setCurrentApiData(record)
-                setApiSendVisible(true)
-              }}
-              style={{
-                marginRight: '10px'
-              }}>
-              <Tooltip title={t('发送请求')}>
-                {t('发送请求')}
-              </Tooltip>
-            </a>
-            <Popconfirm
-              title={t('请确认')}
-              description={t('是否要删除这个代理')}
-              onConfirm={() => {
-                fetchDeleteApiData({
-                  key: record.key,
-                })
-                onApiDataChange()
-              }}
-              okText={t('删除')}
-              cancelText={t('取消')}
-            >
-              <a
-                onClick={() => {
-                  event.stopPropagation()
+              <Popconfirm
+                title={t('请确认')}
+                description={t('是否要删除这个代理')}
+                onConfirm={() => {
+                  fetchDeleteApiData({
+                    key: record.key,
+                  })
+                  onApiDataChange()
                 }}
-                style={{
-                  color: 'red'
-                }}
-              >{t('删除')}</a>
-            </Popconfirm>
+                okText={t('删除')}
+                cancelText={t('取消')}
+              >
+                <a
+                  onClick={() => {
+                    event.stopPropagation()
+                  }}
+                  style={{
+                    color: 'red'
+                  }}
+                >{t('删除')}</a>
+              </Popconfirm>
 
-          </Space>
-        )}
-      />
-    </Table>
+            </Space>
+          )}
+        />
+      </Table>
+    ) : (
+      // 分组视图
+      <Table
+        pagination={false}
+        dataSource={groupedData()}
+        expandable={{
+          expandedRowRender: record => expandedRowRender(record),
+          defaultExpandAllRows: true
+        }}
+        rowKey="key"
+        scroll={{
+          x: 'max-content',
+        }}
+      >
+        <Column title={t('分组名称')} dataIndex="name" key="name" />
+      </Table>
+    )}
     <ApiEdit proxyList={proxyList} onApiDataChange={onApiDataChange} targetKey={itemTargetKey} visible={editVisible} onCancel={() => setEditVisible(false)} />
     <PreviewMockModal targetKey={itemTargetKey} visible={preveiwVisible} onCancel={() => setPreviewVisible(false)} />  
     <ApiDocModal 
