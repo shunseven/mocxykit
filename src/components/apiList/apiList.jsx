@@ -628,6 +628,20 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         scroll={{
           x: 'max-content',
         }}
+        onRow={(record) => {
+          return {
+            onClick: () => {
+              // 找到当前行的展开按钮并触发点击
+              const expandButton = document.querySelector(`[data-row-key="${record.key}"] .ant-table-row-expand-icon`);
+              if (expandButton) {
+                expandButton.click();
+              }
+            },
+            style: { 
+              cursor: 'pointer' 
+            }
+          };
+        }}
       >
         <Column title={t('分组名称')} dataIndex="name" key="name" />
       </Table>

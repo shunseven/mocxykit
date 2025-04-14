@@ -307,7 +307,10 @@ Examples:
   "Body": "Body",
   "Headers": "Headers",
   "Cookies": "Cookies",
-  "从 cookie 中导入": "Import from cookie"
+  "从 cookie 中导入": "Import from cookie",
+  "分组视图": "Group View",
+  "平铺视图": "Tile View",
+  "未分组": "Ungrouped",
 }
 
 export function t (key) {
