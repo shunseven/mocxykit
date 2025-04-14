@@ -56,6 +56,8 @@ export function hasMockData (apiItemData: ApiConfig, mockDatas: AllMockData): bo
 }
 
 export function matchRouter(path: string, reqPath: string) {
+  path = path.replace('https://', '')
+  path = path.replace('http://', '')
   path = path.replace("*", '*path')
   const regexp = pathToRegexp(path);
   return regexp.regexp.test(reqPath);
