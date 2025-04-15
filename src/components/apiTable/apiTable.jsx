@@ -206,7 +206,7 @@ function ApiTable({
         </>}
         width={380}
         render={(record, itemData) => (
-          <>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
            <Tooltip title={pinnedItems?.includes(record.key) ? t('取消固定') : t('固定')}>
             <PushpinOutlined
               style={{
@@ -232,7 +232,7 @@ function ApiTable({
               <Radio disabled={!itemData.selectCustomProxy} value={'customProxy'}>{t('自定义代理')}</Radio>
             </Space>
           </Radio.Group>
-          </>
+          </div>
         )} key="address" />
 
       <Column
