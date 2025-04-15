@@ -172,7 +172,7 @@ function ApiTable({
       <Column
         title={<>
           {t('启用')}
-          <Space size="small" style={{ marginLeft: '10px' }}>
+          <Space size="small" style={{ marginLeft: '5px' }}>
             <Button
               size='small'
               style={{
@@ -204,7 +204,7 @@ function ApiTable({
             >{t('自定义代理')}</Button>
           </Space>
         </>}
-        width={380}
+        width={400}
         render={(record, itemData) => (
           <div style={{ display: 'flex', alignItems: 'center' }}>
            <Tooltip title={pinnedItems?.includes(record.key) ? t('取消固定') : t('固定')}>
