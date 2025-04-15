@@ -32,6 +32,14 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
   const [viewMode, setViewMode] = useState(() => {
     return localStorage.getItem('viewMode') || 'flat';
   });
+  // 展开的分组 keys，从本地存储中加载
+  const [expandedRowKeys, setExpandedRowKeys] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('expandedRowKeys') || '[]');
+    } catch (e) {
+      return [];
+    }
+  });
 
   const rowSelection = {
     selectedRowKeys,
@@ -189,10 +197,9 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
           optionType="button" 
           buttonStyle="solid"
           size="small"
-          style={{ marginLeft: '20px' }}
         >
-          <Radio.Button value="flat"><BarsOutlined /> {t('平铺视图')}</Radio.Button>
-          <Radio.Button value="grouped"><AppstoreOutlined /> {t('分组视图')}</Radio.Button>
+          <Radio.Button value="flat"><BarsOutlined /> {t('平铺')}</Radio.Button>
+          <Radio.Button value="grouped"><AppstoreOutlined /> {t('分组')}</Radio.Button>
         </Radio.Group>
       </Space>
       <Space size={10} >
@@ -248,7 +255,11 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
         dataSource={groupedData()}
         expandable={{
           expandedRowRender: record => expandedRowRender(record),
-          defaultExpandAllRows: true
+          expandedRowKeys: expandedRowKeys,
+          onExpandedRowsChange: (expandedKeys) => {
+            setExpandedRowKeys(expandedKeys);
+            localStorage.setItem('expandedRowKeys', JSON.stringify(expandedKeys));
+          }
         }}
         rowKey="key"
         scroll={{
