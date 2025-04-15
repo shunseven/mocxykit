@@ -69,9 +69,6 @@ export class EventBus {
 
 const dict = {
   "全局代理": "Global Proxy",
-  "切换为全局代理": "Switch to Global Proxy",
-  "MOCK数据优先": "MOCK Data First",
-  "自定义代理优先": "Custom Proxy First",
   "新增MOCK数据&自定义代理": "Add MOCK Data & Custom Proxy",
   "名称": "Name",
   "目标": "Target",
@@ -311,6 +308,7 @@ Examples:
   "分组视图": "Group View",
   "平铺视图": "Tile View",
   "未分组": "Ungrouped",
+  "自定义": "Custom",
 }
 
 export function t (key) {

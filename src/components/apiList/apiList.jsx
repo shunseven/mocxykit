@@ -341,29 +341,6 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
             <Button danger size='small'>{t('批量删除')}</Button>
           </Popconfirm>
         )}
-        <Button
-          size='small'
-          style={{
-            borderColor: '#f50',
-            color: '#f50'
-          }} variant="outlined"
-          onClick={() => handleBatchChange('proxy')}
-        >{t('切换为全局代理')}</Button>
-        <Button style={{
-          color: '#389e0d',
-          borderColor: '#389e0d'
-        }} 
-        onClick={() => handleBatchChange('mock')} 
-        size='small' 
-        color="primary" 
-        variant="outlined" 
-        >{t('MOCK数据优先')}</Button>
-        <Button 
-        onClick={() => handleBatchChange('customProxy')} 
-        size='small' 
-        color="primary" 
-        variant="outlined"
-        >{t('自定义代理优先')}</Button>
         
         <Radio.Group 
           value={viewMode} 
@@ -530,8 +507,40 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
           )}
         />
         <Column
-          title={t('启用')}
-          fixed="right"
+          title={<>
+            {t('启用')}
+            <Space size="small" style={{ marginLeft: '10px' }}>
+              <Button
+                size='small'
+                style={{
+                  borderColor: '#f50',
+                  color: '#f50'
+                }} 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleBatchChange('proxy');
+                }}
+              >{t('全局代理')}</Button>
+              <Button 
+                style={{
+                  color: '#389e0d',
+                  borderColor: '#389e0d'
+                }} 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleBatchChange('mock');
+                }}
+                size='small'
+              >{t('MOCK数据')}</Button>
+              <Button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleBatchChange('customProxy');
+                }}
+                size='small'
+              >{t('自定义代理')}</Button>
+            </Space>
+          </>}
           width={380}
           render={(_, itemData) => (
             <Radio.Group name="radiogroup" onChange={(event) => {
