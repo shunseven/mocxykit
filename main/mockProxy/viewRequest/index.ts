@@ -6,6 +6,7 @@ import { envUpdateEmitter } from "../../index";
 import { getMcpConfig, saveMcpConfig, createEditorMcpConfig, deleteEditorMcpConfig, McpConfig } from "../common/mcpConfig";
 import fs from 'fs';
 import path from 'path';
+import { get } from "http";
 
 const successData = {
   msg: 'success'
@@ -241,31 +242,38 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
 
   // 批量修改目标
   if (matchRouter('/express-proxy-mock/batch-change-target', req.path)) {
-    const apiData = getApiData()
-    const AllMockData = getMock()
-    const target = req.query.target as 'proxy' | 'mock' | 'customProxy'
-    const pinnedItems = (req.query.pinnedItems as string || '').split(',').filter(Boolean)
-    
-    apiData.apiList.forEach(item => {
-      // 如果是固定项则跳过
-      if (pinnedItems.includes(item.key)) {
-        return;
-      }
+    getReqBodyData(req).then((data) => {
+      const apiData = getApiData()
+      const AllMockData = getMock()
+      const target = data.target as 'proxy' | 'mock' | 'customProxy'
+  
+      const pinnedItems = data.pinnedItems || [];
+      const selectedKeys = data.selectedKeys;
       
-      switch (target) {
-        case 'proxy':
-          item.target = 'proxy'
-          break
-        case 'mock':
-          item.target = hasMockData(item, AllMockData) ? 'mock' : item.target
-          break
-        case 'customProxy':
-          item.target = item.selectCustomProxy ? 'customProxy' : item.target
-          break
-      }
+      apiData.apiList.forEach(item => {
+        // 如果是固定项则跳过
+        if (pinnedItems.includes(item.key)) {
+          return;
+        }
+        if (selectedKeys && !selectedKeys.includes(item.key)) {
+          return;
+        }
+        
+        switch (target) {
+          case 'proxy':
+            item.target = 'proxy'
+            break
+          case 'mock':
+            item.target = hasMockData(item, AllMockData) ? 'mock' : item.target
+            break
+          case 'customProxy':
+            item.target = item.selectCustomProxy ? 'customProxy' : item.target
+            break
+        }
+      })
+      setApiData(apiData)
+      res.send(successData)
     })
-    setApiData(apiData)
-    res.send(successData)
     return true
   }
 
