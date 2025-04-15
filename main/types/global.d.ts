@@ -39,7 +39,7 @@ interface ApiConfig {
   parameters?: Record<string, any>;
   requestData?: RequestData;
   method?: string;
-  forderId?: number;
+  forderId?: string;
   forderName?: string;
 }
 

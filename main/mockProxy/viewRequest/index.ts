@@ -137,6 +137,62 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
     return true
   }
 
+  // 设置 API 分组
+  if (matchRouter('/express-proxy-mock/set-api-group-folder', req.path)) {
+    getReqBodyData(req).then((data) => {
+      const { keys, forderId, forderName } = data as { keys: string[], forderId: string, forderName: string };
+      if (!keys || !keys.length) {
+        res.send({
+          msg: 'error',
+          error: 'No API keys provided'
+        });
+        return;
+      }
+      
+      const apiData = getApiData();
+      
+      // 更新 API 列表中的分组信息
+      apiData.apiList.forEach(item => {
+        if (keys.includes(item.key)) {
+          if (forderId === 'ungrouped') {
+            // 如果是移动到未分组，则删除分组信息
+            delete item.forderId;
+            delete item.forderName;
+          } else {
+            // 设置分组信息
+            item.forderId = forderId;
+            item.forderName = forderName;
+          }
+        }
+      });
+      
+      // 保存更新后的 API 数据
+      setApiData(apiData);
+      res.send(successData);
+    });
+    return true;
+  }
+  
+  // 获取所有分组
+  if (matchRouter('/express-proxy-mock/get-all-group-folders', req.path)) {
+    const apiData = getApiData();
+    const folders = new Map();
+    
+    // 遍历 API 列表，提取所有分组信息
+    apiData.apiList.forEach(item => {
+      if (item.forderId && item.forderName && !folders.has(item.forderId)) {
+        folders.set(item.forderId, {
+          id: item.forderId,
+          name: item.forderName
+        });
+      }
+    });
+    
+    // 将分组信息转换为数组
+    res.send(Array.from(folders.values()));
+    return true;
+  }
+
   // 替换原来的 create-proxy 路由
   if (matchRouter('/express-proxy-mock/save-proxy', req.path)) {
     const apiData = getApiData();
@@ -305,7 +361,7 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
     return true
   }
 
-  // 批量导入请求历史
+  // 批量导入请求历史到 Mock
   if (matchRouter('/express-proxy-mock/batch-import-request-cache-to-mock', req.path)) {
     getReqBodyData(req).then(result => {
       const { keys } = result as { keys: string[] }

@@ -221,3 +221,18 @@ export async function saveRequestData(data) {
   return res
 }
 
+// 设置API分组
+export async function setApiGroupFolder(data) {
+  const res = await request('/express-proxy-mock/set-api-group-folder', {
+    method: 'POST',
+    data
+  })
+  return res
+}
+
+// 获取所有分组
+export async function getAllGroupFolders() {
+  const res = await request('/express-proxy-mock/get-all-group-folders')
+  return res
+}
+

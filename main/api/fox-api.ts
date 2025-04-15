@@ -75,7 +75,7 @@ export interface ApiFoxApiTreeItem {
     type: string;
     method: string;
     path: string;
-    folderId: number;
+    forderId: number;
     tags: string[];
     status: number;
     responsibleId: number;
@@ -115,7 +115,7 @@ export interface ApiFoxDataSchema {
   name: string;
   displayName: string;
   jsonSchema: Record<string, any>;
-  folderId: number;
+  forderId: number;
   description: string;
   projectId: number;
   ordering: number;

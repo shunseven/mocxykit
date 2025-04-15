@@ -12,7 +12,7 @@ export async function processSelectedFolders(
   token: string,
   projectId: number,
   getApiDetail: (token: string, projectId: number, apiId: number) => Promise<ApiFoxApiDetailResponse>,
-  parentFolderName: string = ''
+  parentforderName: string = ''
 ): Promise<any[]> {
   let apiConfigs: any[] = [];
   
@@ -20,8 +20,8 @@ export async function processSelectedFolders(
   for (const folder of folders) {
     const folderInfo = folder.folder;
     // 构建完整的文件夹名称路径
-    const currentFolderName = parentFolderName 
-      ? `${parentFolderName}-${folderInfo?.name}` 
+    const currentforderName = parentforderName 
+      ? `${parentforderName}-${folderInfo?.name}` 
       : folderInfo?.name;
     
     // 处理文件夹下的所有子项
@@ -97,7 +97,7 @@ export async function processSelectedFolders(
             responseSchema,
             parameters: apiDetail.data.parameters,
             forderId: folderInfo?.id, // 使用当前文件夹的ID
-            forderName: currentFolderName // 使用构建的文件夹名称路径
+            forderName: currentforderName // 使用构建的文件夹名称路径
           };
           
           apiConfigs.push(apiConfig);
@@ -120,7 +120,7 @@ export async function processSelectedFolders(
           token,
           projectId,
           getApiDetail,
-          currentFolderName // 传递当前构建的文件夹名称路径
+          currentforderName // 传递当前构建的文件夹名称路径
         );
         
         // 合并子文件夹的API配置

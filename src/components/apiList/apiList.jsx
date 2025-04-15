@@ -1,4 +1,4 @@
-import { Space, Button, Popconfirm, Radio, Table } from 'antd';
+import { Space, Button, Popconfirm, Radio, Table, message } from 'antd';
 import { useState } from 'react';
 import ApiEdit from '../mockEditorModal/editModal';
 import { fetchDeleteApiData } from '../../api/api';
@@ -6,11 +6,12 @@ import PreviewMockModal from '../previewMockModal/previewMockModal';
 import CacheRequestHistoryData from '../cacheRequestHistoryData/cacheRequestHistoryData';
 import eventButs from '../mockEditor/eventBus';
 import { t } from '../../common/fun';
-import { SearchOutlined, InfoCircleOutlined, AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
+import { SearchOutlined, InfoCircleOutlined, AppstoreOutlined, BarsOutlined, FolderOutlined } from '@ant-design/icons';
 import ApiFox from '../apiMangeTool/apifox'; 
 import ApiDocModal from '../apiDoc/apiDocModal';
 import ApiSend from '../apiSend/apiSend';
 import ApiTable from '../apiTable/apiTable';
+import GroupModal from '../groupManager/groupModal';
 const { Column } = Table;
 
 // 删除重复的样式定义，现在已经移到 ApiTable 组件中
@@ -28,6 +29,8 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
   const [docVisible, setDocVisible] = useState(false);
   const [currentApiData, setCurrentApiData] = useState(null);
   const [apiSendVisible, setApiSendVisible] = useState(false);
+  // 分组弹窗控制状态
+  const [groupModalVisible, setGroupModalVisible] = useState(false);
   // 视图模式：flat (平铺) 或 grouped (分组)，从本地存储中加载
   const [viewMode, setViewMode] = useState(() => {
     return localStorage.getItem('viewMode') || 'flat';
@@ -79,18 +82,18 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
     const groups = {};
     
     filteredData.forEach(item => {
-      const folderId = item.forderId || 'ungrouped';
-      const folderName = item.forderName || t('未分组');
+      const forderId = item.forderId || 'ungrouped';
+      const forderName = item.forderName || t('未分组');
       
-      if (!groups[folderId]) {
-        groups[folderId] = {
-          key: folderId,
-          name: folderName,
+      if (!groups[forderId]) {
+        groups[forderId] = {
+          key: forderId,
+          name: forderName,
           items: []
         };
       }
       
-      groups[folderId].items.push(item);
+      groups[forderId].items.push(item);
     });
     
     // 转换为数组格式
@@ -180,15 +183,24 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
     }}>
       <Space size={10}>
       {selectedRowKeys.length > 0 && (
-          <Popconfirm
-            title={t('批量删除确认')}
-            description={t('确定要删除选中的') + ` ${selectedRowKeys.length} ` + t('项吗？')}
-            onConfirm={handleBatchDelete}
-            okText={t('删除')}
-            cancelText={t('取消')}
-          >
-            <Button danger size='small'>{t('批量删除')}</Button>
-          </Popconfirm>
+          <>
+            <Popconfirm
+              title={t('批量删除确认')}
+              description={t('确定要删除选中的') + ` ${selectedRowKeys.length} ` + t('项吗？')}
+              onConfirm={handleBatchDelete}
+              okText={t('删除')}
+              cancelText={t('取消')}
+            >
+              <Button danger size='small'>{t('批量删除')}</Button>
+            </Popconfirm>
+            <Button 
+              icon={<FolderOutlined />}
+              size='small'
+              onClick={() => setGroupModalVisible(true)}
+            >
+              {t('分组')}
+            </Button>
+          </>
         )}
         
         <Radio.Group 
@@ -295,6 +307,16 @@ function List({ data, globalProxy, onTargetChange, onBatchChangeTargetType, onAp
       onClose={() => setApiSendVisible(false)} 
       apiData={currentApiData} 
       onApiDataChange={onApiDataChange}
+    />
+    {/* 添加分组管理弹窗 */}
+    <GroupModal
+      visible={groupModalVisible}
+      onCancel={() => setGroupModalVisible(false)}
+      selectedKeys={selectedRowKeys}
+      onSuccess={() => {
+        setSelectedRowKeys([]);
+        onApiDataChange();
+      }}
     />
   </>
 }
