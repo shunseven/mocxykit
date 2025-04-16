@@ -203,12 +203,13 @@ export default function createProxyServer (options: ProxyMockOptions) {
       secure: true,
       cookieDomainRewrite: "",
     };
+    const contentType = req.headers['content-type'] || '';
+    const isJsonData = contentType.includes('application/json');
     
-    // 对于 POST、PUT、PATCH 请求，处理请求体数据
-    if (['POST', 'PUT', 'PATCH'].includes(req.method || '')) {
+    // 对于 POST、PUT、PATCH 请求，只处理JSON数据类型
+    if (['POST', 'PUT', 'PATCH'].includes(req.method || '') && isJsonData) {
       const bodyData = await getRequestBody(req);
       requestBodyManager.add(req.url, bodyData);
-      
       // 创建一个可读流来传递请求体数据
       proxyOption.buffer = createReadableStream(bodyData);
     }
@@ -217,7 +218,6 @@ export default function createProxyServer (options: ProxyMockOptions) {
     if (apiData?.duration) {
       await sleep(apiData.duration);
     }
-    
     // 执行代理请求
     proxy.web(req, res, proxyOption);
   }
