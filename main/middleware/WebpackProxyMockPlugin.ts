@@ -3,6 +3,7 @@ import { logger } from '../mockProxy/common/log';
 import proxyMockMiddleware from './proxyMockMiddleWare';
 import defaultConfig from './defaultConfig';
 import { envUpdateEmitter } from '../index';
+import { getInjectCode } from '../mockProxy/common/injectCode';
 // 创建事件发射器实例
 
 export class WebpackProxyMockPlugin {
@@ -16,6 +17,14 @@ export class WebpackProxyMockPlugin {
     
     // 合并配置：默认配置 < 文件配置 < 传入的配置
     this.options = Object.assign({}, defaultConfig, options, fileConfig);
+  }
+
+  getInjectCode() {
+    return getInjectCode({
+      buttonPosition: this.options.buttonPosition as string,
+      lang: this.options.lang as string,
+      configPath: this.options.configPath as string,
+    });
   }
 
   setupDevServer(app: any) {
