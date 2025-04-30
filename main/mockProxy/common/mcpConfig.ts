@@ -10,6 +10,7 @@ export interface McpConfig {
 export interface EditorConfig {
   editor: string;
   path: string;
+  type: 'sse' | 'mcp'; // 可选属性，默认为空字符串
 }
 
 // 默认MCP配置
@@ -19,8 +20,9 @@ const defaultMcpConfig: McpConfig = {
 
 // 支持的编辑器配置
 export const supportedEditors: EditorConfig[] = [
-  { editor: 'cursor', path: '.cursor/mcp.json' },
-  { editor: 'windsurf', path: '.windsurf/mcp.json' } // 暂不支持，但保留配置
+  { editor: 'cursor', path: '.cursor/mcp.json', type: 'sse' },
+  { editor: 'vscode', path: '.vscode/mcp.json', type: 'mcp' },
+  { editor: 'windsurf', path: '.windsurf/mcp.json', type: 'mcp' } // 暂不支持，但保留配置
 ];
 
 // 获取项目根路径
@@ -137,7 +139,7 @@ export function createEditorMcpConfig(editor: string, port: number): void {
     }
     
     existingConfig.mcpServers[MCP_PROJECT_NAME] = {
-      url: `http://localhost:${port}/sse`
+      url: `http://localhost:${port}/${editorConfig.type}`,
     };
     
     fs.writeFileSync(configPath, JSON.stringify(existingConfig, null, 2));

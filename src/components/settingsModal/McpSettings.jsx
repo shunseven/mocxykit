@@ -101,6 +101,16 @@ const McpSettings = () => {
           <Title level={5} style={{ margin: 0 }}>{t("编辑器支持")}</Title>
           <Text type="secondary">{t("勾选编辑器即可启用 MCP 服务")}</Text>
         </div>
+
+        <div style={{ paddingLeft: 8 }}>
+          <Checkbox 
+            checked={mcpConfig.editors.includes('vscode')}
+            onChange={(e) => handleEditorChange('vscode', e.target.checked)}
+            disabled={loading}
+          >
+            VSCode
+          </Checkbox>
+        </div>
         
         <div style={{ paddingLeft: 8 }}>
           <Checkbox 
