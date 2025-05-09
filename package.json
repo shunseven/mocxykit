@@ -1,6 +1,6 @@
 {
  "name": "mocxykit",
- "version": "2.9.0",
+ "version": "2.9.2",
  "description": "This is an express middleware that can be used with webpack and vite. Its main function is to visualize the configuration, manage proxies, and mock data.",
  "main": "serverDist/index.js",
  "author": "shunseven",
