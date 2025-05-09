@@ -29,7 +29,6 @@ export async function processSelectedFolders({
   let apiConfigs: any[] = [];
   
   // 如果没有传入API详情数据，先获取所有API详情
-  const apiDetailsData = allApiDetails || await getApiDetails(token);
   
   // 递归处理所有文件夹
   for (const folder of folders) {
@@ -51,7 +50,7 @@ export async function processSelectedFolders({
             continue;
           }
 
-          const apiDetailItem = apiDetailsData?.data?.find(detail => detail.id === item.api?.id);
+          const apiDetailItem = allApiDetails?.data?.find(detail => detail.id === item.api?.id);
           if (!apiDetailItem) {
             console.error(`未找到API详情: ${item.api.name}`);
             continue;
@@ -147,7 +146,7 @@ export async function processSelectedFolders({
           selectedApiRule,
           token,
           projectId,
-          allApiDetails: apiDetailsData,
+          allApiDetails,
           parentforderName: currentforderName // 传递当前构建的文件夹名称路径
         });
         
