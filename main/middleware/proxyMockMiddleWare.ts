@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import clientEntry from '../clientEntry';
 import entry from '../mockProxy/entry';
-import viewRequest from '../mockProxy/viewRequest';
+import viewRequest from '../mockProxy/viewRequest/viewRequest';
 import defaultConfig from './defaultConfig';
 // 根据Node.js版本有条件地导入MCP模块
 let createMcpServer: ((config: ProxyMockOptions) => (req: Request, res: Response) => Promise<boolean>) | null = null;

@@ -1,20 +1,35 @@
 // 导入必要的模块
-import { ApiFoxApiTreeItem, ApiFoxDataSchema, ApiFoxApiDetailResponse } from '../../api/fox-api';
+import { ApiFoxApiTreeItem, ApiFoxDataSchema, ApiFoxApiDetailResponse, ApiFoxApiDetailsResponse, getApiDetails } from '../../api/fox-api';
 import { getApiData, setApiData, getMock, setMockData } from './fetchJsonData';
 import { parseUrlToKey } from './fun';
 
+// 定义用于 processSelectedFolders 的参数接口
+interface ProcessSelectedFoldersParams {
+  folders: ApiFoxApiTreeItem[];
+  dataSchemas: ApiFoxDataSchema[];
+  autoCompleteUrl: boolean;
+  selectedApiRule: string;
+  token: string;
+  projectId: number;
+  allApiDetails?: ApiFoxApiDetailsResponse; // 所有API详情数据
+  parentforderName?: string;
+}
+
 // 处理文件夹和子文件夹，返回API配置数组
-export async function processSelectedFolders(
-  folders: ApiFoxApiTreeItem[],
-  dataSchemas: ApiFoxDataSchema[],
-  autoCompleteUrl: boolean,
-  selectedApiRule: string,
-  token: string,
-  projectId: number,
-  getApiDetail: (token: string, projectId: number, apiId: number) => Promise<ApiFoxApiDetailResponse>,
-  parentforderName: string = ''
-): Promise<any[]> {
+export async function processSelectedFolders({
+  folders,
+  dataSchemas,
+  autoCompleteUrl,
+  selectedApiRule,
+  token,
+  projectId,
+  allApiDetails,
+  parentforderName = ''
+}: ProcessSelectedFoldersParams): Promise<any[]> {
   let apiConfigs: any[] = [];
+  
+  // 如果没有传入API详情数据，先获取所有API详情
+  const apiDetailsData = allApiDetails || await getApiDetails(token);
   
   // 递归处理所有文件夹
   for (const folder of folders) {
@@ -29,15 +44,28 @@ export async function processSelectedFolders(
       // 如果是API详情
       if (item.type === 'apiDetail' && item.api) {
         try {
-          // 获取API详情
-          const apiDetail = await getApiDetail(token, projectId, item.api.id);
-          if (!apiDetail.success) {
-            console.error(`获取API详情失败: ${item.api.name}`);
+          // 从API详情数据中查找对应的API
+          // 确保item.api存在
+          if (!item.api || !item.api.id) {
+            console.error(`无效的API数据格式`);
+            continue;
+          }
+
+          const apiDetailItem = apiDetailsData?.data?.find(detail => detail.id === item.api?.id);
+          if (!apiDetailItem) {
+            console.error(`未找到API详情: ${item.api.name}`);
             continue;
           }
           
+          // 构建与原 apiDetail 格式相同的对象
+          const apiDetail: ApiFoxApiDetailResponse = {
+            success: true,
+            data: apiDetailItem
+          };
+          
           // 处理API路径，根据需要自动补全URL
-          let apiPath = item.api.path;
+          // 这里已经确认了item.api存在
+          let apiPath = item.api!.path;
           
           // 如果需要自动补全URL
           if (autoCompleteUrl && selectedApiRule) {
@@ -91,8 +119,8 @@ export async function processSelectedFolders(
           const apiConfig = {
             url: apiPath,
             key: apiKey,
-            method: item.api.method.toUpperCase(),
-            name: `${item.api.name || item.name}(ApiFox)`,
+            method: item.api!.method.toUpperCase(),
+            name: `${item.api!.name || item.name}(ApiFox)`,
             requestSchema,
             responseSchema,
             parameters: apiDetail.data.parameters,
@@ -112,16 +140,16 @@ export async function processSelectedFolders(
       // 如果是文件夹，则递归处理
       else if (item.type === 'apiDetailFolder' && item.children && item.children.length > 0) {
         // 递归处理子文件夹
-        const childApiConfigs = await processSelectedFolders(
-          [item], // 作为单独的文件夹项处理
+        const childApiConfigs = await processSelectedFolders({
+          folders: [item], // 作为单独的文件夹项处理
           dataSchemas,
           autoCompleteUrl,
           selectedApiRule,
           token,
           projectId,
-          getApiDetail,
-          currentforderName // 传递当前构建的文件夹名称路径
-        );
+          allApiDetails: apiDetailsData,
+          parentforderName: currentforderName // 传递当前构建的文件夹名称路径
+        });
         
         // 合并子文件夹的API配置
         apiConfigs = [...apiConfigs, ...childApiConfigs];
@@ -177,17 +205,27 @@ async function processMockData(apiKey: string, apiPath: string, apiItem: any, ap
   }
 }
 
+// 定义用于 syncApiFoxApi 的参数接口
+interface SyncApiFoxApiParams {
+  apiTreeData: ApiFoxApiTreeItem[];
+  folders: string[];
+  dataSchemas: ApiFoxDataSchema[];
+  autoCompleteUrl: boolean;
+  selectedApiRule: string;
+  token: string;
+  projectId: number;
+}
+
 // 处理ApiFox API同步
-export async function syncApiFoxApi(
-  apiTreeData: ApiFoxApiTreeItem[], 
-  folders: string[], 
-  dataSchemas: ApiFoxDataSchema[],
-  autoCompleteUrl: boolean,
-  selectedApiRule: string,
-  token: string,
-  projectId: number,
-  getApiDetail: (token: string, projectId: number, apiId: number) => Promise<ApiFoxApiDetailResponse>
-): Promise<{ success: boolean; message: string; data?: any }> {
+export async function syncApiFoxApi({
+  apiTreeData,
+  folders,
+  dataSchemas,
+  autoCompleteUrl,
+  selectedApiRule,
+  token,
+  projectId
+}: SyncApiFoxApiParams): Promise<{ success: boolean; message: string; data?: any }> {
   try {
     // 获取当前API数据
    
@@ -201,16 +239,19 @@ export async function syncApiFoxApi(
       return { success: false, message: '未找到选中的API分组' };
     }
     
+    // 获取所有API详情
+    const allApiDetails = await getApiDetails(token, projectId);
+    
     // 使用新函数处理选中的文件夹
-    const apiConfigs = await processSelectedFolders(
-      selectedFolders,
+    const apiConfigs = await processSelectedFolders({
+      folders: selectedFolders,
       dataSchemas,
       autoCompleteUrl,
       selectedApiRule,
       token,
       projectId,
-      getApiDetail
-    );
+      allApiDetails
+    });
 
      const apiData = getApiData();
      const apiList = apiData.apiList || [];

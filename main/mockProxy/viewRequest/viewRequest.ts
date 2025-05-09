@@ -734,14 +734,15 @@ export default function viewRequest(req: Request, res: Response, config: ProxyMo
           
           // 3. 同步API数据
           const syncResult = await apiManageTool.syncApiFoxApi(
-            apiTreeResult.data,
-            folders,
-            dataSchemas,
-            autoCompleteUrl === true,
-            selectedApiRule || '',
-            token,
-            projectId,
-            foxApi.getApiDetail
+            {
+              apiTreeData: apiTreeResult.data,
+              folders,
+              dataSchemas,
+              autoCompleteUrl: autoCompleteUrl === true,
+              selectedApiRule: selectedApiRule || '',
+              token,
+              projectId,
+            },
           );
           
           // 4. 返回同步结果
