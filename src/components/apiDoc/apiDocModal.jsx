@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Tabs, Card, Tree, Tag, Typography, Space, Divider, Table } from 'antd';
+import PropTypes from 'prop-types';
 import { t } from '../../common/fun';
 
 const { Title, Text, Paragraph } = Typography;
@@ -17,7 +18,56 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
 
   // 将JSON Schema转换为Tree数据结构
   const convertSchemaToTreeData = (schema, parentKey = '0') => {
-    if (!schema || !schema.properties) {
+    // 处理没有属性的情况
+    if (!schema) {
+      return [];
+    }
+    
+    // 如果schema没有properties属性，但有type属性，则可能是简单类型或数组
+    if (!schema.properties) {
+      if (schema.type === 'array' && schema.items) {
+        // 处理数组类型
+        const arrayKey = `${parentKey}-array`;
+        const arrayTitle = (
+          <Space>
+            <Text strong>{t('数组')}</Text>
+            <Tag color="blue">array</Tag>
+            {schema.description && (
+              <Text type="secondary">{schema.description}</Text>
+            )}
+          </Space>
+        );
+        
+        // 如果数组项是对象类型
+        if (schema.items.type === 'object' && schema.items.properties) {
+          return [{
+            title: arrayTitle,
+            key: arrayKey,
+            children: convertSchemaToTreeData(schema.items, arrayKey),
+          }];
+        }
+        
+        // 如果数组项是简单类型
+        return [{
+          title: arrayTitle,
+          key: arrayKey,
+          children: [{
+            title: (
+              <Space>
+                <Text italic>{t('数组项')}</Text>
+                <Tag color="blue">{schema.items.type || '对象'}</Tag>
+                {schema.items.description && (
+                  <Text type="secondary">{schema.items.description}</Text>
+                )}
+              </Space>
+            ),
+            key: `${arrayKey}-item`,
+            isLeaf: true,
+          }],
+        }];
+      }
+      
+      // 如果是其他简单类型
       return [];
     }
 
@@ -63,12 +113,30 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
           </Space>
         );
         
-        // 如果数组项是对象类型
+        // 如果数组项是对象类型且有属性
         if (prop.items.type === 'object' && prop.items.properties) {
           return {
             title: arrayTitle,
             key: currentKey,
             children: convertSchemaToTreeData(prop.items, currentKey),
+          };
+        }
+        
+        // 如果数组项是对象类型但没有指定属性（可能是空对象）
+        if (prop.items.type === 'object' && !prop.items.properties) {
+          return {
+            title: arrayTitle,
+            key: currentKey,
+            children: [{
+              title: (
+                <Space>
+                  <Text italic>{t('空对象')}</Text>
+                  <Tag color="blue">object</Tag>
+                </Space>
+              ),
+              key: `${currentKey}-empty-object`,
+              isLeaf: true,
+            }],
           };
         }
         
@@ -87,6 +155,7 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
               </Space>
             ),
             key: `${currentKey}-item`,
+            isLeaf: true,
           }],
         };
       }
@@ -132,7 +201,50 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
   const renderSchemaDoc = (schema) => {
     if (!schema) return <Text type="secondary">{t('无数据')}</Text>;
     
-    const treeData = convertSchemaToTreeData(schema);
+    let treeData = [];
+    
+    // 处理顶层为数组类型的情况
+    if (schema.type === 'array' && schema.items) {
+      const arrayTitle = (
+        <Space>
+          <Tag color="blue">array</Tag>
+          {schema.description && (
+            <Text type="secondary">{schema.description}</Text>
+          )}
+        </Space>
+      );
+      
+      // 如果数组项是对象类型且有属性
+      if (schema.items.type === 'object' && schema.items.properties) {
+        treeData = [{
+          title: arrayTitle,
+          key: 'root-array',
+          children: convertSchemaToTreeData(schema.items, 'root-array'),
+        }];
+      } else {
+        // 如果数组项是简单类型
+        treeData = [{
+          title: arrayTitle,
+          key: 'root-array',
+          children: [{
+            title: (
+              <Space>
+                <Text italic>{t('数组项')}</Text>
+                <Tag color="blue">{schema.items.type || '对象'}</Tag>
+                {schema.items.description && (
+                  <Text type="secondary">{schema.items.description}</Text>
+                )}
+              </Space>
+            ),
+            key: 'root-array-item',
+            isLeaf: true,
+          }],
+        }];
+      }
+    } else {
+      // 非数组类型
+      treeData = convertSchemaToTreeData(schema);
+    }
     
     // 设置所有节点的key用于默认展开
     if (expandedKeys.length === 0 && treeData.length > 0) {
@@ -264,6 +376,27 @@ const ApiDocModal = ({ visible, onClose, apiData }) => {
       </Tabs>
     </Modal>
   );
+};
+
+// 定义组件的PropTypes
+ApiDocModal.propTypes = {
+  visible: PropTypes.bool,
+  onClose: PropTypes.func,
+  apiData: PropTypes.shape({
+    name: PropTypes.string,
+    method: PropTypes.string,
+    url: PropTypes.string,
+    parameters: PropTypes.object,
+    requestSchema: PropTypes.object,
+    responseSchema: PropTypes.object
+  })
+};
+
+// 默认属性值
+ApiDocModal.defaultProps = {
+  visible: false,
+  onClose: () => {},
+  apiData: {}
 };
 
 export default ApiDocModal; 
