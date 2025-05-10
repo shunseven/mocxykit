@@ -156,15 +156,11 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
       });
 
       // 处理环境变量
-      api.modifyRspackConfig((rspackConfig: any) => {
+      api.modifyEnvironmentConfig((rspackConfig: any) => {
         if (!isDevelopment) return rspackConfig;
         
         const envVars = setupEnvVariables();
         if (envVars) {
-          // 确保 DefinePlugin 存在
-          if (!rspackConfig.plugins) {
-            rspackConfig.plugins = [];
-          }
           
           // 构建环境变量对象
           const defineEntries: Record<string, string> = {};
@@ -176,14 +172,19 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
           });
           
           // 直接修改 Rspack 配置中的 define 属性
-          if (!rspackConfig.define) {
-            rspackConfig.define = {};
+          if (!rspackConfig.source) {
+            rspackConfig.source = {};
+          }
+          if (!rspackConfig.source.define) {
+            rspackConfig.source.define = {};
+          }
+          rspackConfig.source.define = {
+            ...rspackConfig.source.define,
+            ...defineEntries
           }
           
-          // 合并环境变量到 define 配置
-          Object.assign(rspackConfig.define, defineEntries);
+          console.log('合并环境变量到 Rspack 配置:', rspackConfig);
         }
-        
         return rspackConfig;
       });
     }

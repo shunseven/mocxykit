@@ -42,22 +42,68 @@
     <script type="module">
         function displayEnv() {
             const envDisplay = document.getElementById('envDisplay');
-            // 同时支持 process.env 和 import.meta.env
-            const env = {...process.env, ...import.meta.env};
-            envDisplay.textContent = JSON.stringify(env, null, 2);
+            
+            // 尝试从不同来源获取环境变量
+            let env = {};
+            let processEnvSource = '无法访问';
+            let importMetaEnvSource = '无法访问';
+            
+            try {
+                // 测试访问预设的环境变量
+                console.log("测试NODE_ENV:", process.env.NODE_ENV);
+                console.log("测试TEST_ENV:", process.env.TEST_ENV);
+                
+                // 1. 直接从 process.env 获取
+                if (typeof process !== 'undefined' && process.env) {
+                    env = { ...env, ...process.env };
+                    processEnvSource = '可访问';
+                    console.log('从 process.env 获取到环境变量');
+                }
+            } catch (e) {
+                console.error('访问 process.env 出错:', e);
+            }
+            
+            try {
+                // 2. 从 import.meta.env 获取
+                if (import.meta && import.meta.env) {
+                    env = { ...env, ...import.meta.env };
+                    importMetaEnvSource = '可访问';
+                    console.log('从 import.meta.env 获取到环境变量');
+                }
+            } catch (e) {
+                console.error('访问 import.meta.env 出错:', e);
+            }
+            
+            // 显示环境变量和来源信息
+            const envInfo = {
+                sources: {
+                    'process.env': processEnvSource,
+                    'import.meta.env': importMetaEnvSource
+                },
+                variables: env
+            };
+            
+            envDisplay.textContent = JSON.stringify(envInfo, null, 2);
             console.log('当前环境变量:', env);
+        }
+
+        // 添加环境变量来源信息
+        function addEnvSourceInfo() {
+            const envDisplay = document.getElementById('envDisplay');
+            const currentText = envDisplay.textContent;
+            
+            let sourceInfo = '\n\n// 环境变量来源信息:\n';
+            sourceInfo += '// process 对象类型: ' + (typeof process) + '\n';
+            sourceInfo += '// process.env 对象类型: ' + (typeof process !== 'undefined' ? typeof process.env : 'undefined') + '\n';
+            sourceInfo += '// import.meta 对象类型: ' + (typeof import.meta) + '\n';
+            sourceInfo += '// import.meta.env 对象类型: ' + (typeof import.meta.env);
+            
+            envDisplay.textContent = currentText + sourceInfo;
         }
 
         // 初始显示环境变量
         displayEnv();
-
-        // 如果支持热更新，则在更新时重新显示环境变量
-        if (window.hmr) {
-            window.hmr.on('update', () => {
-                console.log('环境变量更新，重新加载...');
-                displayEnv();
-            });
-        }
+        addEnvSourceInfo();
     </script>
 </body>
 </html>
