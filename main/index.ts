@@ -5,11 +5,12 @@
 import proxyMockMiddleware from "./middleware/proxyMockMiddleWare";
 import viteProxyMockPlugin from "./middleware/viteProxyMockPlugin";
 import WebpackProxyMockPlugin from "./middleware/WebpackProxyMockPlugin";
+import rsbuildProxyMockPlugin from "./middleware/rsbuildProxyMockPlugin";
 import { EventEmitter } from './mockProxy/common/event';
 
 export const envUpdateEmitter = new EventEmitter();
 envUpdateEmitter.setMaxListeners(20);
 
-export { proxyMockMiddleware, viteProxyMockPlugin, WebpackProxyMockPlugin };
+export { proxyMockMiddleware, viteProxyMockPlugin, WebpackProxyMockPlugin, rsbuildProxyMockPlugin };
 
 export default WebpackProxyMockPlugin;

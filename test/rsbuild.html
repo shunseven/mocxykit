@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rsbuild Proxy Mock 测试页面</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .test-form {
+            margin-bottom: 20px;
+        }
+        .result-area {
+            padding: 10px;
+            border: 1px solid #ccc;
+            min-height: 100px;
+        }
+        .env-container {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .env-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rsbuild Proxy Mock 测试页面</h1>
+        <div class="env-container">
+            <div class="env-title">环境变量：</div>
+            <pre id="envDisplay"></pre>
+        </div>
+    </div>
+
+    <script type="module">
+        function displayEnv() {
+            const envDisplay = document.getElementById('envDisplay');
+            // 同时支持 process.env 和 import.meta.env
+            const env = {...process.env, ...import.meta.env};
+            envDisplay.textContent = JSON.stringify(env, null, 2);
+            console.log('当前环境变量:', env);
+        }
+
+        // 初始显示环境变量
+        displayEnv();
+
+        // 如果支持热更新，则在更新时重新显示环境变量
+        if (window.hmr) {
+            window.hmr.on('update', () => {
+                console.log('环境变量更新，重新加载...');
+                displayEnv();
+            });
+        }
+    </script>
+</body>
+</html>
