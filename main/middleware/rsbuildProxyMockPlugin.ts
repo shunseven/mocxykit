@@ -63,7 +63,7 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
 
   // 返回Rsbuild插件对象
   return {
-    name: 'rsbuild-plugin-proxy-mock',
+    name: 'mocxykit:rsbuild-plugin',
 
     // Rsbuild的插件设置
     setup(api: any) {

@@ -124,6 +124,23 @@ app.use(
 
 app.listen(3000, () => console.log("Example app listening on port 3000!"));
 ```
+
+### Rsbuild
+```js
+// rsbuild.config.js
+import { defineConfig } from '@rsbuild/core';
+import { rsbuildProxyMockPlugin } from 'mocxykit';
+
+export default defineConfig({
+  // Rsbuild 配置
+  plugins: [
+    rsbuildProxyMockPlugin({
+      apiRule: '/api/*',
+      lang: 'zh',
+      buttonPosition: 'bottom', // 可选：'top'(顶部)、'middle'(中间)、'bottom'(底部) 或坐标格式如 '100,100'
+    }),
+  ],
+});
 浏览器打开 http://localhost:3000/config 就可以看到代理与 MOCK 数据的配制界面
 vite 项目会在页面右下角显示一个按钮，点击按钮即可打开配置页面
 

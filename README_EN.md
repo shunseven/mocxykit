@@ -122,6 +122,23 @@ app.use(
 
 app.listen(3000, () => console.log("Example app listening on port 3000!"));
 ```
+
+### Rsbuild
+```js
+// rsbuild.config.js
+import { defineConfig } from '@rsbuild/core';
+import { rsbuildProxyMockPlugin } from 'mocxykit';
+
+export default defineConfig({
+  // Rsbuild configuration
+  plugins: [
+    rsbuildProxyMockPlugin({
+      apiRule: '/api/*',
+      lang: 'en',
+      buttonPosition: 'bottom', // Optional: 'top', 'middle', 'bottom' or coordinate like '100,100'
+    }),
+  ],
+});
 Open the browser at http://localhost:3000/config to see the configuration interface for proxy and MOCK data.
 vite project will display a button in the bottom right corner of the page. Click the button to open the configuration page
 
