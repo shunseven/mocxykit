@@ -141,8 +141,10 @@ export default defineConfig({
     }),
   ],
 });
+```
+
 浏览器打开 http://localhost:3000/config 就可以看到代理与 MOCK 数据的配制界面
-vite 项目会在页面右下角显示一个按钮，点击按钮即可打开配置页面
+vite, Rsbuild 项目会在页面右下角显示一个按钮，点击按钮即可打开配置页面
 
 请参阅[下文](#其他服务器)以获取 vite, 与 webpack, 及 vueConfig 使用示例。
 

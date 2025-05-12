@@ -139,8 +139,10 @@ export default defineConfig({
     }),
   ],
 });
+```
+
 Open the browser at http://localhost:3000/config to see the configuration interface for proxy and MOCK data.
-vite project will display a button in the bottom right corner of the page. Click the button to open the configuration page
+vite, Rsbuild project will display a button in the bottom right corner of the page. Click the button to open the configuration page
 
 Refer to [below](#other-servers) for usage examples with vite, webpack, and vueConfig.
 
