@@ -4,7 +4,8 @@ import defaultConfig from './defaultConfig';
 // 直接引入 EventEmitter 以避免循环依赖问题
 import createExpressCompatibilityLayer from '../mockProxy/common/createExpressCompatibilityLayer';
 import { getInjectCode } from '../mockProxy/common/injectCode';
-import { envUpdateEmitter } from '../index'
+import { envUpdateEmitter } from '../index';
+import { restartApp } from '../mockProxy/common/restart';
 
 declare global {
   var originEnv: typeof process.env;
@@ -27,17 +28,6 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
     }), {} as Record<string, string>);
   }
   const originEnv = global.originEnv;
-  console.log('originEnv', originEnv);
-
-  // 清理环境变量值的辅助方法
-  function cleanEnvValue(envObj: Record<string, any>): Record<string, any> {
-    return Object.keys(envObj).reduce((acc, key) => ({
-      ...acc,
-      [key]: typeof envObj[key] === 'string' ? 
-        envObj[key].replace(/^"(.*)"$/, '$1') : 
-        envObj[key]
-    }), {});
-  }
 
   // 处理环境变量更新
   function setupEnvVariables() {
@@ -96,15 +86,16 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
       }
 
       
+      // 为了在其他钩子中访问服务器实例，声明在更高作用域
+      let server: any = null;
 
       // 添加中间件，需要使用 Rsbuild 的正确 API
       api.onBeforeStartDevServer((params: any) => {
         console.log('调用 onBeforeStartDevServer 钩子');
-        console.log('获取到 Rsbuild 服务器实例:', params);
         
         // Rsbuild 2.0+ 版本参数可能是 { server } 结构
         // 早期版本可能直接是 server 对象
-        let server = params?.server || params;
+        server = params?.server || params;
         
         // 检查 server 是否可用
         if (!server && typeof api.getServerConfig === 'function') {
@@ -129,31 +120,27 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
       
       // 添加重启和环境变量更新监听
       api.onAfterStartDevServer(() => {
-        // 监听环境变量更新事件
         envUpdateEmitter.on('serverRestart', () => {
-          console.log('服务器已重新启动');
-          // Rsbuild 的重启方式与 Vite 不同
-          // 可以尝试通过重载页面解决
-          console.log('请手动刷新页面以应用更改');
-        });
-
-        envUpdateEmitter.on('updateEnvVariables', async () => {
-          console.log('更新环境变量');
-          const newEnv = setupEnvVariables();
-          if (newEnv) {
-            // 更新 process.env
-            Object.entries(newEnv).forEach(([key, value]) => {
-              process.env[key] = value as string;
-            });
-
-            // 由于 Rsbuild 可能没有直接的重启 API，提示用户
-            console.log('环境变量已更新，请手动刷新页面');
-          }
+          restartApp({
+            exitDelay: 300,
+            beforeExit: () => {
+              console.log('即将重启应用以应用新的环境变量...');
+            }
+          });
+        })
+        envUpdateEmitter.on('updateEnvVariables', () => {
+          restartApp({
+            exitDelay: 300,
+            beforeExit: () => {
+              console.log('即将重启应用以应用新的环境变量...');
+            }
+          });
         });
       });
-
-      // 处理环境变量
+      
+      // 保留原有的 modifyEnvironmentConfig 作为备选方案
       api.modifyEnvironmentConfig((rspackConfig: any) => {
+        console.log("modifyEnvironmentConfig")
         if (!isDevelopment) return rspackConfig;
         
         const envVars = setupEnvVariables();
@@ -169,16 +156,17 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
           });
           
           // 直接修改 Rspack 配置中的 define 属性
-          if (!rspackConfig.source) {'import.meta.env.NVM_BIN'
+          if (!rspackConfig.source) {
             rspackConfig.source = {};
           }
           if (!rspackConfig.source.define) {
             rspackConfig.source.define = {};
           }
+          
           rspackConfig.source.define = {
             ...rspackConfig.source.define,
             ...defineEntries
-          }
+          };
         }
         
         return rspackConfig;
