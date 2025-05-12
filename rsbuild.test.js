@@ -8,8 +8,15 @@ export default defineConfig({
     },
     root: './test', // 指定测试目录
      define: {
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-        'process.env.TEST_ENV': JSON.stringify('rsbuild-test')
+        // 定义特定的环境变量，使用硬编码值
+        'process.env.NODE_ENV': JSON.stringify('development'),
+        'process.env.TEST_ENV': JSON.stringify('rsbuild-test'),
+        // 定义整个 process.env 对象
+        'process.env': JSON.stringify({
+          NODE_ENV: 'development',
+          TEST_ENV: 'rsbuild-test',
+          // 如有需要可以添加更多环境变量
+        })
       },
   },
   // 不使用默认入口查找规则

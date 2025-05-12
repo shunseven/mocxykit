@@ -2,13 +2,9 @@ import { getApiData, getEnvData, setApiData, getMocxykitConfig } from '../mockPr
 import proxyMockMiddleware from './proxyMockMiddleWare';
 import defaultConfig from './defaultConfig';
 // 直接引入 EventEmitter 以避免循环依赖问题
-import { EventEmitter } from '../mockProxy/common/event';
 import createExpressCompatibilityLayer from '../mockProxy/common/createExpressCompatibilityLayer';
 import { getInjectCode } from '../mockProxy/common/injectCode';
-
-// 创建专用的事件发射器，模拟 envUpdateEmitter 的行为
-const envUpdateEmitter = new EventEmitter();
-envUpdateEmitter.setMaxListeners(20);
+import { envUpdateEmitter } from '../index'
 
 declare global {
   var originEnv: typeof process.env;
@@ -31,6 +27,7 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
     }), {} as Record<string, string>);
   }
   const originEnv = global.originEnv;
+  console.log('originEnv', originEnv);
 
   // 清理环境变量值的辅助方法
   function cleanEnvValue(envObj: Record<string, any>): Record<string, any> {
@@ -168,11 +165,11 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
           Object.entries(envVars).forEach(([key, value]) => {
             defineEntries[`process.env.${key}`] = JSON.stringify(value);
             // 同时支持 import.meta.env 格式
-            defineEntries[`import.meta.env.${key}`] = JSON.stringify(value);
+            // defineEntries[`import.meta.env.${key}`] = JSON.stringify(value);
           });
           
           // 直接修改 Rspack 配置中的 define 属性
-          if (!rspackConfig.source) {
+          if (!rspackConfig.source) {'import.meta.env.NVM_BIN'
             rspackConfig.source = {};
           }
           if (!rspackConfig.source.define) {
@@ -182,9 +179,8 @@ function rsbuildProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
             ...rspackConfig.source.define,
             ...defineEntries
           }
-          
-          console.log('合并环境变量到 Rspack 配置:', rspackConfig);
         }
+        
         return rspackConfig;
       });
     }
