@@ -71,7 +71,7 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
 
   return {
     name: 'vite-plugin-proxy-mock',
-
+    enforce: 'pre',
     transformIndexHtml(html: string) {
       // 仅在开发环境下注入按钮
       if (!isDevelopment || !options.buttonPosition) return html;
@@ -86,6 +86,7 @@ function viteProxyMockPlugin(options: ProxyMockOptions = defaultConfig) {
     },
 
     configureServer(server: any) { 
+      console.log('viteProxyMockPlugin: configureServer called');
       // 仅在开发环境下启用中间件
       if (!isDevelopment) return;
 
