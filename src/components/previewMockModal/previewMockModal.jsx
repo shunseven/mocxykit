@@ -11,6 +11,8 @@ export default function PreviewMockModal(props) {
  
   useEffect(() => {
     if (targetKey && visible) {
+      // 清空之前的数据，避免显示旧数据
+      setMockData('');
       fetctApiItemDataAndMockData({
         key: targetKey
       }).then(data => {
@@ -20,6 +22,13 @@ export default function PreviewMockModal(props) {
       })
     }
   }, [targetKey, visible])
+
+  // 当modal关闭时清空数据
+  useEffect(() => {
+    if (!visible) {
+      setMockData('');
+    }
+  }, [visible])
 
   return <Modal
     className="preview-modal"
