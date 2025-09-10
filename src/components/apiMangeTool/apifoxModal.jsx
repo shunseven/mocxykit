@@ -277,13 +277,13 @@ const ApiFoxModal = ({ visible, onClose, onApiDataSync, config = {}, onConfigUpd
               <Text>
                 {t('获取 Token')}：
                 <Link href="https://app.apifox.com/user/login" target="_blank">
-                  {t('点击登录 ApiFox')}
+                  {t('点击登录 ApiFox')},
                 </Link>
-                {t('，登录完成后，复制 localStorage 的common.accessToken字段值')}
+                {t('登录完成后，复制 cookie 中的 Authorization 字段值')}
               </Text>
             </div>
             <div style={{ marginBottom: 16 }}>
-              <Text type="warning">{t('注：不用使用官方设置后台生成的API 访问令牌。')}</Text>
+              <Text type="warning">{t('注：不要使用 ApiFox 官方设置后台生成的 API 访问令牌。')}</Text>
             </div>
             <Button type="primary" onClick={handleTokenSave}>
               {t('下一步')}

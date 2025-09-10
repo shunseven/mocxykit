@@ -13,6 +13,7 @@ const apiFoxRequest = async <T>(url: string, config: ApiFoxRequestConfig, data?:
     const headers: Record<string, string> = {
       'Authorization': `${token}`,
       'Content-Type': 'application/json',
+      'x-client-version': '2.7.34-alpha.1',
     };
     
     if (projectId) {

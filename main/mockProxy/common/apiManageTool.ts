@@ -2,6 +2,7 @@
 import { ApiFoxApiTreeItem, ApiFoxDataSchema, ApiFoxApiDetailResponse, ApiFoxApiDetailsResponse, getApiDetails } from '../../api/fox-api';
 import { getApiData, setApiData, getMock, setMockData } from './fetchJsonData';
 import { parseUrlToKey } from './fun';
+import { faker } from '@faker-js/faker';
 
 // 定义用于 processSelectedFolders 的参数接口
 interface ProcessSelectedFoldersParams {
@@ -130,7 +131,7 @@ export async function processSelectedFolders({
           apiConfigs.push(apiConfig);
           
           // 处理Mock数据
-          await processMockData(apiKey, apiPath, item, apiDetail);
+          await processMockData(apiKey, apiPath, item, apiDetail, responseSchema);
           
         } catch (error) {
           console.error(`处理API出错: ${item.api.name}`, error);
@@ -159,8 +160,71 @@ export async function processSelectedFolders({
   return apiConfigs;
 }
 
+// 从 JSON Schema 生成 Mock 数据的函数
+function generateMockDataFromSchema(schema: any): any {
+  if (!schema || typeof schema !== 'object') {
+    return null;
+  }
+
+  const { type, properties, items, examples, format } = schema;
+
+  // 如果有 examples，优先使用第一个
+  if (examples && Array.isArray(examples) && examples.length > 0) {
+    return examples[0];
+  }
+
+  switch (type) {
+    case 'object':
+      if (properties) {
+        const result: any = {};
+        for (const [key, propSchema] of Object.entries(properties)) {
+          result[key] = generateMockDataFromSchema(propSchema);
+        }
+        return result;
+      }
+      return {};
+
+    case 'array':
+      if (items) {
+        // 生成一个包含单个元素的数组
+        return [generateMockDataFromSchema(items)];
+      }
+      return [];
+
+    case 'string':
+      if (format === 'date-time') {
+        return faker.date.recent().toISOString();
+      }
+      if (format === 'date') {
+        return faker.date.recent().toISOString().split('T')[0];
+      }
+      if (format === 'email') {
+        return faker.internet.email();
+      }
+      if (format === 'uri' || format === 'url') {
+        return faker.internet.url();
+      }
+      return faker.lorem.word();
+
+    case 'integer':
+      if (format === 'int64') {
+        return faker.number.int({ min: 0, max: 999999 });
+      }
+      return faker.number.int({ min: 0, max: 100 });
+
+    case 'number':
+      return faker.number.float({ min: 0, max: 100, fractionDigits: 2 });
+
+    case 'boolean':
+      return faker.datatype.boolean();
+
+    default:
+      return null;
+  }
+}
+
 // 处理Mock数据的辅助函数
-async function processMockData(apiKey: string, apiPath: string, apiItem: any, apiDetail: ApiFoxApiDetailResponse): Promise<void> {
+async function processMockData(apiKey: string, apiPath: string, apiItem: any, apiDetail: ApiFoxApiDetailResponse, responseSchema?: any): Promise<void> {
   // 获取所有Mock数据
   const allMockData = getMock();
   
@@ -168,26 +232,36 @@ async function processMockData(apiKey: string, apiPath: string, apiItem: any, ap
   const mockExists = allMockData[apiKey];
   
   // 如果没有Mock数据，创建默认的Mock数据
-  if (!mockExists && apiDetail.data.responseExamples && apiDetail.data.responseExamples.length > 0) {
+  if (!mockExists) {
     try {
-      // 获取第一个响应示例
-      const firstExample = apiDetail.data.responseExamples[0];
       let responseData = {};
+      let mockName = '默认响应';
       
-      // 尝试解析响应示例数据
-      if (firstExample.data) {
-        try {
-          responseData = JSON.parse(firstExample.data);
-        } catch (e) {
-          console.error(`解析响应示例数据失败: ${e}`);
-          responseData = { data: firstExample.data };
+      // 优先使用 responseExamples
+      if (apiDetail.data.responseExamples && apiDetail.data.responseExamples.length > 0) {
+        const firstExample = apiDetail.data.responseExamples[0];
+        mockName = firstExample.name || '默认响应';
+        
+        // 尝试解析响应示例数据
+        if (firstExample.data) {
+          try {
+            responseData = JSON.parse(firstExample.data);
+          } catch (e) {
+            console.error(`解析响应示例数据失败: ${e}`);
+            responseData = { data: firstExample.data };
+          }
         }
+      } 
+      // 如果没有 responseExamples，使用 responseSchema 生成
+      else if (responseSchema) {
+        responseData = generateMockDataFromSchema(responseSchema);
+        mockName = '基于Schema生成';
       }
       
       // 创建Mock数据
       const mockData: any = {
         data: [{
-          name: firstExample.name || '默认响应',
+          name: mockName,
           requestData: {},
           responseData
         }],
