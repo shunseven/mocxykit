@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/shunseven-mocxykit-badge.png)](https://mseep.ai/app/shunseven-mocxykit)
+
 # mocxykit
 
 ![描述](./public/proxymock.png)
